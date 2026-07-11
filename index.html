@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="womb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Newborn Essentials — Baby List</title>
+<meta name="description" content="A pediatrician-aligned newborn checklist with budgets, due-date timing, and family sharing.">
+<meta name="theme-color" content="#0B0E15" id="themeColor">
+<meta name="color-scheme" content="dark light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Baby List">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230B0E15'/%3E%3Cpath d='M19 9.5A5 5 0 0112.5 3 5 5 0 1019 9.5z' fill='%23EBC77C'/%3E%3Cpath d='M5 13l4 4.5L18 8' stroke='%237BC8B3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js" defer></script>
+<style>
+/* ============ Theme tokens (DaisyUI custom themes) + print engine ============
+   Layout and components are Tailwind/DaisyUI; this block holds only what the
+   framework expects as variables (themes), category accents, and the print
+   engine the blueprint mandates as an isolated overriding block. */
+[data-theme="womb"]{
+  color-scheme:dark;
+  --color-base-100:#151A26; --color-base-200:#0B0E15; --color-base-300:#232B3B;
+  --color-base-content:#EDF1F8;
+  --color-primary:#7BC8B3;   --color-primary-content:#0C1019;
+  --color-secondary:#F0A87C; --color-secondary-content:#0C1019;
+  --color-accent:#EBC77C;    --color-accent-content:#0C1019;
+  --color-neutral:#EDF1F8;   --color-neutral-content:#0B0E15;
+  --color-info:#A9B4F2;      --color-info-content:#0C1019;
+  --color-success:#A9D98C;   --color-success-content:#0C1019;
+  --color-warning:#EBC77C;   --color-warning-content:#0C1019;
+  --color-error:#F58B7E;     --color-error-content:#0C1019;
+  --radius-box:1rem; --radius-field:.75rem; --radius-selector:.5rem;
+  --ink-soft:#99A6B9; --glow1:rgba(240,168,124,.055); --glow2:rgba(123,200,179,.04);
+  --c-clothing:#F2A3B8;--c-clothing-t:#2C1B23;--c-feeding:#EBC77C;--c-feeding-t:#2C2513;
+  --c-diapering:#7BC8B3;--c-diapering-t:#182823;--c-sleep:#B5A8F2;--c-sleep-t:#232038;
+  --c-bath:#87C6EE;--c-bath-t:#17273A;--c-health:#F58B7E;--c-health-t:#301B17;
+  --c-hospital:#F0A87C;--c-hospital-t:#2E2114;--c-parent:#A9D98C;--c-parent-t:#1F2A17;
+}
+[data-theme="dawn"]{
+  color-scheme:light;
+  --color-base-100:#FFFFFF; --color-base-200:#FAF8F4; --color-base-300:#E8E1D5;
+  --color-base-content:#27313F;
+  --color-primary:#5C9A8B;   --color-primary-content:#FFFFFF;
+  --color-secondary:#E8956B; --color-secondary-content:#FFFFFF;
+  --color-accent:#D9A741;    --color-accent-content:#FFFFFF;
+  --color-neutral:#27313F;   --color-neutral-content:#FAF8F4;
+  --color-info:#5A67C7;      --color-info-content:#FFFFFF;
+  --color-success:#5E8A3C;   --color-success-content:#FFFFFF;
+  --color-warning:#B8860B;   --color-warning-content:#FFFFFF;
+  --color-error:#DD6A59;     --color-error-content:#FFFFFF;
+  --radius-box:1rem; --radius-field:.75rem; --radius-selector:.5rem;
+  --ink-soft:#505C6B; --glow1:rgba(232,149,107,.09); --glow2:rgba(92,154,139,.07);
+  --c-clothing:#C05A78;--c-clothing-t:#FAE7ED;--c-feeding:#A57D1E;--c-feeding-t:#F8EFDA;
+  --c-diapering:#3C7567;--c-diapering-t:#E9F1EE;--c-sleep:#6B5BC9;--c-sleep-t:#EFECFB;
+  --c-bath:#2E7FB4;--c-bath-t:#E5F1FA;--c-health:#C25143;--c-health-t:#FBE9E6;
+  --c-hospital:#C1683A;--c-hospital-t:#FBEADF;--c-parent:#5E8A3C;--c-parent-t:#EFF6E7;
+}
+html{background:var(--color-base-200)}
+body{
+  font-family:"Nunito Sans",system-ui,sans-serif;
+  background-color:var(--color-base-200);
+  background-image:radial-gradient(520px 300px at 14% -10%,var(--glow1),transparent 58%),
+                   radial-gradient(560px 340px at 104% -4%,var(--glow2),transparent 60%);
+  background-repeat:no-repeat;
+}
+.font-display{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto;letter-spacing:-.012em}
+.ink-soft{color:var(--ink-soft)}
+::selection{background:var(--color-primary);color:var(--color-primary-content)}
+/* offline fallback confetti (used only when canvas-confetti CDN is unavailable) */
+.conf{position:fixed;top:-14px;width:8px;height:13px;border-radius:2px;z-index:70;pointer-events:none;animation:cfall linear forwards}
+@keyframes cfall{to{transform:translateY(112vh) rotate(720deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ============ PRINT ENGINE — isolated overriding block ============ */
+@media print{
+  @page{margin:14mm}
+  *,*::before,*::after{background:#ffffff!important;color:#000000!important;box-shadow:none!important;text-shadow:none!important}
+  html,body{background:#ffffff!important;background-image:none!important;font-family:Georgia,"Times New Roman",serif!important;font-size:12.5pt!important;line-height:1.45}
+  .navbar,.icobtns,#searchWrap,#toolbar,#sortbar,#tierbar,#legend,#donext,.foot-actions,.dn-date,.del,.add-area,#budget,.toast,.stamp,#smatch{display:none!important}
+  h1,h2,h3,h4,h5,h6,.cat-head{page-break-after:avoid;break-after:avoid}
+  .cat,.item-wrap{page-break-inside:avoid;break-inside:avoid}
+  .cat{border:1pt solid #999!important;border-radius:0!important;margin-top:10pt;padding:6pt 10pt;display:block!important}
+  .cat-collapse{grid-template-rows:1fr!important}
+  .item-wrap{display:flex!important;opacity:1!important;padding:3pt 0}
+  .item-wrap .checkbox{appearance:none;-webkit-appearance:none;width:11pt;height:11pt;border:1.2pt solid #000!important;border-radius:2pt;display:inline-block}
+  .item-wrap .checkbox:checked::after{content:"✓";display:block;text-align:center;font-size:9pt;line-height:10pt}
+  .badge{border:.8pt solid #666!important;border-radius:6pt;padding:0 4pt;font-size:8pt}
+  .radial-progress{display:none!important}
+  progress{border:1pt solid #000;height:6pt}
+  footer{font-size:9pt}
+}
+</style>
+</head>
+<body class="min-h-screen text-[16px] leading-relaxed pb-[env(safe-area-inset-bottom)]">
+
+<!-- ============ App shell: sticky navbar (zero-CLS: fixed heights) ============ -->
+<header class="navbar sticky top-0 z-30 bg-base-200/85 backdrop-blur-md border-b border-base-300 px-3.5 pt-[calc(env(safe-area-inset-top)+8px)] pb-2 min-h-0">
+  <div class="w-full max-w-[640px] mx-auto block">
+    <div class="flex items-center justify-between gap-2">
+      <h1 class="font-display font-semibold text-[22px] leading-tight m-0">
+        Newborn <em class="italic font-medium text-secondary">Essentials</em>
+        <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1 h-3.5">Pediatrician-aligned · tap to pack</span>
+      </h1>
+      <div class="icobtns flex gap-1.5 flex-none">
+        <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="sizeBtn" type="button" aria-label="Change text size"><span class="font-display font-semibold text-sm">Aa</span></button>
+        <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="calmBtn" type="button" aria-label="Calm sounds: womb-like brown noise" aria-pressed="false"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M3 12c1.5-3.5 3-3.5 4.5 0s3 3.5 4.5 0 3-3.5 4.5 0 3 3.5 4.5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+        <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="resetTop" type="button" aria-label="Reset checkmarks"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M3.4 9.2a8 8 0 1 1-.5 5.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M2.5 4v5.5H8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+    <div class="flex items-center gap-3.5 mt-2.5">
+      <div class="flex-1 min-w-0">
+        <progress class="progress progress-primary w-full h-2" id="gprog" value="0" max="100" aria-label="Overall packing progress"></progress>
+        <div class="text-[12.5px] ink-soft font-semibold mt-1 h-5" id="progLabel"><b class="text-base-content font-extrabold">0</b> of <b class="text-base-content font-extrabold">0</b> packed</div>
+      </div>
+      <div class="flex-none text-right leading-tight min-w-[92px]" id="budget">
+        <div class="text-[9.5px] tracking-[.07em] uppercase ink-soft font-extrabold">Left to buy</div>
+        <div class="font-display font-semibold text-[19px] text-secondary tabular-nums" id="remain">$0</div>
+        <div class="text-[11px] ink-soft font-bold mt-0.5 h-4 tabular-nums" id="packedVal"></div>
+      </div>
+    </div>
+    <div class="relative flex items-center mt-2.5" id="searchWrap">
+      <svg class="absolute left-3 w-4 h-4 ink-soft pointer-events-none" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.2-3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="search" id="search" placeholder="Search items…" aria-label="Search items" autocomplete="off" class="input input-bordered bg-base-100 w-full pl-9 pr-16 font-semibold text-[16px] h-10 rounded-xl">
+      <span class="absolute right-10 text-[11px] ink-soft font-bold pointer-events-none hidden" id="smatch"></span>
+      <button class="btn btn-circle btn-ghost btn-xs absolute right-2 hidden" id="clrBtn" type="button" aria-label="Clear search"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="w-full max-w-[640px] mx-auto px-3.5 pb-16">
+
+  <!-- toggles -->
+  <div class="flex gap-2 overflow-x-auto pt-3.5 pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" id="toolbar">
+    <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5" id="chipHide" type="button" aria-pressed="false">Hide packed</button>
+    <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5" id="chipNotes" type="button" aria-pressed="false">Hide notes</button>
+    <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5" id="chipCollapse" type="button">Collapse all</button>
+    <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5 gap-1.5" id="chipSync" type="button" aria-pressed="false" hidden><span class="w-1.5 h-1.5 rounded-full bg-current opacity-60"></span>Family sync</button>
+  </div>
+
+  <!-- sort -->
+  <div class="flex gap-2 items-center overflow-x-auto mt-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" id="sortbar">
+    <span class="flex-none text-[11px] font-extrabold tracking-[.08em] uppercase ink-soft min-w-[34px]">Sort</span>
+    <div class="join">
+      <button class="join-item btn btn-xs h-8 font-bold sortchip" type="button" data-sort="importance" aria-pressed="true">Importance</button>
+      <button class="join-item btn btn-xs h-8 font-bold sortchip" type="button" data-sort="priceUp" aria-pressed="false">Price&nbsp;↑</button>
+      <button class="join-item btn btn-xs h-8 font-bold sortchip" type="button" data-sort="priceDown" aria-pressed="false">Price&nbsp;↓</button>
+    </div>
+  </div>
+
+  <!-- priority tier filter -->
+  <div class="flex gap-2 items-center overflow-x-auto mt-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" id="tierbar">
+    <span class="flex-none text-[11px] font-extrabold tracking-[.08em] uppercase ink-soft min-w-[34px]">Show</span>
+    <div class="join">
+      <button class="join-item btn btn-xs h-8 font-bold tchip" type="button" data-tier="all" aria-pressed="true">All</button>
+      <button class="join-item btn btn-xs h-8 font-bold tchip gap-1.5" type="button" data-tier="1" aria-pressed="false"><span class="w-2 h-2 rounded-full bg-error"></span>Must</button>
+      <button class="join-item btn btn-xs h-8 font-bold tchip gap-1.5" type="button" data-tier="2" aria-pressed="false"><span class="w-2 h-2 rounded-full bg-warning"></span>Important</button>
+      <button class="join-item btn btn-xs h-8 font-bold tchip gap-1.5" type="button" data-tier="3" aria-pressed="false"><span class="w-2 h-2 rounded-full bg-info"></span>Nice to have</button>
+    </div>
+  </div>
+
+  <!-- legend -->
+  <div class="flex gap-3.5 flex-wrap mt-3.5 mx-0.5 text-[11.5px] ink-soft font-semibold" id="legend">
+    <span class="inline-flex items-center gap-1.5"><span class="badge badge-error badge-xs font-extrabold uppercase">must</span>1 · can't skip</span>
+    <span class="inline-flex items-center gap-1.5"><span class="badge badge-warning badge-outline badge-xs font-extrabold uppercase">important</span>2 · recommended</span>
+    <span class="inline-flex items-center gap-1.5"><span class="badge badge-info badge-soft badge-xs font-extrabold uppercase">nice</span>3 · optional</span>
+    <span class="inline-flex items-center gap-1.5"><span class="badge badge-secondary badge-soft badge-xs font-extrabold">+</span>added</span>
+    <span class="inline-flex items-center gap-1.5"><span class="badge badge-neutral badge-xs font-extrabold uppercase">mine</span>your item</span>
+  </div>
+
+  <!-- Do next / due date -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4" id="donext">
+    <div class="card-body p-4 pb-2">
+      <div class="flex items-center gap-2.5">
+        <span class="font-display font-semibold text-[17px] text-accent" id="dnTitle">Do next</span>
+        <span class="flex-1 min-w-0 text-[12px] ink-soft font-bold h-4" id="dnWeek"></span>
+        <button class="btn btn-xs rounded-full border-base-300 font-extrabold" id="dueBtn" type="button">Set due date</button>
+      </div>
+      <div class="dn-date hidden gap-2 mt-2 items-center flex-wrap" id="dueForm">
+        <input type="date" id="dueInput" aria-label="Due date" class="input input-bordered input-sm bg-base-200 font-semibold text-[16px]">
+        <button id="dueSave" type="button" class="btn btn-sm btn-primary font-extrabold">Save</button>
+        <button id="dueClear" type="button" class="btn btn-sm btn-ghost font-extrabold">Clear</button>
+      </div>
+      <div class="mt-1" id="dnList"></div>
+    </div>
+  </section>
+
+  <main id="list"></main>
+
+  <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
+    <div class="foot-actions flex gap-2 flex-wrap mb-3.5">
+      <button id="copyBtn" type="button" class="btn btn-sm rounded-full border-base-300 bg-base-100 font-bold gap-1.5"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2" stroke="currentColor" stroke-width="1.8"/></svg>Copy list</button>
+      <button id="dlBtn" type="button" class="btn btn-sm rounded-full border-base-300 bg-base-100 font-bold gap-1.5"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Download .txt</button>
+      <button id="saveFileBtn" type="button" class="btn btn-sm rounded-full border-base-300 bg-base-100 font-bold gap-1.5"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><rect x="4" y="13" width="16" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v9m0 0L8.5 8.5M12 12l3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Save to file</button>
+      <button id="loadFileBtn" type="button" class="btn btn-sm rounded-full border-base-300 bg-base-100 font-bold gap-1.5"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><rect x="4" y="13" width="16" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M12 12V3m0 0L8.5 6.5M12 3l3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Load from file</button>
+      <button id="linkBtn" type="button" class="btn btn-sm rounded-full border-base-300 bg-base-100 font-bold gap-1.5"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><path d="M10 14a4.5 4.5 0 006.4.4l3-3a4.5 4.5 0 00-6.4-6.4l-1.6 1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 10a4.5 4.5 0 00-6.4-.4l-3 3a4.5 4.5 0 006.4 6.4l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Share link</button>
+      <button id="shareBtn" type="button" class="btn btn-sm rounded-full border-base-300 bg-base-100 font-bold gap-1.5"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="5.5" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="18.5" r="2.6" stroke="currentColor" stroke-width="1.8"/><path d="M8.4 10.8l6.7-4M8.4 13.2l6.7 4" stroke="currentColor" stroke-width="1.8"/></svg>Share copy (.html)</button>
+      <button id="resetBottom" type="button" class="btn btn-sm btn-ghost rounded-full font-bold ink-soft">Reset checkmarks</button>
+      <input type="file" id="fileInput" accept=".json,application/json" hidden>
+    </div>
+    <p class="mb-2.5">Follows AAP and CPSC safe-sleep guidance, but isn't medical advice. Confirm anything health-related with your pediatrician.</p>
+    <p class="mb-2.5"><b class="text-base-content font-extrabold">Progress saves on this device automatically.</b> <b class="text-base-content font-extrabold">Share link</b> packs your checkmarks, added items, and due date into a URL anyone can open. <b class="text-base-content font-extrabold">Save / Load file</b> is a .json backup. <b class="text-base-content font-extrabold">Share copy</b> downloads this page with your list baked in. <b class="text-base-content font-extrabold">Family sync</b> appears when this runs as a shared Claude artifact; on the web, share links are the way to stay in step. Synced or linked data is visible to anyone who has it.</p>
+  </footer>
+</div>
+
+<div class="toast toast-center toast-bottom z-[80] hidden" id="toastWrap">
+  <div class="alert bg-neutral text-neutral-content rounded-full py-2.5 px-5 text-[13px] font-extrabold shadow-lg border-0" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script type="application/json" id="shared-state"></script>
+<script>
+/* ================================================================
+   Newborn Essentials — logic layer (all business rules preserved)
+   ================================================================ */
+
+/* ---------- data (full taxonomy — 96 items) ---------- */
+const DATA = [
+ {id:'clothing', name:'Clothing', icon:'clothing', tip:'Buy mostly 0–3 & 3–6 mo. Newborn size is outgrown in days.', items:[
+   {n:'Snap-side bodysuits', q:'6–8', note:'Envelope-neck shoulders for easy over-the-head changes.', lo:15, hi:30},
+   {n:'Footed sleep & play pajamas', q:'6–8', note:'Zippers beat snaps at 3 a.m.', lo:20, hi:40},
+   {n:'Muslin swaddle blankets', q:'3–4', note:'Breathable fabric lowers overheating risk.', lo:20, hi:40},
+   {n:'Wearable sleep sacks (0–3 mo)', q:'2–3', note:'AAP-preferred over loose blankets.', lo:30, hi:60},
+   {n:'Scratch mittens', q:'2–3', note:'Newborn nails grow fast and scratch the face.', lo:6, hi:12},
+   {n:'No-skid socks', q:'4–6', note:'', lo:8, hi:15},
+   {n:'Soft season-appropriate hats', q:'1–2', note:'The hospital gives one — keep a backup.', lo:8, hi:15},
+   {n:'Kimono-style tops', q:'1–2', note:'No waistband while the cord stump heals.', lo:12, hi:25},
+   {n:'Going-home outfit', q:'1', note:'One special set for the hospital exit.', lo:15, hi:30, o:true, a:true},
+   {n:'Layering cardigan', q:'1–2', note:'Adds warmth without overdressing.', lo:12, hi:25, a:true}
+ ]},
+ {id:'feeding', name:'Feeding', icon:'feeding', tip:'Fed is best — have both breast and bottle supplies ready.', items:[
+   {n:'Bottles, slow-flow size 1', q:'8–10', note:'BPA-free; anti-colic venting cuts gas.', lo:30, hi:60, wk:34},
+   {n:'Bottle sterilizer (or large pot)', q:'1', note:'Sterilize before first use, then weekly.', lo:0, hi:80},
+   {n:'Bottle brush + drying rack', q:'1', note:'Keep it dedicated to baby bottles.', lo:15, hi:30},
+   {n:'Burp cloths', q:'6–8', note:'You will use more than you expect.', lo:12, hi:25},
+   {n:'Waterproof bibs', q:'2–3', note:'Spit-up is near-constant in the first weeks.', lo:10, hi:20},
+   {n:'Breast pump (electric)', q:'1', note:'Often $0 — many plans cover it fully.', lo:0, hi:300, wk:30},
+   {n:'Nursing bras + breast pads', q:'2–3', note:'Washable pads save money long-term.', lo:30, hi:60},
+   {n:'Nursing pillow', q:'1', note:'Supports the latch and saves your back.', lo:30, hi:50},
+   {n:'Single-serve formula', q:'1', note:'Keep a backup even if you plan to nurse.', lo:20, hi:40},
+   {n:'Bottle warmer', q:'1', note:'Never microwave — it creates hot spots.', lo:25, hi:50, o:true},
+   {n:'Milk storage bags', q:'1', note:'Freezer-safe pouches for pumped milk.', lo:10, hi:20, o:true, a:true},
+   {n:'Silicone milk collector (Haakaa)', q:'1', note:'Catches letdown on the other side.', lo:12, hi:20, o:true, a:true},
+   {n:'Lanolin or nipple cream', q:'1', note:'Soreness peaks in week one — have it ready.', lo:8, hi:15, a:true},
+   {n:'Spare slow-flow nipples', q:'2–4', note:'Flow preference varies; keep backups.', lo:8, hi:15, o:true, a:true},
+   {n:'Nursing cover', q:'1', note:'A muslin swaddle can double for this.', lo:15, hi:25, o:true, a:true}
+ ]},
+ {id:'diapering', name:'Diapering', icon:'diapering', tip:'Expect 8–12 changes a day at first — stock accordingly.', items:[
+   {n:'Newborn diapers (size N)', q:'1 pk', note:"Don't overstock — outgrown fast.", lo:10, hi:15},
+   {n:'Size 1 diapers', q:'2–3 pk', note:'Most babies reach size 1 within 1–2 weeks.', lo:40, hi:70},
+   {n:'Fragrance-free wipes', q:'3–4 pk', note:'Unscented lowers the risk of irritation.', lo:15, hi:30},
+   {n:'Zinc-oxide rash cream', q:'1', note:'A thin layer at each change prevents rash.', lo:6, hi:12},
+   {n:'Waterproof changing pad', q:'1', note:'A washable cover saves on replacements.', lo:20, hi:35},
+   {n:'Diaper pail (odor-seal)', q:'1', note:'Ubbi and Arm & Hammer are parent picks.', lo:30, hi:50},
+   {n:'Diaper bag (compartments)', q:'1', note:'Backpack style frees up your hands.', lo:30, hi:80},
+   {n:'Portable changing pad', q:'1', note:'Folds flat and clips to the bag.', lo:12, hi:25},
+   {n:'Diaper caddy / organizer', q:'1', note:'Keeps supplies stocked at each station.', lo:20, hi:35, a:true},
+   {n:'Diaper disposal bags (to-go)', q:'1 pk', note:'Seals odor for changes away from home.', lo:5, hi:10, o:true, a:true}
+ ]},
+ {id:'sleep', name:'Sleep & Nursery', icon:'sleep', tip:'AAP: room-share (not bed-share) ~6 months. Keep the crib bare.', items:[
+   {n:'Crib or bassinet (CPSC/AAP)', q:'1', note:'Firm, flat surface; no drop-sides.', lo:90, hi:400, wk:32},
+   {n:'Firm, flat, waterproof mattress', q:'1', note:'Soft mattresses raise SIDS risk.', lo:50, hi:150, wk:32},
+   {n:'Fitted sheets (snug)', q:'2–3', note:'Must fit tight — no loose fabric.', lo:20, hi:40, wk:34},
+   {n:'White-noise machine', q:'1', note:'Womb-like sound lengthens sleep.', lo:20, hi:50},
+   {n:'Video + audio monitor', q:'1', note:'Smart units track motion and breathing.', lo:40, hi:200},
+   {n:'Blackout curtains / shade', q:'1', note:'Protects the daytime nap schedule.', lo:20, hi:50},
+   {n:'Glider or rocker + ottoman', q:'1', note:'A lifesaver for middle-of-night feeds.', lo:150, hi:500},
+   {n:'Baby swing or bouncer', q:'1', note:'Soothes fussiness — always supervise.', lo:40, hi:200, o:true},
+   {n:'Cool-mist humidifier', q:'1', note:'Eases stuffy noses in dry rooms.', lo:30, hi:60, o:true, a:true},
+   {n:'Dim nightlight', q:'1', note:'Just enough light for 3 a.m. feeds.', lo:12, hi:25, o:true, a:true},
+   {n:"Pack 'n Play / playard", q:'1', note:'Portable sleep and naps anywhere.', lo:60, hi:150, o:true, a:true},
+   {n:'Room thermometer', q:'1', note:'Keep the nursery around 68–72°F.', lo:8, hi:15, o:true, a:true}
+ ]},
+ {id:'bath', name:'Bath & Grooming', icon:'bath', tip:'Bathe 2–3× a week — daily baths dry out delicate skin.', items:[
+   {n:'Infant tub with sling', q:'1', note:'Sponge baths only until the cord falls off.', lo:25, hi:45},
+   {n:'Hooded towels', q:'2–3', note:'The hood keeps a wet head warm.', lo:20, hi:35},
+   {n:'Soft washcloths', q:'6–8', note:'Gentle on skin; keep them baby-only.', lo:10, hi:20},
+   {n:'Tear-free 2-in-1 wash', q:'1', note:'Fragrance-free; EWG-verified if you can.', lo:8, hi:15},
+   {n:'Fragrance-free lotion', q:'1', note:'Matters most for dry / eczema-prone skin.', lo:8, hi:15},
+   {n:'Nail clipper or electric file', q:'1', note:'A file is safest for tiny newborns.', lo:10, hi:25},
+   {n:'Soft-bristle hairbrush', q:'1', note:'Also helps with cradle cap.', lo:6, hi:12},
+   {n:'Baby laundry detergent', q:'1', note:'Free & Clear; wash everything before use.', lo:10, hi:20},
+   {n:'Bath thermometer', q:'1', note:'Aim for ~100°F / 38°C bathwater.', lo:10, hi:20, o:true, a:true},
+   {n:'Cotton balls / rounds', q:'1', note:'For cord care and wiping eyes.', lo:4, hi:8, a:true}
+ ]},
+ {id:'health', name:'Health & Safety', icon:'health', tip:'Save a 24/7 nurse line in your phone — many practices offer it free.', items:[
+   {n:'Digital rectal thermometer', q:'1', note:'Most accurate; ≥100.4°F means call the pediatrician.', lo:10, hi:20},
+   {n:'Nasal aspirator (NoseFrida / bulb)', q:'1', note:'Saline + suction clears congestion.', lo:8, hi:25},
+   {n:'Saline nasal drops', q:'1', note:'Safe from birth; loosens mucus.', lo:5, hi:10},
+   {n:'Infant gas drops (simethicone)', q:'1', note:'Ask your pediatrician first.', lo:8, hi:12},
+   {n:'Baby nail-care kit (backup)', q:'1', note:'', lo:10, hi:15},
+   {n:'Rear-facing infant car seat', q:'1', note:'Install and get it checked before discharge.', lo:80, hi:300, wk:32},
+   {n:'Stroller / travel system', q:'1', note:'A frame + seat adapter is budget-friendly.', lo:100, hi:500},
+   {n:'Soft-structured carrier / wrap', q:'1', note:'Babywearing soothes colic and aids bonding.', lo:30, hi:160},
+   {n:'Pediatrician chosen', q:'1', note:'Book a prenatal meet-and-greet visit.', lo:0, hi:0, wk:30},
+   {n:'Pacifiers (varied shapes)', q:'1–2', note:'Offer once breastfeeding is established.', lo:8, hi:15},
+   {n:'Car-seat mirror', q:'1', note:'See a rear-facing baby from the front seat.', lo:12, hi:20, o:true, a:true},
+   {n:'Infant first-aid kit', q:'1', note:'Bandages, tweezers, and basics in one place.', lo:15, hi:30, o:true, a:true},
+   {n:'Gripe water', q:'1', note:'A gentler option some parents prefer for gas.', lo:8, hi:12, o:true, a:true},
+   {n:'Medicine syringe / dispenser', q:'1', note:'For dosing once your pediatrician okays meds.', lo:8, hi:15, a:true},
+   {n:'Vitamin D drops (400 IU)', q:'1', note:'AAP-recommended daily for breastfed babies.', lo:8, hi:12, a:true, wk:36},
+   {n:'Petroleum jelly', q:'1', note:'For circumcision care, if it applies.', lo:3, hi:6, o:true, a:true},
+   {n:'Infant CPR class', q:'', note:'Hospitals and Red Cross chapters run them — book before the due date.', lo:0, hi:75, a:true, wk:32},
+   {n:'Poison Control saved: 1-800-222-1222', q:'1', note:'Free 24/7 line — save it now.', lo:0, hi:0, a:true}
+ ]},
+ {id:'hospital', name:'Hospital Bag', icon:'bag', tip:'Pack by 36–37 weeks. Most stays run 1–2 nights (2–4 for a C-section).', items:[
+   {n:'Photo ID, insurance card + birth plan', q:'1', note:"Copies in a folder — you'll hand them over more than once.", lo:0, hi:0, wk:36},
+   {n:'Car seat installed + inspection done', q:'1', note:'Certified techs check for free — required before discharge.', lo:0, hi:0, wk:35},
+   {n:'Travel toiletries, lip balm, hair ties', q:'1', note:'Hospital air is dry; labor is long.', lo:10, hi:20, wk:36},
+   {n:'Robe + front-opening sleepwear', q:'1–2', note:'Easier than the hospital gown for skin-to-skin and nursing.', lo:15, hi:35, wk:36},
+   {n:'Grippy socks or slippers', q:'1–2', note:'Cold floors, lots of hallway walking.', lo:8, hi:15, wk:36},
+   {n:'Snacks + large water bottle', q:'', note:'For the support person during labor, too.', lo:10, hi:20, wk:36},
+   {n:'Loose going-home outfit (yours)', q:'1', note:'Plan for your ~6-months-pregnant size.', lo:0, hi:30, wk:36},
+   {n:'Baby going-home outfit + blanket', q:'1', note:'Add a weather layer for the car ride.', lo:0, hi:0, wk:36},
+   {n:'Long phone charger packed', q:'1', note:'Outlets are never near the bed.', lo:0, hi:0, wk:36},
+   {n:'Own pillow or comfort item', q:'1', note:"A colored pillowcase so it isn't mistaken for hospital linen.", lo:0, hi:0, o:true},
+   {n:'Room in the bag for freebies', q:'', note:'They send you home with diapers, wipes, and more.', lo:0, hi:0, o:true}
+ ]},
+ {id:'parent', name:'Parent Care', icon:'parent', tip:"You can't pour from an empty cup — your recovery matters too.", items:[
+   {n:'Postpartum recovery kit', q:'1', note:'Sitz bath, pads, and a peri bottle.', lo:25, hi:50, wk:34},
+   {n:'Freezer meals + easy snacks', q:'', note:"You won't have time to cook early on.", lo:50, hi:150, wk:36},
+   {n:'Lactation consultant / doula', q:'', note:'Book early — schedules fill fast.', lo:75, hi:300, o:true, wk:28},
+   {n:'Insurance cards + contacts saved', q:'1', note:'Pediatrician and nurse line in your phone.', lo:0, hi:0},
+   {n:'Large water bottle (for nursing)', q:'1', note:'Nursing makes you surprisingly thirsty.', lo:15, hi:30, a:true},
+   {n:'Nursing-friendly top or robe', q:'1–2', note:'Comfort during round-the-clock feeds.', lo:30, hi:60, o:true, a:true},
+   {n:'Long phone charging cable', q:'1', note:'Reach the outlet from the feeding chair.', lo:10, hi:15, a:true},
+   {n:'Add baby to insurance (within 30 days)', q:'1', note:'Hard deadline — set a reminder for week one.', lo:0, hi:0, a:true, wk:'birth'},
+   {n:'Birth certificate + SSN forms', q:'1', note:'Usually filed at the hospital — confirm before discharge.', lo:0, hi:0, a:true, wk:'birth'},
+   {n:'OB-approved pain relief + stool softener', q:'1', note:'Ask what to have on hand at your last prenatal visit.', lo:8, hi:15, a:true, wk:36}
+ ]}
+];
+
+const ICONS={
+ clothing:'<svg viewBox="0 0 24 24" fill="none"><path d="M8 4l-4.5 3 1.8 3.2L8 9v10h8V9l2.7 1.2L20.5 7 16 4a4 4 0 01-8 0z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+ feeding:'<svg viewBox="0 0 24 24" fill="none"><path d="M10 3h4v3h-4z" stroke="currentColor" stroke-width="1.6"/><path d="M9 6h6l1 4v9a2 2 0 01-2 2h-4a2 2 0 01-2-2v-9l1-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 13h6" stroke="currentColor" stroke-width="1.4"/></svg>',
+ diapering:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 8h16v3a8 8 0 01-6.5 7.9L12 19l-1.5-.1A8 8 0 014 11V8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 8V6.5A1.5 1.5 0 015.5 5h13A1.5 1.5 0 0120 6.5V8" stroke="currentColor" stroke-width="1.6"/></svg>',
+ sleep:'<svg viewBox="0 0 24 24" fill="none"><path d="M20 13.5A7.5 7.5 0 0110.5 4a7.5 7.5 0 109.5 9.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 5.5h3M15.5 4v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+ bath:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16v2a5 5 0 01-5 5H9a5 5 0 01-5-5v-2z" stroke="currentColor" stroke-width="1.6"/><path d="M6 12V6a2 2 0 012-2h1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="9" r=".9" fill="currentColor"/><circle cx="14.5" cy="7" r=".9" fill="currentColor"/></svg>',
+ health:'<svg viewBox="0 0 24 24" fill="none"><path d="M12 20s-7-4.3-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.7-7 10-7 10z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 11h2l1-2 1.5 3 1-1H16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ bag:'<svg viewBox="0 0 24 24" fill="none"><rect x="4" y="8" width="16" height="12" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M9 8V6.5A2.5 2.5 0 0111.5 4h1A2.5 2.5 0 0115 6.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M4 12.5h16" stroke="currentColor" stroke-width="1.4"/></svg>',
+ parent:'<svg viewBox="0 0 24 24" fill="none"><path d="M5 9h11v5a4 4 0 01-4 4H9a4 4 0 01-4-4V9z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 10h2.5a2 2 0 010 4H16" stroke="currentColor" stroke-width="1.6"/><path d="M8 4.5c0 .8-.8 1-.8 2M11 4.5c0 .8-.8 1-.8 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+ check:'<svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4.5L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ trash:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m3 0l-.8 12a2 2 0 01-2 1.9H8.8a2 2 0 01-2-1.9L6 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+ info:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="8" r="1.1" fill="currentColor"/></svg>'
+};
+
+/* ---------- priority tiers ---------- */
+const P1 = new Set(['Snap-side bodysuits','Footed sleep & play pajamas','Wearable sleep sacks (0–3 mo)','Bottles, slow-flow size 1','Newborn diapers (size N)','Size 1 diapers','Fragrance-free wipes','Crib or bassinet (CPSC/AAP)','Firm, flat, waterproof mattress','Fitted sheets (snug)','Digital rectal thermometer','Rear-facing infant car seat','Pediatrician chosen','Postpartum recovery kit','Insurance cards + contacts saved','Photo ID, insurance card + birth plan','Car seat installed + inspection done','Add baby to insurance (within 30 days)']);
+const P3 = new Set(['Layering cardigan','Diaper caddy / organizer','Soft-bristle hairbrush','Infant gas drops (simethicone)','Baby nail-care kit (backup)','Medicine syringe / dispenser','Long phone charging cable','Long phone charger packed','Snacks + large water bottle']);
+function priorityFor(it){ if(P1.has(it.n)) return 1; if(it.o || P3.has(it.n)) return 3; return 2; }
+
+/* ---------- state + storage (all storage guarded per resiliency spec) ---------- */
+const KEY='newborn-checklist-v3';
+const KEY_SHARED='newborn-checklist-shared-v1';
+const hasCloud = !!(window.storage && window.storage.get && window.storage.set);
+let lastSyncStamp=null;
+let state={checked:{},collapsed:{},hidePacked:false,dark:true,custom:{},sort:'importance',sizeIdx:0,hideNotes:false,sync:false,importedShare:null,tier:'all',due:null,who:''};
+const WHO_KEY='newborn-who';
+try{ state.who=localStorage.getItem(WHO_KEY)||''; }catch(e){}
+function setWho(n){ state.who=(n||'').trim(); try{localStorage.setItem(WHO_KEY,state.who);}catch(e){} }
+const buzz=p=>{ try{ if(navigator.vibrate) navigator.vibrate(p); }catch(e){} };
+let searchTerm='', wasComplete=false, saveTimer=null;
+const RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const SAVE_VERSION=2;
+
+function snapshot(){
+  return {checked:state.checked,collapsed:state.collapsed,hidePacked:state.hidePacked,due:state.due,who:state.who,
+    custom:state.custom,sort:state.sort,dark:state.dark,sizeIdx:state.sizeIdx,hideNotes:state.hideNotes,
+    sync:state.sync,importedShare:state.importedShare,tier:state.tier,themeV:2,savedAt:new Date().toISOString()};
+}
+function persist(pushShared){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    const snap=snapshot(), json=JSON.stringify(snap);
+    let doneLocal=false;
+    try{ if(hasCloud){ await window.storage.set(KEY,json); doneLocal=true; } }catch(e){}
+    if(!doneLocal){ try{ localStorage.setItem(KEY,json); }catch(e){} }
+    if(state.sync && hasCloud && pushShared!==false){
+      try{ lastSyncStamp=snap.savedAt;
+        await window.storage.set(KEY_SHARED, JSON.stringify({app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap}), true);
+      }catch(e){}
+    }
+  },120);
+}
+async function hydrate(){
+  try{ if(hasCloud){ const r=await window.storage.get(KEY); if(r&&r.value) return JSON.parse(r.value); } }catch(e){}
+  try{ const v=localStorage.getItem(KEY); if(v) return JSON.parse(v); }catch(e){}
+  return null;
+}
+function applyState(saved,skipWho){
+  state.checked=saved.checked||{};
+  state.collapsed=saved.collapsed||{};
+  state.hidePacked=!!saved.hidePacked;
+  state.due=(typeof saved.due==='string'&&saved.due)?saved.due:null;
+  if(!skipWho && typeof saved.who==='string' && saved.who) setWho(saved.who);
+  state.custom=saved.custom||{};
+  if(saved.sort) state.sort=saved.sort;
+  if(saved.themeV===2){ if(typeof saved.dark==='boolean') state.dark=saved.dark; } else state.dark=true;
+  if(typeof saved.sizeIdx==='number') state.sizeIdx=saved.sizeIdx;
+  if(typeof saved.hideNotes==='boolean') state.hideNotes=saved.hideNotes;
+  state.sync=!!saved.sync;
+  state.importedShare=saved.importedShare||null;
+  state.tier=(saved.tier===1||saved.tier===2||saved.tier===3)?saved.tier:'all';
+}
+
+/* ---------- helpers ---------- */
+const $=id=>document.getElementById(id);
+function el(tag,cls){ const e=document.createElement(tag); if(cls) e.className=cls; return e; }
+function money(lo,hi,custom){
+  if(lo===0&&hi===0) return custom?'—':'Free';
+  if(lo===hi) return '$'+lo;
+  return '$'+lo+'–'+hi;
+}
+function setPressed(btn,on){ btn.setAttribute('aria-pressed',!!on); btn.classList.toggle('btn-active',!!on); }
+
+/* ---------- prepare items ---------- */
+DATA.forEach(cat=>{ cat.items.forEach((it,ii)=>{ it._id=cat.id+'-'+ii; it._ord=ii; it.p=priorityFor(it); }); });
+const FLAT=[]; DATA.forEach(cat=>cat.items.forEach(it=>FLAT.push(it)));
+function allItems(cat){ return cat.items.concat(state.custom[cat.id]||[]); }
+function sortItems(cat){
+  const arr=allItems(cat).slice();
+  if(state.sort==='priceUp') arr.sort((a,b)=>((a.lo+a.hi)/2)-((b.lo+b.hi)/2)||a._ord-b._ord);
+  else if(state.sort==='priceDown') arr.sort((a,b)=>((b.lo+b.hi)/2)-((a.lo+a.hi)/2)||a._ord-b._ord);
+  else arr.sort((a,b)=>(a.p-b.p)||(a._ord-b._ord));
+  return arr;
+}
+
+/* ---------- toast (with optional Undo action) ---------- */
+let toastTimer=null, toastFn=null;
+function toast(msg,opt){
+  const wrap=$('toastWrap'), t=$('toast');
+  t.textContent=msg; toastFn=null;
+  if(opt && opt.label && opt.fn){
+    toastFn=opt.fn;
+    const b=el('button','btn btn-xs btn-warning rounded-full font-extrabold uppercase ml-2'); b.type='button'; b.textContent=opt.label;
+    b.addEventListener('click',()=>{ wrap.classList.add('hidden'); const f=toastFn; toastFn=null; if(f) f(); });
+    t.append(b);
+  }
+  wrap.classList.remove('hidden');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>wrap.classList.add('hidden'), opt&&opt.label?6000:1700);
+}
+
+/* ---------- build categories ---------- */
+const list=$('list');
+list.innerHTML='';
+DATA.forEach(cat=>{
+  const sec=el('section','cat card bg-base-100 border border-base-300 shadow-sm mt-4 overflow-hidden');
+  sec.dataset.cat=cat.id;
+  sec.style.setProperty('--cat-a','var(--c-'+cat.id+')');
+  sec.style.setProperty('--cat-t','var(--c-'+cat.id+'-t)');
+
+  const head=el('button','cat-head w-full flex items-center gap-3 text-left px-4 py-3 cursor-pointer bg-transparent border-0');
+  head.type='button'; head.setAttribute('aria-expanded','true');
+  head.innerHTML=
+    '<div class="radial-progress flex-none text-[var(--cat-a)]" style="--value:0;--size:2.7rem;--thickness:3px" role="progressbar" aria-label="'+cat.name+' progress" aria-valuemin="0" aria-valuemax="100">'+
+      '<span class="w-[30px] h-[30px] rounded-[10px] grid place-items-center [&>svg]:w-[18px] [&>svg]:h-[18px]" style="background:var(--cat-t);color:var(--cat-a)">'+ICONS[cat.icon]+'</span>'+
+    '</div>'+
+    '<div class="flex-1 min-w-0">'+
+      '<div class="font-display font-semibold text-[17.5px] leading-tight cat-name">'+cat.name+'</div>'+
+      '<div class="text-[12px] ink-soft font-semibold mt-0.5 cat-meta h-4"></div>'+
+    '</div>'+
+    '<div class="flex-none text-right text-[12.5px] font-extrabold tabular-nums cat-price leading-tight"><small class="block text-[9px] font-bold tracking-[.06em] uppercase ink-soft">left</small><span></span></div>'+
+    '<svg class="chev flex-none w-4 h-4 ink-soft transition-transform duration-300" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  sec.append(head);
+
+  const wrapG=el('div','cat-collapse grid transition-[grid-template-rows] duration-300 [grid-template-rows:1fr]');
+  const bodyO=el('div','overflow-hidden min-h-0');
+  const inner=el('div','px-4 pb-3 border-t border-base-300');
+  if(cat.tip){
+    const tip=el('div','tip flex gap-2 items-start text-[12.5px] font-semibold rounded-lg py-2.5 px-3 my-2.5 leading-relaxed');
+    tip.style.cssText='color:var(--cat-a);background:var(--cat-t);border-left:3px solid var(--cat-a)';
+    tip.innerHTML='<span class="flex-none mt-0.5 [&>svg]:w-[15px] [&>svg]:h-[15px]">'+ICONS.info+'</span><span>'+cat.tip+'</span>';
+    inner.append(tip);
+  }
+  const items=el('div'); items.id='items-'+cat.id; inner.append(items);
+
+  const addArea=el('div','add-area pt-2');
+  const addBtn=el('button','add-btn btn btn-sm btn-ghost w-full border-dashed border-2 border-base-300 rounded-xl font-bold ink-soft hover:border-[var(--cat-a)] hover:text-[var(--cat-a)]');
+  addBtn.type='button'; addBtn.textContent='+ Add your own item';
+  const form=el('div','add-form hidden flex-col gap-2 bg-base-200 border border-base-300 rounded-xl p-3 mt-1');
+  form.innerHTML=
+    '<input class="af-name input input-sm input-bordered bg-base-100 font-semibold text-[16px]" placeholder="Item name" aria-label="Item name">'+
+    '<div class="flex gap-2"><input class="af-qty input input-sm input-bordered bg-base-100 w-full min-w-0 font-semibold text-[16px]" placeholder="Qty" aria-label="Quantity"><input class="af-lo input input-sm input-bordered bg-base-100 w-full min-w-0 font-semibold text-[16px]" inputmode="numeric" placeholder="$ low" aria-label="Low price"><input class="af-hi input input-sm input-bordered bg-base-100 w-full min-w-0 font-semibold text-[16px]" inputmode="numeric" placeholder="$ high" aria-label="High price"></div>'+
+    '<div class="flex gap-2 mt-0.5"><button class="af-add btn btn-sm btn-primary flex-1 font-extrabold" type="button">Add</button><button class="af-cancel btn btn-sm flex-1 font-extrabold" type="button">Cancel</button></div>';
+  addBtn.addEventListener('click',()=>{ form.classList.toggle('hidden'); form.classList.toggle('flex'); if(!form.classList.contains('hidden')) form.querySelector('.af-name').focus(); });
+  form.querySelector('.af-cancel').addEventListener('click',()=>{ form.classList.add('hidden'); form.classList.remove('flex'); });
+  form.querySelector('.af-add').addEventListener('click',()=>{
+    const nm=form.querySelector('.af-name').value.trim();
+    if(!nm){ form.querySelector('.af-name').focus(); return; }
+    const lo=Math.max(0,parseInt(form.querySelector('.af-lo').value,10)||0);
+    const hi=Math.max(lo,parseInt(form.querySelector('.af-hi').value,10)||0);
+    const item={n:nm,q:form.querySelector('.af-qty').value.trim()||'1',note:'',lo,hi,p:2,_ord:1000+Date.now()%100000,_custom:true,_id:'c-'+cat.id+'-'+Date.now()};
+    (state.custom[cat.id]||(state.custom[cat.id]=[])).push(item);
+    form.querySelectorAll('input').forEach(i=>i.value='');
+    form.classList.add('hidden'); form.classList.remove('flex');
+    persist(); renderItems(cat); update(); toast('Added to '+cat.name);
+  });
+  addArea.append(addBtn,form);
+  inner.append(addArea);
+  bodyO.append(inner); wrapG.append(bodyO); sec.append(wrapG);
+
+  head.addEventListener('click',()=>{
+    const isC=sec.classList.toggle('collapsed');
+    state.collapsed[cat.id]=isC;
+    wrapG.classList.toggle('[grid-template-rows:0fr]',isC);
+    wrapG.classList.toggle('[grid-template-rows:1fr]',!isC);
+    head.setAttribute('aria-expanded',!isC);
+    sec.querySelector('.chev').style.transform=isC?'rotate(-90deg)':'';
+    $('chipCollapse').textContent = DATA.some(c=>!state.collapsed[c.id]) ? 'Collapse all' : 'Expand all';
+    persist();
+  });
+
+  list.append(sec);
+});
+
+/* ---------- item rows ---------- */
+const tierBadge={1:'badge badge-error badge-xs font-extrabold uppercase',2:'badge badge-warning badge-outline badge-xs font-extrabold uppercase',3:'badge badge-info badge-soft badge-xs font-extrabold uppercase'};
+const tierText={1:'must',2:'important',3:'nice'};
+function makeRow(cat,it){
+  const wrap=el('div','item-wrap group flex items-stretch');
+  wrap.dataset.id=it._id;
+  const lab=el('label','item flex-1 min-w-0 flex items-start gap-3 py-3 px-2 -mx-2 rounded-xl cursor-pointer transition-opacity hover:bg-base-200/60');
+  const input=document.createElement('input');
+  input.type='checkbox'; input.className='checkbox checkbox-primary checkbox-sm mt-0.5 flex-none';
+  input.checked=!!state.checked[it._id];
+  input.addEventListener('change',()=>{
+    if(input.checked){ state.checked[it._id]={by:state.who||'',at:Date.now()}; buzz(10); }
+    else delete state.checked[it._id];
+    persist(); update();
+  });
+  const main=el('div','flex-1 min-w-0');
+  const nameRow=el('div','flex items-center gap-1.5 flex-wrap');
+  const nm=el('span','it-name font-bold text-[15.5px] leading-snug'); nm.textContent=it.n; nameRow.append(nm);
+  if(it.q && it.q!=='1'){ const q=el('span','badge badge-xs font-extrabold border-transparent'); q.style.cssText='background:var(--cat-t);color:var(--cat-a)'; q.textContent='×'+it.q; nameRow.append(q); }
+  const pt=el('span',tierBadge[it.p||2]); pt.textContent=tierText[it.p||2]; nameRow.append(pt);
+  if(it.a){ const t=el('span','badge badge-secondary badge-soft badge-xs font-extrabold'); t.textContent='+'; nameRow.append(t); }
+  if(it._custom){ const t=el('span','badge badge-neutral badge-xs font-extrabold uppercase'); t.textContent='mine'; nameRow.append(t); }
+  if(it.wk){ const w=el('span','wk badge badge-ghost badge-xs font-extrabold uppercase'); w.textContent = it.wk==='birth' ? 'after birth' : 'by wk '+it.wk; nameRow.append(w); }
+  main.append(nameRow);
+  if(it.note){
+    const nt=el('span','it-note block text-[13px] ink-soft leading-relaxed mt-1');
+    if(state.hideNotes) nt.classList.add('hidden');
+    nt.textContent=it.note; main.append(nt);
+  }
+  const st=el('span','stamp block text-[11.5px] text-primary font-bold mt-0.5 empty:hidden'); main.append(st);
+  const pr=el('span','it-price flex-none text-[13.5px] font-extrabold whitespace-nowrap mt-0.5 tabular-nums self-start');
+  pr.textContent=money(it.lo,it.hi,it._custom);
+  if(it.lo===0&&it.hi===0&&!it._custom) pr.classList.add('text-primary');
+  lab.append(input,main,pr);
+  wrap.append(lab);
+  if(it._custom){
+    const del=el('button','del btn btn-ghost btn-sm flex-none w-10 px-0 ink-soft hover:text-error');
+    del.type='button'; del.setAttribute('aria-label','Remove '+it.n);
+    del.innerHTML='<span class="[&>svg]:w-[15px] [&>svg]:h-[15px]">'+ICONS.trash+'</span>';
+    del.addEventListener('click',(e)=>{ e.preventDefault(); e.stopPropagation();
+      const wasChecked=state.checked[it._id];
+      state.custom[cat.id]=(state.custom[cat.id]||[]).filter(x=>x._id!==it._id);
+      delete state.checked[it._id]; persist(); renderItems(cat); update();
+      toast('Removed '+it.n,{label:'Undo',fn:()=>{
+        (state.custom[cat.id]||(state.custom[cat.id]=[])).push(it);
+        if(wasChecked) state.checked[it._id]=wasChecked;
+        persist(); renderItems(cat); update();
+      }});
+    });
+    wrap.append(del);
+  }
+  return wrap;
+}
+function renderItems(cat){
+  const box=$('items-'+cat.id); box.innerHTML='';
+  sortItems(cat).forEach(it=>box.append(makeRow(cat,it)));
+}
+
+/* ---------- due date + Do next ---------- */
+function preg(){
+  if(!state.due) return null;
+  const d=new Date(state.due+'T12:00:00');
+  if(isNaN(d.getTime())) return null;
+  const days=Math.round((d.getTime()-Date.now())/864e5);
+  const toGo=Math.ceil(days/7);
+  const week=Math.min(42,Math.max(4,40-toGo));
+  return {days,toGo,week,date:d};
+}
+function showDueForm(show){
+  const f=$('dueForm');
+  f.classList.toggle('hidden',!show);
+  f.classList.toggle('flex',show);
+}
+function renderDoNext(){
+  const pg=preg(), curWeek=pg?pg.week:null;
+  $('dnWeek').textContent = pg
+    ? (pg.days<0 ? 'Past due — any day now'
+       : 'Week '+pg.week+' of 40 · '+Math.max(0,pg.toGo)+' wk to go · due '+pg.date.toLocaleDateString(undefined,{month:'short',day:'numeric'}))
+    : '';
+  $('dueBtn').textContent = pg ? 'Edit' : 'Set due date';
+  const cands=[];
+  DATA.forEach(cat=>{
+    allItems(cat).forEach(it=>{
+      if(state.checked[it._id]) return;
+      let s = typeof it.wk==='number' ? it.wk : (it.wk==='birth' ? 70 : 44+(it.p||2)*4);
+      if(curWeek!==null && typeof it.wk==='number' && it.wk<=curWeek+1) s-=100;
+      cands.push({it,s});
+    });
+  });
+  cands.sort((a,b)=>(a.s-b.s)||((a.it.p||2)-(b.it.p||2))||((a.it._ord||0)-(b.it._ord||0)));
+  const box=$('dnList'); box.innerHTML='';
+  if(!cands.length){
+    const e=el('div','py-2.5 text-[13px] ink-soft font-semibold'); e.textContent="Everything's packed — you're ready."; box.append(e); return;
+  }
+  cands.slice(0,4).forEach(({it})=>{
+    const row=el('button','dn-row w-full flex items-center gap-2.5 py-2.5 text-left border-t border-base-300 first:border-t-0 bg-transparent');
+    row.type='button'; row.setAttribute('aria-label','Mark '+it.n+' as packed');
+    row.innerHTML='<span class="flex-none w-6 h-6 rounded-lg border-2 border-base-300 grid place-items-center [&>svg]:w-3.5 [&>svg]:h-3.5 text-transparent">'+ICONS.check+'</span>';
+    const nm=el('span','flex-1 min-w-0 font-bold text-[14.5px] leading-snug'); nm.textContent=it.n; row.append(nm);
+    if(it.wk){ const w=el('span','badge badge-xs font-extrabold uppercase '+((curWeek!==null&&typeof it.wk==='number'&&it.wk<=curWeek+1)?'badge-warning':'badge-ghost'));
+      w.textContent=it.wk==='birth'?'after birth':'by wk '+it.wk; row.append(w); }
+    const pr=el('span','text-[13px] font-extrabold tabular-nums '+((it.lo===0&&it.hi===0)?'text-primary':''));
+    pr.textContent=money(it.lo,it.hi,it._custom); row.append(pr);
+    row.addEventListener('click',()=>{ state.checked[it._id]={by:state.who||'',at:Date.now()}; buzz(10); persist(); update(); });
+    box.append(row);
+  });
+}
+$('dueBtn').addEventListener('click',()=>{
+  const opening=$('dueForm').classList.contains('hidden');
+  showDueForm(opening);
+  if(opening){ $('dueInput').value=state.due||''; $('dueInput').focus(); }
+});
+$('dueSave').addEventListener('click',()=>{
+  const v=$('dueInput').value;
+  if(!v){ $('dueInput').focus(); return; }
+  state.due=v; showDueForm(false); persist(); update(); toast('Due date saved');
+});
+$('dueClear').addEventListener('click',()=>{ state.due=null; showDueForm(false); persist(); update(); toast('Due date cleared'); });
+
+/* ---------- update ---------- */
+function update(){
+  const hide=state.hidePacked, q=searchTerm.trim().toLowerCase(), tier=state.tier;
+  const pg=preg(), curWeek=pg?pg.week:null;
+  let gPacked=0,gTotal=0,gRemLo=0,gRemHi=0,gPackedVal=0,gMatches=0;
+  DATA.forEach(cat=>{
+    const sec=list.querySelector('.cat[data-cat="'+cat.id+'"]');
+    let cShown=0,cPacked=0,hasVisible=false;
+    allItems(cat).forEach(it=>{
+      const wrap=sec.querySelector('.item-wrap[data-id="'+it._id+'"]');
+      if(!wrap) return;
+      const isChecked=!!state.checked[it._id];
+      const matchesQ=!q || it.n.toLowerCase().includes(q) || (it.note||'').toLowerCase().includes(q);
+      const matchesT=tier==='all' || (it.p||2)===tier;
+      const visible=matchesQ && matchesT && !(hide && isChecked);
+      const stampEl=wrap.querySelector('.stamp');
+      if(stampEl){
+        const v=state.checked[it._id];
+        stampEl.textContent=(isChecked && v && v.by)
+          ? 'Packed by '+v.by+(v.at?' · '+new Date(v.at).toLocaleDateString(undefined,{month:'short',day:'numeric'}):'')
+          : '';
+      }
+      const wkEl=wrap.querySelector('.wk');
+      if(wkEl){
+        const hot=!isChecked && curWeek!==null && typeof it.wk==='number' && it.wk<=curWeek+1;
+        wkEl.classList.toggle('badge-warning',hot); wkEl.classList.toggle('badge-ghost',!hot);
+      }
+      wrap.classList.toggle('hidden',!visible);
+      const inputEl=wrap.querySelector('input'); if(inputEl.checked!==isChecked) inputEl.checked=isChecked;
+      wrap.querySelector('.item').classList.toggle('opacity-45',isChecked);
+      wrap.querySelector('.it-name').classList.toggle('line-through',isChecked);
+      if(visible){ hasVisible=true; if(q) gMatches++; }
+      cShown++;
+      if(isChecked){ cPacked++; gPackedVal+=(it.lo+it.hi)/2; }
+      else { gRemLo+=it.lo; gRemHi+=it.hi; }
+      gTotal++; if(isChecked) gPacked++;
+    });
+    sec.querySelector('.cat-meta').textContent=cPacked+' of '+cShown+' packed';
+    const remLo=allItems(cat).filter(i=>!state.checked[i._id]).reduce((s,i)=>s+i.lo,0);
+    const remHi=allItems(cat).filter(i=>!state.checked[i._id]).reduce((s,i)=>s+i.hi,0);
+    sec.querySelector('.cat-price span').textContent=(remLo===0&&remHi===0)?'—':('$'+remLo+'–'+remHi);
+    const pct=cShown?Math.round(cPacked/cShown*100):0;
+    const rp=sec.querySelector('.radial-progress'); rp.style.setProperty('--value',pct); rp.setAttribute('aria-valuenow',pct);
+    const done=cShown>0 && cPacked===cShown;
+    const wasDone=sec.classList.contains('done');
+    sec.classList.toggle('done',done);
+    rp.classList.toggle('text-accent',done); rp.classList.toggle('text-[var(--cat-a)]',!done);
+    if(done && !wasDone && !q){
+      try{ rp.animate([{transform:'scale(1)'},{transform:'scale(1.18)'},{transform:'scale(1)'}],{duration:600,easing:'cubic-bezier(.34,1.56,.64,1)'}); }catch(e){}
+      buzz([15,40,20]);
+      if(window.confetti && !RM){ const r=rp.getBoundingClientRect();
+        confetti({particleCount:14,spread:50,startVelocity:16,scalar:.7,origin:{x:(r.left+r.width/2)/innerWidth,y:(r.top+r.height/2)/innerHeight}}); }
+    }
+    const isEmpty=(q||tier!=='all')? !hasVisible : cShown===0;
+    sec.classList.toggle('empty',isEmpty);
+    sec.classList.toggle('hidden',isEmpty);
+    const g=sec.querySelector('.cat-collapse');
+    if(q){ g.classList.add('[grid-template-rows:1fr]'); g.classList.remove('[grid-template-rows:0fr]'); }
+    else if(state.collapsed[cat.id]){ g.classList.add('[grid-template-rows:0fr]'); g.classList.remove('[grid-template-rows:1fr]'); }
+  });
+  $('gprog').value=gTotal?Math.round(gPacked/gTotal*100):0;
+  $('progLabel').innerHTML='<b class="text-base-content font-extrabold">'+gPacked+'</b> of <b class="text-base-content font-extrabold">'+gTotal+'</b> packed';
+  $('remain').textContent=(gRemLo===0&&gRemHi===0)?'$0':('$'+gRemLo+'–'+gRemHi);
+  $('packedVal').textContent=gPackedVal>0?('≈$'+Math.round(gPackedVal)+' packed'):'';
+  const complete=gTotal>0 && gPacked===gTotal;
+  document.body.classList.toggle('complete',complete);
+  if(complete && !wasComplete && !q) celebrate();
+  wasComplete=complete;
+  document.body.classList.toggle('searching',!!q);
+  $('smatch').textContent=q? gMatches+(gMatches===1?' item':' items') : '';
+  $('smatch').classList.toggle('hidden',!q);
+  renderDoNext();
+}
+
+/* ---------- celebration (canvas-confetti with offline fallback) ---------- */
+function celebrate(){
+  buzz([20,50,20,50,40]);
+  if(RM) return;
+  if(window.confetti){
+    confetti({particleCount:90,spread:75,origin:{y:.75}});
+    setTimeout(()=>{ confetti({particleCount:45,angle:60,spread:60,origin:{x:0,y:.8}}); confetti({particleCount:45,angle:120,spread:60,origin:{x:1,y:.8}}); },220);
+    return;
+  }
+  const colors=['#7BC8B3','#F0A87C','#EBC77C','#A9B4F2','#F2A3B8'];
+  for(let i=0;i<44;i++){
+    const c=el('div','conf');
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2.2+Math.random()*1.6)+'s';
+    c.style.animationDelay=(Math.random()*.5)+'s';
+    document.body.append(c);
+    setTimeout(()=>c.remove(),4500);
+  }
+}
+
+/* ---------- search ---------- */
+$('search').addEventListener('input',e=>{
+  searchTerm=e.target.value;
+  $('clrBtn').classList.toggle('hidden',!searchTerm);
+  update();
+});
+$('clrBtn').addEventListener('click',()=>{ $('search').value=''; searchTerm=''; $('clrBtn').classList.add('hidden'); update(); $('search').focus(); });
+
+/* ---------- toggles / sort / tier ---------- */
+const chipHide=$('chipHide'), chipNotes=$('chipNotes'), chipCollapse=$('chipCollapse'), chipSync=$('chipSync');
+chipHide.addEventListener('click',()=>{ state.hidePacked=!state.hidePacked; setPressed(chipHide,state.hidePacked); persist(); update(); });
+chipNotes.addEventListener('click',()=>{ state.hideNotes=!state.hideNotes; setPressed(chipNotes,state.hideNotes);
+  document.querySelectorAll('.it-note').forEach(n=>n.classList.toggle('hidden',state.hideNotes)); persist(); });
+chipCollapse.addEventListener('click',()=>{
+  const anyOpen=DATA.some(c=>!state.collapsed[c.id]);
+  DATA.forEach(c=>{ state.collapsed[c.id]=anyOpen; });
+  DATA.forEach(cat=>{
+    const sec=list.querySelector('.cat[data-cat="'+cat.id+'"]');
+    sec.classList.toggle('collapsed',anyOpen);
+    const g=sec.querySelector('.cat-collapse');
+    g.classList.toggle('[grid-template-rows:0fr]',anyOpen); g.classList.toggle('[grid-template-rows:1fr]',!anyOpen);
+    sec.querySelector('.cat-head').setAttribute('aria-expanded',!anyOpen);
+    sec.querySelector('.chev').style.transform=anyOpen?'rotate(-90deg)':'';
+  });
+  chipCollapse.textContent=anyOpen?'Expand all':'Collapse all';
+  persist();
+});
+document.querySelectorAll('.tchip').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const v=b.dataset.tier;
+    state.tier = v==='all' ? 'all' : Number(v);
+    document.querySelectorAll('.tchip').forEach(x=>setPressed(x, x.dataset.tier===String(state.tier)));
+    persist(); update();
+  });
+});
+document.querySelectorAll('.sortchip').forEach(b=>{
+  b.addEventListener('click',()=>{
+    state.sort=b.dataset.sort;
+    document.querySelectorAll('.sortchip').forEach(x=>setPressed(x, x.dataset.sort===state.sort));
+    DATA.forEach(renderItems); persist(); update();
+  });
+});
+
+/* ---------- theme + size ---------- */
+const SIZES=[1,1.12,1.25];
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme',state.dark?'womb':'dawn');
+  $('themeBtn').innerHTML=state.dark
+    ? '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+    : '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M20 13.5A7.5 7.5 0 0110.5 4a7.5 7.5 0 109.5 9.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+  const tc=$('themeColor'); if(tc) tc.content=state.dark?'#0B0E15':'#FAF8F4';
+}
+function applySize(){
+  const z=SIZES[state.sizeIdx||0];
+  document.body.style.zoom = z===1 ? '' : z;
+}
+$('themeBtn').addEventListener('click',()=>{ state.dark=!state.dark; applyTheme(); persist(); });
+$('sizeBtn').addEventListener('click',()=>{ state.sizeIdx=((state.sizeIdx||0)+1)%SIZES.length; applySize(); persist(); toast(['Default','Large','Extra large'][state.sizeIdx]+' text'); });
+
+/* ---------- copy / download .txt ---------- */
+function buildText(){
+  const sortName=state.sort==='priceUp'?'price low→high':state.sort==='priceDown'?'price high→low':'importance';
+  const d=new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+  let out='NEWBORN ESSENTIALS — TO BUY\n('+d+' · sorted by '+sortName+')\n', lo=0,hi=0,count=0;
+  DATA.forEach(cat=>{
+    const rows=sortItems(cat).filter(it=>!state.checked[it._id]);
+    if(!rows.length) return;
+    out+='\n'+cat.name.toUpperCase()+'\n';
+    rows.forEach(it=>{
+      out+=' '+(it.p===1?'*':'-')+' '+it.n+(it.q&&it.q!=='1'?' ×'+it.q:'')+'  '+money(it.lo,it.hi,it._custom)+'\n';
+      lo+=it.lo; hi+=it.hi; count++;
+    });
+  });
+  out+='\n'+count+' items · $'+lo+'–'+hi+'  (* = must-have)\n';
+  return out;
+}
+$('copyBtn').addEventListener('click',async()=>{
+  try{ await navigator.clipboard.writeText(buildText()); toast('List copied'); }
+  catch(e){ toast('Copy not available here'); }
+});
+$('dlBtn').addEventListener('click',()=>{
+  try{
+    const blob=new Blob([buildText()],{type:'text/plain'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='newborn-to-buy.txt';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  }catch(e){ toast('Download not supported here'); }
+});
+
+/* ---------- reset (undo instead of confirm) ---------- */
+function resetAll(){
+  const before=state.checked;
+  if(!Object.keys(before).length){ toast('Nothing to clear'); return; }
+  state.checked={}; wasComplete=false; persist(); update();
+  toast('Checkmarks cleared',{label:'Undo',fn:()=>{ state.checked=before; persist(); update(); }});
+}
+$('resetTop').addEventListener('click',resetAll);
+$('resetBottom').addEventListener('click',resetAll);
+
+/* ---------- full UI refresh ---------- */
+function refreshUI(){
+  applyTheme(); applySize();
+  setPressed(chipNotes,state.hideNotes);
+  document.querySelectorAll('.it-note').forEach(n=>n.classList.toggle('hidden',state.hideNotes));
+  document.querySelectorAll('.sortchip').forEach(x=>setPressed(x,x.dataset.sort===state.sort));
+  document.querySelectorAll('.tchip').forEach(x=>setPressed(x,x.dataset.tier===String(state.tier)));
+  DATA.forEach(cat=>{
+    renderItems(cat);
+    const sec=list.querySelector('.cat[data-cat="'+cat.id+'"]');
+    const g=sec.querySelector('.cat-collapse');
+    const isC=!!state.collapsed[cat.id];
+    sec.classList.toggle('collapsed',isC);
+    g.classList.toggle('[grid-template-rows:0fr]',isC); g.classList.toggle('[grid-template-rows:1fr]',!isC);
+    sec.querySelector('.cat-head').setAttribute('aria-expanded',!isC);
+    sec.querySelector('.chev').style.transform=isC?'rotate(-90deg)':'';
+  });
+  setPressed(chipHide,state.hidePacked);
+  setPressed(chipSync,!!state.sync);
+  chipCollapse.textContent = DATA.some(c=>!state.collapsed[c.id]) ? 'Collapse all' : 'Expand all';
+  update();
+}
+
+/* ---------- save file / load file (.json backup) ---------- */
+function saveToFile(){
+  const snap=snapshot();
+  const payload={app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap};
+  try{
+    const d=new Date(), pad=n=>String(n).padStart(2,'0');
+    const name='newborn-checklist-'+d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'.json';
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+    toast('Saved to file');
+  }catch(e){ toast('Save not supported here'); }
+}
+function loadFromFile(file){
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const data=JSON.parse(r.result);
+      if(!data || data.app!=='newborn-checklist' || typeof data.state!=='object' || !data.state) throw new Error('bad file');
+      applyState(data.state,true); wasComplete=false; persist(); refreshUI();
+      const when=data.savedAt? new Date(data.savedAt) : null;
+      toast('Loaded'+(when&&!isNaN(when)? ' — saved '+when.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}) : ''));
+    }catch(e){ buzz([40,30,40]); toast('Not a valid save file'); }
+  };
+  r.onerror=()=>toast('Could not read that file');
+  r.readAsText(file);
+}
+const fileInput=$('fileInput');
+$('saveFileBtn').addEventListener('click',saveToFile);
+$('loadFileBtn').addEventListener('click',()=>fileInput.click());
+fileInput.addEventListener('change',()=>{ const f=fileInput.files&&fileInput.files[0]; if(f) loadFromFile(f); fileInput.value=''; });
+
+/* ---------- share copy (self-contained .html) ---------- */
+function shareCopy(){
+  try{
+    const snap=snapshot();
+    const payload={app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap};
+    const holder=$('shared-state');
+    holder.textContent=JSON.stringify(payload).replace(/</g,'\\u003c');
+    const src='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+    holder.textContent='';
+    state.importedShare=snap.savedAt; persist();
+    const blob=new Blob([src],{type:'text/html'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='newborn-checklist-shared.html';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+    toast('Share copy downloaded');
+  }catch(e){ toast('Share not supported here'); }
+}
+$('shareBtn').addEventListener('click',shareCopy);
+function readEmbedded(){
+  try{
+    const t=$('shared-state');
+    if(!t || !t.textContent.trim()) return null;
+    const d=JSON.parse(t.textContent);
+    if(d && d.app==='newborn-checklist' && d.state && typeof d.state==='object') return d;
+  }catch(e){}
+  return null;
+}
+
+/* ================================================================
+   URL SHARE LINKS — bitmask architecture
+   Every static item is one bit in DATA order, chunked into 32-bit
+   ints: S = sum(b_i * 2^i). Custom items + their checks ride along
+   as JSON. TextEncoder → btoa → Base64URL (+→-, /→_, strip =).
+   ================================================================ */
+function b64uEncode(str){
+  const bytes=new TextEncoder().encode(str);
+  let bin=''; const CH=0x8000;
+  for(let i=0;i<bytes.length;i+=CH) bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+CH));
+  return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function b64uDecode(s){
+  s=s.replace(/-/g,'+').replace(/_/g,'/');
+  while(s.length%4) s+='=';
+  const bin=atob(s);
+  const bytes=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+function encodeShareURL(){
+  const bits=new Array(Math.ceil(FLAT.length/32)).fill(0);
+  FLAT.forEach((it,i)=>{ if(state.checked[it._id]) bits[i>>5]=(bits[i>>5]|(1<<(i&31)))|0; });
+  const cc=[];
+  Object.keys(state.custom||{}).forEach(cid=>(state.custom[cid]||[]).forEach(it=>{ if(state.checked[it._id]) cc.push(it._id); }));
+  const payload={v:1,n:FLAT.length,b:bits,d:state.due||null,t:state.tier};
+  if(Object.keys(state.custom||{}).some(k=>(state.custom[k]||[]).length)) payload.cu=state.custom;
+  if(cc.length) payload.cc=cc;
+  const base=(location.origin && location.origin!=='null' && location.protocol.indexOf('http')===0)
+    ? location.origin+location.pathname : location.href.split('#')[0];
+  return base+'#s='+b64uEncode(JSON.stringify(payload));
+}
+function decodeShareHash(){
+  /* Hydration error boundary: any corruption falls through to stored state. */
+  try{
+    const m=location.hash.match(/[#&]s=([A-Za-z0-9\-_]+)/);
+    if(!m) return null;
+    const p=JSON.parse(b64uDecode(m[1]));
+    if(!p || p.v!==1 || !Array.isArray(p.b)) return null;
+    const checked={};
+    const n=Math.min(typeof p.n==='number'?p.n:FLAT.length, FLAT.length);
+    for(let i=0;i<n;i++){ if(((p.b[i>>5]>>>(i&31))&1)===1) checked[FLAT[i]._id]=true; }
+    (Array.isArray(p.cc)?p.cc:[]).forEach(id=>{ if(typeof id==='string') checked[id]=true; });
+    return {raw:m[1],checked,custom:(p.cu&&typeof p.cu==='object')?p.cu:{},due:(typeof p.d==='string')?p.d:null,
+            tier:(p.t===1||p.t===2||p.t===3)?p.t:'all'};
+  }catch(e){ return null; }
+}
+function applyShared(sh){
+  state.checked=sh.checked; state.custom=sh.custom;
+  state.due=sh.due; state.tier=sh.tier;
+  wasComplete=false;
+}
+async function shareLink(){
+  const url=encodeShareURL();
+  try{
+    if(navigator.canShare && navigator.canShare({url}) && navigator.share){
+      await navigator.share({title:'Newborn Essentials',text:'Our baby checklist',url});
+      return;
+    }
+  }catch(e){ if(e && e.name==='AbortError') return; }
+  try{ await navigator.clipboard.writeText(url); toast('Link copied — send it to anyone'); }
+  catch(e){ prompt('Copy this link:',url); }
+}
+$('linkBtn').addEventListener('click',shareLink);
+
+/* ================================================================
+   CALM FOCUS MODE — procedural brown noise (Web Audio)
+   x[n] = (x[n-1] + 0.02·w[n]) / 1.02, w ∈ [-1,1], through a low-pass
+   biquad with a slow gain LFO for a womb-like pulse. User-initiated only.
+   ================================================================ */
+let calm=null;
+function toggleCalm(){
+  const btn=$('calmBtn');
+  if(calm && calm.on){
+    try{ calm.ctx.suspend(); }catch(e){}
+    calm.on=false;
+    setPressed(btn,false); toast('Calm sounds off'); return;
+  }
+  try{
+    if(!calm){
+      const Ctx=window.AudioContext||window.webkitAudioContext;
+      const ctx=new Ctx();
+      const len=ctx.sampleRate*12, buf=ctx.createBuffer(1,len,ctx.sampleRate), ch=buf.getChannelData(0);
+      let last=0;
+      for(let i=0;i<len;i++){ const w=Math.random()*2-1; last=(last+0.02*w)/1.02; ch[i]=last*3.5; }
+      const src=ctx.createBufferSource(); src.buffer=buf; src.loop=true;
+      const lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=420; lp.Q.value=0.4;
+      const pulse=ctx.createGain(); pulse.gain.value=1;
+      const lfo=ctx.createOscillator(); lfo.frequency.value=1.05;
+      const depth=ctx.createGain(); depth.gain.value=0.14;
+      lfo.connect(depth); depth.connect(pulse.gain);
+      const master=ctx.createGain(); master.gain.value=0.3;
+      src.connect(lp); lp.connect(pulse); pulse.connect(master); master.connect(ctx.destination);
+      src.start(); lfo.start();
+      calm={ctx,on:false};
+    }
+    calm.ctx.resume(); calm.on=true;
+    setPressed(btn,true); toast('Calm sounds on — womb-like brown noise');
+  }catch(e){ toast('Audio not available here'); }
+}
+$('calmBtn').addEventListener('click',toggleCalm);
+
+/* ---------- family sync (Claude artifact environments only) ---------- */
+chipSync.addEventListener('click',()=>{
+  state.sync=!state.sync;
+  if(state.sync && !state.who){
+    const n=prompt('Name to stamp on your checkmarks (shown to everyone on the shared list):');
+    if(n) setWho(n);
+  }
+  setPressed(chipSync,state.sync);
+  persist();
+  toast(state.sync
+    ? 'Family sync on — everyone with this link sees and edits one live list'
+    : 'Sync off — changes stay on this device');
+});
+async function pollShared(){
+  if(!state.sync || !hasCloud || document.hidden) return;
+  try{
+    const r=await window.storage.get(KEY_SHARED,true);
+    if(!r || !r.value) return;
+    const sh=JSON.parse(r.value);
+    if(!sh || sh.app!=='newborn-checklist' || !sh.state || !sh.savedAt) return;
+    if(lastSyncStamp && sh.savedAt<=lastSyncStamp) return;
+    lastSyncStamp=sh.savedAt;
+    applyState(sh.state,true); state.sync=true; persist(false); refreshUI();
+    toast('Updated from the shared list');
+  }catch(e){}
+}
+
+/* ---------- boot ---------- */
+(async()=>{
+  const saved=await hydrate();
+  if(saved) applyState(saved);
+  if(saved && saved.themeV!==2) persist(false); /* stamp the one-time dark migration */
+
+  /* 1. URL share link (highest precedence — the user tapped it deliberately) */
+  const urlShare=decodeShareHash();
+  let consumedURL=false;
+  if(urlShare){
+    const marker='s:'+urlShare.raw.slice(0,64);
+    if(!saved){
+      applyShared(urlShare); state.importedShare=marker; persist(); consumedURL=true;
+      toast('Loaded the shared checklist');
+    } else if(state.importedShare!==marker){
+      if(confirm('This link contains a shared checklist. Replace your current list with it?')){ applyShared(urlShare); consumedURL=true; }
+      state.importedShare=marker; persist();
+    }
+    try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+  }
+
+  /* 2. Embedded state from a share-copy file */
+  const emb=consumedURL?null:readEmbedded();
+  if(emb){
+    if(!saved){
+      applyState(emb.state,true); state.importedShare=emb.savedAt||null; persist();
+      toast('Loaded the shared checklist');
+    } else if(emb.savedAt && state.importedShare!==emb.savedAt){
+      const when=new Date(emb.savedAt);
+      const label=isNaN(when)?'':' (saved '+when.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})+')';
+      if(confirm('This file includes a shared checklist'+label+'. Replace your current list with it?')) applyState(emb.state,true);
+      state.importedShare=emb.savedAt; persist();
+    }
+  }
+
+  /* 3. Family sync cloud state (artifact environments) */
+  if(hasCloud){
+    chipSync.hidden=false;
+    try{
+      const r=await window.storage.get(KEY_SHARED,true);
+      if(r && r.value){
+        const sh=JSON.parse(r.value);
+        if(sh && sh.app==='newborn-checklist' && sh.state){
+          if(!saved && !emb && !consumedURL){
+            applyState(sh.state,true); state.sync=true; lastSyncStamp=sh.savedAt||null; persist(false);
+            toast('Synced with the shared family list');
+          } else if(state.sync && sh.savedAt && (!saved || sh.savedAt>(saved.savedAt||''))){
+            lastSyncStamp=sh.savedAt;
+            applyState(sh.state,true); state.sync=true; persist(false);
+          }
+        }
+      }
+    }catch(e){}
+    setInterval(pollShared,20000);
+  }
+
+  refreshUI();
+
+  /* PWA: cache the shell + CDN assets for offline use after first visit */
+  if('serviceWorker' in navigator && location.protocol==='https:'){
+    try{ navigator.serviceWorker.register('./sw.js'); }catch(e){}
+  }
+})();
+</script>
+</body>
+</html>
