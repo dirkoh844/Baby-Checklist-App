@@ -1,5 +1,5 @@
 {
-  "name": "Newborn Essentials — Baby List",
+  "name": "Newborn Essentials \u2014 Baby List",
   "short_name": "Baby List",
   "description": "A pediatrician-aligned newborn checklist with budgets, due-date timing, and family sharing.",
   "start_url": "./",
@@ -8,8 +8,36 @@
   "background_color": "#0B0E15",
   "theme_color": "#0B0E15",
   "icons": [
-    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Labor & Delivery",
+      "url": "./labor.html",
+      "description": "Contraction timer and when-to-go guide",
+      "icons": [
+        {
+          "src": "./icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }

@@ -1,0 +1,13 @@
+{
+  "name": "baby-list",
+  "private": true,
+  "type": "module",
+  "description": "Newborn Essentials checklist PWA + push sender",
+  "scripts": {
+    "push": "node scripts/send-push.mjs",
+    "vapid": "node scripts/generate-vapid.mjs"
+  },
+  "devDependencies": {
+    "web-push": "^3.6.7"
+  }
+}

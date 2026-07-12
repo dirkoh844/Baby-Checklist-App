@@ -2,42 +2,74 @@
 
 A pediatrician-aligned newborn checklist. 96 priced, priority-tiered items across
 8 categories, due-date timing with a "Do next" queue, name-stamped checkmarks,
-undo, haptics, confetti, a womb-noise Calm Focus mode, a hardened print layout,
-and four ways to share.
+cross-device cloud sync, mom-care reminders with notifications, a Labor & Delivery
+page with a 5-1-1 contraction timer, undo, haptics, confetti, a womb-noise Calm
+Focus mode, a hardened print layout, and four ways to share.
 
 ## Files
 
 | File | Purpose |
 |---|---|
-| `index.html` | The entire app (markup + logic). Tailwind, DaisyUI, and canvas-confetti load from CDNs. |
-| `manifest.webmanifest` | PWA install metadata. |
-| `sw.js` | Service worker: caches the shell and CDN assets, so the app works offline after the first visit. |
+| `index.html` | The checklist app. |
+| `labor.html` | Labor & Delivery: when-to-go guidance, contraction timer, stages, key contacts. |
+| `manifest.webmanifest` | PWA install metadata (+ Labor shortcut). |
+| `sw.js` | Service worker: network-first pages, cached assets, notification clicks focus the app. |
 | `icon-192.png` / `icon-512.png` / `apple-touch-icon.png` | App icons. |
 
 ## Deploy to GitHub Pages
 
-1. Create a repository (e.g. `baby-list`) and push all files to the root of `main`.
-2. Repo → Settings → Pages → Source: **Deploy from a branch** → `main` / `/ (root)` → Save.
-3. Open `https://<username>.github.io/baby-list/` after the build finishes (about a minute).
+1. Push all files to the root of `main`.
+2. Settings → Pages → Deploy from a branch → `main` / `/ (root)`.
+3. Open `https://<username>.github.io/<repo>/`.
 
-HTTPS is automatic, which enables the service worker, Web Share, and install prompts.
+## Cross-device sync (one shared list)
 
-## Sharing model
+GitHub Pages is static and cannot store data itself, so the app syncs through a
+tiny JSON store on the web:
 
-- **Share link** — encodes every checkmark (one bit per item, 32-bit chunks), your
-  custom items, and the due date into a Base64URL hash. Opening the link restores
-  the exact list; corrupted links fail silently back to saved state.
-- **Save / Load file** — full-state `.json` backup.
-- **Share copy** — downloads the page with state embedded for offline hand-off.
-- **Family sync** — appears only when running as a shared Claude artifact.
+1. Tap **Cloud sync** → **Create shared storage** (uses jsonstorage.net's free,
+   no-account API). If auto-create is unavailable, paste any JSON endpoint that
+   accepts GET/PUT — JSONBin.io, Pantry, ExtendsClass, or your own. Keys go in
+   the second field; the app shapes the right auth header per provider.
+2. Tap **Share link** and send it. Any device that opens the link joins the same
+   live list — checkmarks, custom items, and the due date sync about every 20
+   seconds and on every change.
 
-Progress otherwise saves to the device via localStorage.
+Privacy: the endpoint address acts as the password. Anyone with the share link
+can read and edit the shared list.
+
+## Reminders
+
+The Mom care card schedules a prenatal-vitamin reminder, water every N hours, and
+custom reminders, delivered as system notifications after you tap Enable. On a
+static site there is no push server, so reminders fire while the app is open or
+installed and running; missed daily reminders catch up within 3 hours of opening.
+
+
+## True push (closed-app delivery) — one-time setup, ~10 minutes
+
+1. In the app, set up **Cloud sync** (Create shared storage). Reopen the sync
+   panel and copy the endpoint URL shown in the field.
+2. Repo → Settings → Secrets and variables → Actions → add:
+   `CLOUD_URL` (that endpoint), `CLOUD_KEY` (only if your endpoint needs one),
+   and the three VAPID values from `SECRET-vapid-private-key.txt`
+   (never commit that file; it is gitignored).
+3. Commit `package.json`, `scripts/`, and `.github/workflows/push-reminders.yml`.
+4. On each phone: add the app to the Home Screen (required on iPhone), then in
+   the Mom care card tap **Enable notifications**, then **Enable push**.
+5. Actions tab → "Send push reminders" → Run workflow once to verify.
+
+The cron checks every 15 minutes, sends whatever is due in each device's own
+timezone, de-duplicates via slots stored in the bin, and prunes dead
+subscriptions. While push is on, in-app timers stand down so nothing doubles.
+The monthly `keepalive.yml` workflow makes an empty commit so GitHub never
+suspends the cron after 60 idle days. After deploying, walk through
+POST-DEPLOY.md once. See APPSTORE.md for the App Store and Play Store routes.
 
 ## Notes
 
-- Item order in `DATA` defines share-link bit positions. Append new items at the
+- Item order in `DATA` defines share-link bit positions; append new items at the
   end of a category to keep old links valid.
-- Calm Focus synthesizes brown noise (`x[n] = (x[n-1] + 0.02w)/1.02`) through a
-  low-pass filter with a slow pulse. It only starts on tap, never automatically.
-- Print (Ctrl/Cmd+P) outputs a black-on-white serif checklist with pagination
-  guards; controls, badges' color, and dark backgrounds are stripped.
+- The contraction timer flags the 5-1-1 pattern (about 5 min apart, about 1 min
+  long, sustained an hour) and keeps its log on-device.
+- Print (Ctrl/Cmd+P) outputs a black-on-white serif checklist with pagination guards.

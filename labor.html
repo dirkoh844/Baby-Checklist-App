@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="womb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Labor &amp; Delivery — Baby List</title>
+<meta name="description" content="When to head to the hospital, a 5-1-1 contraction timer, labor stages, and your key contacts.">
+<meta name="theme-color" content="#0B0E15">
+<meta name="color-scheme" content="dark light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230B0E15'/%3E%3Cpath d='M19 9.5A5 5 0 0112.5 3 5 5 0 1019 9.5z' fill='%23EBC77C'/%3E%3Cpath d='M5 13l4 4.5L18 8' stroke='%237BC8B3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+[data-theme="womb"]{
+  color-scheme:dark;
+  --color-base-100:#151A26; --color-base-200:#0B0E15; --color-base-300:#232B3B;
+  --color-base-content:#EDF1F8;
+  --color-primary:#7BC8B3;   --color-primary-content:#0C1019;
+  --color-secondary:#F0A87C; --color-secondary-content:#0C1019;
+  --color-accent:#EBC77C;    --color-accent-content:#0C1019;
+  --color-neutral:#EDF1F8;   --color-neutral-content:#0B0E15;
+  --color-info:#A9B4F2;      --color-info-content:#0C1019;
+  --color-success:#A9D98C;   --color-success-content:#0C1019;
+  --color-warning:#EBC77C;   --color-warning-content:#0C1019;
+  --color-error:#F58B7E;     --color-error-content:#0C1019;
+  --radius-box:1rem; --radius-field:.75rem; --radius-selector:.5rem;
+  --ink-soft:#99A6B9; --glow1:rgba(240,168,124,.055); --glow2:rgba(123,200,179,.04);
+}
+[data-theme="dawn"]{
+  color-scheme:light;
+  --color-base-100:#FFFFFF; --color-base-200:#FAF8F4; --color-base-300:#E8E1D5;
+  --color-base-content:#27313F;
+  --color-primary:#5C9A8B;   --color-primary-content:#FFFFFF;
+  --color-secondary:#E8956B; --color-secondary-content:#FFFFFF;
+  --color-accent:#D9A741;    --color-accent-content:#FFFFFF;
+  --color-neutral:#27313F;   --color-neutral-content:#FAF8F4;
+  --color-info:#5A67C7;      --color-info-content:#FFFFFF;
+  --color-success:#5E8A3C;   --color-success-content:#FFFFFF;
+  --color-warning:#B8860B;   --color-warning-content:#FFFFFF;
+  --color-error:#DD6A59;     --color-error-content:#FFFFFF;
+  --radius-box:1rem; --radius-field:.75rem; --radius-selector:.5rem;
+  --ink-soft:#505C6B; --glow1:rgba(232,149,107,.09); --glow2:rgba(92,154,139,.07);
+}
+html{background:var(--color-base-200)}
+body{
+  font-family:"Nunito Sans",system-ui,sans-serif;
+  background-color:var(--color-base-200);
+  background-image:radial-gradient(520px 300px at 14% -10%,var(--glow1),transparent 58%),
+                   radial-gradient(560px 340px at 104% -4%,var(--glow2),transparent 60%);
+  background-repeat:no-repeat;
+}
+.font-display{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto;letter-spacing:-.012em}
+.ink-soft{color:var(--ink-soft)}
+::selection{background:var(--color-primary);color:var(--color-primary-content)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  @page{margin:14mm}
+  *,*::before,*::after{background:#fff!important;color:#000!important;box-shadow:none!important}
+  html,body{background:#fff!important;background-image:none!important;font-family:Georgia,serif!important;font-size:12.5pt!important}
+  .navbar,#timerCard .btn,#ctClear,#backLink{display:none!important}
+  .card{border:1pt solid #999!important;border-radius:0!important;page-break-inside:avoid}
+  h1,h2,h3{page-break-after:avoid}
+}
+</style>
+</head>
+<body class="min-h-screen text-[16px] leading-relaxed pb-[env(safe-area-inset-bottom)]">
+
+<header class="navbar sticky top-0 z-30 bg-base-200/85 backdrop-blur-md border-b border-base-300 px-3.5 pt-[calc(env(safe-area-inset-top)+8px)] pb-2 min-h-0">
+  <div class="w-full max-w-[640px] mx-auto flex items-center gap-2">
+    <a href="./index.html" id="backLink" class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 flex-none" aria-label="Back to checklist"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <h1 class="font-display font-semibold text-[21px] leading-tight m-0 flex-1">Labor <em class="italic font-medium text-secondary">&amp; Delivery</em>
+      <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1">When to go · timer · contacts</span>
+    </h1>
+    <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 flex-none" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+  </div>
+</header>
+
+<div class="w-full max-w-[640px] mx-auto px-3.5 pb-16">
+
+  <!-- when to go -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4">
+    <div class="card-body p-4 gap-2">
+      <h2 class="font-display font-semibold text-[17.5px] m-0 text-accent">When to head in</h2>
+      <div class="rounded-xl p-3 text-[13.5px] font-semibold leading-relaxed" style="background:var(--color-base-200);border-left:3px solid var(--color-accent)">
+        <b class="text-accent">The 5-1-1 rule</b> — contractions every <b>5 minutes</b>, lasting <b>1 minute</b>, for <b>1 hour</b>. That pattern usually means active labor: call your provider and go. Your OB may give you different numbers (4-1-1 is common for second babies) — theirs win.
+      </div>
+      <div class="rounded-xl p-3 text-[13.5px] font-semibold leading-relaxed" style="background:var(--color-base-200);border-left:3px solid var(--color-error)">
+        <b class="text-error">Call right away, any time,</b> for: water breaking (note the time and color — green or brown means say so), heavy bleeding, severe headache or vision changes, noticeably reduced baby movement, fever, or regular contractions before 37 weeks.
+      </div>
+      <p class="text-[12px] ink-soft m-0">General guidance, not medical advice. When unsure, call — Labor &amp; Delivery lines answer 24/7 and would rather hear from you.</p>
+    </div>
+  </section>
+
+  <!-- contraction timer -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4" id="timerCard">
+    <div class="card-body p-4 gap-2">
+      <div class="flex items-center gap-2">
+        <h2 class="font-display font-semibold text-[17.5px] m-0 text-primary flex-1">Contraction timer</h2>
+        <button id="ctClear" type="button" class="btn btn-xs rounded-full border-base-300 font-bold">Clear</button>
+      </div>
+      <div class="hidden rounded-xl p-3 text-[13.5px] font-extrabold leading-relaxed" id="ctAlert" style="background:var(--color-base-200);border-left:3px solid var(--color-warning)" role="status" aria-live="polite"></div>
+      <button id="ctBtn" type="button" class="btn btn-primary btn-lg w-full h-20 rounded-2xl font-display font-semibold text-[20px]" aria-live="polite">Contraction starting</button>
+      <div class="grid grid-cols-3 gap-2 text-center mt-1">
+        <div class="rounded-xl py-2" style="background:var(--color-base-200)"><div class="text-[9.5px] tracking-[.07em] uppercase ink-soft font-extrabold">Last length</div><div class="font-display font-semibold text-[17px] tabular-nums" id="ctDur">—</div></div>
+        <div class="rounded-xl py-2" style="background:var(--color-base-200)"><div class="text-[9.5px] tracking-[.07em] uppercase ink-soft font-extrabold">Apart</div><div class="font-display font-semibold text-[17px] tabular-nums" id="ctGap">—</div></div>
+        <div class="rounded-xl py-2" style="background:var(--color-base-200)"><div class="text-[9.5px] tracking-[.07em] uppercase ink-soft font-extrabold">1h average</div><div class="font-display font-semibold text-[17px] tabular-nums" id="ctAvg">—</div></div>
+      </div>
+      <div id="ctList" class="mt-1"></div>
+      <p class="text-[11.5px] ink-soft m-0">"Apart" is start-to-start. The timer keeps your log on this phone, even if you close the page.</p>
+    </div>
+  </section>
+
+  <!-- stages -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4">
+    <div class="card-body p-4 gap-1.5">
+      <h2 class="font-display font-semibold text-[17.5px] m-0 text-info">Stages, at a glance</h2>
+      <div class="text-[13.5px] leading-relaxed space-y-2 mt-1">
+        <p class="m-0"><b class="text-base-content">Early labor</b> <span class="ink-soft">— contractions 5–20 min apart, mild and irregular; cervix to ~6 cm. Often hours (or a day). Home is usually the place: rest, eat light, hydrate, shower.</span></p>
+        <p class="m-0"><b class="text-base-content">Active labor</b> <span class="ink-soft">— stronger, ~3–5 min apart, about a minute long; this is the 5-1-1 zone and hospital time.</span></p>
+        <p class="m-0"><b class="text-base-content">Transition</b> <span class="ink-soft">— the most intense and usually the shortest; contractions 2–3 min apart to full 10 cm.</span></p>
+        <p class="m-0"><b class="text-base-content">Pushing &amp; birth</b> <span class="ink-soft">— minutes to a few hours, guided by your team.</span></p>
+        <p class="m-0"><b class="text-base-content">Placenta + golden hour</b> <span class="ink-soft">— delivery of the placenta, then skin-to-skin and the first feed. Say it's in your birth plan.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- contacts -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4">
+    <div class="card-body p-4 gap-2">
+      <h2 class="font-display font-semibold text-[17.5px] m-0 text-secondary">Key contacts</h2>
+      <div id="contacts" class="space-y-2"></div>
+      <p class="text-[11.5px] ink-soft m-0">Saved on this phone. Tap the phone icon to call.</p>
+    </div>
+  </section>
+
+  <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
+    <p class="m-0">Part of <a class="link link-primary font-bold" href="./index.html">Newborn Essentials</a>. Educational reference, not medical advice — your OB or midwife's instructions always come first.</p>
+  </footer>
+</div>
+
+<div class="toast toast-center toast-bottom z-[80] hidden" id="toastWrap">
+  <div class="alert bg-neutral text-neutral-content rounded-full py-2.5 px-5 text-[13px] font-extrabold shadow-lg border-0" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const buzz=p=>{ try{ if(navigator.vibrate) navigator.vibrate(p); }catch(e){} };
+let toastTimer=null;
+function toast(msg){ const w=$('toastWrap'); $('toast').textContent=msg; w.classList.remove('hidden'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),1700); }
+
+/* ---------- theme (shares the main app's saved preference) ---------- */
+const KEY='newborn-checklist-v3';
+let dark=true;
+try{ const v=localStorage.getItem(KEY); if(v){ const s=JSON.parse(v); if(s.themeV===2 && typeof s.dark==='boolean') dark=s.dark; } }catch(e){}
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme',dark?'womb':'dawn');
+  $('themeBtn').innerHTML=dark
+    ? '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+    : '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M20 13.5A7.5 7.5 0 0110.5 4a7.5 7.5 0 109.5 9.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+}
+$('themeBtn').addEventListener('click',()=>{
+  dark=!dark; applyTheme();
+  try{ const v=localStorage.getItem(KEY); const s=v?JSON.parse(v):{}; s.dark=dark; s.themeV=2; localStorage.setItem(KEY,JSON.stringify(s)); }catch(e){}
+});
+applyTheme();
+
+/* ---------- contraction timer (5-1-1 aware) ---------- */
+const CT_KEY='labor-contractions';
+let ct={active:null,log:[]};
+try{ const v=localStorage.getItem(CT_KEY); if(v){ const p=JSON.parse(v); if(p && Array.isArray(p.log)) ct=p; } }catch(e){}
+function ctSave(){ try{ localStorage.setItem(CT_KEY,JSON.stringify(ct)); }catch(e){} }
+const fmtS=s=>{ s=Math.round(s); return s>=60 ? Math.floor(s/60)+'m '+String(s%60).padStart(2,'0')+'s' : s+'s'; };
+const fmtGap=s=>{ const m=s/60; return (m>=10?Math.round(m):m.toFixed(1))+' min'; };
+
+function ctRender(){
+  const btn=$('ctBtn');
+  if(ct.active){ btn.textContent='Contraction ending'; btn.classList.remove('btn-primary'); btn.classList.add('btn-secondary'); }
+  else { btn.textContent='Contraction starting'; btn.classList.add('btn-primary'); btn.classList.remove('btn-secondary'); }
+
+  const log=ct.log;
+  const last=log[log.length-1];
+  $('ctDur').textContent=last?fmtS(last.dur):'—';
+  $('ctGap').textContent=log.length>1?fmtGap((log[log.length-1].start-log[log.length-2].start)/1000):'—';
+
+  const hourAgo=Date.now()-36e5;
+  const recent=log.filter(c=>c.start>=hourAgo);
+  let avgGap=null,avgDur=null;
+  if(recent.length>=2){
+    const gaps=[]; for(let i=1;i<recent.length;i++) gaps.push((recent[i].start-recent[i-1].start)/1000);
+    avgGap=gaps.reduce((a,b)=>a+b,0)/gaps.length;
+    avgDur=recent.reduce((a,b)=>a+b.dur,0)/recent.length;
+    $('ctAvg').textContent=fmtGap(avgGap)+' / '+fmtS(avgDur);
+  } else $('ctAvg').textContent='—';
+
+  /* 5-1-1 detector: ≥1h of data, avg gap ≤ 5.5 min, avg length ≥ 50s */
+  const alert=$('ctAlert');
+  const spanH = recent.length>=2 ? (recent[recent.length-1].start-recent[0].start)/36e5 : 0;
+  if(avgGap!==null && spanH>=0.9 && avgGap<=330 && avgDur>=50){
+    alert.textContent='Pattern matches 5-1-1 — contractions about '+fmtGap(avgGap)+' apart, averaging '+fmtS(avgDur)+', for the past hour. Time to call your provider.';
+    alert.classList.remove('hidden');
+  } else alert.classList.add('hidden');
+
+  const list=$('ctList'); list.innerHTML='';
+  log.slice(-8).reverse().forEach((c,i,arr)=>{
+    const row=document.createElement('div');
+    row.className='flex items-center gap-3 py-1.5 border-t border-base-300 first:border-t-0 text-[13px] font-semibold tabular-nums';
+    const t=new Date(c.start).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+    const idx=log.indexOf(c);
+    const gap=idx>0?fmtGap((c.start-log[idx-1].start)/1000):'—';
+    row.innerHTML='<span class="flex-1">'+t+'</span><span class="ink-soft">lasted '+fmtS(c.dur)+'</span><span class="ink-soft w-[72px] text-right">'+gap+'</span>';
+    list.append(row);
+  });
+}
+$('ctBtn').addEventListener('click',()=>{
+  const now=Date.now();
+  if(!ct.active){ ct.active=now; buzz(10); }
+  else{
+    const dur=Math.max(1,(now-ct.active)/1000);
+    ct.log.push({start:ct.active,dur});
+    if(ct.log.length>200) ct.log=ct.log.slice(-200);
+    ct.active=null; buzz([10,30,10]);
+  }
+  ctSave(); ctRender();
+});
+$('ctClear').addEventListener('click',()=>{
+  if(!ct.log.length && !ct.active){ toast('Nothing to clear'); return; }
+  const before=JSON.stringify(ct);
+  ct={active:null,log:[]}; ctSave(); ctRender();
+  const undoWrap=$('toastWrap'), t=$('toast');
+  t.textContent='Timer cleared';
+  const b=document.createElement('button');
+  b.type='button'; b.className='btn btn-xs btn-warning rounded-full font-extrabold uppercase ml-2'; b.textContent='Undo';
+  b.addEventListener('click',()=>{ ct=JSON.parse(before); ctSave(); ctRender(); undoWrap.classList.add('hidden'); });
+  t.append(b);
+  undoWrap.classList.remove('hidden');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>undoWrap.classList.add('hidden'),6000);
+});
+setInterval(()=>{ if(ct.active) ctRender(); },5000);
+ctRender();
+
+/* ---------- key contacts ---------- */
+const CN_KEY='labor-contacts';
+const CN_DEF=[
+  {id:'ob',label:'OB / midwife',name:'',tel:''},
+  {id:'ld',label:'Labor & Delivery unit',name:'',tel:''},
+  {id:'doula',label:'Doula / support',name:'',tel:''},
+  {id:'ride',label:'Backup ride',name:'',tel:''}
+];
+let cn=CN_DEF;
+try{ const v=localStorage.getItem(CN_KEY); if(v){ const p=JSON.parse(v); if(Array.isArray(p)&&p.length) cn=p; } }catch(e){}
+function cnSave(){ try{ localStorage.setItem(CN_KEY,JSON.stringify(cn)); }catch(e){} }
+function cnRender(){
+  const box=$('contacts'); box.innerHTML='';
+  cn.forEach(c=>{
+    const row=document.createElement('div');
+    row.className='flex items-center gap-2';
+    const lab=document.createElement('span');
+    lab.className='flex-none w-[118px] text-[12px] font-extrabold ink-soft uppercase tracking-[.04em]';
+    lab.textContent=c.label;
+    const tel=document.createElement('input');
+    tel.type='tel'; tel.value=c.tel; tel.placeholder='Phone number';
+    tel.className='input input-sm input-bordered bg-base-200 font-semibold text-[16px] flex-1 min-w-0 tabular-nums';
+    tel.setAttribute('aria-label',c.label+' phone number');
+    tel.addEventListener('change',()=>{ c.tel=tel.value.trim(); cnSave(); cnRender(); });
+    row.append(lab,tel);
+    if(c.tel){
+      const call=document.createElement('a');
+      call.href='tel:'+c.tel.replace(/[^+\d]/g,'');
+      call.className='btn btn-circle btn-sm btn-primary flex-none';
+      call.setAttribute('aria-label','Call '+c.label);
+      call.innerHTML='<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M5 4h4l1.5 4.5L8 10a12 12 0 006 6l1.5-2.5L20 15v4a1.5 1.5 0 01-1.7 1.5C10.5 19.6 4.4 13.5 3.5 5.7A1.5 1.5 0 015 4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>';
+      row.append(call);
+    }
+    box.append(row);
+  });
+}
+cnRender();
+
+/* PWA */
+if('serviceWorker' in navigator && location.protocol==='https:'){
+  try{ navigator.serviceWorker.register('./sw.js'); }catch(e){}
+}
+</script>
+</body>
+</html>

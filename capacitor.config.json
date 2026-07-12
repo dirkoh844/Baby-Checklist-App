@@ -1,0 +1,6 @@
+{
+  "appId": "com.yourname.babylist",
+  "appName": "Baby List",
+  "webDir": "www",
+  "ios": { "contentInset": "always" }
+}

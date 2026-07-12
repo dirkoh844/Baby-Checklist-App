@@ -142,7 +142,7 @@ body{
     <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5" id="chipHide" type="button" aria-pressed="false">Hide packed</button>
     <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5" id="chipNotes" type="button" aria-pressed="false">Hide notes</button>
     <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5" id="chipCollapse" type="button">Collapse all</button>
-    <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5 gap-1.5" id="chipSync" type="button" aria-pressed="false" hidden><span class="w-1.5 h-1.5 rounded-full bg-current opacity-60"></span>Family sync</button>
+    <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5 gap-1.5" id="chipSync" type="button" aria-pressed="false"><span class="w-1.5 h-1.5 rounded-full bg-current opacity-60"></span>Cloud sync</button>
   </div>
 
   <!-- sort -->
@@ -165,6 +165,23 @@ body{
       <button class="join-item btn btn-xs h-8 font-bold tchip gap-1.5" type="button" data-tier="3" aria-pressed="false"><span class="w-2 h-2 rounded-full bg-info"></span>Nice to have</button>
     </div>
   </div>
+
+  <!-- cloud sync setup -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-3.5 hidden" id="syncPanel">
+    <div class="card-body p-4 gap-2">
+      <div class="font-display font-semibold text-[16px]">Set up cloud sync</div>
+      <p class="text-[12.5px] ink-soft leading-relaxed m-0">One shared list for every device that has the link. Quickest path: tap <b class="text-base-content">Create shared storage</b>. Or paste your own JSON endpoint (JSONBin, Pantry, jsonstorage.net, ExtendsClass, or any URL that accepts GET and PUT).</p>
+      <button id="cloudCreate" type="button" class="btn btn-sm btn-primary font-extrabold w-full">Create shared storage</button>
+      <div class="divider my-0 text-[10px] ink-soft">or paste an endpoint</div>
+      <input id="cloudUrl" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="https://… endpoint URL" aria-label="Sync endpoint URL">
+      <input id="cloudKey" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="Access key (if the service needs one)" aria-label="Sync access key">
+      <div class="flex gap-2">
+        <button id="cloudConnect" type="button" class="btn btn-sm btn-primary font-extrabold flex-1">Connect</button>
+        <button id="cloudCancel" type="button" class="btn btn-sm flex-1 font-extrabold">Cancel</button>
+      </div>
+      <p class="text-[11.5px] ink-soft leading-relaxed m-0">Heads up: anyone who has the share link can read and edit the shared list.</p>
+    </div>
+  </section>
 
   <!-- legend -->
   <div class="flex gap-3.5 flex-wrap mt-3.5 mx-0.5 text-[11.5px] ink-soft font-semibold" id="legend">
@@ -192,6 +209,36 @@ body{
     </div>
   </section>
 
+  <!-- mom care reminders -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4" id="remindCard">
+    <div class="card-body p-4 pb-3 gap-2">
+      <div class="flex items-center gap-2.5">
+        <span class="font-display font-semibold text-[17px] text-primary">Mom care reminders</span>
+        <span class="flex-1"></span>
+        <button class="btn btn-xs rounded-full border-base-300 font-extrabold" id="notifBtn" type="button">Enable notifications</button>
+        <button class="btn btn-xs rounded-full border-base-300 font-extrabold" id="pushBtn" type="button">Enable push</button>
+      </div>
+      <div id="remList" class="mt-1"></div>
+      <div class="flex gap-2 mt-1">
+        <button id="remAdd" type="button" class="btn btn-xs rounded-full border-base-300 font-bold">+ Custom reminder</button>
+        <button id="remTest" type="button" class="btn btn-xs rounded-full border-base-300 font-bold">Test</button>
+      </div>
+      <p class="text-[11px] ink-soft leading-relaxed m-0" id="remNote">Notifications fire while the app runs. Turn on <b class="text-base-content">push</b> (needs Cloud sync + the repo's reminder workflow) and they arrive even with the app fully closed, checked every 15 minutes. On iPhone, add to Home Screen first.</p>
+    </div>
+  </section>
+
+  <!-- labor & delivery page link -->
+  <a href="./labor.html" class="card bg-base-100 border border-base-300 shadow-sm mt-4 block hover:border-secondary transition-colors" id="laborLink">
+    <div class="card-body p-4 flex-row items-center gap-3">
+      <span class="w-[38px] h-[38px] rounded-xl grid place-items-center flex-none" style="background:var(--c-health-t);color:var(--c-health)"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-7.5-10.7A4.3 4.3 0 0112 7.6a4.3 4.3 0 017.5 2.7C19.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 12h2.4l1-1.8 1.4 3.2 1.1-1.4H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-display font-semibold text-[16.5px]">Labor &amp; Delivery</span>
+        <span class="block text-[12.5px] ink-soft font-semibold mt-0.5">When to go, contraction timer, stages, key contacts</span>
+      </span>
+      <svg class="w-4 h-4 ink-soft flex-none" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </a>
+
   <main id="list"></main>
 
   <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
@@ -206,7 +253,7 @@ body{
       <input type="file" id="fileInput" accept=".json,application/json" hidden>
     </div>
     <p class="mb-2.5">Follows AAP and CPSC safe-sleep guidance, but isn't medical advice. Confirm anything health-related with your pediatrician.</p>
-    <p class="mb-2.5"><b class="text-base-content font-extrabold">Progress saves on this device automatically.</b> <b class="text-base-content font-extrabold">Share link</b> packs your checkmarks, added items, and due date into a URL anyone can open. <b class="text-base-content font-extrabold">Save / Load file</b> is a .json backup. <b class="text-base-content font-extrabold">Share copy</b> downloads this page with your list baked in. <b class="text-base-content font-extrabold">Family sync</b> appears when this runs as a shared Claude artifact; on the web, share links are the way to stay in step. Synced or linked data is visible to anyone who has it.</p>
+    <p class="mb-2.5"><b class="text-base-content font-extrabold">Progress saves on this device automatically.</b> <b class="text-base-content font-extrabold">Share link</b> packs your checkmarks, added items, and due date into a URL anyone can open. <b class="text-base-content font-extrabold">Save / Load file</b> is a .json backup. <b class="text-base-content font-extrabold">Share copy</b> downloads this page with your list baked in. <b class="text-base-content font-extrabold">Cloud sync</b> keeps one live list across every device: tap the Cloud sync chip once to create shared storage (or paste your own JSON endpoint), then send a Share link — devices that open it join the same list automatically and stay in step. Anything synced or linked is visible to whoever has the link.</p>
   </footer>
 </div>
 
@@ -360,7 +407,7 @@ const KEY='newborn-checklist-v3';
 const KEY_SHARED='newborn-checklist-shared-v1';
 const hasCloud = !!(window.storage && window.storage.get && window.storage.set);
 let lastSyncStamp=null;
-let state={checked:{},collapsed:{},hidePacked:false,dark:true,custom:{},sort:'importance',sizeIdx:0,hideNotes:false,sync:false,importedShare:null,tier:'all',due:null,who:''};
+let state={checked:{},collapsed:{},hidePacked:false,dark:true,custom:{},sort:'importance',sizeIdx:0,hideNotes:false,sync:false,importedShare:null,tier:'all',due:null,who:'',cloud:null};
 const WHO_KEY='newborn-who';
 try{ state.who=localStorage.getItem(WHO_KEY)||''; }catch(e){}
 function setWho(n){ state.who=(n||'').trim(); try{localStorage.setItem(WHO_KEY,state.who);}catch(e){} }
@@ -372,7 +419,7 @@ const SAVE_VERSION=2;
 function snapshot(){
   return {checked:state.checked,collapsed:state.collapsed,hidePacked:state.hidePacked,due:state.due,who:state.who,
     custom:state.custom,sort:state.sort,dark:state.dark,sizeIdx:state.sizeIdx,hideNotes:state.hideNotes,
-    sync:state.sync,importedShare:state.importedShare,tier:state.tier,themeV:2,savedAt:new Date().toISOString()};
+    sync:state.sync,importedShare:state.importedShare,tier:state.tier,cloud:state.cloud,themeV:2,savedAt:new Date().toISOString()};
 }
 function persist(pushShared){
   clearTimeout(saveTimer);
@@ -381,9 +428,21 @@ function persist(pushShared){
     let doneLocal=false;
     try{ if(hasCloud){ await window.storage.set(KEY,json); doneLocal=true; } }catch(e){}
     if(!doneLocal){ try{ localStorage.setItem(KEY,json); }catch(e){} }
-    if(state.sync && hasCloud && pushShared!==false){
-      try{ lastSyncStamp=snap.savedAt;
-        await window.storage.set(KEY_SHARED, JSON.stringify({app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap}), true);
+    if(state.sync && remote.available() && pushShared!==false){
+      try{
+        let snap2=snap;
+        try{
+          const cur=await remote.get();
+          if(cur && cur.push) cloudPushCache=cur.push;
+          if(cur && cur.state && cur.savedAt && cur.savedAt!==lastSyncStamp){
+            if(mergeIncoming(cur.state)){ snap2=snapshot(); refreshUI(); }
+            else snap2=snapshot();
+          }
+        }catch(e){}
+        lastSyncStamp=snap2.savedAt;
+        const doc={app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap2.savedAt,state:snap2};
+        if(cloudPushCache) doc.push=cloudPushCache;
+        await remote.put(doc);
       }catch(e){}
     }
   },120);
@@ -407,6 +466,96 @@ function applyState(saved,skipWho){
   state.sync=!!saved.sync;
   state.importedShare=saved.importedShare||null;
   state.tier=(saved.tier===1||saved.tier===2||saved.tier===3)?saved.tier:'all';
+  if(saved.cloud && typeof saved.cloud.u==='string') state.cloud={u:saved.cloud.u,k:(typeof saved.cloud.k==='string'?saved.cloud.k:'')};
+}
+
+/* ================================================================
+   REMOTE ADAPTER — one shared list across devices.
+   Backend A: Claude artifact shared storage (window.storage).
+   Backend B: any HTTP JSON endpoint (GET returns the payload,
+   PUT replaces it). Auth is auto-shaped per provider hostname.
+   ================================================================ */
+function cloudHeaders(cfg,method){
+  const hd={'Content-Type':'application/json'};
+  if(!cfg || !cfg.k) return hd;
+  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
+  if(host.includes('jsonbin.io')) hd['X-Master-Key']=cfg.k;
+  else if(host.includes('extendsclass.com')) hd['Security-key']=cfg.k;
+  else hd['Authorization']='Bearer '+cfg.k;
+  return hd;
+}
+function cloudUrlFor(cfg){
+  if(!cfg) return null;
+  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
+  if(host.includes('jsonstorage.net') && cfg.k && cfg.u.indexOf('apiKey=')<0)
+    return cfg.u+(cfg.u.includes('?')?'&':'?')+'apiKey='+encodeURIComponent(cfg.k);
+  return cfg.u;
+}
+function unwrapCloud(body){
+  if(body && typeof body==='object'){
+    if(body.record && body.record.app==='newborn-checklist') return body.record;   /* jsonbin.io */
+    if(body.app==='newborn-checklist') return body;
+  }
+  return null;
+}
+const VAPID_PUBLIC='BNVR-AypVjbusxgNVt54BWPu77Fry3d04IIz6k23169SiUivRrFFpkZfNSA7JOAqA3a3asDA3wgOQmDzoHh3o1E';
+let cloudPushCache=null;
+const remote={
+  available(){ return hasCloud || !!(state.cloud && state.cloud.u); },
+  kind(){ return hasCloud ? 'artifact' : (state.cloud && state.cloud.u ? 'http' : null); },
+  async get(){
+    if(hasCloud){
+      const r=await window.storage.get(KEY_SHARED,true);
+      if(!r||!r.value) return null;
+      const sh=JSON.parse(r.value);
+      return (sh && sh.app==='newborn-checklist' && sh.state) ? sh : null;
+    }
+    if(state.cloud && state.cloud.u){
+      const res=await fetch(cloudUrlFor(state.cloud),{headers:cloudHeaders(state.cloud,'GET'),cache:'no-store'});
+      if(!res.ok) return null;
+      const doc=unwrapCloud(await res.json());
+      if(doc && doc.push) cloudPushCache=doc.push;
+      return doc;
+    }
+    return null;
+  },
+  async put(payload){
+    if(hasCloud){
+      await window.storage.set(KEY_SHARED,JSON.stringify(payload),true);
+      return true;
+    }
+    if(state.cloud && state.cloud.u){
+      const res=await fetch(cloudUrlFor(state.cloud),{method:'PUT',headers:cloudHeaders(state.cloud,'PUT'),body:JSON.stringify(payload)});
+      return res.ok;
+    }
+    return false;
+  }
+};
+
+/* Conflict reduction for two-device editing: union their checks and custom
+   items into ours. A check they made after our last sync is adopted; a check
+   older than our last sync that we no longer have was unchecked here and stays
+   unchecked. Returns true when anything visible changed. */
+function mergeIncoming(their){
+  let changed=false;
+  const lsMs=Date.parse(lastSyncStamp||'')||0;
+  const mine=state.checked||{};
+  Object.keys(their.checked||{}).forEach(k=>{
+    const tv=their.checked[k];
+    const ta=(tv&&tv.at)||0;
+    if(!(k in mine)){ if(ta>lsMs){ mine[k]=tv; changed=true; } }
+    else{ const ma=(mine[k]&&mine[k].at)||0; if(ta>ma){ mine[k]=tv; changed=true; } }
+  });
+  state.checked=mine;
+  const tc=their.custom||{};
+  Object.keys(tc).forEach(cid=>{
+    const ours=state.custom[cid]||(state.custom[cid]=[]);
+    (tc[cid]||[]).forEach(it=>{
+      if(it && it._id && !ours.some(x=>x._id===it._id)){ ours.push(it); changed=true; }
+    });
+  });
+  if(!state.due && typeof their.due==='string' && their.due){ state.due=their.due; changed=true; }
+  return changed;
 }
 
 /* ---------- helpers ---------- */
@@ -942,6 +1091,7 @@ function encodeShareURL(){
   const payload={v:1,n:FLAT.length,b:bits,d:state.due||null,t:state.tier};
   if(Object.keys(state.custom||{}).some(k=>(state.custom[k]||[]).length)) payload.cu=state.custom;
   if(cc.length) payload.cc=cc;
+  if(state.sync && state.cloud && state.cloud.u) payload.cs={u:state.cloud.u,k:state.cloud.k||''};
   const base=(location.origin && location.origin!=='null' && location.protocol.indexOf('http')===0)
     ? location.origin+location.pathname : location.href.split('#')[0];
   return base+'#s='+b64uEncode(JSON.stringify(payload));
@@ -957,13 +1107,15 @@ function decodeShareHash(){
     const n=Math.min(typeof p.n==='number'?p.n:FLAT.length, FLAT.length);
     for(let i=0;i<n;i++){ if(((p.b[i>>5]>>>(i&31))&1)===1) checked[FLAT[i]._id]=true; }
     (Array.isArray(p.cc)?p.cc:[]).forEach(id=>{ if(typeof id==='string') checked[id]=true; });
+    const cs=(p.cs && typeof p.cs.u==='string' && p.cs.u.indexOf('https://')===0)?{u:p.cs.u,k:(typeof p.cs.k==='string'?p.cs.k:'')}:null;
     return {raw:m[1],checked,custom:(p.cu&&typeof p.cu==='object')?p.cu:{},due:(typeof p.d==='string')?p.d:null,
-            tier:(p.t===1||p.t===2||p.t===3)?p.t:'all'};
+            tier:(p.t===1||p.t===2||p.t===3)?p.t:'all',cs};
   }catch(e){ return null; }
 }
 function applyShared(sh){
   state.checked=sh.checked; state.custom=sh.custom;
   state.due=sh.due; state.tier=sh.tier;
+  if(sh.cs && !state.cloud){ state.cloud=sh.cs; state.sync=true; }
   wasComplete=false;
 }
 async function shareLink(){
@@ -1017,31 +1169,284 @@ function toggleCalm(){
 $('calmBtn').addEventListener('click',toggleCalm);
 
 /* ---------- family sync (Claude artifact environments only) ---------- */
-chipSync.addEventListener('click',()=>{
-  state.sync=!state.sync;
-  if(state.sync && !state.who){
+function showSyncPanel(show){
+  const p=$('syncPanel');
+  p.classList.toggle('hidden',!show);
+  if(show){ $('cloudUrl').value=state.cloud?state.cloud.u:''; $('cloudKey').value=state.cloud?(state.cloud.k||''):''; }
+}
+function askWho(){
+  if(!state.who){
     const n=prompt('Name to stamp on your checkmarks (shown to everyone on the shared list):');
     if(n) setWho(n);
   }
-  setPressed(chipSync,state.sync);
-  persist();
-  toast(state.sync
-    ? 'Family sync on — everyone with this link sees and edits one live list'
-    : 'Sync off — changes stay on this device');
+}
+async function enableSync(){
+  askWho();
+  state.sync=true; setPressed(chipSync,true);
+  try{
+    const sh=await remote.get();
+    if(sh && sh.state && sh.savedAt){
+      if(confirm("The cloud already has a list. Load it onto this device? (Cancel keeps this device's list and overwrites the cloud.)")){
+        lastSyncStamp=sh.savedAt;
+        applyState(sh.state,true); state.sync=true; persist(false); refreshUI();
+      } else persist();
+    } else persist();
+  }catch(e){ persist(); }
+  toast('Cloud sync on — everyone with the link shares one live list');
+}
+chipSync.addEventListener('click',()=>{
+  if(state.sync){
+    state.sync=false; setPressed(chipSync,false); persist(false);
+    toast('Sync off — changes stay on this device');
+    return;
+  }
+  if(!remote.available()){ showSyncPanel(true); return; }
+  enableSync();
+});
+$('cloudCancel').addEventListener('click',()=>showSyncPanel(false));
+$('cloudCreate').addEventListener('click',async()=>{
+  const btn=$('cloudCreate'); btn.disabled=true; btn.textContent='Creating…';
+  try{
+    const snap=snapshot();
+    const body={app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap};
+    const res=await fetch('https://api.jsonstorage.net/v1/json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(!res.ok) throw new Error('create failed');
+    const j=await res.json();
+    const uri=j.uri||j.url;
+    if(!uri || uri.indexOf('https://')!==0) throw new Error('no uri');
+    state.cloud={u:uri,k:''};
+    lastSyncStamp=snap.savedAt;
+    askWho();
+    state.sync=true; setPressed(chipSync,true); persist(false);
+    showSyncPanel(false);
+    toast('Shared storage created — send a Share link to connect other devices');
+  }catch(e){
+    toast('Auto-create unavailable — paste an endpoint below instead');
+  }
+  btn.disabled=false; btn.textContent='Create shared storage';
+});
+$('cloudConnect').addEventListener('click',async()=>{
+  const u=$('cloudUrl').value.trim(), k=$('cloudKey').value.trim();
+  if(u.indexOf('https://')!==0){ toast('Endpoint must start with https://'); return; }
+  state.cloud={u,k};
+  const btn=$('cloudConnect'); btn.disabled=true; btn.textContent='Checking…';
+  try{
+    const sh=await remote.get().catch(()=>null);
+    if(sh && sh.state && sh.savedAt){
+      askWho(); state.sync=true; setPressed(chipSync,true);
+      if(confirm("That endpoint already has a list. Load it onto this device? (Cancel keeps this device's list and overwrites the cloud.)")){
+        lastSyncStamp=sh.savedAt;
+        applyState(sh.state,true); state.sync=true; persist(false); refreshUI();
+      } else persist();
+      showSyncPanel(false); toast('Cloud sync connected');
+    } else {
+      const snap=snapshot();
+      const ok=await remote.put({app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap});
+      if(!ok) throw new Error('put failed');
+      lastSyncStamp=snap.savedAt;
+      askWho(); state.sync=true; setPressed(chipSync,true); persist(false);
+      showSyncPanel(false); toast('Cloud sync connected');
+    }
+  }catch(e){
+    state.cloud=null;
+    toast('Could not reach that endpoint — check the URL and key');
+  }
+  btn.disabled=false; btn.textContent='Connect';
 });
 async function pollShared(){
-  if(!state.sync || !hasCloud || document.hidden) return;
+  if(!state.sync || !remote.available() || document.hidden) return;
   try{
-    const r=await window.storage.get(KEY_SHARED,true);
-    if(!r || !r.value) return;
-    const sh=JSON.parse(r.value);
-    if(!sh || sh.app!=='newborn-checklist' || !sh.state || !sh.savedAt) return;
+    const sh=await remote.get();
+    if(!sh || !sh.state || !sh.savedAt) return;
     if(lastSyncStamp && sh.savedAt<=lastSyncStamp) return;
     lastSyncStamp=sh.savedAt;
     applyState(sh.state,true); state.sync=true; persist(false); refreshUI();
     toast('Updated from the shared list');
   }catch(e){}
 }
+
+/* ================================================================
+   MOM CARE REMINDERS — local notifications while the app runs.
+   Static hosting has no push server; delivery with the app fully
+   closed is not guaranteed, and the UI says so.
+   ================================================================ */
+const REM_KEY='newborn-reminders';
+let rem={items:[
+  {id:'vit',label:'Prenatal vitamin',type:'daily',time:'09:00',on:false},
+  {id:'water',label:'Drink water',type:'interval',every:2,start:'09:00',end:'21:00',on:false}
+],last:{}};
+try{ const v=localStorage.getItem(REM_KEY); if(v){ const p=JSON.parse(v); if(p && Array.isArray(p.items)) rem=p; if(!rem.last) rem.last={}; } }catch(e){}
+function remSave(){ try{ localStorage.setItem(REM_KEY,JSON.stringify(rem)); }catch(e){} if(typeof scheduleRegistrySync==='function') scheduleRegistrySync(); }
+function minutesOf(t){ const m=/^(\d{1,2}):(\d{2})$/.exec(t||''); return m?(+m[1]*60 + +m[2]):null; }
+function remDueSlot(r,now){
+  const d=new Date(now); const cur=d.getHours()*60+d.getMinutes();
+  if(r.type==='daily'){
+    const t=minutesOf(r.time); if(t===null) return null;
+    return (cur>=t && cur<t+180) ? d.toDateString()+'|'+r.time : null;   /* 3h catch-up window */
+  }
+  const s=minutesOf(r.start), e=minutesOf(r.end), ev=(+r.every||2)*60;
+  if(s===null||e===null||ev<=0||cur<s||cur>e) return null;
+  return d.toDateString()+'|i'+Math.floor((cur-s)/ev);
+}
+async function remFire(r){
+  buzz(15);
+  const body=r.type==='interval' ? 'Every '+r.every+'h — small sips add up.' : "Time for this — you've got it, mama.";
+  try{
+    if('Notification' in window && Notification.permission==='granted'){
+      if(navigator.serviceWorker){
+        const reg=await navigator.serviceWorker.getRegistration();
+        if(reg && reg.showNotification){ reg.showNotification(r.label,{body,tag:'rem-'+r.id,icon:'./icon-192.png',badge:'./icon-192.png'}); return; }
+      }
+      new Notification(r.label,{body,icon:'./icon-192.png'}); return;
+    }
+  }catch(e){}
+  toast('Reminder: '+r.label);
+}
+function remTick(){
+  if(pushSub) return; /* the cron sender owns delivery while push is on */
+  const now=Date.now();
+  rem.items.forEach(r=>{
+    if(!r.on) return;
+    const slot=remDueSlot(r,now);
+    if(slot && rem.last[r.id]!==slot){ rem.last[r.id]=slot; remSave(); remFire(r); }
+  });
+}
+function refreshNotifBtn(){
+  const b=$('notifBtn');
+  if(!('Notification' in window)){ b.textContent='Notifications unavailable'; b.disabled=true; return; }
+  if(Notification.permission==='granted'){ b.textContent='Notifications on'; b.classList.add('btn-active'); }
+  else if(Notification.permission==='denied'){ b.textContent='Blocked in browser settings'; }
+  else { b.textContent='Enable notifications'; b.classList.remove('btn-active'); }
+}
+function renderReminders(){
+  const box=$('remList'); box.innerHTML='';
+  rem.items.forEach(r=>{
+    const row=el('div','flex items-center gap-2.5 py-2 border-t border-base-300 first:border-t-0 flex-wrap');
+    const tg=document.createElement('input');
+    tg.type='checkbox'; tg.className='toggle toggle-primary toggle-sm flex-none'; tg.checked=!!r.on;
+    tg.setAttribute('aria-label','Toggle '+r.label);
+    tg.addEventListener('change',()=>{ r.on=tg.checked; remSave(); if(r.on) remTick(); });
+    const lab=el('span','flex-1 min-w-[120px] font-bold text-[14px] leading-snug'); lab.textContent=r.label;
+    row.append(tg,lab);
+    if(r.type==='daily'){
+      const t=document.createElement('input');
+      t.type='time'; t.value=r.time||'09:00';
+      t.className='input input-xs input-bordered bg-base-200 font-semibold w-[92px]';
+      t.setAttribute('aria-label',r.label+' time');
+      t.addEventListener('change',()=>{ r.time=t.value; remSave(); });
+      row.append(t);
+    } else {
+      const sel=document.createElement('select');
+      sel.className='select select-xs select-bordered bg-base-200 font-semibold';
+      sel.setAttribute('aria-label',r.label+' interval');
+      [1,2,3,4].forEach(n=>{ const o=document.createElement('option'); o.value=n; o.textContent='every '+n+'h'; if(n===(+r.every||2)) o.selected=true; sel.append(o); });
+      sel.addEventListener('change',()=>{ r.every=+sel.value; remSave(); });
+      row.append(sel);
+    }
+    if(!['vit','water'].includes(r.id)){
+      const x=el('button','btn btn-ghost btn-xs px-1 ink-soft hover:text-error'); x.type='button';
+      x.setAttribute('aria-label','Remove '+r.label); x.textContent='✕';
+      x.addEventListener('click',()=>{
+        rem.items=rem.items.filter(i=>i.id!==r.id); remSave(); renderReminders();
+        toast('Removed '+r.label,{label:'Undo',fn:()=>{ rem.items.push(r); remSave(); renderReminders(); }});
+      });
+      row.append(x);
+    }
+    box.append(row);
+  });
+}
+$('notifBtn').addEventListener('click',()=>{
+  if(!('Notification' in window)) return;
+  if(Notification.permission==='default'){
+    Notification.requestPermission().then(p=>{ refreshNotifBtn(); toast(p==='granted'?'Notifications enabled':'Notifications not enabled'); });
+  } else refreshNotifBtn();
+});
+$('remAdd').addEventListener('click',()=>{
+  const label=(prompt('Reminder name (e.g. "Iron supplement", "Rest break"):')||'').trim();
+  if(!label) return;
+  const time=(prompt('Daily at what time? (HH:MM, 24-hour)','14:00')||'14:00').trim();
+  rem.items.push({id:'c'+Date.now(),label,type:'daily',time:minutesOf(time)!==null?time:'14:00',on:true});
+  remSave(); renderReminders(); toast('Reminder added');
+});
+$('remTest').addEventListener('click',()=>remFire({id:'test',label:'Test reminder',type:'daily'}));
+/* ---------- true push (Web Push + the repo's Actions cron sender) ---------- */
+let pushSub=null;
+function b64ToU8(s){ s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4)s+='='; const r=atob(s); const a=new Uint8Array(r.length); for(let i=0;i<r.length;i++) a[i]=r.charCodeAt(i); return a; }
+function subKey(s){ return s.endpoint.slice(-44).replace(/[^A-Za-z0-9]/g,'').slice(-32); }
+async function getPushSub(){
+  try{
+    if(!('serviceWorker' in navigator) || !('PushManager' in window)) return null;
+    const reg=await navigator.serviceWorker.ready;
+    return await reg.pushManager.getSubscription();
+  }catch(e){ return null; }
+}
+async function writePushRegistry(){
+  const s=pushSub || await getPushSub(); if(!s) return;
+  try{
+    const doc=(await remote.get()) || {app:'newborn-checklist',version:SAVE_VERSION};
+    doc.state=snapshot(); /* local truth wins for the list; only push subs merge from remote */
+    doc.push=doc.push||{subs:{}}; doc.push.subs=doc.push.subs||{};
+    const prev=doc.push.subs[subKey(s)]||{};
+    doc.push.subs[subKey(s)]={
+      sub:s.toJSON(), tzo:new Date().getTimezoneOffset(), who:state.who||'',
+      reminders:rem.items.filter(r=>r.on).map(r=>({id:r.id,label:r.label,type:r.type,time:r.time,every:r.every,start:r.start,end:r.end})),
+      last:prev.last||{}, updatedAt:new Date().toISOString()
+    };
+    cloudPushCache=doc.push;
+    doc.savedAt=new Date().toISOString();
+    await remote.put(doc);
+  }catch(e){}
+}
+async function enablePush(){
+  if(!('PushManager' in window)){
+    const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent||'');
+    const standalone=(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone;
+    toast(isIOS&&!standalone
+      ? 'On iPhone: Share → Add to Home Screen first, then enable push from the installed app'
+      : 'Push not supported in this browser');
+    return;
+  }
+  if(hasCloud || !remote.available()){ toast('Set up Cloud sync first — push rides on it'); showSyncPanel(true); return; }
+  if(!('Notification' in window)){ toast('Notifications unavailable here'); return; }
+  if(Notification.permission!=='granted'){
+    const p=await Notification.requestPermission(); refreshNotifBtn();
+    if(p!=='granted'){ toast('Allow notifications first'); return; }
+  }
+  try{
+    const reg=await navigator.serviceWorker.ready;
+    pushSub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64ToU8(VAPID_PUBLIC)});
+    await writePushRegistry();
+    refreshPushBtn();
+    toast('Push on — reminders arrive even with the app closed');
+  }catch(e){ toast('Push not available in this browser'); }
+}
+async function disablePush(){
+  try{
+    const s=await getPushSub();
+    if(s){
+      try{
+        const doc=await remote.get();
+        if(doc && doc.push && doc.push.subs){ delete doc.push.subs[subKey(s)]; cloudPushCache=doc.push; doc.savedAt=new Date().toISOString(); await remote.put(doc); }
+      }catch(e){}
+      await s.unsubscribe();
+    }
+  }catch(e){}
+  pushSub=null; refreshPushBtn(); toast('Push off — reminders fire only while the app runs');
+}
+function refreshPushBtn(){
+  const b=$('pushBtn');
+  if(!('serviceWorker' in navigator)){ b.textContent='Push unavailable'; b.disabled=true; return; }
+  if(pushSub){ b.textContent='Push on'; b.classList.add('btn-active'); }
+  else { b.textContent='Enable push'; b.classList.remove('btn-active'); }
+}
+$('pushBtn').addEventListener('click',()=>{ pushSub ? disablePush() : enablePush(); });
+(async()=>{ pushSub=await getPushSub(); refreshPushBtn(); if(pushSub) writePushRegistry(); })();
+let regTimer=null;
+function scheduleRegistrySync(){ if(!pushSub) return; clearTimeout(regTimer); regTimer=setTimeout(writePushRegistry,800); }
+
+setInterval(remTick,30000);
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) remTick(); });
+renderReminders(); refreshNotifBtn();
 
 /* ---------- boot ---------- */
 (async()=>{
@@ -1078,32 +1483,39 @@ async function pollShared(){
     }
   }
 
-  /* 3. Family sync cloud state (artifact environments) */
-  if(hasCloud){
-    chipSync.hidden=false;
+  /* 3. Shared cloud state — artifact storage or a configured HTTP endpoint */
+  if(remote.available()){
     try{
-      const r=await window.storage.get(KEY_SHARED,true);
-      if(r && r.value){
-        const sh=JSON.parse(r.value);
-        if(sh && sh.app==='newborn-checklist' && sh.state){
-          if(!saved && !emb && !consumedURL){
-            applyState(sh.state,true); state.sync=true; lastSyncStamp=sh.savedAt||null; persist(false);
-            toast('Synced with the shared family list');
-          } else if(state.sync && sh.savedAt && (!saved || sh.savedAt>(saved.savedAt||''))){
-            lastSyncStamp=sh.savedAt;
-            applyState(sh.state,true); state.sync=true; persist(false);
-          }
+      const sh=await remote.get();
+      if(sh && sh.state){
+        if(!saved && !emb && !consumedURL){
+          applyState(sh.state,true); state.sync=true; lastSyncStamp=sh.savedAt||null; persist(false);
+          toast('Synced with the shared list');
+        } else if(state.sync && sh.savedAt && (!saved || sh.savedAt>(saved.savedAt||''))){
+          lastSyncStamp=sh.savedAt;
+          applyState(sh.state,true); state.sync=true; persist(false);
         }
       }
     }catch(e){}
-    setInterval(pollShared,20000);
   }
+  setInterval(pollShared,20000);
 
   refreshUI();
 
   /* PWA: cache the shell + CDN assets for offline use after first visit */
   if('serviceWorker' in navigator && location.protocol==='https:'){
-    try{ navigator.serviceWorker.register('./sw.js'); }catch(e){}
+    try{
+      navigator.serviceWorker.register('./sw.js').then(reg=>{
+        reg.addEventListener('updatefound',()=>{
+          const nw=reg.installing;
+          if(nw) nw.addEventListener('statechange',()=>{
+            if(nw.state==='installed' && navigator.serviceWorker.controller){
+              toast('Update ready',{label:'Reload',fn:()=>location.reload()});
+            }
+          });
+        });
+      }).catch(()=>{});
+    }catch(e){}
   }
 })();
 </script>
