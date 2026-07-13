@@ -16,6 +16,7 @@ Focus mode, a hardened print layout, and four ways to share.
 | `settings.html` | Cloud sync setup, due date, name, appearance, what's new. |
 | `upbringing.html` | Recovery through the first year: sleep, feeding, tummy time, solids, babyproofing. |
 | `CHANGELOG.md` | Version history. |
+| `assets/` | Precompiled stylesheet, confetti, and fonts — no CDN, works fully offline. |
 | `manifest.webmanifest` | PWA install metadata (+ Labor shortcut). |
 | `sw.js` | Service worker: network-first pages, cached assets, notification clicks focus the app. |
 | `icon-192.png` / `icon-512.png` / `apple-touch-icon.png` | App icons. |
@@ -31,13 +32,13 @@ Focus mode, a hardened print layout, and four ways to share.
 GitHub Pages is static and cannot store data itself, so the app syncs through a
 tiny JSON store on the web:
 
-1. Tap **Cloud sync** → **Create shared storage** (uses jsonstorage.net's free,
-   no-account API). If auto-create is unavailable, paste any JSON endpoint that
+1. In **Settings**, tap **Create shared storage** (tries JSONBlob first, then
+   jsonstorage.net — both free, no account). Or paste any JSON endpoint that
    accepts GET/PUT — JSONBin.io, Pantry, ExtendsClass, or your own. Keys go in
    the second field; the app shapes the right auth header per provider.
-2. Tap **Share link** and send it. Any device that opens the link joins the same
-   live list — checkmarks, custom items, and the due date sync about every 20
-   seconds and on every change.
+2. Tap **Share link** and send it (or copy the Settings **invite link**). Any
+   device that opens it joins the same live list — checkmarks, custom items,
+   and the due date sync about once a minute and whenever the app is opened.
 
 Privacy: the endpoint address acts as the password. Anyone with the share link
 can read and edit the shared list.
@@ -77,3 +78,15 @@ POST-DEPLOY.md once. See APPSTORE.md for the App Store and Play Store routes.
 - The contraction timer flags the 5-1-1 pattern (about 5 min apart, about 1 min
   long, sustained an hour) and keeps its log on-device.
 - Print (Ctrl/Cmd+P) outputs a black-on-white serif checklist with pagination guards.
+
+## Rebuilding the stylesheet
+
+The CSS is precompiled (Tailwind 4 + daisyUI 5, fonts vendored). If you edit
+any HTML classes, rebuild once before deploying:
+
+```
+npm install
+npm run css
+```
+
+That regenerates `assets/app.css`. Nothing else needs a build step.

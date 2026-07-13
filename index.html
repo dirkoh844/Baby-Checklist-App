@@ -5,20 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Newborn Essentials — Baby List</title>
 <meta name="description" content="A pediatrician-aligned newborn checklist with budgets, due-date timing, and family sharing.">
-<meta name="theme-color" content="#0B0E15" id="themeColor">
+<meta name="theme-color" content="#10141F" id="themeColor">
 <meta name="color-scheme" content="dark light">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Baby List">
 <link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230B0E15'/%3E%3Cpath d='M19 9.5A5 5 0 0112.5 3 5 5 0 1019 9.5z' fill='%23EBC77C'/%3E%3Cpath d='M5 13l4 4.5L18 8' stroke='%237BC8B3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%2310141F'/%3E%3Cpath d='M19 9.5A5 5 0 0112.5 3 5 5 0 1019 9.5z' fill='%23EBC77C'/%3E%3Cpath d='M5 13l4 4.5L18 8' stroke='%237BC8B3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js" defer></script>
+<link href="./assets/app.css" rel="stylesheet">
+<script src="./assets/confetti.min.js" defer></script>
 <style>
 /* ============ Theme tokens (DaisyUI custom themes) + print engine ============
    Layout and components are Tailwind/DaisyUI; this block holds only what the
@@ -26,22 +23,22 @@
    engine the blueprint mandates as an isolated overriding block. */
 [data-theme="womb"]{
   color-scheme:dark;
-  --color-base-100:#151A26; --color-base-200:#0B0E15; --color-base-300:#232B3B;
-  --color-base-content:#EDF1F8;
-  --color-primary:#7BC8B3;   --color-primary-content:#0C1019;
-  --color-secondary:#F0A87C; --color-secondary-content:#0C1019;
-  --color-accent:#EBC77C;    --color-accent-content:#0C1019;
-  --color-neutral:#EDF1F8;   --color-neutral-content:#0B0E15;
-  --color-info:#A9B4F2;      --color-info-content:#0C1019;
-  --color-success:#A9D98C;   --color-success-content:#0C1019;
-  --color-warning:#EBC77C;   --color-warning-content:#0C1019;
-  --color-error:#F58B7E;     --color-error-content:#0C1019;
+  --color-base-100:#1A2130; --color-base-200:#10141F; --color-base-300:#2B3547;
+  --color-base-content:#EFF3FA;
+  --color-primary:#7DD3BC;   --color-primary-content:#0C1019;
+  --color-secondary:#F5AD7E; --color-secondary-content:#0C1019;
+  --color-accent:#F2CB6C;    --color-accent-content:#0C1019;
+  --color-neutral:#EFF3FA;   --color-neutral-content:#10141F;
+  --color-info:#AEB9FF;      --color-info-content:#0C1019;
+  --color-success:#A9DB84;   --color-success-content:#0C1019;
+  --color-warning:#F2CB6C;   --color-warning-content:#0C1019;
+  --color-error:#FF8F7D;     --color-error-content:#0C1019;
   --radius-box:1rem; --radius-field:.75rem; --radius-selector:.5rem;
-  --ink-soft:#99A6B9; --glow1:rgba(240,168,124,.055); --glow2:rgba(123,200,179,.04);
-  --c-clothing:#F2A3B8;--c-clothing-t:#2C1B23;--c-feeding:#EBC77C;--c-feeding-t:#2C2513;
-  --c-diapering:#7BC8B3;--c-diapering-t:#182823;--c-sleep:#B5A8F2;--c-sleep-t:#232038;
-  --c-bath:#87C6EE;--c-bath-t:#17273A;--c-health:#F58B7E;--c-health-t:#301B17;
-  --c-hospital:#F0A87C;--c-hospital-t:#2E2114;--c-parent:#A9D98C;--c-parent-t:#1F2A17;
+  --ink-soft:#A3B0C4; --glow1:rgba(245,173,126,.10); --glow2:rgba(125,211,188,.075);
+  --c-clothing:#F794B8;--c-clothing-t:#3A2230;--c-feeding:#F2C95C;--c-feeding-t:#382D12;
+  --c-diapering:#6FD6B9;--c-diapering-t:#143129;--c-sleep:#B9A0FF;--c-sleep-t:#2A2344;
+  --c-bath:#6FC2F5;--c-bath-t:#14304A;--c-health:#FF8F7D;--c-health-t:#3B201B;
+  --c-hospital:#FFAB66;--c-hospital-t:#3A2513;--c-parent:#A5E07E;--c-parent-t:#223416;
 }
 [data-theme="dawn"]{
   color-scheme:light;
@@ -76,19 +73,19 @@ body{
 /* ---- Colorful dark surfaces: every zone gets its own deep hue ---- */
 @supports (background: color-mix(in oklab, red 10%, blue)){
   .cat{
-    background:color-mix(in oklab, var(--cat-a) 11%, var(--color-base-100));
-    border-color:color-mix(in oklab, var(--cat-a) 30%, var(--color-base-300));
+    background:color-mix(in oklab, var(--cat-a) 16%, var(--color-base-100));
+    border-color:color-mix(in oklab, var(--cat-a) 42%, var(--color-base-300));
     border-left:4px solid var(--cat-a);
   }
-  .cat .cat-head{background:linear-gradient(180deg, color-mix(in oklab, var(--cat-a) 8%, transparent), transparent)}
+  .cat .cat-head{background:linear-gradient(180deg, color-mix(in oklab, var(--cat-a) 12%, transparent), transparent)}
   .cat .cat-name{color:var(--cat-a)}
-  .cat .cat-inner{border-top-color:color-mix(in oklab, var(--cat-a) 26%, var(--color-base-300))}
-  .cat .item:hover{background:color-mix(in oklab, var(--cat-a) 15%, var(--color-base-100))}
-  .cat .item-wrap .btn-ghost:hover{background:color-mix(in oklab, var(--cat-a) 18%, var(--color-base-100))}
-  .zone-gold{background:color-mix(in oklab, var(--color-accent) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-accent) 30%, var(--color-base-300));border-left:4px solid var(--color-accent)}
-  .zone-green{background:color-mix(in oklab, var(--color-primary) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-primary) 30%, var(--color-base-300));border-left:4px solid var(--color-primary)}
-  .zone-info{background:color-mix(in oklab, var(--color-info) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-info) 30%, var(--color-base-300));border-left:4px solid var(--color-info)}
-  .zone-coral{background:color-mix(in oklab, var(--c-health) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--c-health) 30%, var(--color-base-300))}
+  .cat .cat-inner{border-top-color:color-mix(in oklab, var(--cat-a) 34%, var(--color-base-300))}
+  .cat .item:hover{background:color-mix(in oklab, var(--cat-a) 22%, var(--color-base-100))}
+  .cat .item-wrap .btn-ghost:hover{background:color-mix(in oklab, var(--cat-a) 26%, var(--color-base-100))}
+  .zone-gold{background:color-mix(in oklab, var(--color-accent) 15%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-accent) 40%, var(--color-base-300));border-left:4px solid var(--color-accent)}
+  .zone-green{background:color-mix(in oklab, var(--color-primary) 15%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-primary) 40%, var(--color-base-300));border-left:4px solid var(--color-primary)}
+  .zone-info{background:color-mix(in oklab, var(--color-info) 15%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-info) 40%, var(--color-base-300));border-left:4px solid var(--color-info)}
+  .zone-coral{background:color-mix(in oklab, var(--c-health) 15%, var(--color-base-100));border-color:color-mix(in oklab, var(--c-health) 40%, var(--color-base-300))}
 }
 @media print{ .cat,.zone-gold,.zone-green,.zone-info,.zone-coral{background:#fff!important;border-left-width:1pt!important} }
 
@@ -97,12 +94,22 @@ body{
 @keyframes cfall{to{transform:translateY(112vh) rotate(720deg);opacity:0}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
+
+/* Bottom menu: every tab has an identity color; the active tab wears a tinted
+   pill behind its icon plus a matching label, so state reads at a glance. */
+#tabNav .nt{color:var(--ink-soft)}
+#tabNav .nt[aria-current="page"]{color:var(--tab-a)}
+#tabNav .nt[aria-current="page"] .np{background:color-mix(in oklab, var(--tab-a) 22%, transparent);box-shadow:inset 0 0 0 1px color-mix(in oklab, var(--tab-a) 38%, transparent)}
+@supports not (background: color-mix(in oklab, red 10%, blue)){
+  #tabNav .nt[aria-current="page"] .np{background:var(--color-base-300)}
+}
+
 /* ============ PRINT ENGINE — isolated overriding block ============ */
 @media print{
   @page{margin:14mm}
   *,*::before,*::after{background:#ffffff!important;color:#000000!important;box-shadow:none!important;text-shadow:none!important}
   html,body{background:#ffffff!important;background-image:none!important;font-family:Georgia,"Times New Roman",serif!important;font-size:12.5pt!important;line-height:1.45}
-  .navbar,.icobtns,#searchWrap,#phasebar,#toolbar,#sortbar,#tierbar,#legend,#donext,.foot-actions,.dn-date,.del,.add-area,#budget,.toast,.stamp,#smatch,#tabNav,#storageWarn{display:none!important}
+  .navbar,.icobtns,#searchWrap,#phasebar,#toolbar,#sortbar,#tierbar,#legend,#donext,.foot-actions,.dn-date,.del,.add-area,#budget,.toast,.stamp,#smatch,#tabNav,#storageWarn,#installBanner,#syncDot{display:none!important}
   h1,h2,h3,h4,h5,h6,.cat-head{page-break-after:avoid;break-after:avoid}
   .cat,.item-wrap{page-break-inside:avoid;break-inside:avoid}
   .cat{border:1pt solid #999!important;border-radius:0!important;margin-top:10pt;padding:6pt 10pt;display:block!important}
@@ -117,7 +124,7 @@ body{
 }
 </style>
 </head>
-<body class="min-h-screen text-[16px] leading-relaxed pb-[env(safe-area-inset-bottom)]">
+<body class="min-h-dvh text-[16px] leading-relaxed pb-[env(safe-area-inset-bottom)]">
 
 <!-- ============ App shell: sticky navbar (zero-CLS: fixed heights) ============ -->
 <header class="navbar sticky top-0 z-30 bg-base-200/85 backdrop-blur-md border-b border-base-300 px-3.5 pt-[calc(env(safe-area-inset-top)+8px)] pb-2 min-h-0">
@@ -127,7 +134,7 @@ body{
         Newborn <em class="italic font-medium text-secondary">Essentials</em>
         <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1 h-3.5">Pediatrician-aligned · tap to pack</span>
       </h1>
-      <div class="icobtns flex gap-1.5 flex-none">
+      <div class="icobtns flex gap-1.5 flex-none items-center"><span id="syncDot" class="hidden w-2 h-2 rounded-full mr-0.5" role="status"></span>
         <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="sizeBtn" type="button" aria-label="Change text size"><span class="font-display font-semibold text-sm">Aa</span></button>
         <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="calmBtn" type="button" aria-label="Calm sounds: womb-like brown noise" aria-pressed="false"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M3 12c1.5-3.5 3-3.5 4.5 0s3 3.5 4.5 0 3-3.5 4.5 0 3 3.5 4.5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
         <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
@@ -200,6 +207,14 @@ body{
     <span>This browser is blocking saved data (private mode, most likely). Checkmarks won't survive closing this window. Open your <b class="text-base-content">Share link</b> here to load the family list, or switch out of private browsing.</span>
   </div>
 
+  <div class="alert bg-base-100 border border-primary/50 text-[13px] font-semibold leading-relaxed mt-3.5 hidden" id="installBanner">
+    <svg class="w-4 h-4 flex-none text-primary" viewBox="0 0 24 24" fill="none"><path d="M12 3v11m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 17v2a2 2 0 002 2h10a2 2 0 002-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <span class="flex-1" id="installText">Install Baby List for one-tap access and offline use.</span>
+    <button id="installBtn" type="button" class="btn btn-sm btn-primary font-extrabold">Install</button>
+    <button id="installDismiss" type="button" class="btn btn-sm btn-ghost" aria-label="Dismiss install banner">✕</button>
+  </div>
+  <span id="srAnnounce" class="sr-only" aria-live="polite"></span>
+
   <!-- legend -->
   <div class="flex gap-3.5 flex-wrap mt-3.5 mx-0.5 text-[11.5px] ink-soft font-semibold" id="legend">
     <span class="inline-flex items-center gap-1.5"><span class="badge badge-error badge-xs font-extrabold uppercase">must</span>1 · can't skip</span>
@@ -233,11 +248,12 @@ body{
         <button id="saveFileBtn" type="button" class="btn btn-soft btn-primary h-11 rounded-xl justify-start text-[13px] font-bold gap-2"><svg class="w-4 h-4 flex-none" viewBox="0 0 24 24" fill="none"><rect x="4" y="13" width="16" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v9m0 0L8.5 8.5M12 12l3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Save to file</button>
         <button id="loadFileBtn" type="button" class="btn btn-soft btn-secondary h-11 rounded-xl justify-start text-[13px] font-bold gap-2"><svg class="w-4 h-4 flex-none" viewBox="0 0 24 24" fill="none"><rect x="4" y="13" width="16" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M12 12V3m0 0L8.5 6.5M12 3l3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Load from file</button>
         <button id="shareBtn" type="button" class="btn btn-soft btn-warning h-11 rounded-xl justify-start text-[13px] font-bold gap-2"><svg class="w-4 h-4 flex-none" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="5.5" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="18.5" r="2.6" stroke="currentColor" stroke-width="1.8"/><path d="M8.4 10.8l6.7-4M8.4 13.2l6.7 4" stroke="currentColor" stroke-width="1.8"/></svg>Share copy (.html)</button>
+        <button id="printBtn" type="button" class="btn btn-soft btn-neutral h-11 rounded-xl justify-start text-[13px] font-bold gap-2"><svg class="w-4 h-4 flex-none" viewBox="0 0 24 24" fill="none"><path d="M7 8V4h10v4M7 16H5a2 2 0 01-2-2v-4a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2h-2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><rect x="7" y="14" width="10" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/></svg>Print list</button>
         <button id="resetBottom" type="button" class="btn btn-soft btn-error h-11 rounded-xl justify-start text-[13px] font-bold gap-2"><svg class="w-4 h-4 flex-none" viewBox="0 0 24 24" fill="none"><path d="M3.4 9.2a8 8 0 1 1-.5 5.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M2.5 4v5.5H8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Reset checkmarks</button>
       </div>
       <input type="file" id="fileInput" accept=".json,application/json" hidden>
     </div>
-    <p class="mb-2.5 text-[11px]">Baby List v2.1.0 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a></p>
+    <p class="mb-2.5 text-[11px]">Baby List v2.2.0 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a></p>
     <p class="mb-2.5">Follows AAP and CPSC safe-sleep guidance, but isn't medical advice. Confirm anything health-related with your pediatrician.</p>
     <p class="mb-2.5"><b class="text-base-content font-extrabold">Progress saves on this device automatically.</b> <b class="text-base-content font-extrabold">Share link</b> packs your checkmarks, added items, and due date into a URL anyone can open. <b class="text-base-content font-extrabold">Save / Load file</b> is a .json backup. <b class="text-base-content font-extrabold">Share copy</b> downloads this page with your list baked in. <b class="text-base-content font-extrabold">Cloud sync</b> keeps one live list across every device — set it up once in <a class="link link-primary font-bold" href="./settings.html">Settings</a>, then send a Share link; devices that open it join automatically and refresh about once a minute and whenever the app is opened. Anything synced or linked is visible to whoever has the link.</p>
   </footer>
@@ -245,31 +261,16 @@ body{
 
 <nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
   <div class="max-w-[640px] mx-auto grid grid-cols-5">
-    <a href="./index.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold text-primary" aria-current="page">
-      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.2l2.4 2.6 4.8-5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Checklist
-    </a>
-    <a href="./labor.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft">
-      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-7.5-10.7A4.3 4.3 0 0112 7.6a4.3 4.3 0 017.5 2.7C19.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 12h2.4l1-1.8 1.4 3.2 1.1-1.4H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Labor
-    </a>
-    <a href="./upbringing.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft">
-      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M12 21v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14c0-4.2-3-6.6-7.2-6.6C4.8 11.6 7.8 14 12 14z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 12.2c0-3.4 2.5-5.4 6-5.4 0 3.4-2.5 5.4-6 5.4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-      Upbringing
-    </a>
-    <a href="./reminders.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft">
-      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M6 9.5A6 6 0 0118 9.5c0 5 2 6 2 6H4s2-1 2-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.8 19a2.3 2.3 0 004.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      Reminders
-    </a>
-    <a href="./settings.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft">
-      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      Settings
-    </a>
+    <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[10px] font-extrabold" aria-current="page" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-14 h-7 rounded-full transition-colors [&>svg]:w-5 [&>svg]:h-5"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.2l2.4 2.6 4.8-5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
+    <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[10px] font-extrabold" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-14 h-7 rounded-full transition-colors [&>svg]:w-5 [&>svg]:h-5"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-7.5-10.7A4.3 4.3 0 0112 7.6a4.3 4.3 0 017.5 2.7C19.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 12h2.4l1-1.8 1.4 3.2 1.1-1.4H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
+    <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[10px] font-extrabold" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-14 h-7 rounded-full transition-colors [&>svg]:w-5 [&>svg]:h-5"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14c0-4.2-3-6.6-7.2-6.6C4.8 11.6 7.8 14 12 14z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 12.2c0-3.4 2.5-5.4 6-5.4 0 3.4-2.5 5.4-6 5.4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span>Upbringing</a>
+    <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[10px] font-extrabold" style="--tab-a:var(--color-accent)"><span class="np grid place-items-center w-14 h-7 rounded-full transition-colors [&>svg]:w-5 [&>svg]:h-5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9.5A6 6 0 0118 9.5c0 5 2 6 2 6H4s2-1 2-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.8 19a2.3 2.3 0 004.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Reminders</a>
+    <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[10px] font-extrabold" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-14 h-7 rounded-full transition-colors [&>svg]:w-5 [&>svg]:h-5"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Settings</a>
   </div>
 </nav>
 
 <div class="toast toast-center toast-bottom z-[80] mb-20 hidden" id="toastWrap">
-  <div class="alert bg-neutral text-neutral-content rounded-full py-2.5 px-5 text-[13px] font-extrabold shadow-lg border-0" id="toast" role="status" aria-live="polite"></div>
+  <div class="alert bg-neutral text-neutral-content rounded-2xl py-3.5 px-6 text-[15px] leading-snug font-extrabold shadow-lg border-0 max-w-[92vw] whitespace-normal justify-center text-center" id="toast" role="status" aria-live="polite"></div>
 </div>
 
 <script type="application/json" id="shared-state"></script>
@@ -281,10 +282,10 @@ body{
 /* ---------- data (full taxonomy — 96 items) ---------- */
 const DATA = [
  {id:'clothing', name:'Clothing', icon:'clothing', tip:'Buy mostly 0–3 & 3–6 mo. Newborn size is outgrown in days.', items:[
-   {n:'Snap-side bodysuits', q:'6–8', note:'Envelope-neck shoulders for easy over-the-head changes.', lo:15, hi:30},
+   {n:'Snap-side bodysuits',k:'onesie onesies', q:'6–8', note:'Envelope-neck shoulders for easy over-the-head changes.', lo:15, hi:30},
    {n:'Footed sleep & play pajamas', q:'6–8', note:'Zippers beat snaps at 3 a.m.', lo:20, hi:40},
-   {n:'Muslin swaddle blankets', q:'3–4', note:'Breathable fabric lowers overheating risk.', lo:20, hi:40},
-   {n:'Wearable sleep sacks (0–3 mo)', q:'2–3', note:'AAP-preferred over loose blankets.', lo:30, hi:60},
+   {n:'Muslin swaddle blankets',k:'wrap', q:'3–4', note:'Breathable fabric lowers overheating risk.', lo:20, hi:40},
+   {n:'Wearable sleep sacks (0–3 mo)',k:'wearable blanket sleepsack', q:'2–3', note:'AAP-preferred over loose blankets.', lo:30, hi:60},
    {n:'Scratch mittens', q:'2–3', note:'Newborn nails grow fast and scratch the face.', lo:6, hi:12},
    {n:'No-skid socks', q:'4–6', note:'', lo:8, hi:15},
    {n:'Soft season-appropriate hats', q:'1–2', note:'The hospital gives one — keep a backup.', lo:8, hi:15},
@@ -310,10 +311,10 @@ const DATA = [
    {n:'Nursing cover', q:'1', note:'A muslin swaddle can double for this.', lo:15, hi:25, o:true, a:true}
  ]},
  {id:'diapering', name:'Diapering', icon:'diapering', tip:'Expect 8–12 changes a day at first — stock accordingly.', items:[
-   {n:'Newborn diapers (size N)', q:'1 pk', note:"Don't overstock — outgrown fast.", lo:10, hi:15},
+   {n:'Newborn diapers (size N)',k:'nappies', q:'1 pk', note:"Don't overstock — outgrown fast.", lo:10, hi:15},
    {n:'Size 1 diapers', q:'2–3 pk', note:'Most babies reach size 1 within 1–2 weeks.', lo:40, hi:70},
    {n:'Fragrance-free wipes', q:'3–4 pk', note:'Unscented lowers the risk of irritation.', lo:15, hi:30},
-   {n:'Zinc-oxide rash cream', q:'1', note:'A thin layer at each change prevents rash.', lo:6, hi:12},
+   {n:'Zinc-oxide rash cream',k:'diaper cream butt paste desitin', q:'1', note:'A thin layer at each change prevents rash.', lo:6, hi:12},
    {n:'Waterproof changing pad', q:'1', note:'A washable cover saves on replacements.', lo:20, hi:35},
    {n:'Diaper pail (odor-seal)', q:'1', note:'Ubbi and Arm & Hammer are parent picks.', lo:30, hi:50},
    {n:'Diaper bag (compartments)', q:'1', note:'Backpack style frees up your hands.', lo:30, hi:80},
@@ -322,17 +323,17 @@ const DATA = [
    {n:'Diaper disposal bags (to-go)', q:'1 pk', note:'Seals odor for changes away from home.', lo:5, hi:10, o:true, a:true}
  ]},
  {id:'sleep', name:'Sleep & Nursery', icon:'sleep', tip:'AAP: room-share (not bed-share) ~6 months. Keep the crib bare.', items:[
-   {n:'Crib or bassinet (CPSC/AAP)', q:'1', note:'Firm, flat surface; no drop-sides.', lo:90, hi:400, wk:32},
+   {n:'Crib or bassinet (CPSC/AAP)',k:'cot moses basket', q:'1', note:'Firm, flat surface; no drop-sides.', lo:90, hi:400, wk:32},
    {n:'Firm, flat, waterproof mattress', q:'1', note:'Soft mattresses raise SIDS risk.', lo:50, hi:150, wk:32},
    {n:'Fitted sheets (snug)', q:'2–3', note:'Must fit tight — no loose fabric.', lo:20, hi:40, wk:34},
-   {n:'White-noise machine', q:'1', note:'Womb-like sound lengthens sleep.', lo:20, hi:50},
+   {n:'White-noise machine',k:'sound machine hatch', q:'1', note:'Womb-like sound lengthens sleep.', lo:20, hi:50},
    {n:'Video + audio monitor', q:'1', note:'Smart units track motion and breathing.', lo:40, hi:200},
    {n:'Blackout curtains / shade', q:'1', note:'Protects the daytime nap schedule.', lo:20, hi:50},
    {n:'Glider or rocker + ottoman', q:'1', note:'A lifesaver for middle-of-night feeds.', lo:150, hi:500},
    {n:'Baby swing or bouncer', q:'1', note:'Soothes fussiness — always supervise.', lo:40, hi:200, o:true},
    {n:'Cool-mist humidifier', q:'1', note:'Eases stuffy noses in dry rooms.', lo:30, hi:60, o:true, a:true},
    {n:'Dim nightlight', q:'1', note:'Just enough light for 3 a.m. feeds.', lo:12, hi:25, o:true, a:true},
-   {n:"Pack 'n Play / playard", q:'1', note:'Portable sleep and naps anywhere.', lo:60, hi:150, o:true, a:true},
+   {n:"Pack 'n Play / playard",k:'pack-and-play travel crib', q:'1', note:'Portable sleep and naps anywhere.', lo:60, hi:150, o:true, a:true},
    {n:'Room thermometer', q:'1', note:'Keep the nursery around 68–72°F.', lo:8, hi:15, o:true, a:true}
  ]},
  {id:'bath', name:'Bath & Grooming', icon:'bath', tip:'Bathe 2–3× a week — daily baths dry out delicate skin.', items:[
@@ -353,11 +354,11 @@ const DATA = [
    {n:'Saline nasal drops', q:'1', note:'Safe from birth; loosens mucus.', lo:5, hi:10},
    {n:'Infant gas drops (simethicone)', q:'1', note:'Ask your pediatrician first.', lo:8, hi:12},
    {n:'Baby nail-care kit (backup)', q:'1', note:'', lo:10, hi:15},
-   {n:'Rear-facing infant car seat', q:'1', note:'Install and get it checked before discharge.', lo:80, hi:300, wk:32},
-   {n:'Stroller / travel system', q:'1', note:'A frame + seat adapter is budget-friendly.', lo:100, hi:500},
+   {n:'Rear-facing infant car seat',k:'carseat', q:'1', note:'Install and get it checked before discharge.', lo:80, hi:300, wk:32},
+   {n:'Stroller / travel system',k:'pram buggy', q:'1', note:'A frame + seat adapter is budget-friendly.', lo:100, hi:500},
    {n:'Soft-structured carrier / wrap', q:'1', note:'Babywearing soothes colic and aids bonding.', lo:30, hi:160},
    {n:'Pediatrician chosen', q:'1', note:'Book a prenatal meet-and-greet visit.', lo:0, hi:0, wk:30},
-   {n:'Pacifiers (varied shapes)', q:'1–2', note:'Offer once breastfeeding is established.', lo:8, hi:15},
+   {n:'Pacifiers (varied shapes)',k:'paci binky soother dummy', q:'1–2', note:'Offer once breastfeeding is established.', lo:8, hi:15},
    {n:'Car-seat mirror', q:'1', note:'See a rear-facing baby from the front seat.', lo:12, hi:20, o:true, a:true},
    {n:'Infant first-aid kit', q:'1', note:'Bandages, tweezers, and basics in one place.', lo:15, hi:30, o:true, a:true},
    {n:'Gripe water', q:'1', note:'A gentler option some parents prefer for gas.', lo:8, hi:12, o:true, a:true},
@@ -381,7 +382,7 @@ const DATA = [
    {n:'Room in the bag for freebies', q:'', note:'They send you home with diapers, wipes, and more.', lo:0, hi:0, o:true}
  ]},
  {id:'parent', name:'Parent Care', icon:'parent', tip:"You can't pour from an empty cup — your recovery matters too.", items:[
-   {n:'Postpartum recovery kit', q:'1', note:'Sitz bath, pads, and a peri bottle.', lo:25, hi:50, wk:34},
+   {n:'Postpartum recovery kit',k:'sitz peri bottle pads', q:'1', note:'Sitz bath, pads, and a peri bottle.', lo:25, hi:50, wk:34},
    {n:'Freezer meals + easy snacks', q:'', note:"You won't have time to cook early on.", lo:50, hi:150, wk:36},
    {n:'Lactation consultant / doula', q:'', note:'Book early — schedules fill fast.', lo:75, hi:300, o:true, wk:28},
    {n:'Insurance cards + contacts saved', q:'1', note:'Pediatrician and nurse line in your phone.', lo:0, hi:0},
@@ -432,32 +433,74 @@ function snapshot(){
     custom:state.custom,sort:state.sort,dark:state.dark,sizeIdx:state.sizeIdx,hideNotes:state.hideNotes,
     sync:state.sync,importedShare:state.importedShare,tier:state.tier,phase:state.phase,cloud:state.cloud,themeV:2,savedAt:new Date().toISOString()};
 }
+let cloudTimer=null, cloudOK=null, pendingLocal=false, pendingCloud=false;
+function setDot(ok){
+  const d=$('syncDot'); if(!d) return;
+  if(!state.sync || !remote.available()){ d.classList.add('hidden'); cloudOK=null; return; }
+  d.classList.remove('hidden');
+  d.classList.toggle('bg-success',ok); d.classList.toggle('bg-warning',!ok);
+  d.setAttribute('aria-label', ok?'Cloud sync connected':'Cloud sync unreachable');
+  d.title = ok?'Synced':'Sync unreachable — changes saved on this device';
+  if(cloudOK===true && ok===false) toast("Cloud sync is unreachable — changes are safe on this device");
+  cloudOK=ok;
+}
+function writeLocal(snap){
+  try{ localStorage.setItem(KEY,JSON.stringify(snap)); }
+  catch(e){ const w=$('storageWarn'); if(w) w.classList.remove('hidden'); }
+}
+async function pushCloud(){
+  pendingCloud=false;
+  if(!(state.sync && remote.available())) return;
+  try{
+    let snap2=snapshot();
+    try{
+      const cur=await remote.get();
+      if(cur && cur.push) cloudPushCache=cur.push;
+      if(cur && cur.state && cur.savedAt && cur.savedAt!==lastSyncStamp){
+        if(mergeIncoming(cur.state)){ snap2=snapshot(); refreshUI(); }
+        else snap2=snapshot();
+      }
+    }catch(e){}
+    lastSyncStamp=snap2.savedAt;
+    const doc={app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap2.savedAt,state:snap2};
+    if(cloudPushCache) doc.push=cloudPushCache;
+    const ok=await remote.put(doc);
+    setDot(ok!==false);
+  }catch(e){ setDot(false); }
+}
 function persist(pushShared){
+  /* local save: fast, coalesced at 120ms. cloud push: debounced to 2s so a
+     burst of taps becomes one PUT instead of a request per checkmark. */
+  pendingLocal=true;
   clearTimeout(saveTimer);
   saveTimer=setTimeout(async()=>{
+    pendingLocal=false;
     const snap=snapshot(), json=JSON.stringify(snap);
     let doneLocal=false;
     try{ if(hasCloud){ await window.storage.set(KEY,json); doneLocal=true; } }catch(e){}
-    if(!doneLocal){ try{ localStorage.setItem(KEY,json); }catch(e){} }
-    if(state.sync && remote.available() && pushShared!==false){
-      try{
-        let snap2=snap;
-        try{
-          const cur=await remote.get();
-          if(cur && cur.push) cloudPushCache=cur.push;
-          if(cur && cur.state && cur.savedAt && cur.savedAt!==lastSyncStamp){
-            if(mergeIncoming(cur.state)){ snap2=snapshot(); refreshUI(); }
-            else snap2=snapshot();
-          }
-        }catch(e){}
-        lastSyncStamp=snap2.savedAt;
-        const doc={app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap2.savedAt,state:snap2};
-        if(cloudPushCache) doc.push=cloudPushCache;
-        await remote.put(doc);
-      }catch(e){}
-    }
+    if(!doneLocal) writeLocal(snap);
   },120);
+  if(state.sync && remote.available() && pushShared!==false){
+    pendingCloud=true;
+    clearTimeout(cloudTimer);
+    cloudTimer=setTimeout(pushCloud,2000);
+  }
 }
+function flushPending(){
+  /* the tab is going away: land the local write synchronously and fire any
+     pending cloud push with keepalive so the last checkmark survives */
+  if(pendingLocal){ clearTimeout(saveTimer); pendingLocal=false; if(!hasCloud) writeLocal(snapshot()); }
+  if(pendingCloud && state.sync && !hasCloud && state.cloud && state.cloud.u){
+    clearTimeout(cloudTimer); pendingCloud=false;
+    try{
+      const doc={app:'newborn-checklist',version:SAVE_VERSION,savedAt:new Date().toISOString(),state:snapshot()};
+      if(cloudPushCache) doc.push=cloudPushCache;
+      fetch(cloudUrlFor(state.cloud),{method:'PUT',headers:cloudHeaders(state.cloud),body:JSON.stringify(doc),keepalive:true});
+    }catch(e){}
+  }
+}
+addEventListener('pagehide',flushPending);
+document.addEventListener('visibilitychange',()=>{ if(document.hidden) flushPending(); });
 async function hydrate(){
   try{ if(hasCloud){ const r=await window.storage.get(KEY); if(r&&r.value) return JSON.parse(r.value); } }catch(e){}
   try{ const v=localStorage.getItem(KEY); if(v) return JSON.parse(v); }catch(e){}
@@ -591,6 +634,7 @@ function money(lo,hi,custom){
   return '$'+lo+'–'+hi;
 }
 function setPressed(btn,on){ btn.setAttribute('aria-pressed',!!on); btn.classList.toggle('btn-active',!!on); }
+function announce(m){ const el=$('srAnnounce'); if(!el) return; el.textContent=''; setTimeout(()=>{ el.textContent=m; },40); }
 
 /* ---------- prepare items ---------- */
 DATA.forEach(cat=>{ cat.items.forEach((it,ii)=>{ it._id=cat.id+'-'+ii; it._ord=ii; it.p=priorityFor(it); }); });
@@ -611,7 +655,7 @@ function toast(msg,opt){
   t.textContent=msg; toastFn=null;
   if(opt && opt.label && opt.fn){
     toastFn=opt.fn;
-    const b=el('button','btn btn-xs btn-warning rounded-full font-extrabold uppercase ml-2'); b.type='button'; b.textContent=opt.label;
+    const b=el('button','btn btn-sm btn-warning rounded-full font-extrabold uppercase ml-2'); b.type='button'; b.textContent=opt.label;
     b.addEventListener('click',()=>{ wrap.classList.add('hidden'); const f=toastFn; toastFn=null; if(f) f(); });
     t.append(b);
   }
@@ -708,6 +752,7 @@ function makeRow(cat,it){
     if(input.checked){ state.checked[it._id]={by:state.who||'',at:Date.now()}; buzz(10); }
     else delete state.checked[it._id];
     persist(); update();
+    announce(it.n+(input.checked?' packed. ':' unpacked. ')+$('progLabel').textContent);
   });
   const main=el('div','flex-1 min-w-0');
   const nameRow=el('div','flex items-center gap-1.5 flex-wrap');
@@ -775,7 +820,7 @@ function update(){
       const wrap=sec.querySelector('.item-wrap[data-id="'+it._id+'"]');
       if(!wrap) return;
       const isChecked=!!state.checked[it._id];
-      const matchesQ=!q || it.n.toLowerCase().includes(q) || (it.note||'').toLowerCase().includes(q);
+      const matchesQ=!q || it.n.toLowerCase().includes(q) || (it.note||'').toLowerCase().includes(q) || (it.k||'').includes(q);
       const matchesT=tier==='all' || (it.p||2)===tier;
       const matchesP=phase==='all' || phaseOf(cat,it)===phase;
       const inScope=matchesT && matchesP;
@@ -848,7 +893,7 @@ function celebrate(){
     setTimeout(()=>{ confetti({particleCount:45,angle:60,spread:60,origin:{x:0,y:.8}}); confetti({particleCount:45,angle:120,spread:60,origin:{x:1,y:.8}}); },220);
     return;
   }
-  const colors=['#7BC8B3','#F0A87C','#EBC77C','#A9B4F2','#F2A3B8'];
+  const colors=['#7DD3BC','#F5AD7E','#F2CB6C','#AEB9FF','#F794B8'];
   for(let i=0;i<44;i++){
     const c=el('div','conf');
     c.style.left=Math.random()*100+'vw';
@@ -861,15 +906,17 @@ function celebrate(){
 }
 
 /* ---------- search ---------- */
+let searchTimer=null;
 $('search').addEventListener('input',e=>{
-  searchTerm=e.target.value;
-  $('clrBtn').classList.toggle('hidden',!searchTerm);
-  update();
+  const v=e.target.value;
+  $('clrBtn').classList.toggle('hidden',!v);
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>{ searchTerm=v; update(); },150);
 });
 document.addEventListener('keydown',e=>{
   if(e.key==='/' && !/input|select|textarea/i.test((e.target&&e.target.tagName)||'')){ e.preventDefault(); $('search').focus(); }
 });
-$('clrBtn').addEventListener('click',()=>{ $('search').value=''; searchTerm=''; $('clrBtn').classList.add('hidden'); update(); $('search').focus(); });
+$('clrBtn').addEventListener('click',()=>{ clearTimeout(searchTimer); $('search').value=''; searchTerm=''; $('clrBtn').classList.add('hidden'); update(); $('search').focus(); });
 
 /* ---------- toggles / sort / tier ---------- */
 const chipHide=$('chipHide'), chipNotes=$('chipNotes'), chipCollapse=$('chipCollapse');
@@ -928,7 +975,7 @@ $('phaseSel').addEventListener('change',()=>{
   state.phase=(v==='pregnancy'||v==='baby')?v:'all';
   persist(); update();
 });
-$('clrFilters').addEventListener('click',()=>{
+$('clrFilters').addEventListener('click',()=>{ clearTimeout(searchTimer);
   $('search').value=''; searchTerm=''; $('clrBtn').classList.add('hidden');
   state.tier='all'; state.phase='all';
   styleChips(); persist(); update(); toast('Filters cleared');
@@ -941,7 +988,7 @@ function applyTheme(){
   $('themeBtn').innerHTML=state.dark
     ? '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
     : '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M20 13.5A7.5 7.5 0 0110.5 4a7.5 7.5 0 109.5 9.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
-  const tc=$('themeColor'); if(tc) tc.content=state.dark?'#0B0E15':'#FAF8F4';
+  const tc=$('themeColor'); if(tc) tc.content=state.dark?'#10141F':'#FAF8F4';
 }
 function applySize(){
   const z=SIZES[state.sizeIdx||0];
@@ -986,6 +1033,31 @@ function resetAll(){
   state.checked={}; wasComplete=false; persist(); update();
   toast('Checkmarks cleared',{label:'Undo',fn:()=>{ state.checked=before; persist(); update(); }});
 }
+$('printBtn').addEventListener('click',()=>{ try{ window.print(); }catch(e){} });
+
+/* ---------- install prompt: native on Android, guided on iOS ---------- */
+let deferredInstall=null;
+const INSTALL_KEY='newborn-install-dismissed';
+function installDismissed(){ try{ return localStorage.getItem(INSTALL_KEY)==='1'; }catch(e){ return true; } }
+function dismissInstall(){ try{ localStorage.setItem(INSTALL_KEY,'1'); }catch(e){} $('installBanner').classList.add('hidden'); }
+const isStandalone=(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone;
+addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); deferredInstall=e;
+  if(!installDismissed() && !isStandalone) $('installBanner').classList.remove('hidden');
+});
+$('installBtn').addEventListener('click',async()=>{
+  if(!deferredInstall) return;
+  deferredInstall.prompt();
+  try{ await deferredInstall.userChoice; }catch(e){}
+  deferredInstall=null; dismissInstall();
+});
+$('installDismiss').addEventListener('click',dismissInstall);
+if(!isStandalone && !installDismissed() && /iPhone|iPad|iPod/.test(navigator.userAgent||'')){
+  $('installText').textContent='On iPhone: tap Share, then "Add to Home Screen" to install with offline use and push.';
+  $('installBtn').classList.add('hidden');
+  $('installBanner').classList.remove('hidden');
+}
+
 $('resetTop').addEventListener('click',resetAll);
 $('resetBottom').addEventListener('click',resetAll);
 
@@ -1011,9 +1083,13 @@ function refreshUI(){
 }
 
 /* ---------- save file / load file (.json backup) ---------- */
+function collectExtras(){
+  const g=k=>{ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } };
+  return {reminders:g('newborn-reminders'),laborLog:g('labor-contractions'),laborContacts:g('labor-contacts')};
+}
 function saveToFile(){
   const snap=snapshot();
-  const payload={app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap};
+  const payload={app:'newborn-checklist',version:3,savedAt:snap.savedAt,state:snap,extras:collectExtras()};
   try{
     const d=new Date(), pad=n=>String(n).padStart(2,'0');
     const name='newborn-checklist-'+d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'.json';
@@ -1030,8 +1106,16 @@ function loadFromFile(file){
       const data=JSON.parse(r.result);
       if(!data || data.app!=='newborn-checklist' || typeof data.state!=='object' || !data.state) throw new Error('bad file');
       applyState(data.state,true); wasComplete=false; persist(); refreshUI();
+      let restored='';
+      if(data.extras){
+        const s=(k,v)=>{ try{ if(v) localStorage.setItem(k,JSON.stringify(v)); }catch(e){} };
+        s('newborn-reminders',data.extras.reminders);
+        s('labor-contractions',data.extras.laborLog);
+        s('labor-contacts',data.extras.laborContacts);
+        restored=' — full backup restored';
+      }
       const when=data.savedAt? new Date(data.savedAt) : null;
-      toast('Loaded'+(when&&!isNaN(when)? ' — saved '+when.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}) : ''));
+      toast('Loaded'+(when&&!isNaN(when)? ' — saved '+when.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}) : '')+restored);
     }catch(e){ buzz([40,30,40]); toast('Not a valid save file'); }
   };
   r.onerror=()=>toast('Could not read that file');
@@ -1049,7 +1133,16 @@ function shareCopy(){
     const payload={app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap};
     const holder=$('shared-state');
     holder.textContent=JSON.stringify(payload).replace(/</g,'\\u003c');
+    /* absolutize local assets so the downloaded copy styles itself from the
+       live site instead of a relative path it does not have */
+    const abs=pth=>{ try{ return new URL(pth,location.href).href; }catch(e){ return pth; } };
+    const cssL=document.querySelector('link[href="./assets/app.css"]');
+    const cjS=document.querySelector('script[src="./assets/confetti.min.js"]');
+    if(cssL) cssL.setAttribute('href',abs('./assets/app.css'));
+    if(cjS) cjS.setAttribute('src',abs('./assets/confetti.min.js'));
     const src='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+    if(cssL) cssL.setAttribute('href','./assets/app.css');
+    if(cjS) cjS.setAttribute('src','./assets/confetti.min.js');
     holder.textContent='';
     state.importedShare=snap.savedAt; persist();
     const blob=new Blob([src],{type:'text/html'});
@@ -1132,8 +1225,12 @@ async function shareLink(){
       return;
     }
   }catch(e){ if(e && e.name==='AbortError') return; }
-  try{ await navigator.clipboard.writeText(url); toast('Link copied — send it to anyone'); }
-  catch(e){ prompt('Copy this link:',url); }
+  try{
+    await navigator.clipboard.writeText(url);
+    toast(url.length>2000
+      ? 'Link copied — heads up, it is '+url.length+' characters; a Save-to-file backup travels better at this size'
+      : 'Link copied — send it to anyone');
+  }catch(e){ prompt('Copy this link:',url); }
 }
 $('linkBtn').addEventListener('click',shareLink);
 
@@ -1169,7 +1266,9 @@ function toggleCalm(){
       calm={ctx,on:false};
     }
     calm.ctx.resume(); calm.on=true;
-    setPressed(btn,true); toast('Calm sounds on — womb-like brown noise');
+    setPressed(btn,true);
+    const iosNote=/iPhone|iPad|iPod/.test(navigator.userAgent||'')?' (plays even on the silent switch)':'';
+    toast('Calm sounds on — womb-like brown noise'+iosNote);
   }catch(e){ toast('Audio not available here'); }
 }
 $('calmBtn').addEventListener('click',toggleCalm);
@@ -1184,6 +1283,7 @@ async function pollShared(){
     if(lastSyncStamp && sh.savedAt<=lastSyncStamp) return;
     lastSyncStamp=sh.savedAt;
     applyState(sh.state,true); state.sync=true; persist(false); refreshUI();
+    setDot(true);
     toast('Updated from the shared list');
   }catch(e){}
 }
@@ -1249,6 +1349,8 @@ async function pollShared(){
   setInterval(pollShared,60000);
   document.addEventListener('visibilitychange',()=>{ if(!document.hidden) pollShared(); });
 
+  try{ if(navigator.storage && navigator.storage.persist) navigator.storage.persist(); }catch(e){}
+  setDot(cloudOK===false?false:true);
   refreshUI();
 
   /* PWA: cache the shell + CDN assets for offline use after first visit */

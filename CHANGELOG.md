@@ -1,5 +1,35 @@
 # Baby List — Changelog
 
+## v2.2.0 — July 2026
+- Fully self-hosted: Tailwind + daisyUI precompiled to a static stylesheet,
+  fonts and confetti vendored. No CDNs, no runtime compiler, no FOUC, and the
+  app now works completely offline including first paint.
+- Saving split in two: local writes land in ~120ms while cloud pushes batch
+  on a 2-second debounce (a burst of taps becomes one request). Closing or
+  backgrounding the app flushes both, with keepalive for the network push.
+- Sync status dot in the header (green synced, amber unreachable) with a
+  single quiet toast on failure; private-mode storage warnings surface too.
+- Save-to-file is now a full backup: list, reminders, labor contacts, and the
+  contraction log travel in one file and restore together.
+- Install banner: native prompt on Android, guided Add-to-Home-Screen on iOS.
+- Copy the contraction log from the Labor page for your provider.
+- Settings: invite link that connects another phone in one tap, and a
+  next-baby reset that clears checkmarks locally and in the cloud while
+  keeping custom items, reminders, and the connection.
+- Search: 150ms debounce plus nickname keywords (onesie, paci, binky,
+  carseat, pram, sitz...), screen-reader announcements on checkmarks, a
+  maskable Android icon, larger toasts, print button, share-link size
+  heads-up, iOS silent-switch note on Calm sounds, and durable-storage
+  request at boot.
+
+
+## v2.1.1 — July 2026
+- Bottom menu redesign: identity colors per tab and a tinted pill behind the
+  active tab's icon, so the current page reads at a glance.
+- Dark palette lifted and diversified: brighter, more separated category and
+  zone hues on slightly lighter surfaces, stronger tints and borders, so
+  sections stop washing into one navy.
+
 ## v2.1.0 — July 2026
 - New Upbringing page: fourth-trimester recovery and visitor boundaries,
   first-30-days sleep and feeding-on-cues, tummy-time schedule by age,

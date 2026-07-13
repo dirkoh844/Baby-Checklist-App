@@ -1,7 +1,7 @@
 /* Baby List service worker — network-first navigations (fresh deploys reach users),
    stale-while-revalidate for assets/CDNs, notification click focuses the app */
-const VERSION = 'babylist-v5';
-const CORE = ['./', './index.html', './labor.html', './reminders.html', './settings.html', './upbringing.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
+const VERSION = 'babylist-v6';
+const CORE = ['./', './index.html', './labor.html', './reminders.html', './settings.html', './upbringing.html', './assets/app.css', './assets/confetti.min.js', './assets/fonts/fraunces-latin-opsz-normal.woff2', './assets/fonts/fraunces-latin-opsz-italic.woff2', './assets/fonts/nunito-sans-latin-normal.woff2', './assets/fonts/nunito-sans-latin-italic.woff2', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));

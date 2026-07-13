@@ -5,9 +5,19 @@
   "description": "Newborn Essentials checklist PWA + push sender",
   "scripts": {
     "push": "node scripts/send-push.mjs",
-    "vapid": "node scripts/generate-vapid.mjs"
+    "vapid": "node scripts/generate-vapid.mjs",
+    "css": "tailwindcss -i assets/input.css -o assets/app.css --minify"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.3.2",
+    "daisyui": "^5.6.18",
+    "jsdom": "^29.1.1",
+    "tailwindcss": "^4.3.2",
     "web-push": "^3.6.7"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.2.9",
+    "@fontsource-variable/nunito-sans": "^5.2.7",
+    "canvas-confetti": "^1.9.4"
   }
 }
