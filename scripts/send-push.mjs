@@ -28,7 +28,7 @@ function headersFor(url, key, method) {
   const hd = { 'Content-Type': 'application/json' };
   if (!key) return hd;
   const host = (url.match(/^https?:\/\/([^/]+)/) || [])[1] || '';
-  if (host.includes('jsonbin.io')) hd['X-Master-Key'] = key;
+  if (host.includes('jsonbin.io')) hd[process.env.CLOUD_KEY_TYPE === 'master' ? 'X-Master-Key' : 'X-Access-Key'] = key;
   else if (host.includes('extendsclass.com')) hd['Security-key'] = key;
   else hd['Authorization'] = 'Bearer ' + key;
   return hd;
