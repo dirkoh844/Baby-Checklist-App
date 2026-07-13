@@ -8,11 +8,15 @@ Run through this once after pushing the package.
 - DevTools optional: Application → Service Workers shows `babylist-v3` activated.
 
 ## 2. Cloud sync
-- Tap **Cloud sync** → **Create shared storage**. Success toast means jsonstorage.net
-  minted a bin. Reopen the panel and copy the endpoint URL for the `CLOUD_URL` secret.
+- Tap **Cloud sync** → **Create shared storage**. The app tries JSONBlob first
+  (no account, no request caps; the push cron's 15-minute touches keep the blob
+  alive indefinitely), then jsonstorage.net. Reopen the panel and copy the
+  endpoint URL for the `CLOUD_URL` secret.
 - If auto-create fails: make a free bin at jsonbin.io (signup) → paste
   `https://api.jsonbin.io/v3/b/<BIN_ID>` as the URL and your X-Master-Key in the
-  key field → Connect. Pantry and ExtendsClass work the same way.
+  key field → Connect. Pantry and ExtendsClass work the same way. Avoid
+  jsonstorage.net's free tier as a manual choice — its 1,000 requests/month is
+  too small for sync plus the push cron.
 - Check an item on phone A; open the share link on phone B → same checkmark,
   and B toggles it within ~20 seconds of A's next change.
 

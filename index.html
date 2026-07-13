@@ -194,7 +194,7 @@ body{
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-3.5 hidden zone-info" id="syncPanel">
     <div class="card-body p-4 gap-2">
       <div class="font-display font-semibold text-[16px]">Set up cloud sync</div>
-      <p class="text-[12.5px] ink-soft leading-relaxed m-0">One shared list for every device that has the link. Quickest path: tap <b class="text-base-content">Create shared storage</b>. Or paste your own JSON endpoint (JSONBin, Pantry, jsonstorage.net, ExtendsClass, or any URL that accepts GET and PUT).</p>
+      <p class="text-[12.5px] ink-soft leading-relaxed m-0">One shared list for every device that has the link. Quickest: tap <b class="text-base-content">Create shared storage</b> (tries JSONBlob, then jsonstorage.net). Manual fallback: sign up free at jsonbin.io, create a bin, then paste <b class="text-base-content">https://api.jsonbin.io/v3/b/YOUR_BIN_ID</b> plus your X-Master-Key. Pantry and ExtendsClass work too.</p>
       <button id="cloudCreate" type="button" class="btn btn-sm btn-primary font-extrabold w-full">Create shared storage</button>
       <div class="divider my-0 text-[10px] ink-soft">or paste an endpoint</div>
       <input id="cloudUrl" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="https://… endpoint URL" aria-label="Sync endpoint URL">
@@ -280,7 +280,7 @@ body{
       <input type="file" id="fileInput" accept=".json,application/json" hidden>
     </div>
     <p class="mb-2.5">Follows AAP and CPSC safe-sleep guidance, but isn't medical advice. Confirm anything health-related with your pediatrician.</p>
-    <p class="mb-2.5"><b class="text-base-content font-extrabold">Progress saves on this device automatically.</b> <b class="text-base-content font-extrabold">Share link</b> packs your checkmarks, added items, and due date into a URL anyone can open. <b class="text-base-content font-extrabold">Save / Load file</b> is a .json backup. <b class="text-base-content font-extrabold">Share copy</b> downloads this page with your list baked in. <b class="text-base-content font-extrabold">Cloud sync</b> keeps one live list across every device: tap the Cloud sync chip once to create shared storage (or paste your own JSON endpoint), then send a Share link — devices that open it join the same list automatically and stay in step. Anything synced or linked is visible to whoever has the link.</p>
+    <p class="mb-2.5"><b class="text-base-content font-extrabold">Progress saves on this device automatically.</b> <b class="text-base-content font-extrabold">Share link</b> packs your checkmarks, added items, and due date into a URL anyone can open. <b class="text-base-content font-extrabold">Save / Load file</b> is a .json backup. <b class="text-base-content font-extrabold">Share copy</b> downloads this page with your list baked in. <b class="text-base-content font-extrabold">Cloud sync</b> keeps one live list across every device: tap the Cloud sync chip once to create shared storage (or paste your own JSON endpoint), then send a Share link — devices that open it join the same list automatically and refresh about once a minute and whenever the app is opened. Anything synced or linked is visible to whoever has the link.</p>
   </footer>
 </div>
 
@@ -1253,24 +1253,44 @@ chipSync.addEventListener('click',()=>{
   enableSync();
 });
 $('cloudCancel').addEventListener('click',()=>showSyncPanel(false));
+async function mintCloud(body){
+  /* Provider chain — first success wins. */
+  /* 1. JSONBlob: no account, no key, no request caps; kept alive by activity
+        (the push cron touches it every 15 minutes, so it never expires). */
+  try{
+    const r=await fetch('https://jsonblob.com/api/jsonBlob',{method:'POST',headers:{'Content-Type':'application/json'},body});
+    if(r.status===201){
+      const loc=r.headers.get('Location')||r.headers.get('location');
+      if(loc){
+        const u=loc.indexOf('http')===0?loc:'https://jsonblob.com'+loc;
+        return {u,k:''};
+      }
+    }
+  }catch(e){}
+  /* 2. jsonstorage.net keyless create (only where their plan still permits it) */
+  try{
+    const r=await fetch('https://api.jsonstorage.net/v1/json',{method:'POST',headers:{'Content-Type':'application/json'},body});
+    if(r.ok){
+      const j=await r.json();
+      const uri=j.uri||j.url;
+      if(uri && uri.indexOf('https://')===0) return {u:uri,k:''};
+    }
+  }catch(e){}
+  return null;
+}
 $('cloudCreate').addEventListener('click',async()=>{
   const btn=$('cloudCreate'); btn.disabled=true; btn.textContent='Creating…';
-  try{
-    const snap=snapshot();
-    const body={app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap};
-    const res=await fetch('https://api.jsonstorage.net/v1/json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    if(!res.ok) throw new Error('create failed');
-    const j=await res.json();
-    const uri=j.uri||j.url;
-    if(!uri || uri.indexOf('https://')!==0) throw new Error('no uri');
-    state.cloud={u:uri,k:''};
+  const snap=snapshot();
+  const cfg=await mintCloud(JSON.stringify({app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap}));
+  if(cfg){
+    state.cloud=cfg;
     lastSyncStamp=snap.savedAt;
     askWho();
     state.sync=true; setPressed(chipSync,true); persist(false);
     showSyncPanel(false);
     toast('Shared storage created — send a Share link to connect other devices');
-  }catch(e){
-    toast('Auto-create unavailable — paste an endpoint below instead');
+  } else {
+    toast('Auto-create unavailable — the JSONBin option below takes one minute');
   }
   btn.disabled=false; btn.textContent='Create shared storage';
 });
@@ -1554,7 +1574,8 @@ renderReminders(); refreshNotifBtn();
       }
     }catch(e){}
   }
-  setInterval(pollShared,20000);
+  setInterval(pollShared,60000);
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden) pollShared(); });
 
   refreshUI();
 
