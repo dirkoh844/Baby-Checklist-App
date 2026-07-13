@@ -10,8 +10,12 @@ Focus mode, a hardened print layout, and four ways to share.
 
 | File | Purpose |
 |---|---|
-| `index.html` | The checklist app. |
+| `index.html` | The checklist. |
 | `labor.html` | Labor & Delivery: when-to-go guidance, contraction timer, stages, key contacts. |
+| `reminders.html` | Mom-care reminders and push enrollment. |
+| `settings.html` | Cloud sync setup, due date, name, appearance, what's new. |
+| `upbringing.html` | Recovery through the first year: sleep, feeding, tummy time, solids, babyproofing. |
+| `CHANGELOG.md` | Version history. |
 | `manifest.webmanifest` | PWA install metadata (+ Labor shortcut). |
 | `sw.js` | Service worker: network-first pages, cached assets, notification clicks focus the app. |
 | `icon-192.png` / `icon-512.png` / `apple-touch-icon.png` | App icons. |

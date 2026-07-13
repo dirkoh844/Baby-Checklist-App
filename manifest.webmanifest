@@ -38,6 +38,17 @@
           "sizes": "192x192"
         }
       ]
+    },
+    {
+      "name": "Reminders",
+      "url": "./reminders.html",
+      "description": "Vitamin and water reminders",
+      "icons": [
+        {
+          "src": "./icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

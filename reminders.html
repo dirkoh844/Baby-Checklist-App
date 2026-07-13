@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="womb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reminders — Baby List</title>
+<meta name="theme-color" content="#0B0E15">
+<meta name="color-scheme" content="dark light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230B0E15'/%3E%3Cpath d='M19 9.5A5 5 0 0112.5 3 5 5 0 1019 9.5z' fill='%23EBC77C'/%3E%3Cpath d='M5 13l4 4.5L18 8' stroke='%237BC8B3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+[data-theme="womb"]{
+  color-scheme:dark;
+  --color-base-100:#151A26; --color-base-200:#0B0E15; --color-base-300:#232B3B;
+  --color-base-content:#EDF1F8;
+  --color-primary:#7BC8B3;   --color-primary-content:#0C1019;
+  --color-secondary:#F0A87C; --color-secondary-content:#0C1019;
+  --color-accent:#EBC77C;    --color-accent-content:#0C1019;
+  --color-neutral:#EDF1F8;   --color-neutral-content:#0B0E15;
+  --color-info:#A9B4F2;      --color-info-content:#0C1019;
+  --color-success:#A9D98C;   --color-success-content:#0C1019;
+  --color-warning:#EBC77C;   --color-warning-content:#0C1019;
+  --color-error:#F58B7E;     --color-error-content:#0C1019;
+  --radius-box:1rem; --radius-field:.75rem; --radius-selector:.5rem;
+  --ink-soft:#99A6B9; --glow1:rgba(240,168,124,.055); --glow2:rgba(123,200,179,.04);
+}
+[data-theme="dawn"]{
+  color-scheme:light;
+  --color-base-100:#FFFFFF; --color-base-200:#FAF8F4; --color-base-300:#E8E1D5;
+  --color-base-content:#27313F;
+  --color-primary:#5C9A8B;   --color-primary-content:#FFFFFF;
+  --color-secondary:#E8956B; --color-secondary-content:#FFFFFF;
+  --color-accent:#D9A741;    --color-accent-content:#FFFFFF;
+  --color-neutral:#27313F;   --color-neutral-content:#FAF8F4;
+  --color-info:#5A67C7;      --color-info-content:#FFFFFF;
+  --color-success:#5E8A3C;   --color-success-content:#FFFFFF;
+  --color-warning:#B8860B;   --color-warning-content:#FFFFFF;
+  --color-error:#DD6A59;     --color-error-content:#FFFFFF;
+  --radius-box:1rem; --radius-field:.75rem; --radius-selector:.5rem;
+  --ink-soft:#505C6B; --glow1:rgba(232,149,107,.09); --glow2:rgba(92,154,139,.07);
+}
+html{background:var(--color-base-200)}
+body{
+  font-family:"Nunito Sans",system-ui,sans-serif;
+  background-color:var(--color-base-200);
+  background-image:radial-gradient(520px 300px at 14% -10%,var(--glow1),transparent 58%),
+                   radial-gradient(560px 340px at 104% -4%,var(--glow2),transparent 60%);
+  background-repeat:no-repeat;
+}
+.font-display{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto;letter-spacing:-.012em}
+.ink-soft{color:var(--ink-soft)}
+::selection{background:var(--color-primary);color:var(--color-primary-content)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@supports (background: color-mix(in oklab, red 10%, blue)){
+  .zone-gold{background:color-mix(in oklab, var(--color-accent) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-accent) 30%, var(--color-base-300));border-left:4px solid var(--color-accent)}
+  .zone-green{background:color-mix(in oklab, var(--color-primary) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-primary) 30%, var(--color-base-300));border-left:4px solid var(--color-primary)}
+  .zone-info{background:color-mix(in oklab, var(--color-info) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-info) 30%, var(--color-base-300));border-left:4px solid var(--color-info)}
+  .zone-coral{background:color-mix(in oklab, var(--color-error) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-error) 30%, var(--color-base-300));border-left:4px solid var(--color-error)}
+}
+@media print{ *{background:#fff!important;color:#000!important} #tabNav{display:none!important} }
+</style>
+</head>
+<body class="min-h-screen text-[16px] leading-relaxed pb-28">
+
+<header class="navbar sticky top-0 z-30 bg-base-200/85 backdrop-blur-md border-b border-base-300 px-3.5 pt-[calc(env(safe-area-inset-top)+8px)] pb-2 min-h-0">
+  <div class="w-full max-w-[640px] mx-auto flex items-center gap-2">
+    <h1 class="font-display font-semibold text-[21px] leading-tight m-0 flex-1">Mom care <em class="italic font-medium text-secondary">reminders</em>
+      <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1">Vitamins · water · your own</span>
+    </h1>
+    <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 flex-none" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+  </div>
+</header>
+
+<div class="w-full max-w-[640px] mx-auto px-3.5">
+
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-green">
+    <div class="card-body p-4 pb-3 gap-2">
+      <div class="flex items-center gap-2 flex-wrap">
+        <h2 class="font-display font-semibold text-[17.5px] m-0 text-primary flex-1">Your reminders</h2>
+        <button class="btn btn-xs rounded-full border-base-300 font-extrabold" id="notifBtn" type="button">Enable notifications</button>
+        <button class="btn btn-xs rounded-full border-base-300 font-extrabold" id="pushBtn" type="button">Enable push</button>
+      </div>
+      <div id="remList" class="mt-1"></div>
+      <div class="flex gap-2 mt-1">
+        <button id="remAdd" type="button" class="btn btn-xs rounded-full border-base-300 font-bold">+ Custom reminder</button>
+        <button id="remTest" type="button" class="btn btn-xs rounded-full border-base-300 font-bold">Test</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4">
+    <div class="card-body p-4 gap-1.5 text-[13px] leading-relaxed">
+      <h2 class="font-display font-semibold text-[16.5px] m-0 text-info">How delivery works</h2>
+      <p class="m-0"><b class="text-base-content">Push on</b> means reminders arrive even with the app fully closed — a repo workflow checks every 15 minutes and sends what's due in this phone's timezone. Push needs Cloud sync (<a class="link link-primary font-bold" href="./settings.html">set up in Settings</a>) and, on iPhone, the app added to the Home Screen.</p>
+      <p class="m-0 ink-soft">Without push, reminders fire while this app is open or installed and running, with a 3-hour catch-up when reopened.</p>
+    </div>
+  </section>
+
+  <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
+    <p class="m-0">Times are per phone. Toggling or retiming a reminder updates your push schedule automatically.</p>
+  </footer>
+</div>
+
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
+  <div class="max-w-[640px] mx-auto grid grid-cols-5">
+    <a href="./index.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.2l2.4 2.6 4.8-5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Checklist</a>
+    <a href="./labor.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-7.5-10.7A4.3 4.3 0 0112 7.6a4.3 4.3 0 017.5 2.7C19.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 12h2.4l1-1.8 1.4 3.2 1.1-1.4H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Labor</a>
+    <a href="./upbringing.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M12 21v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14c0-4.2-3-6.6-7.2-6.6C4.8 11.6 7.8 14 12 14z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 12.2c0-3.4 2.5-5.4 6-5.4 0 3.4-2.5 5.4-6 5.4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Upbringing</a>
+    <a href="./reminders.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold text-primary" aria-current="page"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M6 9.5A6 6 0 0118 9.5c0 5 2 6 2 6H4s2-1 2-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.8 19a2.3 2.3 0 004.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Reminders</a>
+    <a href="./settings.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Settings</a>
+  </div>
+</nav>
+
+<div class="toast toast-center toast-bottom z-[80] mb-20 hidden" id="toastWrap">
+  <div class="alert bg-neutral text-neutral-content rounded-full py-2.5 px-5 text-[13px] font-extrabold shadow-lg border-0" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const buzz=p=>{ try{ if(navigator.vibrate) navigator.vibrate(p); }catch(e){} };
+let toastTimer=null, toastFn=null;
+function el(t,c){ const e=document.createElement(t); if(c) e.className=c; return e; }
+function toast(msg,opt){
+  const w=$('toastWrap'), t=$('toast');
+  t.textContent=msg; toastFn=null;
+  if(opt&&opt.label&&opt.fn){
+    toastFn=opt.fn;
+    const b=el('button','btn btn-xs btn-warning rounded-full font-extrabold uppercase ml-2'); b.type='button'; b.textContent=opt.label;
+    b.addEventListener('click',()=>{ w.classList.add('hidden'); const f=toastFn; toastFn=null; if(f) f(); });
+    t.append(b);
+  }
+  w.classList.remove('hidden');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),opt&&opt.label?6000:1900);
+}
+
+/* ---------- shared state (theme + cloud config + name) ---------- */
+const KEY='newborn-checklist-v3', WHO_KEY='newborn-who';
+function loadState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):null; }catch(e){ return null; } }
+const cur=loadState()||{};
+let dark=(cur.themeV===2&&typeof cur.dark==='boolean')?cur.dark:true;
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme',dark?'womb':'dawn');
+  $('themeBtn').innerHTML=dark
+    ? '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+    : '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M20 13.5A7.5 7.5 0 0110.5 4a7.5 7.5 0 109.5 9.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+}
+$('themeBtn').addEventListener('click',()=>{
+  dark=!dark; applyTheme();
+  try{ const s=loadState()||{}; s.dark=dark; s.themeV=2; localStorage.setItem(KEY,JSON.stringify(s)); }catch(e){}
+});
+applyTheme();
+
+/* ---------- reminders store ---------- */
+const REM_KEY='newborn-reminders';
+let rem={items:[
+  {id:'vit',label:'Prenatal vitamin',type:'daily',time:'09:00',on:false},
+  {id:'water',label:'Drink water',type:'interval',every:2,start:'09:00',end:'21:00',on:false}
+],last:{}};
+try{ const v=localStorage.getItem(REM_KEY); if(v){ const p=JSON.parse(v); if(p&&Array.isArray(p.items)) rem=p; if(!rem.last) rem.last={}; } }catch(e){}
+function remSave(){ try{ localStorage.setItem(REM_KEY,JSON.stringify(rem)); }catch(e){} scheduleRegistrySync(); }
+function minutesOf(t){ const m=/^(\d{1,2}):(\d{2})$/.exec(t||''); return m?(+m[1]*60 + +m[2]):null; }
+function remDueSlot(r,now){
+  const d=new Date(now); const c=d.getHours()*60+d.getMinutes();
+  if(r.type==='daily'){ const t=minutesOf(r.time); if(t===null) return null; return (c>=t&&c<t+180)?d.toDateString()+'|'+r.time:null; }
+  const s=minutesOf(r.start), e=minutesOf(r.end), ev=(+r.every||2)*60;
+  if(s===null||e===null||ev<=0||c<s||c>e) return null;
+  return d.toDateString()+'|i'+Math.floor((c-s)/ev);
+}
+async function remFire(r){
+  buzz(15);
+  const body=r.type==='interval'?'Every '+r.every+'h — small sips add up.':"Time for this — you've got it, mama.";
+  try{
+    if('Notification' in window && Notification.permission==='granted'){
+      if(navigator.serviceWorker){
+        const reg=await navigator.serviceWorker.getRegistration();
+        if(reg&&reg.showNotification){ reg.showNotification(r.label,{body,tag:'rem-'+r.id,icon:'./icon-192.png',badge:'./icon-192.png'}); return; }
+      }
+      new Notification(r.label,{body,icon:'./icon-192.png'}); return;
+    }
+  }catch(e){}
+  toast('Reminder: '+r.label);
+}
+function remTick(){
+  if(pushSub) return; /* the cron sender owns delivery while push is on */
+  const now=Date.now();
+  rem.items.forEach(r=>{
+    if(!r.on) return;
+    const slot=remDueSlot(r,now);
+    if(slot && rem.last[r.id]!==slot){ rem.last[r.id]=slot; remSave(); remFire(r); }
+  });
+}
+function refreshNotifBtn(){
+  const b=$('notifBtn');
+  if(!('Notification' in window)){ b.textContent='Notifications unavailable'; b.disabled=true; return; }
+  if(Notification.permission==='granted'){ b.textContent='Notifications on'; b.classList.add('btn-active'); }
+  else if(Notification.permission==='denied'){ b.textContent='Blocked in browser settings'; }
+  else { b.textContent='Enable notifications'; b.classList.remove('btn-active'); }
+}
+function renderReminders(){
+  const box=$('remList'); box.innerHTML='';
+  rem.items.forEach(r=>{
+    const row=el('div','flex items-center gap-2.5 py-2 border-t border-base-300 first:border-t-0 flex-wrap');
+    const tg=document.createElement('input');
+    tg.type='checkbox'; tg.className='toggle toggle-primary toggle-sm flex-none'; tg.checked=!!r.on;
+    tg.setAttribute('aria-label','Toggle '+r.label);
+    tg.addEventListener('change',()=>{ r.on=tg.checked; remSave(); if(r.on) remTick(); });
+    const lab=el('span','flex-1 min-w-[120px] font-bold text-[14px] leading-snug'); lab.textContent=r.label;
+    row.append(tg,lab);
+    if(r.type==='daily'){
+      const t=document.createElement('input');
+      t.type='time'; t.value=r.time||'09:00';
+      t.className='input input-xs input-bordered bg-base-200 font-semibold w-[92px]';
+      t.setAttribute('aria-label',r.label+' time');
+      t.addEventListener('change',()=>{ r.time=t.value; remSave(); });
+      row.append(t);
+    } else {
+      const sel=document.createElement('select');
+      sel.className='select select-xs select-bordered bg-base-200 font-semibold';
+      sel.setAttribute('aria-label',r.label+' interval');
+      [1,2,3,4].forEach(n=>{ const o=document.createElement('option'); o.value=n; o.textContent='every '+n+'h'; if(n===(+r.every||2)) o.selected=true; sel.append(o); });
+      sel.addEventListener('change',()=>{ r.every=+sel.value; remSave(); });
+      row.append(sel);
+    }
+    if(!['vit','water'].includes(r.id)){
+      const x=el('button','btn btn-ghost btn-xs px-1 ink-soft hover:text-error'); x.type='button';
+      x.setAttribute('aria-label','Remove '+r.label); x.textContent='✕';
+      x.addEventListener('click',()=>{
+        rem.items=rem.items.filter(i=>i.id!==r.id); remSave(); renderReminders();
+        toast('Removed '+r.label,{label:'Undo',fn:()=>{ rem.items.push(r); remSave(); renderReminders(); }});
+      });
+      row.append(x);
+    }
+    box.append(row);
+  });
+}
+$('notifBtn').addEventListener('click',()=>{
+  if(!('Notification' in window)) return;
+  if(Notification.permission==='default'){
+    Notification.requestPermission().then(p=>{ refreshNotifBtn(); toast(p==='granted'?'Notifications enabled':'Notifications not enabled'); });
+  } else refreshNotifBtn();
+});
+$('remAdd').addEventListener('click',()=>{
+  const label=(prompt('Reminder name (e.g. "Iron supplement", "Rest break"):')||'').trim();
+  if(!label) return;
+  const time=(prompt('Daily at what time? (HH:MM, 24-hour)','14:00')||'14:00').trim();
+  rem.items.push({id:'c'+Date.now(),label,type:'daily',time:minutesOf(time)!==null?time:'14:00',on:true});
+  remSave(); renderReminders(); toast('Reminder added');
+});
+$('remTest').addEventListener('click',()=>remFire({id:'test',label:'Test reminder',type:'daily'}));
+
+/* ---------- true push: subscribe here, the repo cron delivers ---------- */
+const VAPID_PUBLIC='BNVR-AypVjbusxgNVt54BWPu77Fry3d04IIz6k23169SiUivRrFFpkZfNSA7JOAqA3a3asDA3wgOQmDzoHh3o1E';
+let pushSub=null;
+function b64ToU8(s){ s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4)s+='='; const r=atob(s); const a=new Uint8Array(r.length); for(let i=0;i<r.length;i++)a[i]=r.charCodeAt(i); return a; }
+function subKey(s){ return s.endpoint.slice(-44).replace(/[^A-Za-z0-9]/g,'').slice(-32); }
+function cloudCfg(){ const s=loadState(); return (s&&s.cloud&&s.cloud.u)?s.cloud:null; }
+function cloudHeaders(cfg){
+  const hd={'Content-Type':'application/json'};
+  if(!cfg||!cfg.k) return hd;
+  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
+  if(host.includes('jsonbin.io')) hd['X-Master-Key']=cfg.k;
+  else if(host.includes('extendsclass.com')) hd['Security-key']=cfg.k;
+  else hd['Authorization']='Bearer '+cfg.k;
+  return hd;
+}
+function cloudUrlFor(cfg){
+  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
+  if(host.includes('jsonstorage.net')&&cfg.k&&cfg.u.indexOf('apiKey=')<0)
+    return cfg.u+(cfg.u.includes('?')?'&':'?')+'apiKey='+encodeURIComponent(cfg.k);
+  return cfg.u;
+}
+async function getPushSub(){
+  try{
+    if(!('serviceWorker' in navigator)||!('PushManager' in window)) return null;
+    const reg=await navigator.serviceWorker.ready;
+    return await reg.pushManager.getSubscription();
+  }catch(e){ return null; }
+}
+async function writePushRegistry(){
+  const s=pushSub||await getPushSub(); if(!s) return;
+  const cfg=cloudCfg(); if(!cfg) return;
+  try{
+    let doc=null;
+    try{
+      const r=await fetch(cloudUrlFor(cfg),{headers:cloudHeaders(cfg),cache:'no-store'});
+      if(r.ok){ const j=await r.json(); doc=(j&&j.record&&j.record.app)?j.record:j; if(!doc||doc.app!=='newborn-checklist') doc=null; }
+    }catch(e){}
+    if(!doc){
+      const saved=loadState();
+      doc={app:'newborn-checklist',version:2,savedAt:new Date().toISOString(),state:saved||{}};
+    }
+    doc.push=doc.push||{subs:{}}; doc.push.subs=doc.push.subs||{};
+    const prev=doc.push.subs[subKey(s)]||{};
+    let who=''; try{ who=localStorage.getItem(WHO_KEY)||''; }catch(e){}
+    doc.push.subs[subKey(s)]={
+      sub:s.toJSON(), tzo:new Date().getTimezoneOffset(), who,
+      reminders:rem.items.filter(r=>r.on).map(r=>({id:r.id,label:r.label,type:r.type,time:r.time,every:r.every,start:r.start,end:r.end})),
+      last:prev.last||{}, updatedAt:new Date().toISOString()
+    };
+    await fetch(cloudUrlFor(cfg),{method:'PUT',headers:cloudHeaders(cfg),body:JSON.stringify(doc)});
+  }catch(e){}
+}
+async function enablePush(){
+  if(!('PushManager' in window)){
+    const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent||'');
+    const standalone=(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone;
+    toast(isIOS&&!standalone?'On iPhone: Share → Add to Home Screen first, then enable push from the installed app':'Push not supported in this browser');
+    return;
+  }
+  if(!cloudCfg()){ toast('Set up Cloud sync in Settings first — push rides on it'); return; }
+  if(!('Notification' in window)){ toast('Notifications unavailable here'); return; }
+  if(Notification.permission!=='granted'){
+    const p=await Notification.requestPermission(); refreshNotifBtn();
+    if(p!=='granted'){ toast('Allow notifications first'); return; }
+  }
+  try{
+    const reg=await navigator.serviceWorker.ready;
+    pushSub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64ToU8(VAPID_PUBLIC)});
+    await writePushRegistry();
+    refreshPushBtn();
+    toast('Push on — reminders arrive even with the app closed');
+  }catch(e){ toast('Push not available in this browser'); }
+}
+async function disablePush(){
+  try{
+    const s=await getPushSub();
+    const cfg=cloudCfg();
+    if(s&&cfg){
+      try{
+        const r=await fetch(cloudUrlFor(cfg),{headers:cloudHeaders(cfg),cache:'no-store'});
+        if(r.ok){
+          const j=await r.json(); const doc=(j&&j.record&&j.record.app)?j.record:j;
+          if(doc&&doc.push&&doc.push.subs){ delete doc.push.subs[subKey(s)];
+            await fetch(cloudUrlFor(cfg),{method:'PUT',headers:cloudHeaders(cfg),body:JSON.stringify(doc)}); }
+        }
+      }catch(e){}
+    }
+    if(s) await s.unsubscribe();
+  }catch(e){}
+  pushSub=null; refreshPushBtn(); toast('Push off — reminders fire only while the app runs');
+}
+function refreshPushBtn(){
+  const b=$('pushBtn');
+  if(!('serviceWorker' in navigator)){ b.textContent='Push unavailable'; b.disabled=true; return; }
+  if(pushSub){ b.textContent='Push on'; b.classList.add('btn-active'); }
+  else { b.textContent='Enable push'; b.classList.remove('btn-active'); }
+}
+$('pushBtn').addEventListener('click',()=>{ pushSub?disablePush():enablePush(); });
+let regTimer=null;
+function scheduleRegistrySync(){ if(!pushSub) return; clearTimeout(regTimer); regTimer=setTimeout(writePushRegistry,800); }
+
+setInterval(remTick,30000);
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) remTick(); });
+renderReminders(); refreshNotifBtn();
+(async()=>{ pushSub=await getPushSub(); refreshPushBtn(); if(pushSub) writePushRegistry(); })();
+
+if('serviceWorker' in navigator && location.protocol==='https:'){ try{ navigator.serviceWorker.register('./sw.js'); }catch(e){} }
+</script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="womb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Upbringing — Baby List</title>
+<meta name="description" content="Postpartum recovery through the first year: sleep, feeding, tummy time, solids, and babyproofing, phase by phase.">
+<meta name="theme-color" content="#0B0E15">
+<meta name="color-scheme" content="dark light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230B0E15'/%3E%3Cpath d='M19 9.5A5 5 0 0112.5 3 5 5 0 1019 9.5z' fill='%23EBC77C'/%3E%3Cpath d='M5 13l4 4.5L18 8' stroke='%237BC8B3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+[data-theme="womb"]{
+  color-scheme:dark;
+  --color-base-100:#151A26; --color-base-200:#0B0E15; --color-base-300:#232B3B;
+  --color-base-content:#EDF1F8;
+  --color-primary:#7BC8B3;   --color-primary-content:#0C1019;
+  --color-secondary:#F0A87C; --color-secondary-content:#0C1019;
+  --color-accent:#EBC77C;    --color-accent-content:#0C1019;
+  --color-neutral:#EDF1F8;   --color-neutral-content:#0B0E15;
+  --color-info:#A9B4F2;      --color-info-content:#0C1019;
+  --color-success:#A9D98C;   --color-success-content:#0C1019;
+  --color-warning:#EBC77C;   --color-warning-content:#0C1019;
+  --color-error:#F58B7E;     --color-error-content:#0C1019;
+  --radius-box:1rem; --radius-field:.75rem; --radius-selector:.5rem;
+  --ink-soft:#99A6B9; --glow1:rgba(240,168,124,.055); --glow2:rgba(123,200,179,.04);
+}
+[data-theme="dawn"]{
+  color-scheme:light;
+  --color-base-100:#FFFFFF; --color-base-200:#FAF8F4; --color-base-300:#E8E1D5;
+  --color-base-content:#27313F;
+  --color-primary:#5C9A8B;   --color-primary-content:#FFFFFF;
+  --color-secondary:#E8956B; --color-secondary-content:#FFFFFF;
+  --color-accent:#D9A741;    --color-accent-content:#FFFFFF;
+  --color-neutral:#27313F;   --color-neutral-content:#FAF8F4;
+  --color-info:#5A67C7;      --color-info-content:#FFFFFF;
+  --color-success:#5E8A3C;   --color-success-content:#FFFFFF;
+  --color-warning:#B8860B;   --color-warning-content:#FFFFFF;
+  --color-error:#DD6A59;     --color-error-content:#FFFFFF;
+  --radius-box:1rem; --radius-field:.75rem; --radius-selector:.5rem;
+  --ink-soft:#505C6B; --glow1:rgba(232,149,107,.09); --glow2:rgba(92,154,139,.07);
+}
+html{background:var(--color-base-200)}
+body{
+  font-family:"Nunito Sans",system-ui,sans-serif;
+  background-color:var(--color-base-200);
+  background-image:radial-gradient(520px 300px at 14% -10%,var(--glow1),transparent 58%),
+                   radial-gradient(560px 340px at 104% -4%,var(--glow2),transparent 60%);
+  background-repeat:no-repeat;
+}
+.font-display{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto;letter-spacing:-.012em}
+.ink-soft{color:var(--ink-soft)}
+::selection{background:var(--color-primary);color:var(--color-primary-content)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@supports (background: color-mix(in oklab, red 10%, blue)){
+  .zone-gold{background:color-mix(in oklab, var(--color-accent) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-accent) 30%, var(--color-base-300));border-left:4px solid var(--color-accent)}
+  .zone-green{background:color-mix(in oklab, var(--color-primary) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-primary) 30%, var(--color-base-300));border-left:4px solid var(--color-primary)}
+  .zone-info{background:color-mix(in oklab, var(--color-info) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-info) 30%, var(--color-base-300));border-left:4px solid var(--color-info)}
+  .zone-coral{background:color-mix(in oklab, var(--color-error) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-error) 30%, var(--color-base-300));border-left:4px solid var(--color-error)}
+}
+@supports (background: color-mix(in oklab, red 10%, blue)){
+  .zone-warning{background:color-mix(in oklab, var(--color-warning) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-warning) 30%, var(--color-base-300));border-left:4px solid var(--color-warning)}
+  .zone-secondary{background:color-mix(in oklab, var(--color-secondary) 10%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-secondary) 30%, var(--color-base-300));border-left:4px solid var(--color-secondary)}
+}
+.utable th{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft)}
+.utable td{font-size:12.5px;line-height:1.45;vertical-align:top}
+@media print{ *{background:#fff!important;color:#000!important} #tabNav{display:none!important} .card{border:1pt solid #999!important;page-break-inside:avoid} h1,h2{page-break-after:avoid} }
+</style>
+</head>
+<body class="min-h-screen text-[16px] leading-relaxed pb-28">
+
+<header class="navbar sticky top-0 z-30 bg-base-200/85 backdrop-blur-md border-b border-base-300 px-3.5 pt-[calc(env(safe-area-inset-top)+8px)] pb-2 min-h-0">
+  <div class="w-full max-w-[640px] mx-auto flex items-center gap-2">
+    <h1 class="font-display font-semibold text-[21px] leading-tight m-0 flex-1">The first <em class="italic font-medium text-secondary">year</em>
+      <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1">Recovery · sleep · milestones · solids</span>
+    </h1>
+    <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 flex-none" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+  </div>
+</header>
+
+<div class="w-full max-w-[640px] mx-auto px-3.5">
+
+  <!-- Phase 1: fourth trimester -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-secondary">
+    <div class="card-body p-4 gap-2">
+      <div class="flex items-center gap-2 flex-wrap">
+        <h2 class="font-display font-semibold text-[17.5px] m-0 text-secondary flex-1">Recovery &amp; the fourth trimester</h2>
+        <span class="badge badge-secondary badge-soft badge-xs font-extrabold uppercase">weeks 0–8</span>
+      </div>
+      <p class="m-0 text-[13.5px] leading-relaxed">The weeks right after birth belong to healing and bonding. Newborns are especially vulnerable to everyday germs for roughly the first <b class="text-base-content">6–8 weeks</b>, so setting visitor expectations <i>before</i> the birth protects both the baby and your energy. Framing a boundary as a plan rather than a rejection keeps the peace:</p>
+      <div class="rounded-xl p-3 text-[13px] font-semibold leading-relaxed" style="background:var(--color-base-200);border-left:3px solid var(--color-secondary)">
+        "We're keeping the first weeks quiet to rest and settle in. Can we book a visit for the weekend of [date]?"
+      </div>
+      <p class="m-0 text-[13.5px] leading-relaxed ink-soft">Mom's body is navigating hormonal shifts, uterine involution, physical trauma recovery, and possibly C-section aftercare all at once. Healing unfolds on its own schedule; planning for that ahead of time (meals, help, low expectations) protects mental health too. The <a class="link link-primary font-bold" href="./labor.html">Labor page</a> covers the when-to-call red flags.</p>
+    </div>
+  </section>
+
+  <!-- Phase 2: first 30 days -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-green">
+    <div class="card-body p-4 gap-2">
+      <div class="flex items-center gap-2 flex-wrap">
+        <h2 class="font-display font-semibold text-[17.5px] m-0 text-primary flex-1">The first 30 days</h2>
+        <span class="badge badge-primary badge-soft badge-xs font-extrabold uppercase">sleep &amp; feeding</span>
+      </div>
+      <p class="m-0 text-[13.5px] leading-relaxed"><b class="text-base-content">Sleep is real but shattered.</b> Newborns total <b class="text-base-content">11–17 hours</b> a day in bursts of 30 minutes to 3 hours, with awake windows rarely past 2 hours. That fragmentation is normal physiology (their circadian rhythm barely exists yet); true regular cycles don't solidify until around 6 months. Sleep when the baby sleeps is advice, not a cliché.</p>
+      <p class="m-0 text-[13.5px] leading-relaxed"><b class="text-base-content">Feed on cues, not the clock.</b> The first feed usually happens within 30–60 minutes of delivery, delivering early immune protection and heading off low blood sugar. After that, watch for early hunger cues: rooting, nuzzling toward the breast, hands to mouth. Crying is a <i>late</i> hunger cue; catching the earlier ones makes latching and settling far easier.</p>
+      <p class="m-0 text-[12.5px] ink-soft">The <a class="link link-primary font-bold" href="./reminders.html">Reminders page</a> can nudge water and vitamins while you're running on newborn time.</p>
+    </div>
+  </section>
+
+  <!-- Phase 3: 1–6 months -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
+    <div class="card-body p-4 gap-2">
+      <div class="flex items-center gap-2 flex-wrap">
+        <h2 class="font-display font-semibold text-[17.5px] m-0 text-info flex-1">1–6 months: tummy time &amp; milestones</h2>
+        <span class="badge badge-info badge-soft badge-xs font-extrabold uppercase">motor development</span>
+      </div>
+      <p class="m-0 text-[13.5px] leading-relaxed">Daily tummy time builds the neck, chest, and core strength behind every later milestone and helps prevent flat spots. Always awake and supervised:</p>
+      <div class="overflow-x-auto">
+        <table class="table table-sm utable">
+          <thead><tr><th>Age</th><th>Daily amount</th><th>How</th></tr></thead>
+          <tbody>
+            <tr><td class="font-bold whitespace-nowrap">0–4 wk</td><td>~20 min in 3–5 min micro-sessions</td><td>On your chest, across the lap, or a firm clean blanket</td></tr>
+            <tr><td class="font-bold whitespace-nowrap">1–3 mo</td><td>20–30 min in 5–10 min sessions</td><td>Flat, safe floor surface such as a play mat</td></tr>
+            <tr><td class="font-bold whitespace-nowrap">4–5 mo</td><td>Build up to ~60 min</td><td>Add toys to encourage reaching, rolling, and pivoting</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="m-0 text-[13.5px] leading-relaxed">By around six months, many babies roll tummy-to-back, push up on straight arms, and lean on their hands while sitting. Socially, expect squeals, real laughs, raspberries, and back-and-forth "conversations." Everything goes in the mouth from here on, so start choking-hazard vigilance now, and keep the vaccination schedule on track at every well visit.</p>
+    </div>
+  </section>
+
+  <!-- Phase 4: 6–12 months -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-warning">
+    <div class="card-body p-4 gap-2">
+      <div class="flex items-center gap-2 flex-wrap">
+        <h2 class="font-display font-semibold text-[17.5px] m-0 text-warning flex-1">6–12 months: solids &amp; babyproofing</h2>
+        <span class="badge badge-warning badge-soft badge-xs font-extrabold uppercase">big transitions</span>
+      </div>
+      <p class="m-0 text-[13.5px] leading-relaxed">The AAP and the Dietary Guidelines both point to starting solids at <b class="text-base-content">about 6 months</b>, but readiness matters more than the calendar:</p>
+      <div class="overflow-x-auto">
+        <table class="table table-sm utable">
+          <thead><tr><th>Readiness sign</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td class="font-bold">Strong head &amp; neck control</td><td>Sits in a high chair with steady head control, keeping the airway safe</td></tr>
+            <tr><td class="font-bold">Tongue-thrust reflex fading</td><td>Food moves back to be swallowed instead of being pushed straight out</td></tr>
+            <tr><td class="font-bold">Roughly doubled birth weight</td><td>Around 13 lb or more, when the gut can handle solids</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="m-0 text-[13.5px] leading-relaxed">Rotate variety early: oat, barley, and multigrain cereals rather than rice-only (which limits inorganic arsenic exposure), plus purees and soft textures. Breast milk or formula stays the <b class="text-base-content">primary</b> nutrition source through the first birthday. Sleep consolidates to 12–16 hour totals with 6+ hour night stretches for many babies.</p>
+      <p class="m-0 text-[13.5px] leading-relaxed"><b class="text-base-content">Mobility means babyproofing, now:</b> clear small swallowable objects, keep hot liquids out of reach, stay rear-facing in the car seat, and hold off on screens (video chat is the exception).</p>
+    </div>
+  </section>
+
+  <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
+    <p class="m-0">Drawn from AAP, CDC, and Nemours KidsHealth guidance. Educational reference, not medical advice — your pediatrician's instructions always come first.</p>
+  </footer>
+</div>
+
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
+  <div class="max-w-[640px] mx-auto grid grid-cols-5">
+    <a href="./index.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.2l2.4 2.6 4.8-5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Checklist</a>
+    <a href="./labor.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-7.5-10.7A4.3 4.3 0 0112 7.6a4.3 4.3 0 017.5 2.7C19.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 12h2.4l1-1.8 1.4 3.2 1.1-1.4H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Labor</a>
+    <a href="./upbringing.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold text-primary" aria-current="page"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M12 21v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14c0-4.2-3-6.6-7.2-6.6C4.8 11.6 7.8 14 12 14z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 12.2c0-3.4 2.5-5.4 6-5.4 0 3.4-2.5 5.4-6 5.4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Upbringing</a>
+    <a href="./reminders.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M6 9.5A6 6 0 0118 9.5c0 5 2 6 2 6H4s2-1 2-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.8 19a2.3 2.3 0 004.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Reminders</a>
+    <a href="./settings.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Settings</a>
+  </div>
+</nav>
+
+<div class="toast toast-center toast-bottom z-[80] mb-20 hidden" id="toastWrap">
+  <div class="alert bg-neutral text-neutral-content rounded-full py-2.5 px-5 text-[13px] font-extrabold shadow-lg border-0" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const KEY='newborn-checklist-v3';
+let dark=true;
+try{ const v=localStorage.getItem(KEY); if(v){ const s=JSON.parse(v); if(s.themeV===2 && typeof s.dark==='boolean') dark=s.dark; } }catch(e){}
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme',dark?'womb':'dawn');
+  $('themeBtn').innerHTML=dark
+    ? '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+    : '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M20 13.5A7.5 7.5 0 0110.5 4a7.5 7.5 0 109.5 9.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+}
+$('themeBtn').addEventListener('click',()=>{
+  dark=!dark; applyTheme();
+  try{ const v=localStorage.getItem(KEY); const s=v?JSON.parse(v):{}; s.dark=dark; s.themeV=2; localStorage.setItem(KEY,JSON.stringify(s)); }catch(e){}
+});
+applyTheme();
+if('serviceWorker' in navigator && location.protocol==='https:'){ try{ navigator.serviceWorker.register('./sw.js'); }catch(e){} }
+</script>
+</body>
+</html>

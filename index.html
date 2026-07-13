@@ -102,7 +102,7 @@ body{
   @page{margin:14mm}
   *,*::before,*::after{background:#ffffff!important;color:#000000!important;box-shadow:none!important;text-shadow:none!important}
   html,body{background:#ffffff!important;background-image:none!important;font-family:Georgia,"Times New Roman",serif!important;font-size:12.5pt!important;line-height:1.45}
-  .navbar,.icobtns,#searchWrap,#toolbar,#sortbar,#tierbar,#legend,#donext,.foot-actions,.dn-date,.del,.add-area,#budget,.toast,.stamp,#smatch,#tabNav,#storageWarn{display:none!important}
+  .navbar,.icobtns,#searchWrap,#phasebar,#toolbar,#sortbar,#tierbar,#legend,#donext,.foot-actions,.dn-date,.del,.add-area,#budget,.toast,.stamp,#smatch,#tabNav,#storageWarn{display:none!important}
   h1,h2,h3,h4,h5,h6,.cat-head{page-break-after:avoid;break-after:avoid}
   .cat,.item-wrap{page-break-inside:avoid;break-inside:avoid}
   .cat{border:1pt solid #999!important;border-radius:0!important;margin-top:10pt;padding:6pt 10pt;display:block!important}
@@ -156,12 +156,21 @@ body{
 
 <div class="w-full max-w-[640px] mx-auto px-3.5 pb-28">
 
+  <!-- life phase filter -->
+  <div class="flex gap-2 items-center pt-3.5" id="phasebar">
+    <span class="flex-none text-[11px] font-extrabold tracking-[.08em] uppercase ink-soft min-w-[34px]">Phase</span>
+    <select id="phaseSel" class="select select-bordered select-sm bg-base-100 font-bold flex-1 min-w-0 rounded-xl" aria-label="Life phase filter">
+      <option value="all">All phases</option>
+      <option value="pregnancy">Pregnancy &amp; Mom Care</option>
+      <option value="baby">First Year — Baby</option>
+    </select>
+  </div>
+
   <!-- toggles -->
-  <div class="flex gap-2 overflow-x-auto pt-3.5 pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" id="toolbar">
+  <div class="flex gap-2 overflow-x-auto pt-2.5 pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" id="toolbar">
     <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5" id="chipHide" type="button" aria-pressed="false">Hide packed</button>
     <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5" id="chipNotes" type="button" aria-pressed="false">Hide notes</button>
     <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5" id="chipCollapse" type="button">Collapse all</button>
-    <button class="btn btn-xs h-8 rounded-full border-base-300 font-bold px-3.5 gap-1.5" id="chipSync" type="button" aria-pressed="false"><span class="w-1.5 h-1.5 rounded-full bg-current opacity-60"></span>Cloud sync</button>
   </div>
 
   <!-- sort -->
@@ -183,29 +192,13 @@ body{
       <button class="join-item btn btn-xs h-8 font-bold tchip gap-1.5" type="button" data-tier="2" aria-pressed="false"><span class="w-2 h-2 rounded-full bg-warning"></span>Important</button>
       <button class="join-item btn btn-xs h-8 font-bold tchip gap-1.5" type="button" data-tier="3" aria-pressed="false"><span class="w-2 h-2 rounded-full bg-info"></span>Nice to have</button>
     </div>
+    <button id="clrFilters" type="button" class="btn btn-xs h-8 rounded-full btn-ghost text-error font-extrabold hidden flex-none">✕ Clear filters</button>
   </div>
 
   <div class="alert bg-base-100 border border-warning/60 text-[13px] font-semibold leading-relaxed mt-3.5 hidden" id="storageWarn" role="alert">
     <svg class="w-4 h-4 flex-none text-warning" viewBox="0 0 24 24" fill="none"><path d="M12 8v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.1" fill="currentColor"/><path d="M10.3 3.9L2.6 17.4A2 2 0 004.3 20.5h15.4a2 2 0 001.7-3.1L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
     <span>This browser is blocking saved data (private mode, most likely). Checkmarks won't survive closing this window. Open your <b class="text-base-content">Share link</b> here to load the family list, or switch out of private browsing.</span>
   </div>
-
-  <!-- cloud sync setup -->
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-3.5 hidden zone-info" id="syncPanel">
-    <div class="card-body p-4 gap-2">
-      <div class="font-display font-semibold text-[16px]">Set up cloud sync</div>
-      <p class="text-[12.5px] ink-soft leading-relaxed m-0">One shared list for every device that has the link. Quickest: tap <b class="text-base-content">Create shared storage</b> (tries JSONBlob, then jsonstorage.net). Manual fallback: sign up free at jsonbin.io, create a bin, then paste <b class="text-base-content">https://api.jsonbin.io/v3/b/YOUR_BIN_ID</b> plus your X-Master-Key. Pantry and ExtendsClass work too.</p>
-      <button id="cloudCreate" type="button" class="btn btn-sm btn-primary font-extrabold w-full">Create shared storage</button>
-      <div class="divider my-0 text-[10px] ink-soft">or paste an endpoint</div>
-      <input id="cloudUrl" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="https://… endpoint URL" aria-label="Sync endpoint URL">
-      <input id="cloudKey" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="Access key (if the service needs one)" aria-label="Sync access key">
-      <div class="flex gap-2">
-        <button id="cloudConnect" type="button" class="btn btn-sm btn-primary font-extrabold flex-1">Connect</button>
-        <button id="cloudCancel" type="button" class="btn btn-sm flex-1 font-extrabold">Cancel</button>
-      </div>
-      <p class="text-[11.5px] ink-soft leading-relaxed m-0">Heads up: anyone who has the share link can read and edit the shared list.</p>
-    </div>
-  </section>
 
   <!-- legend -->
   <div class="flex gap-3.5 flex-wrap mt-3.5 mx-0.5 text-[11.5px] ink-soft font-semibold" id="legend">
@@ -215,41 +208,6 @@ body{
     <span class="inline-flex items-center gap-1.5"><span class="badge badge-secondary badge-soft badge-xs font-extrabold">+</span>added</span>
     <span class="inline-flex items-center gap-1.5"><span class="badge badge-neutral badge-xs font-extrabold uppercase">mine</span>your item</span>
   </div>
-
-  <!-- Do next / due date -->
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-gold" id="donext">
-    <div class="card-body p-4 pb-2">
-      <div class="flex items-center gap-2.5">
-        <span class="font-display font-semibold text-[17px] text-accent" id="dnTitle">Do next</span>
-        <span class="flex-1 min-w-0 text-[12px] ink-soft font-bold h-4" id="dnWeek"></span>
-        <button class="btn btn-xs rounded-full border-base-300 font-extrabold" id="dueBtn" type="button">Set due date</button>
-      </div>
-      <div class="dn-date hidden gap-2 mt-2 items-center flex-wrap" id="dueForm">
-        <input type="date" id="dueInput" aria-label="Due date" class="input input-bordered input-sm bg-base-200 font-semibold text-[16px]">
-        <button id="dueSave" type="button" class="btn btn-sm btn-primary font-extrabold">Save</button>
-        <button id="dueClear" type="button" class="btn btn-sm btn-ghost font-extrabold">Clear</button>
-      </div>
-      <div class="mt-1" id="dnList"></div>
-    </div>
-  </section>
-
-  <!-- mom care reminders -->
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-green" id="remindCard">
-    <div class="card-body p-4 pb-3 gap-2">
-      <div class="flex items-center gap-2.5">
-        <span class="font-display font-semibold text-[17px] text-primary">Mom care reminders</span>
-        <span class="flex-1"></span>
-        <button class="btn btn-xs rounded-full border-base-300 font-extrabold" id="notifBtn" type="button">Enable notifications</button>
-        <button class="btn btn-xs rounded-full border-base-300 font-extrabold" id="pushBtn" type="button">Enable push</button>
-      </div>
-      <div id="remList" class="mt-1"></div>
-      <div class="flex gap-2 mt-1">
-        <button id="remAdd" type="button" class="btn btn-xs rounded-full border-base-300 font-bold">+ Custom reminder</button>
-        <button id="remTest" type="button" class="btn btn-xs rounded-full border-base-300 font-bold">Test</button>
-      </div>
-      <p class="text-[11px] ink-soft leading-relaxed m-0" id="remNote">Notifications fire while the app runs. Turn on <b class="text-base-content">push</b> (needs Cloud sync + the repo's reminder workflow) and they arrive even with the app fully closed, checked every 15 minutes. On iPhone, add to Home Screen first.</p>
-    </div>
-  </section>
 
   <!-- labor & delivery page link -->
   <a href="./labor.html" class="card bg-base-100 border border-base-300 shadow-sm mt-4 block hover:border-[var(--c-health)] transition-colors zone-coral" id="laborLink" style="border-left:4px solid var(--c-health)">
@@ -279,20 +237,33 @@ body{
       </div>
       <input type="file" id="fileInput" accept=".json,application/json" hidden>
     </div>
+    <p class="mb-2.5 text-[11px]">Baby List v2.1.0 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a></p>
     <p class="mb-2.5">Follows AAP and CPSC safe-sleep guidance, but isn't medical advice. Confirm anything health-related with your pediatrician.</p>
-    <p class="mb-2.5"><b class="text-base-content font-extrabold">Progress saves on this device automatically.</b> <b class="text-base-content font-extrabold">Share link</b> packs your checkmarks, added items, and due date into a URL anyone can open. <b class="text-base-content font-extrabold">Save / Load file</b> is a .json backup. <b class="text-base-content font-extrabold">Share copy</b> downloads this page with your list baked in. <b class="text-base-content font-extrabold">Cloud sync</b> keeps one live list across every device: tap the Cloud sync chip once to create shared storage (or paste your own JSON endpoint), then send a Share link — devices that open it join the same list automatically and refresh about once a minute and whenever the app is opened. Anything synced or linked is visible to whoever has the link.</p>
+    <p class="mb-2.5"><b class="text-base-content font-extrabold">Progress saves on this device automatically.</b> <b class="text-base-content font-extrabold">Share link</b> packs your checkmarks, added items, and due date into a URL anyone can open. <b class="text-base-content font-extrabold">Save / Load file</b> is a .json backup. <b class="text-base-content font-extrabold">Share copy</b> downloads this page with your list baked in. <b class="text-base-content font-extrabold">Cloud sync</b> keeps one live list across every device — set it up once in <a class="link link-primary font-bold" href="./settings.html">Settings</a>, then send a Share link; devices that open it join automatically and refresh about once a minute and whenever the app is opened. Anything synced or linked is visible to whoever has the link.</p>
   </footer>
 </div>
 
 <nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
-  <div class="max-w-[640px] mx-auto grid grid-cols-2">
-    <a href="./index.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[11px] font-extrabold text-primary" aria-current="page">
+  <div class="max-w-[640px] mx-auto grid grid-cols-5">
+    <a href="./index.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold text-primary" aria-current="page">
       <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.2l2.4 2.6 4.8-5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Checklist
     </a>
-    <a href="./labor.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[11px] font-extrabold ink-soft">
+    <a href="./labor.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft">
       <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-7.5-10.7A4.3 4.3 0 0112 7.6a4.3 4.3 0 017.5 2.7C19.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 12h2.4l1-1.8 1.4 3.2 1.1-1.4H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Labor &amp; Delivery
+      Labor
+    </a>
+    <a href="./upbringing.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M12 21v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14c0-4.2-3-6.6-7.2-6.6C4.8 11.6 7.8 14 12 14z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 12.2c0-3.4 2.5-5.4 6-5.4 0 3.4-2.5 5.4-6 5.4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      Upbringing
+    </a>
+    <a href="./reminders.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M6 9.5A6 6 0 0118 9.5c0 5 2 6 2 6H4s2-1 2-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.8 19a2.3 2.3 0 004.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Reminders
+    </a>
+    <a href="./settings.html" class="flex flex-col items-center gap-1 pt-2 pb-1.5 text-[10px] font-extrabold ink-soft">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Settings
     </a>
   </div>
 </nav>
@@ -447,7 +418,7 @@ const KEY='newborn-checklist-v3';
 const KEY_SHARED='newborn-checklist-shared-v1';
 const hasCloud = !!(window.storage && window.storage.get && window.storage.set);
 let lastSyncStamp=null;
-let state={checked:{},collapsed:{},hidePacked:false,dark:true,custom:{},sort:'importance',sizeIdx:0,hideNotes:false,sync:false,importedShare:null,tier:'all',due:null,who:'',cloud:null};
+let state={checked:{},collapsed:{},hidePacked:false,dark:true,custom:{},sort:'importance',sizeIdx:0,hideNotes:false,sync:false,importedShare:null,tier:'all',phase:'all',due:null,who:'',cloud:null};
 const WHO_KEY='newborn-who';
 try{ state.who=localStorage.getItem(WHO_KEY)||''; }catch(e){}
 function setWho(n){ state.who=(n||'').trim(); try{localStorage.setItem(WHO_KEY,state.who);}catch(e){} }
@@ -459,7 +430,7 @@ const SAVE_VERSION=2;
 function snapshot(){
   return {checked:state.checked,collapsed:state.collapsed,hidePacked:state.hidePacked,due:state.due,who:state.who,
     custom:state.custom,sort:state.sort,dark:state.dark,sizeIdx:state.sizeIdx,hideNotes:state.hideNotes,
-    sync:state.sync,importedShare:state.importedShare,tier:state.tier,cloud:state.cloud,themeV:2,savedAt:new Date().toISOString()};
+    sync:state.sync,importedShare:state.importedShare,tier:state.tier,phase:state.phase,cloud:state.cloud,themeV:2,savedAt:new Date().toISOString()};
 }
 function persist(pushShared){
   clearTimeout(saveTimer);
@@ -506,6 +477,7 @@ function applyState(saved,skipWho){
   state.sync=!!saved.sync;
   state.importedShare=saved.importedShare||null;
   state.tier=(saved.tier===1||saved.tier===2||saved.tier===3)?saved.tier:'all';
+  state.phase=(saved.phase==='pregnancy'||saved.phase==='baby')?saved.phase:'all';
   if(saved.cloud && typeof saved.cloud.u==='string') state.cloud={u:saved.cloud.u,k:(typeof saved.cloud.k==='string'?saved.cloud.k:'')};
 }
 
@@ -538,7 +510,6 @@ function unwrapCloud(body){
   }
   return null;
 }
-const VAPID_PUBLIC='BNVR-AypVjbusxgNVt54BWPu77Fry3d04IIz6k23169SiUivRrFFpkZfNSA7JOAqA3a3asDA3wgOQmDzoHh3o1E';
 let cloudPushCache=null;
 const remote={
   available(){ return hasCloud || !!(state.cloud && state.cloud.u); },
@@ -575,6 +546,15 @@ const remote={
 /* Categories start collapsed; any explicit choice (either direction) is stored
    and remembered. Absent from state.collapsed = default = collapsed. */
 function isCollapsed(cat){ return (cat.id in state.collapsed) ? !!state.collapsed[cat.id] : true; }
+
+/* Life-phase mapping: hospital + parent categories plus the two prenatal
+   health tasks are the Pregnancy & Mom Care phase; everything else is the
+   first-year baby phase. */
+function phaseOf(cat,it){
+  if(cat.id==='hospital'||cat.id==='parent') return 'pregnancy';
+  if(cat.id==='health' && (it.n==='Pediatrician chosen'||it.n==='Infant CPR class')) return 'pregnancy';
+  return 'baby';
+}
 
 /* Conflict reduction for two-device editing: union their checks and custom
    items into ours. A check they made after our last sync is adopted; a check
@@ -772,7 +752,7 @@ function renderItems(cat){
   sortItems(cat).forEach(it=>box.append(makeRow(cat,it)));
 }
 
-/* ---------- due date + Do next ---------- */
+/* ---------- due-date math (drives the by-week chips) ---------- */
 function preg(){
   if(!state.due) return null;
   const d=new Date(state.due+'T12:00:00');
@@ -782,72 +762,24 @@ function preg(){
   const week=Math.min(42,Math.max(4,40-toGo));
   return {days,toGo,week,date:d};
 }
-function showDueForm(show){
-  const f=$('dueForm');
-  f.classList.toggle('hidden',!show);
-  f.classList.toggle('flex',show);
-}
-function renderDoNext(){
-  const pg=preg(), curWeek=pg?pg.week:null;
-  $('dnWeek').textContent = pg
-    ? (pg.days<0 ? 'Past due — any day now'
-       : 'Week '+pg.week+' of 40 · '+Math.max(0,pg.toGo)+' wk to go · due '+pg.date.toLocaleDateString(undefined,{month:'short',day:'numeric'}))
-    : '';
-  $('dueBtn').textContent = pg ? 'Edit' : 'Set due date';
-  const cands=[];
-  DATA.forEach(cat=>{
-    allItems(cat).forEach(it=>{
-      if(state.checked[it._id]) return;
-      let s = typeof it.wk==='number' ? it.wk : (it.wk==='birth' ? 70 : 44+(it.p||2)*4);
-      if(curWeek!==null && typeof it.wk==='number' && it.wk<=curWeek+1) s-=100;
-      cands.push({it,s});
-    });
-  });
-  cands.sort((a,b)=>(a.s-b.s)||((a.it.p||2)-(b.it.p||2))||((a.it._ord||0)-(b.it._ord||0)));
-  const box=$('dnList'); box.innerHTML='';
-  if(!cands.length){
-    const e=el('div','py-2.5 text-[13px] ink-soft font-semibold'); e.textContent="Everything's packed — you're ready."; box.append(e); return;
-  }
-  cands.slice(0,4).forEach(({it})=>{
-    const row=el('button','dn-row w-full flex items-center gap-2.5 py-2.5 text-left border-t border-base-300 first:border-t-0 bg-transparent');
-    row.type='button'; row.setAttribute('aria-label','Mark '+it.n+' as packed');
-    row.innerHTML='<span class="flex-none w-6 h-6 rounded-lg border-2 border-base-300 grid place-items-center [&>svg]:w-3.5 [&>svg]:h-3.5 text-transparent">'+ICONS.check+'</span>';
-    const nm=el('span','flex-1 min-w-0 font-bold text-[14.5px] leading-snug'); nm.textContent=it.n; row.append(nm);
-    if(it.wk){ const w=el('span','badge badge-xs font-extrabold uppercase '+((curWeek!==null&&typeof it.wk==='number'&&it.wk<=curWeek+1)?'badge-warning':'badge-ghost'));
-      w.textContent=it.wk==='birth'?'after birth':'by wk '+it.wk; row.append(w); }
-    const pr=el('span','text-[13px] font-extrabold tabular-nums '+((it.lo===0&&it.hi===0)?'text-primary':''));
-    pr.textContent=money(it.lo,it.hi,it._custom); row.append(pr);
-    row.addEventListener('click',()=>{ state.checked[it._id]={by:state.who||'',at:Date.now()}; buzz(10); persist(); update(); });
-    box.append(row);
-  });
-}
-$('dueBtn').addEventListener('click',()=>{
-  const opening=$('dueForm').classList.contains('hidden');
-  showDueForm(opening);
-  if(opening){ $('dueInput').value=state.due||''; $('dueInput').focus(); }
-});
-$('dueSave').addEventListener('click',()=>{
-  const v=$('dueInput').value;
-  if(!v){ $('dueInput').focus(); return; }
-  state.due=v; showDueForm(false); persist(); update(); toast('Due date saved');
-});
-$('dueClear').addEventListener('click',()=>{ state.due=null; showDueForm(false); persist(); update(); toast('Due date cleared'); });
 
 /* ---------- update ---------- */
 function update(){
-  const hide=state.hidePacked, q=searchTerm.trim().toLowerCase(), tier=state.tier;
+  const hide=state.hidePacked, q=searchTerm.trim().toLowerCase(), tier=state.tier, phase=state.phase||'all';
   const pg=preg(), curWeek=pg?pg.week:null;
   let gPacked=0,gTotal=0,gRemLo=0,gRemHi=0,gPackedVal=0,gMatches=0;
   DATA.forEach(cat=>{
     const sec=list.querySelector('.cat[data-cat="'+cat.id+'"]');
-    let cShown=0,cPacked=0,hasVisible=false;
+    let cShown=0,cPacked=0,cRemLo=0,cRemHi=0,hasVisible=false;
     allItems(cat).forEach(it=>{
       const wrap=sec.querySelector('.item-wrap[data-id="'+it._id+'"]');
       if(!wrap) return;
       const isChecked=!!state.checked[it._id];
       const matchesQ=!q || it.n.toLowerCase().includes(q) || (it.note||'').toLowerCase().includes(q);
       const matchesT=tier==='all' || (it.p||2)===tier;
-      const visible=matchesQ && matchesT && !(hide && isChecked);
+      const matchesP=phase==='all' || phaseOf(cat,it)===phase;
+      const inScope=matchesT && matchesP;
+      const visible=inScope && matchesQ && !(hide && isChecked);
       const stampEl=wrap.querySelector('.stamp');
       if(stampEl){
         const v=state.checked[it._id];
@@ -865,15 +797,14 @@ function update(){
       wrap.querySelector('.item').classList.toggle('opacity-45',isChecked);
       wrap.querySelector('.it-name').classList.toggle('line-through',isChecked);
       if(visible){ hasVisible=true; if(q) gMatches++; }
-      cShown++;
-      if(isChecked){ cPacked++; gPackedVal+=(it.lo+it.hi)/2; }
-      else { gRemLo+=it.lo; gRemHi+=it.hi; }
-      gTotal++; if(isChecked) gPacked++;
+      if(inScope){
+        cShown++; gTotal++;
+        if(isChecked){ cPacked++; gPacked++; gPackedVal+=(it.lo+it.hi)/2; }
+        else { gRemLo+=it.lo; gRemHi+=it.hi; cRemLo+=it.lo; cRemHi+=it.hi; }
+      }
     });
     sec.querySelector('.cat-meta').textContent=cPacked+' of '+cShown+' packed';
-    const remLo=allItems(cat).filter(i=>!state.checked[i._id]).reduce((s,i)=>s+i.lo,0);
-    const remHi=allItems(cat).filter(i=>!state.checked[i._id]).reduce((s,i)=>s+i.hi,0);
-    sec.querySelector('.cat-price span').textContent=(remLo===0&&remHi===0)?'—':('$'+remLo+'–'+remHi);
+    sec.querySelector('.cat-price span').textContent=(cRemLo===0&&cRemHi===0)?'—':('$'+cRemLo+'–'+cRemHi);
     const pct=cShown?Math.round(cPacked/cShown*100):0;
     const rp=sec.querySelector('.radial-progress'); rp.style.setProperty('--value',pct); rp.setAttribute('aria-valuenow',pct);
     const done=cShown>0 && cPacked===cShown;
@@ -886,11 +817,11 @@ function update(){
       if(window.confetti && !RM){ const r=rp.getBoundingClientRect();
         confetti({particleCount:14,spread:50,startVelocity:16,scalar:.7,origin:{x:(r.left+r.width/2)/innerWidth,y:(r.top+r.height/2)/innerHeight}}); }
     }
-    const isEmpty=(q||tier!=='all')? !hasVisible : cShown===0;
+    const isEmpty=(q||tier!=='all'||phase!=='all')? !hasVisible : cShown===0;
     sec.classList.toggle('empty',isEmpty);
     sec.classList.toggle('hidden',isEmpty);
     const g=sec.querySelector('.cat-collapse');
-    if(q || tier!=='all'){ g.classList.add('[grid-template-rows:1fr]'); g.classList.remove('[grid-template-rows:0fr]'); }
+    if(q || tier!=='all' || phase!=='all'){ g.classList.add('[grid-template-rows:1fr]'); g.classList.remove('[grid-template-rows:0fr]'); }
     else if(isCollapsed(cat)){ g.classList.add('[grid-template-rows:0fr]'); g.classList.remove('[grid-template-rows:1fr]'); }
     else { g.classList.add('[grid-template-rows:1fr]'); g.classList.remove('[grid-template-rows:0fr]'); }
   });
@@ -900,12 +831,12 @@ function update(){
   $('packedVal').textContent=gPackedVal>0?('≈$'+Math.round(gPackedVal)+' packed'):'';
   const complete=gTotal>0 && gPacked===gTotal;
   document.body.classList.toggle('complete',complete);
-  if(complete && !wasComplete && !q) celebrate();
+  if(complete && !wasComplete && !q && tier==='all' && phase==='all') celebrate();
   wasComplete=complete;
   document.body.classList.toggle('searching',!!q);
   $('smatch').textContent=q? gMatches+(gMatches===1?' item':' items') : '';
   $('smatch').classList.toggle('hidden',!q);
-  renderDoNext();
+  $('clrFilters').classList.toggle('hidden', !(q || tier!=='all' || phase!=='all'));
 }
 
 /* ---------- celebration (canvas-confetti with offline fallback) ---------- */
@@ -941,7 +872,7 @@ document.addEventListener('keydown',e=>{
 $('clrBtn').addEventListener('click',()=>{ $('search').value=''; searchTerm=''; $('clrBtn').classList.add('hidden'); update(); $('search').focus(); });
 
 /* ---------- toggles / sort / tier ---------- */
-const chipHide=$('chipHide'), chipNotes=$('chipNotes'), chipCollapse=$('chipCollapse'), chipSync=$('chipSync');
+const chipHide=$('chipHide'), chipNotes=$('chipNotes'), chipCollapse=$('chipCollapse');
 chipHide.addEventListener('click',()=>{ state.hidePacked=!state.hidePacked; setPressed(chipHide,state.hidePacked); persist(); update(); });
 chipNotes.addEventListener('click',()=>{ state.hideNotes=!state.hideNotes; setPressed(chipNotes,state.hideNotes);
   document.querySelectorAll('.it-note').forEach(n=>n.classList.toggle('hidden',state.hideNotes)); persist(); });
@@ -959,20 +890,48 @@ chipCollapse.addEventListener('click',()=>{
   chipCollapse.textContent=anyOpen?'Expand all':'Collapse all';
   persist();
 });
+/* Toggle-to-undo: tapping the active chip reverts to the default, and the
+   active state is a fully saturated semantic color (never btn-outline +
+   btn-active together, which turns illegible in DaisyUI themes). */
+const TIER_STYLE={all:'btn-primary','1':'btn-error','2':'btn-warning','3':'btn-info'};
+function styleChips(){
+  document.querySelectorAll('.tchip').forEach(x=>{
+    const on=x.dataset.tier===String(state.tier);
+    x.classList.remove('btn-active','btn-primary','btn-error','btn-warning','btn-info');
+    x.setAttribute('aria-pressed',on);
+    if(on) x.classList.add('btn-active',TIER_STYLE[x.dataset.tier]||'btn-primary');
+  });
+  document.querySelectorAll('.sortchip').forEach(x=>{
+    const on=x.dataset.sort===state.sort;
+    x.classList.remove('btn-active','btn-primary');
+    x.setAttribute('aria-pressed',on);
+    if(on) x.classList.add('btn-active','btn-primary');
+  });
+  const ps=$('phaseSel'); if(ps) ps.value=state.phase||'all';
+}
 document.querySelectorAll('.tchip').forEach(b=>{
   b.addEventListener('click',()=>{
-    const v=b.dataset.tier;
-    state.tier = v==='all' ? 'all' : Number(v);
-    document.querySelectorAll('.tchip').forEach(x=>setPressed(x, x.dataset.tier===String(state.tier)));
-    persist(); update();
+    const v=b.dataset.tier==='all' ? 'all' : Number(b.dataset.tier);
+    state.tier = (state.tier===v && v!=='all') ? 'all' : v;
+    styleChips(); persist(); update();
   });
 });
 document.querySelectorAll('.sortchip').forEach(b=>{
   b.addEventListener('click',()=>{
-    state.sort=b.dataset.sort;
-    document.querySelectorAll('.sortchip').forEach(x=>setPressed(x, x.dataset.sort===state.sort));
-    DATA.forEach(renderItems); persist(); update();
+    const v=b.dataset.sort;
+    state.sort = (state.sort===v && v!=='importance') ? 'importance' : v;
+    styleChips(); DATA.forEach(renderItems); persist(); update();
   });
+});
+$('phaseSel').addEventListener('change',()=>{
+  const v=$('phaseSel').value;
+  state.phase=(v==='pregnancy'||v==='baby')?v:'all';
+  persist(); update();
+});
+$('clrFilters').addEventListener('click',()=>{
+  $('search').value=''; searchTerm=''; $('clrBtn').classList.add('hidden');
+  state.tier='all'; state.phase='all';
+  styleChips(); persist(); update(); toast('Filters cleared');
 });
 
 /* ---------- theme + size ---------- */
@@ -1035,8 +994,7 @@ function refreshUI(){
   applyTheme(); applySize();
   setPressed(chipNotes,state.hideNotes);
   document.querySelectorAll('.it-note').forEach(n=>n.classList.toggle('hidden',state.hideNotes));
-  document.querySelectorAll('.sortchip').forEach(x=>setPressed(x,x.dataset.sort===state.sort));
-  document.querySelectorAll('.tchip').forEach(x=>setPressed(x,x.dataset.tier===String(state.tier)));
+  styleChips();
   DATA.forEach(cat=>{
     renderItems(cat);
     const sec=list.querySelector('.cat[data-cat="'+cat.id+'"]');
@@ -1048,7 +1006,6 @@ function refreshUI(){
     sec.querySelector('.chev').style.transform=isC?'rotate(-90deg)':'';
   });
   setPressed(chipHide,state.hidePacked);
-  setPressed(chipSync,!!state.sync);
   chipCollapse.textContent = DATA.some(c=>!isCollapsed(c)) ? 'Collapse all' : 'Expand all';
   update();
 }
@@ -1218,110 +1175,7 @@ function toggleCalm(){
 $('calmBtn').addEventListener('click',toggleCalm);
 
 /* ---------- family sync (Claude artifact environments only) ---------- */
-function showSyncPanel(show){
-  const p=$('syncPanel');
-  p.classList.toggle('hidden',!show);
-  if(show){ $('cloudUrl').value=state.cloud?state.cloud.u:''; $('cloudKey').value=state.cloud?(state.cloud.k||''):''; }
-}
-function askWho(){
-  if(!state.who){
-    const n=prompt('Name to stamp on your checkmarks (shown to everyone on the shared list):');
-    if(n) setWho(n);
-  }
-}
-async function enableSync(){
-  askWho();
-  state.sync=true; setPressed(chipSync,true);
-  try{
-    const sh=await remote.get();
-    if(sh && sh.state && sh.savedAt){
-      if(confirm("The cloud already has a list. Load it onto this device? (Cancel keeps this device's list and overwrites the cloud.)")){
-        lastSyncStamp=sh.savedAt;
-        applyState(sh.state,true); state.sync=true; persist(false); refreshUI();
-      } else persist();
-    } else persist();
-  }catch(e){ persist(); }
-  toast('Cloud sync on — everyone with the link shares one live list');
-}
-chipSync.addEventListener('click',()=>{
-  if(state.sync){
-    state.sync=false; setPressed(chipSync,false); persist(false);
-    toast('Sync off — changes stay on this device');
-    return;
-  }
-  if(!remote.available()){ showSyncPanel(true); return; }
-  enableSync();
-});
-$('cloudCancel').addEventListener('click',()=>showSyncPanel(false));
-async function mintCloud(body){
-  /* Provider chain — first success wins. */
-  /* 1. JSONBlob: no account, no key, no request caps; kept alive by activity
-        (the push cron touches it every 15 minutes, so it never expires). */
-  try{
-    const r=await fetch('https://jsonblob.com/api/jsonBlob',{method:'POST',headers:{'Content-Type':'application/json'},body});
-    if(r.status===201){
-      const loc=r.headers.get('Location')||r.headers.get('location');
-      if(loc){
-        const u=loc.indexOf('http')===0?loc:'https://jsonblob.com'+loc;
-        return {u,k:''};
-      }
-    }
-  }catch(e){}
-  /* 2. jsonstorage.net keyless create (only where their plan still permits it) */
-  try{
-    const r=await fetch('https://api.jsonstorage.net/v1/json',{method:'POST',headers:{'Content-Type':'application/json'},body});
-    if(r.ok){
-      const j=await r.json();
-      const uri=j.uri||j.url;
-      if(uri && uri.indexOf('https://')===0) return {u:uri,k:''};
-    }
-  }catch(e){}
-  return null;
-}
-$('cloudCreate').addEventListener('click',async()=>{
-  const btn=$('cloudCreate'); btn.disabled=true; btn.textContent='Creating…';
-  const snap=snapshot();
-  const cfg=await mintCloud(JSON.stringify({app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap}));
-  if(cfg){
-    state.cloud=cfg;
-    lastSyncStamp=snap.savedAt;
-    askWho();
-    state.sync=true; setPressed(chipSync,true); persist(false);
-    showSyncPanel(false);
-    toast('Shared storage created — send a Share link to connect other devices');
-  } else {
-    toast('Auto-create unavailable — the JSONBin option below takes one minute');
-  }
-  btn.disabled=false; btn.textContent='Create shared storage';
-});
-$('cloudConnect').addEventListener('click',async()=>{
-  const u=$('cloudUrl').value.trim(), k=$('cloudKey').value.trim();
-  if(u.indexOf('https://')!==0){ toast('Endpoint must start with https://'); return; }
-  state.cloud={u,k};
-  const btn=$('cloudConnect'); btn.disabled=true; btn.textContent='Checking…';
-  try{
-    const sh=await remote.get().catch(()=>null);
-    if(sh && sh.state && sh.savedAt){
-      askWho(); state.sync=true; setPressed(chipSync,true);
-      if(confirm("That endpoint already has a list. Load it onto this device? (Cancel keeps this device's list and overwrites the cloud.)")){
-        lastSyncStamp=sh.savedAt;
-        applyState(sh.state,true); state.sync=true; persist(false); refreshUI();
-      } else persist();
-      showSyncPanel(false); toast('Cloud sync connected');
-    } else {
-      const snap=snapshot();
-      const ok=await remote.put({app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap});
-      if(!ok) throw new Error('put failed');
-      lastSyncStamp=snap.savedAt;
-      askWho(); state.sync=true; setPressed(chipSync,true); persist(false);
-      showSyncPanel(false); toast('Cloud sync connected');
-    }
-  }catch(e){
-    state.cloud=null;
-    toast('Could not reach that endpoint — check the URL and key');
-  }
-  btn.disabled=false; btn.textContent='Connect';
-});
+
 async function pollShared(){
   if(!state.sync || !remote.available() || document.hidden) return;
   try{
@@ -1334,188 +1188,6 @@ async function pollShared(){
   }catch(e){}
 }
 
-/* ================================================================
-   MOM CARE REMINDERS — local notifications while the app runs.
-   Static hosting has no push server; delivery with the app fully
-   closed is not guaranteed, and the UI says so.
-   ================================================================ */
-const REM_KEY='newborn-reminders';
-let rem={items:[
-  {id:'vit',label:'Prenatal vitamin',type:'daily',time:'09:00',on:false},
-  {id:'water',label:'Drink water',type:'interval',every:2,start:'09:00',end:'21:00',on:false}
-],last:{}};
-try{ const v=localStorage.getItem(REM_KEY); if(v){ const p=JSON.parse(v); if(p && Array.isArray(p.items)) rem=p; if(!rem.last) rem.last={}; } }catch(e){}
-function remSave(){ try{ localStorage.setItem(REM_KEY,JSON.stringify(rem)); }catch(e){} if(typeof scheduleRegistrySync==='function') scheduleRegistrySync(); }
-function minutesOf(t){ const m=/^(\d{1,2}):(\d{2})$/.exec(t||''); return m?(+m[1]*60 + +m[2]):null; }
-function remDueSlot(r,now){
-  const d=new Date(now); const cur=d.getHours()*60+d.getMinutes();
-  if(r.type==='daily'){
-    const t=minutesOf(r.time); if(t===null) return null;
-    return (cur>=t && cur<t+180) ? d.toDateString()+'|'+r.time : null;   /* 3h catch-up window */
-  }
-  const s=minutesOf(r.start), e=minutesOf(r.end), ev=(+r.every||2)*60;
-  if(s===null||e===null||ev<=0||cur<s||cur>e) return null;
-  return d.toDateString()+'|i'+Math.floor((cur-s)/ev);
-}
-async function remFire(r){
-  buzz(15);
-  const body=r.type==='interval' ? 'Every '+r.every+'h — small sips add up.' : "Time for this — you've got it, mama.";
-  try{
-    if('Notification' in window && Notification.permission==='granted'){
-      if(navigator.serviceWorker){
-        const reg=await navigator.serviceWorker.getRegistration();
-        if(reg && reg.showNotification){ reg.showNotification(r.label,{body,tag:'rem-'+r.id,icon:'./icon-192.png',badge:'./icon-192.png'}); return; }
-      }
-      new Notification(r.label,{body,icon:'./icon-192.png'}); return;
-    }
-  }catch(e){}
-  toast('Reminder: '+r.label);
-}
-function remTick(){
-  if(pushSub) return; /* the cron sender owns delivery while push is on */
-  const now=Date.now();
-  rem.items.forEach(r=>{
-    if(!r.on) return;
-    const slot=remDueSlot(r,now);
-    if(slot && rem.last[r.id]!==slot){ rem.last[r.id]=slot; remSave(); remFire(r); }
-  });
-}
-function refreshNotifBtn(){
-  const b=$('notifBtn');
-  if(!('Notification' in window)){ b.textContent='Notifications unavailable'; b.disabled=true; return; }
-  if(Notification.permission==='granted'){ b.textContent='Notifications on'; b.classList.add('btn-active'); }
-  else if(Notification.permission==='denied'){ b.textContent='Blocked in browser settings'; }
-  else { b.textContent='Enable notifications'; b.classList.remove('btn-active'); }
-}
-function renderReminders(){
-  const box=$('remList'); box.innerHTML='';
-  rem.items.forEach(r=>{
-    const row=el('div','flex items-center gap-2.5 py-2 border-t border-base-300 first:border-t-0 flex-wrap');
-    const tg=document.createElement('input');
-    tg.type='checkbox'; tg.className='toggle toggle-primary toggle-sm flex-none'; tg.checked=!!r.on;
-    tg.setAttribute('aria-label','Toggle '+r.label);
-    tg.addEventListener('change',()=>{ r.on=tg.checked; remSave(); if(r.on) remTick(); });
-    const lab=el('span','flex-1 min-w-[120px] font-bold text-[14px] leading-snug'); lab.textContent=r.label;
-    row.append(tg,lab);
-    if(r.type==='daily'){
-      const t=document.createElement('input');
-      t.type='time'; t.value=r.time||'09:00';
-      t.className='input input-xs input-bordered bg-base-200 font-semibold w-[92px]';
-      t.setAttribute('aria-label',r.label+' time');
-      t.addEventListener('change',()=>{ r.time=t.value; remSave(); });
-      row.append(t);
-    } else {
-      const sel=document.createElement('select');
-      sel.className='select select-xs select-bordered bg-base-200 font-semibold';
-      sel.setAttribute('aria-label',r.label+' interval');
-      [1,2,3,4].forEach(n=>{ const o=document.createElement('option'); o.value=n; o.textContent='every '+n+'h'; if(n===(+r.every||2)) o.selected=true; sel.append(o); });
-      sel.addEventListener('change',()=>{ r.every=+sel.value; remSave(); });
-      row.append(sel);
-    }
-    if(!['vit','water'].includes(r.id)){
-      const x=el('button','btn btn-ghost btn-xs px-1 ink-soft hover:text-error'); x.type='button';
-      x.setAttribute('aria-label','Remove '+r.label); x.textContent='✕';
-      x.addEventListener('click',()=>{
-        rem.items=rem.items.filter(i=>i.id!==r.id); remSave(); renderReminders();
-        toast('Removed '+r.label,{label:'Undo',fn:()=>{ rem.items.push(r); remSave(); renderReminders(); }});
-      });
-      row.append(x);
-    }
-    box.append(row);
-  });
-}
-$('notifBtn').addEventListener('click',()=>{
-  if(!('Notification' in window)) return;
-  if(Notification.permission==='default'){
-    Notification.requestPermission().then(p=>{ refreshNotifBtn(); toast(p==='granted'?'Notifications enabled':'Notifications not enabled'); });
-  } else refreshNotifBtn();
-});
-$('remAdd').addEventListener('click',()=>{
-  const label=(prompt('Reminder name (e.g. "Iron supplement", "Rest break"):')||'').trim();
-  if(!label) return;
-  const time=(prompt('Daily at what time? (HH:MM, 24-hour)','14:00')||'14:00').trim();
-  rem.items.push({id:'c'+Date.now(),label,type:'daily',time:minutesOf(time)!==null?time:'14:00',on:true});
-  remSave(); renderReminders(); toast('Reminder added');
-});
-$('remTest').addEventListener('click',()=>remFire({id:'test',label:'Test reminder',type:'daily'}));
-/* ---------- true push (Web Push + the repo's Actions cron sender) ---------- */
-let pushSub=null;
-function b64ToU8(s){ s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4)s+='='; const r=atob(s); const a=new Uint8Array(r.length); for(let i=0;i<r.length;i++) a[i]=r.charCodeAt(i); return a; }
-function subKey(s){ return s.endpoint.slice(-44).replace(/[^A-Za-z0-9]/g,'').slice(-32); }
-async function getPushSub(){
-  try{
-    if(!('serviceWorker' in navigator) || !('PushManager' in window)) return null;
-    const reg=await navigator.serviceWorker.ready;
-    return await reg.pushManager.getSubscription();
-  }catch(e){ return null; }
-}
-async function writePushRegistry(){
-  const s=pushSub || await getPushSub(); if(!s) return;
-  try{
-    const doc=(await remote.get()) || {app:'newborn-checklist',version:SAVE_VERSION};
-    doc.state=snapshot(); /* local truth wins for the list; only push subs merge from remote */
-    doc.push=doc.push||{subs:{}}; doc.push.subs=doc.push.subs||{};
-    const prev=doc.push.subs[subKey(s)]||{};
-    doc.push.subs[subKey(s)]={
-      sub:s.toJSON(), tzo:new Date().getTimezoneOffset(), who:state.who||'',
-      reminders:rem.items.filter(r=>r.on).map(r=>({id:r.id,label:r.label,type:r.type,time:r.time,every:r.every,start:r.start,end:r.end})),
-      last:prev.last||{}, updatedAt:new Date().toISOString()
-    };
-    cloudPushCache=doc.push;
-    doc.savedAt=new Date().toISOString();
-    await remote.put(doc);
-  }catch(e){}
-}
-async function enablePush(){
-  if(!('PushManager' in window)){
-    const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent||'');
-    const standalone=(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone;
-    toast(isIOS&&!standalone
-      ? 'On iPhone: Share → Add to Home Screen first, then enable push from the installed app'
-      : 'Push not supported in this browser');
-    return;
-  }
-  if(hasCloud || !remote.available()){ toast('Set up Cloud sync first — push rides on it'); showSyncPanel(true); return; }
-  if(!('Notification' in window)){ toast('Notifications unavailable here'); return; }
-  if(Notification.permission!=='granted'){
-    const p=await Notification.requestPermission(); refreshNotifBtn();
-    if(p!=='granted'){ toast('Allow notifications first'); return; }
-  }
-  try{
-    const reg=await navigator.serviceWorker.ready;
-    pushSub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64ToU8(VAPID_PUBLIC)});
-    await writePushRegistry();
-    refreshPushBtn();
-    toast('Push on — reminders arrive even with the app closed');
-  }catch(e){ toast('Push not available in this browser'); }
-}
-async function disablePush(){
-  try{
-    const s=await getPushSub();
-    if(s){
-      try{
-        const doc=await remote.get();
-        if(doc && doc.push && doc.push.subs){ delete doc.push.subs[subKey(s)]; cloudPushCache=doc.push; doc.savedAt=new Date().toISOString(); await remote.put(doc); }
-      }catch(e){}
-      await s.unsubscribe();
-    }
-  }catch(e){}
-  pushSub=null; refreshPushBtn(); toast('Push off — reminders fire only while the app runs');
-}
-function refreshPushBtn(){
-  const b=$('pushBtn');
-  if(!('serviceWorker' in navigator)){ b.textContent='Push unavailable'; b.disabled=true; return; }
-  if(pushSub){ b.textContent='Push on'; b.classList.add('btn-active'); }
-  else { b.textContent='Enable push'; b.classList.remove('btn-active'); }
-}
-$('pushBtn').addEventListener('click',()=>{ pushSub ? disablePush() : enablePush(); });
-(async()=>{ pushSub=await getPushSub(); refreshPushBtn(); if(pushSub) writePushRegistry(); })();
-let regTimer=null;
-function scheduleRegistrySync(){ if(!pushSub) return; clearTimeout(regTimer); regTimer=setTimeout(writePushRegistry,800); }
-
-setInterval(remTick,30000);
-document.addEventListener('visibilitychange',()=>{ if(!document.hidden) remTick(); });
-renderReminders(); refreshNotifBtn();
 
 /* ---------- boot ---------- */
 (async()=>{
