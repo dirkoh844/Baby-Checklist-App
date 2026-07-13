@@ -15,8 +15,10 @@ Focus mode, a hardened print layout, and four ways to share.
 | `reminders.html` | Mom-care reminders and push enrollment. |
 | `settings.html` | Cloud sync setup, due date, name, appearance, what's new. |
 | `upbringing.html` | Recovery through the first year: sleep, feeding, tummy time, solids, babyproofing. |
+| `birthplan.html` | Birth preferences in labor order, with the reasoning and the likely hospital answer for each. `noindex`. |
 | `CHANGELOG.md` | Version history. |
 | `assets/` | Precompiled stylesheet, confetti, and fonts — no CDN, works fully offline. |
+| `worker/` | Cloudflare Worker sync endpoint (recommended cloud store) + wrangler config. |
 | `manifest.webmanifest` | PWA install metadata (+ Labor shortcut). |
 | `sw.js` | Service worker: network-first pages, cached assets, notification clicks focus the app. |
 | `icon-192.png` / `icon-512.png` / `apple-touch-icon.png` | App icons. |
@@ -29,19 +31,40 @@ Focus mode, a hardened print layout, and four ways to share.
 
 ## Cross-device sync (one shared list)
 
-GitHub Pages is static and cannot store data itself, so the app syncs through a
-tiny JSON store on the web:
+GitHub Pages is static and cannot store data, so the app syncs through a JSON
+endpoint you own. It must answer `GET` with the stored document and accept
+`PUT` of a new one, with CORS open to the site. The endpoint plus its key is
+the password: anyone holding both can read and edit the list.
 
-1. In **Settings**, tap **Create shared storage** (tries JSONBlob first, then
-   jsonstorage.net — both free, no account). Or paste any JSON endpoint that
-   accepts GET/PUT — JSONBin.io, Pantry, ExtendsClass, or your own. Keys go in
-   the second field; the app shapes the right auth header per provider.
-2. Tap **Share link** and send it (or copy the Settings **invite link**). Any
-   device that opens it joins the same live list — checkmarks, custom items,
-   and the due date sync about once a minute and whenever the app is opened.
+**Cloudflare Worker + KV (recommended).** Free, nothing expires, and the list
+is unreadable without your token. Deploy `worker/baby-list-worker.js`:
 
-Privacy: the endpoint address acts as the password. Anyone with the share link
-can read and edit the shared list.
+1. Cloudflare dashboard, Workers & Pages, Create, Worker. Paste the file, deploy.
+2. Storage & Databases, KV, create a namespace. Bind it to the Worker as `LIST`.
+3. Worker, Settings, Variables: add a **secret** named `TOKEN`, value from
+   `openssl rand -hex 24`.
+4. In the app: Settings, endpoint `https://<worker>.workers.dev`, key `TOKEN`.
+   Tap **Test connection**.
+
+Or `cd worker && npx wrangler kv namespace create LIST && npx wrangler secret put TOKEN && npx wrangler deploy`.
+
+**JSONBin.io.** No deploy. Free account, private bins, no auto-deletion. Create
+a bin, then an **Access Key** with read + update permission (not the Master Key,
+which is your whole account). Endpoint `https://api.jsonbin.io/v3/b/YOUR_BIN_ID`,
+key = the access key. The free allowance is 10,000 requests in total rather than
+per month, so it suits light use.
+
+**JSONBlob quick-create.** Public blobs, deleted after 75 idle days, and blob
+creation depends on their CORS policy exposing the `Location` header. It stays in
+the app as a throwaway option, not a home for the real list.
+
+Put the same endpoint and key in the repository secrets `CLOUD_URL` and
+`CLOUD_KEY` so the reminder workflow can read the list. If you use a JSONBin
+Master Key there, also set `CLOUD_KEY_TYPE` to `master`.
+
+Checkmarks, custom items, and the due date sync about once a minute and whenever
+the app is opened. Send the **Share link** from the checklist, or the **invite
+link** from Settings, to join another phone.
 
 ## Reminders
 
@@ -78,6 +101,33 @@ POST-DEPLOY.md once. See APPSTORE.md for the App Store and Play Store routes.
 - The contraction timer flags the 5-1-1 pattern (about 5 min apart, about 1 min
   long, sustained an hour) and keeps its log on-device.
 - Print (Ctrl/Cmd+P) outputs a black-on-white serif checklist with pagination guards.
+
+## Deploying
+
+The whole repo is the site. Every file in the zip must land in the repo, and
+that includes the folders:
+
+```
+index.html labor.html upbringing.html reminders.html settings.html
+sw.js manifest.webmanifest package.json
+icon-192.png icon-512.png icon-maskable-512.png apple-touch-icon.png
+assets/          <- app.css, confetti.min.js, fonts/ (4 woff2)   REQUIRED
+.github/         <- workflows for push reminders + keepalive
+scripts/         <- send-push.mjs, generate-vapid.mjs
+.nojekyll
+```
+
+Extract the zip over your clone, then:
+
+```
+git add -A
+git commit -m "Baby List update"
+git push
+```
+
+If you upload through the GitHub web page instead, drag the extracted **folder**
+onto the drop zone. The "choose your files" picker cannot select folders, so
+`assets/` gets left behind and the site renders with no styling at all.
 
 ## Rebuilding the stylesheet
 

@@ -1,5 +1,35 @@
 # Baby List — Changelog
 
+## v2.3.0 — July 2026
+- New **Birth Plan** page (`birthplan.html`), sixth tab. Reproduces the signed
+  SNGH birth preferences in full, reordered into the sequence labor actually
+  happens, with a clinical rationale under every preference and a verdict on how
+  the hospital is likely to answer it (routine, ask, settle prenatally, expect
+  pushback). Sourced from ACOG, AAP, CDC, USPSTF, and WHO guidance.
+- "Hide explanations" collapses the page to preferences only, a clean view to
+  hand a nurse at the desk. Print button included; the page prints without the
+  app chrome.
+- The page is `noindex, nofollow`. It carries a name and medical detail on a
+  public site, so it stays out of search engines.
+- Bottom navigation is now six tabs across every page.
+
+
+## v2.2.1 — July 2026
+- Removed the Labor & Delivery card from the checklist page. The page itself is
+  unchanged and still one tap away in the bottom bar. No item IDs moved, so
+  checkmarks and existing share links are unaffected.
+- Cloud sync now sends JSONBin an **Access Key** header rather than the Master
+  Key, falling back to the Master Key once if the access header is rejected and
+  remembering which one worked. A Master Key in a public page is the whole
+  account; an access key scoped to read + update is not.
+- Added `worker/baby-list-worker.js`: a Cloudflare Worker + KV sync endpoint.
+  Free, no auto-deletion, bearer-token auth, CORS handled.
+- Settings: a **Test connection** button that reports the actual HTTP status,
+  and setup copy that names what each provider costs you. JSONBlob quick-create
+  is now labelled for what it is (public, removed after 75 idle days) and its
+  failures say why instead of failing silently.
+
+
 ## v2.2.0 — July 2026
 - Fully self-hosted: Tailwind + daisyUI precompiled to a static stylesheet,
   fonts and confetti vendored. No CDNs, no runtime compiler, no FOUC, and the
@@ -16,6 +46,11 @@
 - Settings: invite link that connects another phone in one tap, and a
   next-baby reset that clears checkmarks locally and in the cloud while
   keeping custom items, reminders, and the connection.
+- Service worker installs file by file, so one missing or 404ing asset can no
+  longer reject the whole install and silently leave the app with no offline
+  cache. Failed responses are never cached.
+- Every page detects a missing stylesheet and says so plainly instead of
+  rendering as unstyled markup.
 - Search: 150ms debounce plus nickname keywords (onesie, paci, binky,
   carseat, pram, sitz...), screen-reader announcements on checkmarks, a
   maskable Android icon, larger toasts, print button, share-link size

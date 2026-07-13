@@ -1,10 +1,16 @@
 /* Baby List service worker — network-first navigations (fresh deploys reach users),
    stale-while-revalidate for assets/CDNs, notification click focuses the app */
-const VERSION = 'babylist-v6';
-const CORE = ['./', './index.html', './labor.html', './reminders.html', './settings.html', './upbringing.html', './assets/app.css', './assets/confetti.min.js', './assets/fonts/fraunces-latin-opsz-normal.woff2', './assets/fonts/fraunces-latin-opsz-italic.woff2', './assets/fonts/nunito-sans-latin-normal.woff2', './assets/fonts/nunito-sans-latin-italic.woff2', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
+const VERSION = 'babylist-v8';
+const CORE = ['./', './index.html', './labor.html', './reminders.html', './settings.html', './upbringing.html', './birthplan.html', './assets/app.css', './assets/confetti.min.js', './assets/fonts/fraunces-latin-opsz-normal.woff2', './assets/fonts/fraunces-latin-opsz-italic.woff2', './assets/fonts/nunito-sans-latin-normal.woff2', './assets/fonts/nunito-sans-latin-italic.woff2', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
+  /* cache each file on its own: addAll() rejects the entire install if a single
+     entry 404s, which silently leaves the app with no offline cache at all */
+  e.waitUntil(
+    caches.open(VERSION)
+      .then(c => Promise.allSettled(CORE.map(u => c.add(u))))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', e => {
@@ -23,8 +29,10 @@ self.addEventListener('fetch', e => {
   if (req.mode === 'navigate') {
     e.respondWith(
       fetch(req).then(res => {
-        const copy = res.clone();
-        caches.open(VERSION).then(c => c.put(req, copy));
+        if (res && res.ok) {
+          const copy = res.clone();
+          caches.open(VERSION).then(c => c.put(req, copy));
+        }
         return res;
       }).catch(() =>
         caches.match(req).then(hit => hit || caches.match('./index.html'))
