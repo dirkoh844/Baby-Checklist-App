@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@source "../index.html";
+@source "../labor.html";
+@source "../upbringing.html";
+@source "../reminders.html";
+@source "../settings.html";
+
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:swap;src:url('./fonts/fraunces-latin-opsz-normal.woff2') format('woff2-variations');}
+@font-face{font-family:'Fraunces';font-style:italic;font-weight:100 900;font-display:swap;src:url('./fonts/fraunces-latin-opsz-italic.woff2') format('woff2-variations');}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:100 900;font-display:swap;src:url('./fonts/nunito-sans-latin-normal.woff2') format('woff2-variations');}
+@font-face{font-family:'Nunito Sans';font-style:italic;font-weight:100 900;font-display:swap;src:url('./fonts/nunito-sans-latin-italic.woff2') format('woff2-variations');}
