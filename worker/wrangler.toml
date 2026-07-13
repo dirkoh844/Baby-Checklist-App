@@ -1,0 +1,10 @@
+# Optional CLI deploy:  npx wrangler deploy
+#   npx wrangler kv namespace create LIST     -> paste the id below
+#   npx wrangler secret put TOKEN             -> paste your openssl rand -hex 24
+name = "baby-list-sync"
+main = "baby-list-worker.js"
+compatibility_date = "2026-01-01"
+
+[[kv_namespaces]]
+binding = "LIST"
+id = "PASTE_YOUR_KV_NAMESPACE_ID"
