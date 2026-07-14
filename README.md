@@ -15,6 +15,8 @@ Focus mode, a hardened print layout, and four ways to share.
 | `reminders.html` | Mom-care reminders and push enrollment. |
 | `settings.html` | Cloud sync setup, due date, name, appearance, what's new. |
 | `upbringing.html` | Recovery through the first year: sleep, feeding, tummy time, solids, babyproofing. |
+| `tracker.html` | Feeds, diapers, sleep. Warns on AAP thresholds. Syncs to both phones. `noindex`. |
+| `emergency.html` | POST-BIRTH warning signs, newborn red flags, emergency card. Offline. `noindex`. |
 | `birthplan.html` | Birth preferences in labor order, with the reasoning and the likely hospital answer for each. `noindex`. |
 | `CHANGELOG.md` | Version history. |
 | `assets/` | Precompiled stylesheet, confetti, and fonts — no CDN, works fully offline. |

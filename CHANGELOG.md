@@ -1,5 +1,31 @@
 # Baby List — Changelog
 
+## v2.4.0 — July 2026
+- New **Tracker** page. Feeds (nursing timer with sides, bottle ounces, pumping),
+  diapers (wet, dirty, both), and sleep. The three numbers a pediatrician always
+  asks for are the first thing on screen: time since the last feed, time since
+  the last wet diaper, and whether the baby is asleep. Both phones write to one
+  log, unioned by entry id so simultaneous logging never overwrites.
+- The tracker **warns**, which is what a logging app usually will not do. Fewer
+  than 6 wet diapers in 24 hours after the first week, no wet diaper in 8 hours,
+  no feed logged in 4 hours, fewer than 8 feeds a day. AAP thresholds, phrased as
+  a prompt to call, never as a diagnosis.
+- "Copy for the doctor" puts the 24-hour and 7-day counts on the clipboard.
+- **Night mode**: dim red on near-black, oversized buttons, and a screen wake
+  lock so the phone does not sleep mid-feed at 3am.
+- New **Warning signs** page, one tap from the header of every screen. AWHONN's
+  POST-BIRTH signs for mom (the four that mean call 911, the five that mean call
+  your provider), newborn red flags including the rule that a rectal temperature
+  of 100.4 under 3 months is an emergency, and an editable emergency card with
+  one-tap calling. Works offline.
+- **Fixed a data-loss bug**: the checklist page saved state from a whitelist, so
+  any key another page owned was deleted on the next save. That already dropped
+  the Birth Plan's clean-view setting and would have erased every feed log.
+  Foreign keys are now carried through and the log is unioned, both locally and
+  on every cloud push.
+- Bottom navigation is now seven tabs.
+
+
 ## v2.3.0 — July 2026
 - New **Birth Plan** page (`birthplan.html`), sixth tab. Reproduces the signed
   SNGH birth preferences in full, reordered into the sequence labor actually

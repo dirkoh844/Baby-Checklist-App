@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="womb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tracker — Baby List</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Feeds, diapers, and sleep. Answers the three questions the pediatrician always asks.">
+<meta name="theme-color" content="#10141F">
+<meta name="color-scheme" content="dark light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%2310141F'/%3E%3Cpath d='M19 9.5A5 5 0 0112.5 3 5 5 0 1019 9.5z' fill='%23EBC77C'/%3E%3Cpath d='M5 13l4 4.5L18 8' stroke='%237BC8B3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
+<script>
+addEventListener('DOMContentLoaded',function(){
+  if(!window.__cssMissing) return;
+  var d=document.createElement('div');
+  d.setAttribute('style','position:fixed;left:0;right:0;top:0;z-index:99999;background:#7f1d1d;color:#fff;padding:12px 14px;font:600 14px/1.45 system-ui,sans-serif');
+  d.textContent='Styles did not load: assets/app.css is missing from this deployment. Upload the assets folder (app.css, confetti.min.js, fonts/) to the repository.';
+  document.body.prepend(d);
+});
+</script>
+<style>
+[data-theme="womb"]{
+  color-scheme:dark;
+  --color-base-100:#1A2130; --color-base-200:#10141F; --color-base-300:#2B3547;
+  --color-base-content:#EFF3FA;
+  --color-primary:#7DD3BC;   --color-primary-content:#0C1019;
+  --color-secondary:#F5AD7E; --color-secondary-content:#0C1019;
+  --color-accent:#F2CB6C;    --color-accent-content:#0C1019;
+  --color-neutral:#EFF3FA;   --color-neutral-content:#10141F;
+  --color-info:#AEB9FF;      --color-info-content:#0C1019;
+  --color-success:#A9DB84;   --color-success-content:#0C1019;
+  --color-warning:#F2CB6C;   --color-warning-content:#0C1019;
+  --color-error:#FF8F7D;     --color-error-content:#0C1019;
+  --radius-box:1rem; --radius-field:.75rem; --radius-selector:.5rem;
+  --ink-soft:#A3B0C4; --glow1:rgba(245,173,126,.10); --glow2:rgba(125,211,188,.075);
+}
+[data-theme="dawn"]{
+  color-scheme:light;
+  --color-base-100:#FFFFFF; --color-base-200:#FAF8F4; --color-base-300:#E8E1D5;
+  --color-base-content:#27313F;
+  --color-primary:#5C9A8B;   --color-primary-content:#FFFFFF;
+  --color-secondary:#E8956B; --color-secondary-content:#FFFFFF;
+  --color-accent:#D9A741;    --color-accent-content:#FFFFFF;
+  --color-neutral:#27313F;   --color-neutral-content:#FAF8F4;
+  --color-info:#5A67C7;      --color-info-content:#FFFFFF;
+  --color-success:#5E8A3C;   --color-success-content:#FFFFFF;
+  --color-warning:#B8860B;   --color-warning-content:#FFFFFF;
+  --color-error:#DD6A59;     --color-error-content:#FFFFFF;
+  --radius-box:1rem; --radius-field:.75rem; --radius-selector:.5rem;
+  --ink-soft:#505C6B; --glow1:rgba(232,149,107,.09); --glow2:rgba(92,154,139,.07);
+}
+html{background:var(--color-base-200)}
+body{
+  font-family:"Nunito Sans",system-ui,sans-serif;
+  background-color:var(--color-base-200);
+  background-image:radial-gradient(520px 300px at 14% -10%,var(--glow1),transparent 58%),
+                   radial-gradient(560px 340px at 104% -4%,var(--glow2),transparent 60%);
+  background-repeat:no-repeat;
+}
+.font-display{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto;letter-spacing:-.012em}
+.ink-soft{color:var(--ink-soft)}
+::selection{background:var(--color-primary);color:var(--color-primary-content)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@supports (background: color-mix(in oklab, red 10%, blue)){
+  .zone-gold{background:color-mix(in oklab, var(--color-accent) 15%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-accent) 40%, var(--color-base-300));border-left:4px solid var(--color-accent)}
+  .zone-green{background:color-mix(in oklab, var(--color-primary) 15%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-primary) 40%, var(--color-base-300));border-left:4px solid var(--color-primary)}
+  .zone-info{background:color-mix(in oklab, var(--color-info) 15%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-info) 40%, var(--color-base-300));border-left:4px solid var(--color-info)}
+  .zone-coral{background:color-mix(in oklab, var(--color-error) 15%, var(--color-base-100));border-color:color-mix(in oklab, var(--color-error) 40%, var(--color-base-300));border-left:4px solid var(--color-error)}
+}
+
+/* Bottom menu: every tab has an identity color; the active tab wears a tinted
+   pill behind its icon plus a matching label, so state reads at a glance. */
+#tabNav .nt{color:var(--ink-soft)}
+#tabNav .nt[aria-current="page"]{color:var(--tab-a)}
+#tabNav .nt[aria-current="page"] .np{background:color-mix(in oklab, var(--tab-a) 22%, transparent);box-shadow:inset 0 0 0 1px color-mix(in oklab, var(--tab-a) 38%, transparent)}
+@supports not (background: color-mix(in oklab, red 10%, blue)){
+  #tabNav .nt[aria-current="page"] .np{background:var(--color-base-300)}
+}
+
+
+/* 3 a.m. mode: deep red on near-black. Red light does not wreck night vision
+   the way blue-white does, and the buttons get big enough to hit one-handed. */
+body.night{background:#07070A;color:#E0736A}
+body.night .card,body.night .navbar,body.night #tabNav{background:#0B0B0F!important;border-color:#3A1518!important;backdrop-filter:none}
+body.night .ink-soft,body.night .text-base-content\/70{color:#8C3F3C!important}
+body.night h1,body.night h2,body.night .hero-num{color:#E0736A!important}
+body.night .btn{background:#1A0C0E!important;border-color:#4A1D20!important;color:#E0736A!important;box-shadow:none}
+body.night .btn-primary,body.night .btn-secondary,body.night .btn-error{background:#3A1518!important;color:#F0A79E!important}
+body.night .logbtn{min-height:72px;font-size:17px}
+body.night .badge{background:#1A0C0E!important;border-color:#4A1D20!important;color:#E0736A!important}
+body.night input,body.night select{background:#12080A!important;color:#E0736A!important;border-color:#4A1D20!important}
+body.night #tabNav .nt{color:#6B2F2E!important}
+body.night #tabNav .nt[aria-current="page"]{color:#E0736A!important}
+body.night #tabNav .nt[aria-current="page"] .np{background:#2A1013!important;box-shadow:none}
+.hero-num{font-variant-numeric:tabular-nums}
+.logbtn{min-height:58px}
+.ent:nth-child(odd){background:color-mix(in oklab, var(--color-base-200) 60%, transparent)}
+@media print{ *{background:#fff!important;color:#000!important} #tabNav,#toastWrap,.icobtns,.logrow,#nightBtn{display:none!important} }
+</style>
+</head>
+<body class="min-h-dvh text-[16px] leading-relaxed pb-28">
+
+<header class="navbar sticky top-0 z-30 bg-base-200/85 backdrop-blur-md border-b border-base-300 px-3.5 pt-[calc(env(safe-area-inset-top)+8px)] pb-2 min-h-0">
+  <div class="w-full max-w-[640px] mx-auto flex items-center gap-2">
+    <h1 class="font-display font-semibold text-[21px] leading-tight m-0 flex-1">Baby <em class="italic font-medium text-secondary">tracker</em>
+      <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1" id="dol">Feeds · diapers · sleep</span>
+    </h1>
+    <div class="icobtns flex gap-1.5 flex-none items-center">
+      <span id="syncDot" class="hidden w-2 h-2 rounded-full mr-0.5" role="status"></span>
+      <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 flex-none" id="nightBtn" type="button" aria-label="Night mode" aria-pressed="false"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M20 13.5A7.5 7.5 0 0110.5 4a7.5 7.5 0 109.5 9.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button>
+      <a href="./emergency.html" class="btn btn-circle btn-sm btn-soft btn-error flex-none" id="sosBtn" aria-label="Warning signs and emergency contacts" title="Warning signs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M12 8.5v4.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><circle cx="12" cy="16.6" r="1.15" fill="currentColor"/><path d="M10.3 3.9L2.6 17.4A2 2 0 004.3 20.5h15.4a2 2 0 001.7-3.1L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></a>
+      <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 flex-none" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+    </div>
+  </div>
+</header>
+
+<div class="w-full max-w-[640px] mx-auto px-3.5">
+
+  <!-- no birth date yet -->
+  <section class="card bg-base-100 border border-primary/50 shadow-sm mt-4" id="bornCard">
+    <div class="card-body p-4 gap-2">
+      <h2 class="font-display font-semibold text-[17.5px] m-0">Is the baby here?</h2>
+      <p class="m-0 text-[12.5px] ink-soft leading-relaxed">The day-of-life count drives the diaper and feeding thresholds, so the tracker needs the birth date and time.</p>
+      <input id="bornInput" type="datetime-local" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full">
+      <button id="bornSave" type="button" class="btn btn-sm btn-primary rounded-xl font-extrabold w-full">Start tracking</button>
+    </div>
+  </section>
+
+  <!-- the three questions -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 hidden" id="heroCard">
+    <div class="card-body p-4 gap-2">
+      <div class="grid grid-cols-3 gap-2 text-center">
+        <div>
+          <span class="block text-[10px] font-extrabold uppercase tracking-wider ink-soft">Since fed</span>
+          <span class="block font-display font-semibold text-[26px] leading-tight hero-num" id="sinceFeed">—</span>
+        </div>
+        <div>
+          <span class="block text-[10px] font-extrabold uppercase tracking-wider ink-soft">Since wet</span>
+          <span class="block font-display font-semibold text-[26px] leading-tight hero-num" id="sinceWet">—</span>
+        </div>
+        <div>
+          <span class="block text-[10px] font-extrabold uppercase tracking-wider ink-soft">Sleeping</span>
+          <span class="block font-display font-semibold text-[26px] leading-tight hero-num" id="sleepState">—</span>
+        </div>
+      </div>
+      <div class="flex gap-2 justify-center flex-wrap text-[12px] font-bold mt-1" id="today"></div>
+    </div>
+  </section>
+
+  <!-- thresholds -->
+  <div id="warnWrap" class="mt-3"></div>
+
+  <!-- nursing timer -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 hidden logrow" id="nurseCard">
+    <div class="card-body p-4 gap-2">
+      <div class="flex items-center gap-2">
+        <h2 class="font-display font-semibold text-[17.5px] m-0 flex-1">Nursing</h2>
+        <span class="font-display font-semibold text-[22px] hero-num" id="nurseClock">0:00</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <button id="nurseL" type="button" class="btn btn-soft btn-secondary rounded-xl font-extrabold logbtn">Left</button>
+        <button id="nurseR" type="button" class="btn btn-soft btn-secondary rounded-xl font-extrabold logbtn">Right</button>
+      </div>
+      <button id="nurseStop" type="button" class="btn btn-primary rounded-xl font-extrabold w-full hidden">Stop and log</button>
+    </div>
+  </section>
+
+  <!-- one-tap logging -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 hidden logrow" id="logCard">
+    <div class="card-body p-4 gap-2">
+      <div class="grid grid-cols-2 gap-2">
+        <button id="btnWet" type="button" class="btn btn-soft btn-info rounded-xl font-extrabold logbtn">Wet</button>
+        <button id="btnDirty" type="button" class="btn btn-soft btn-warning rounded-xl font-extrabold logbtn">Dirty</button>
+        <button id="btnBoth" type="button" class="btn btn-soft btn-accent rounded-xl font-extrabold logbtn">Wet + dirty</button>
+        <button id="btnSleep" type="button" class="btn btn-soft btn-neutral rounded-xl font-extrabold logbtn">Sleep start</button>
+      </div>
+      <div class="flex gap-2 items-center mt-1">
+        <input id="ozIn" type="number" inputmode="decimal" step="0.5" min="0" max="12" placeholder="oz" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-20 flex-none" aria-label="Ounces">
+        <button id="btnBottle" type="button" class="btn btn-sm btn-soft btn-success rounded-xl font-bold flex-1">Bottle</button>
+        <button id="btnPump" type="button" class="btn btn-sm btn-soft btn-secondary rounded-xl font-bold flex-1">Pump</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- history -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 hidden" id="histCard">
+    <div class="card-body p-4 gap-2">
+      <div class="flex items-center gap-2 flex-wrap">
+        <h2 class="font-display font-semibold text-[17.5px] m-0 flex-1">Last 48 hours</h2>
+        <button id="copyBtn" type="button" class="btn btn-xs rounded-full border-base-300 font-bold">Copy for the doctor</button>
+      </div>
+      <div id="hist" class="text-[13px]"></div>
+    </div>
+  </section>
+
+  <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
+    <p class="m-0">Both phones write to the same log. Entries older than 30 days move to a local archive and ride along in your Save-to-file backup. The thresholds here follow AAP guidance and are a prompt to call, never a diagnosis. <a class="link link-error font-bold" href="./emergency.html">Warning signs</a>.</p>
+  </footer>
+</div>
+
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
+  <div class="max-w-[640px] mx-auto grid grid-cols-7">
+    <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.2l2.4 2.6 4.8-5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
+    <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-7.5-10.7A4.3 4.3 0 0112 7.6a4.3 4.3 0 017.5 2.7C19.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 12h2.4l1-1.8 1.4 3.2 1.1-1.4H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
+    <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M9 4.2h6a.8.8 0 01.8.8v1.2H8.2V5a.8.8 0 01.8-.8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.2 6.2H6.6A1.6 1.6 0 005 7.8v10.6A1.6 1.6 0 006.6 20h10.8a1.6 1.6 0 001.6-1.6V7.8a1.6 1.6 0 00-1.6-1.6h-1.6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 17s-3-1.9-3-4a1.75 1.75 0 013-1.2 1.75 1.75 0 013 1.2c0 2.1-3 4-3 4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>Birth Plan</a>
+    <a href="./tracker.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" aria-current="page" style="--tab-a:var(--color-accent)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7.5 15.5v-3M11.5 15.5v-6M15.5 15.5v-4M19 15.5v-8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>Tracker</a>
+    <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14c0-4.2-3-6.6-7.2-6.6C4.8 11.6 7.8 14 12 14z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 12.2c0-3.4 2.5-5.4 6-5.4 0 3.4-2.5 5.4-6 5.4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span>Upbringing</a>
+    <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-warning)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9.5A6 6 0 0118 9.5c0 5 2 6 2 6H4s2-1 2-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.8 19a2.3 2.3 0 004.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Reminders</a>
+    <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Settings</a>
+  </div>
+</nav>
+
+<div class="toast toast-center toast-bottom z-[80] mb-20 hidden" id="toastWrap">
+  <div class="alert bg-neutral text-neutral-content rounded-2xl py-3.5 px-6 text-[15px] leading-snug font-extrabold shadow-lg border-0 max-w-[92vw] whitespace-normal justify-center text-center" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let toastTimer=null;
+function toast(m,undo){
+  const w=$('toastWrap'), t=$('toast');
+  t.textContent=m;
+  if(undo){
+    const b=document.createElement('button');
+    b.type='button'; b.className='btn btn-sm btn-warning rounded-full font-extrabold uppercase ml-2';
+    b.textContent='Undo';
+    b.addEventListener('click',()=>{ undo(); w.classList.add('hidden'); });
+    t.appendChild(b);
+  }
+  w.classList.remove('hidden');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),undo?5000:2400);
+}
+const KEY='newborn-checklist-v3', ARCH='newborn-log-archive';
+const DAY=864e5, HOUR=36e5;
+
+/* ---------- state ---------- */
+function readState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):{}; }catch(e){ return {}; } }
+let S=readState();
+if(!Array.isArray(S.log)) S.log=[];
+function save(){
+  S.savedAt=new Date().toISOString();
+  try{ localStorage.setItem(KEY,JSON.stringify(S)); }
+  catch(e){ toast('This browser is blocking saved data'); }
+  queuePush();
+}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function add(e){
+  e.i=uid(); e.u=Date.now(); if(!e.at) e.at=Date.now();
+  e.by=S.who||'';
+  S.log.push(e); save(); render();
+  return e.i;
+}
+function drop(id){
+  const e=S.log.find(x=>x.i===id);
+  if(!e) return;
+  e.del=true; e.u=Date.now();
+  save(); render();
+}
+
+/* ---------- cloud: same adapter and auth rules as the checklist ---------- */
+function cloudHeaders(cfg,useMaster){
+  const hd={'Content-Type':'application/json'};
+  if(!cfg||!cfg.k) return hd;
+  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
+  if(host.includes('jsonbin.io')) hd[(useMaster||cfg.kt==='m')?'X-Master-Key':'X-Access-Key']=cfg.k;
+  else if(host.includes('extendsclass.com')) hd['Security-key']=cfg.k;
+  else hd['Authorization']='Bearer '+cfg.k;
+  return hd;
+}
+function cloudUrlFor(cfg){
+  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
+  if(host.includes('jsonstorage.net') && cfg.k && cfg.u.indexOf('apiKey=')<0)
+    return cfg.u+(cfg.u.includes('?')?'&':'?')+'apiKey='+encodeURIComponent(cfg.k);
+  return cfg.u;
+}
+async function cloudFetch(cfg,method,body){
+  const opts={method,headers:cloudHeaders(cfg),cache:'no-store'};
+  if(body!=null) opts.body=body;
+  let res=await fetch(cloudUrlFor(cfg),opts);
+  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
+  if((res.status===401||res.status===403) && host.includes('jsonbin.io') && cfg.kt!=='m'){
+    const o2={method,headers:cloudHeaders(cfg,true),cache:'no-store'};
+    if(body!=null) o2.body=body;
+    res=await fetch(cloudUrlFor(cfg),o2);
+    if(res.ok){ cfg.kt='m'; S.cloud=cfg; }
+  }
+  return res;
+}
+function unwrap(b){ if(b&&typeof b==='object'){ if(b.record&&b.record.app==='newborn-checklist') return b.record; if(b.app==='newborn-checklist') return b; } return null; }
+/* append-only union by entry id, newest edit of an id wins */
+function mergeLogs(a,b){
+  const m={};
+  (a||[]).forEach(e=>{ if(e&&e.i) m[e.i]=e; });
+  (b||[]).forEach(e=>{ if(e&&e.i){ const o=m[e.i]; if(!o||(e.u||0)>(o.u||0)) m[e.i]=e; } });
+  return Object.keys(m).map(k=>m[k]).sort((x,y)=>(x.at||0)-(y.at||0));
+}
+function setDot(ok){
+  const d=$('syncDot');
+  if(!(S.sync && S.cloud && S.cloud.u)){ d.classList.add('hidden'); return; }
+  d.classList.remove('hidden');
+  d.classList.toggle('bg-success',ok); d.classList.toggle('bg-warning',!ok);
+  d.title=ok?'Synced':'Sync unreachable — saved on this phone';
+}
+let pushTimer=null, pushing=false;
+function queuePush(){
+  if(!(S.sync && S.cloud && S.cloud.u)) return;
+  clearTimeout(pushTimer);
+  pushTimer=setTimeout(pushCloud,2000);
+}
+async function pushCloud(){
+  if(pushing || !(S.sync && S.cloud && S.cloud.u)) return;
+  pushing=true;
+  try{
+    let doc=null;
+    try{
+      const r=await cloudFetch(S.cloud,'GET');
+      if(r.ok) doc=unwrap(await r.json());
+    }catch(e){}
+    /* never PUT a doc we did not merge first: the other phone owns the
+       checklist half of it and may have written since we loaded */
+    const base=(doc&&doc.state)?doc.state:{};
+    const merged=Object.assign({},base,S,{log:mergeLogs(base.log,S.log)});
+    S.log=merged.log;
+    try{ localStorage.setItem(KEY,JSON.stringify(merged)); }catch(e){}
+    S=merged;
+    const out={app:'newborn-checklist',version:2,savedAt:new Date().toISOString(),state:merged};
+    if(doc&&doc.push) out.push=doc.push;
+    const res=await cloudFetch(S.cloud,'PUT',JSON.stringify(out));
+    setDot(res.ok!==false);
+    render();
+  }catch(e){ setDot(false); }
+  pushing=false;
+}
+async function pullCloud(){
+  if(!(S.sync && S.cloud && S.cloud.u)) return;
+  try{
+    const r=await cloudFetch(S.cloud,'GET');
+    if(!r.ok){ setDot(false); return; }
+    const doc=unwrap(await r.json());
+    if(doc && doc.state){
+      const before=S.log.length;
+      const merged=mergeLogs(S.log,doc.state.log);
+      if(JSON.stringify(merged)!==JSON.stringify(S.log)){
+        S.log=merged;
+        if(!S.born && doc.state.born) S.born=doc.state.born;
+        if(!S.card && doc.state.card) S.card=doc.state.card;
+        try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){}
+        render();
+        if(S.log.length>before) toast('Updated from the other phone');
+      }
+    }
+    setDot(true);
+  }catch(e){ setDot(false); }
+}
+
+/* ---------- archive entries older than 30 days ---------- */
+function prune(){
+  const cut=Date.now()-30*DAY;
+  const old=S.log.filter(e=>e.at<cut), keep=S.log.filter(e=>e.at>=cut);
+  if(!old.length) return;
+  try{
+    const prev=JSON.parse(localStorage.getItem(ARCH)||'[]');
+    localStorage.setItem(ARCH,JSON.stringify(prev.concat(old)));
+    S.log=keep; save();
+  }catch(e){}
+}
+
+/* ---------- helpers ---------- */
+const live=()=>S.log.filter(e=>!e.del);
+const since=ms=>{
+  const m=Math.floor(ms/6e4);
+  if(m<60) return m+'m';
+  const h=Math.floor(m/60);
+  return h+'h'+(m%60?' '+(m%60)+'m':'');
+};
+const fmtDur=s=>{ s=Math.round(s); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); };
+const clock=t=>new Date(t).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+function dayOfLife(){
+  if(!S.born) return null;
+  const b=Date.parse(S.born); if(isNaN(b)) return null;
+  return Math.floor((Date.now()-b)/DAY)+1;   /* birth day = day 1 */
+}
+const inWindow=(e,ms)=>e.at>=Date.now()-ms;
+const isFeed=e=>e.t==='feed';
+const isWet=e=>e.t==='diaper'&&e.w;
+const isDirty=e=>e.t==='diaper'&&e.p;
+
+/* ---------- thresholds: AAP-derived, and only ever a prompt to call ---------- */
+function warnings(){
+  const dol=dayOfLife(), out=[];
+  if(!dol) return out;
+  const L=live();
+  const feeds24=L.filter(e=>isFeed(e)&&inWindow(e,DAY)).length;
+  const wet24=L.filter(e=>isWet(e)&&inWindow(e,DAY)).length;
+  const lastFeed=L.filter(isFeed).sort((a,b)=>b.at-a.at)[0];
+  const lastWet=L.filter(isWet).sort((a,b)=>b.at-a.at)[0];
+  const age=Date.now()-Date.parse(S.born);
+
+  if(lastWet && Date.now()-lastWet.at>=8*HOUR)
+    out.push(['error','No wet diaper in '+since(Date.now()-lastWet.at),'Eight hours with no wet diaper is a dehydration flag. Call the pediatrician.']);
+  if(dol>=7 && wet24<6 && age>=DAY)
+    out.push(['error','Only '+wet24+' wet diapers in 24 hours','After the first week, fewer than 6 a day suggests the baby is not getting enough. Call the pediatrician today.']);
+  else if(dol>=5 && dol<7 && wet24<5 && age>=DAY)
+    out.push(['warning','Only '+wet24+' wet diapers in 24 hours','By day 5, expect the count to be climbing toward 6 or more. Worth a call.']);
+  if(lastFeed && Date.now()-lastFeed.at>=4*HOUR)
+    out.push(['warning','No feed logged in '+since(Date.now()-lastFeed.at),'Newborns feed 8 to 12 times a day, about every 2 to 3 hours. A baby too sleepy to feed needs to be checked.']);
+  if(dol>=2 && feeds24<8 && age>=DAY)
+    out.push(['warning','Only '+feeds24+' feeds in 24 hours','The target is 8 to 12. If the baby keeps falling asleep at the breast or refuses, call.']);
+  if(dol>=14 && dol<=21)
+    out.push(['info','Two-week check','Babies should be back to birth weight by about 2 weeks. If the weight check has not happened, book it.']);
+  return out;
+}
+
+/* ---------- render ---------- */
+let nurse=null;   /* {side, start} */
+function render(){
+  const started=!!S.born;
+  $('bornCard').classList.toggle('hidden',started);
+  ['heroCard','nurseCard','logCard','histCard'].forEach(id=>$(id).classList.toggle('hidden',!started));
+  if(!started) return;
+
+  const dol=dayOfLife();
+  $('dol').textContent='Day '+dol+' of life';
+
+  const L=live();
+  const lastFeed=L.filter(isFeed).sort((a,b)=>b.at-a.at)[0];
+  const lastWet=L.filter(isWet).sort((a,b)=>b.at-a.at)[0];
+  const openSleep=L.filter(e=>e.t==='sleep'&&!e.e).sort((a,b)=>b.at-a.at)[0];
+
+  $('sinceFeed').textContent=lastFeed?since(Date.now()-lastFeed.at):'—';
+  $('sinceWet').textContent=lastWet?since(Date.now()-lastWet.at):'—';
+  $('sleepState').textContent=openSleep?since(Date.now()-openSleep.at):'awake';
+  $('btnSleep').textContent=openSleep?'Sleep end':'Sleep start';
+
+  const f=L.filter(e=>isFeed(e)&&inWindow(e,DAY)).length;
+  const w=L.filter(e=>isWet(e)&&inWindow(e,DAY)).length;
+  const d=L.filter(e=>isDirty(e)&&inWindow(e,DAY)).length;
+  const slept=L.filter(e=>e.t==='sleep'&&e.e&&inWindow(e,DAY)).reduce((a,b)=>a+(b.e-b.at),0);
+  $('today').innerHTML=
+    '<span class="badge badge-soft badge-secondary">'+f+' feeds / 24h</span>'+
+    '<span class="badge badge-soft badge-info">'+w+' wet</span>'+
+    '<span class="badge badge-soft badge-warning">'+d+' dirty</span>'+
+    '<span class="badge badge-soft badge-neutral">'+(slept?Math.round(slept/HOUR*10)/10:0)+'h sleep</span>';
+
+  const ws=warnings();
+  $('warnWrap').innerHTML=ws.length? ws.map(([lvl,head,body])=>
+    '<div class="alert bg-base-100 border-2 border-'+lvl+' mb-2 block py-3">'+
+    '<p class="m-0 text-[14px] font-extrabold leading-snug text-'+lvl+'">'+head+'</p>'+
+    '<p class="m-0 text-[12.5px] leading-relaxed ink-soft mt-0.5">'+body+'</p>'+
+    '</div>').join('')+
+    '<a href="./emergency.html" class="btn btn-sm btn-soft btn-error rounded-xl font-bold w-full">Newborn warning signs</a>' : '';
+
+  const recent=L.filter(e=>inWindow(e,2*DAY)).sort((a,b)=>b.at-a.at);
+  $('hist').innerHTML=recent.length? recent.map(e=>{
+    let txt='';
+    if(e.t==='feed') txt=e.k==='bottle'?('Bottle '+(e.oz||'?')+' oz'):('Nursed '+(e.s||'')+' '+fmtDur(e.d||0));
+    else if(e.t==='pump') txt='Pumped '+(e.oz||'?')+' oz';
+    else if(e.t==='diaper') txt=(e.w&&e.p)?'Wet + dirty':(e.w?'Wet':'Dirty');
+    else if(e.t==='sleep') txt=e.e?('Slept '+since(e.e-e.at)):'Sleeping…';
+    return '<div class="ent flex items-center gap-2 py-1.5 px-2 rounded-lg">'+
+      '<span class="font-bold w-16 flex-none hero-num">'+clock(e.at)+'</span>'+
+      '<span class="flex-1 min-w-0">'+txt+(e.by?' <span class="ink-soft text-[11px]">'+e.by+'</span>':'')+'</span>'+
+      '<button class="btn btn-xs btn-ghost text-error font-bold flex-none" data-del="'+e.i+'" aria-label="Delete entry">✕</button>'+
+      '</div>';
+  }).join('') : '<p class="m-0 ink-soft text-[13px]">Nothing logged yet.</p>';
+  $('hist').querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>drop(b.getAttribute('data-del'))));
+}
+
+/* ---------- logging ---------- */
+function logDiaper(w,p,label){
+  const id=add({t:'diaper',w:w,p:p});
+  toast(label+' logged',()=>drop(id));
+}
+$('btnWet').addEventListener('click',()=>logDiaper(true,false,'Wet'));
+$('btnDirty').addEventListener('click',()=>logDiaper(false,true,'Dirty'));
+$('btnBoth').addEventListener('click',()=>logDiaper(true,true,'Wet + dirty'));
+$('btnSleep').addEventListener('click',()=>{
+  const open=live().filter(e=>e.t==='sleep'&&!e.e).sort((a,b)=>b.at-a.at)[0];
+  if(open){ open.e=Date.now(); open.u=Date.now(); save(); render(); toast('Slept '+since(open.e-open.at)); }
+  else { const id=add({t:'sleep',e:null}); toast('Sleep started',()=>drop(id)); }
+});
+function oz(){ const v=parseFloat($('ozIn').value); return isNaN(v)?null:v; }
+$('btnBottle').addEventListener('click',()=>{
+  const v=oz(); if(v===null){ toast('Enter the ounces first'); $('ozIn').focus(); return; }
+  const id=add({t:'feed',k:'bottle',oz:v}); $('ozIn').value='';
+  toast('Bottle '+v+' oz logged',()=>drop(id));
+});
+$('btnPump').addEventListener('click',()=>{
+  const v=oz(); if(v===null){ toast('Enter the ounces first'); $('ozIn').focus(); return; }
+  const id=add({t:'pump',oz:v}); $('ozIn').value='';
+  toast('Pumped '+v+' oz',()=>drop(id));
+});
+
+/* nursing timer, with the screen held awake while it runs */
+let wake=null;
+async function keepAwake(on){
+  try{
+    if(on && navigator.wakeLock && !wake) wake=await navigator.wakeLock.request('screen');
+    else if(!on && wake){ wake.release(); wake=null; }
+  }catch(e){}
+}
+function nurseStart(side){
+  nurse={side:side,start:Date.now()};
+  $('nurseL').classList.toggle('btn-secondary',side==='L');
+  $('nurseR').classList.toggle('btn-secondary',side==='R');
+  $('nurseL').textContent=side==='L'?'Left ●':'Left';
+  $('nurseR').textContent=side==='R'?'Right ●':'Right';
+  $('nurseStop').classList.remove('hidden');
+  keepAwake(true);
+}
+$('nurseL').addEventListener('click',()=>nurse?null:nurseStart('L'));
+$('nurseR').addEventListener('click',()=>nurse?null:nurseStart('R'));
+$('nurseStop').addEventListener('click',()=>{
+  if(!nurse) return;
+  const d=Math.round((Date.now()-nurse.start)/1000);
+  const id=add({t:'feed',k:'breast',s:nurse.side,d:d,at:nurse.start});
+  nurse=null; keepAwake(false);
+  $('nurseStop').classList.add('hidden');
+  $('nurseClock').textContent='0:00';
+  $('nurseL').textContent='Left'; $('nurseR').textContent='Right';
+  toast('Nursed '+fmtDur(d),()=>drop(id));
+});
+setInterval(()=>{
+  if(nurse) $('nurseClock').textContent=fmtDur((Date.now()-nurse.start)/1000);
+  if(S.born) render();
+},30000);
+setInterval(()=>{ if(nurse) $('nurseClock').textContent=fmtDur((Date.now()-nurse.start)/1000); },1000);
+
+/* ---------- doctor summary ---------- */
+$('copyBtn').addEventListener('click',async()=>{
+  const L=live(), dol=dayOfLife();
+  const win=(ms,f)=>L.filter(e=>inWindow(e,ms)&&f(e));
+  let out='BABY LOG — day '+dol+' of life — '+new Date().toLocaleString()+'\n\n';
+  out+='LAST 24 HOURS\n';
+  out+='  Feeds: '+win(DAY,isFeed).length+'  (breast '+win(DAY,e=>isFeed(e)&&e.k==='breast').length+', bottle '+win(DAY,e=>isFeed(e)&&e.k==='bottle').length+')\n';
+  const oz24=win(DAY,e=>isFeed(e)&&e.k==='bottle').reduce((a,b)=>a+(b.oz||0),0);
+  if(oz24) out+='  Bottle volume: '+Math.round(oz24*10)/10+' oz\n';
+  out+='  Wet diapers: '+win(DAY,isWet).length+'\n';
+  out+='  Dirty diapers: '+win(DAY,isDirty).length+'\n';
+  const s24=win(DAY,e=>e.t==='sleep'&&e.e).reduce((a,b)=>a+(b.e-b.at),0);
+  out+='  Sleep: '+(Math.round(s24/HOUR*10)/10)+' h\n\n';
+  out+='LAST 7 DAYS (daily average)\n';
+  const days=Math.min(7,Math.max(1,dol));
+  out+='  Feeds/day: '+Math.round(win(7*DAY,isFeed).length/days*10)/10+'\n';
+  out+='  Wet/day: '+Math.round(win(7*DAY,isWet).length/days*10)/10+'\n';
+  out+='  Dirty/day: '+Math.round(win(7*DAY,isDirty).length/days*10)/10+'\n';
+  const w=warnings();
+  if(w.length) out+='\nFLAGS\n'+w.map(x=>'  - '+x[1]).join('\n')+'\n';
+  try{ await navigator.clipboard.writeText(out); toast('Copied — paste it for the pediatrician'); }
+  catch(e){ prompt('Copy the log:',out); }
+});
+
+/* ---------- birth date ---------- */
+$('bornSave').addEventListener('click',()=>{
+  const v=$('bornInput').value;
+  if(!v){ toast('Pick the birth date and time'); return; }
+  const d=new Date(v);
+  if(isNaN(d) || d.getTime()>Date.now()+6e4){ toast('That date is in the future'); return; }
+  S.born=d.toISOString(); save(); render();
+  toast('Tracking from day 1');
+});
+
+/* ---------- themes ---------- */
+let dark=true;
+if(S.themeV===2 && typeof S.dark==='boolean') dark=S.dark;
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme',dark?'womb':'dawn');
+  $('themeBtn').innerHTML=dark
+    ? '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+    : '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M20 13.5A7.5 7.5 0 0110.5 4a7.5 7.5 0 109.5 9.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+}
+$('themeBtn').addEventListener('click',()=>{ dark=!dark; applyTheme(); S.dark=dark; S.themeV=2; save(); });
+applyTheme();
+
+let night=!!S.night;
+function applyNight(){
+  document.body.classList.toggle('night',night);
+  $('nightBtn').setAttribute('aria-pressed',night);
+  keepAwake(night||!!nurse);
+}
+$('nightBtn').addEventListener('click',()=>{
+  night=!night; S.night=night; save(); applyNight();
+  toast(night?'Night mode — dim red, big buttons, screen stays on':'Night mode off');
+});
+applyNight();
+
+/* ---------- boot ---------- */
+prune();
+render();
+pullCloud();
+setInterval(pullCloud,60000);
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) pullCloud(); });
+addEventListener('pagehide',()=>{ if(pushTimer){ clearTimeout(pushTimer); pushCloud(); } });
+
+if('serviceWorker' in navigator && location.protocol==='https:'){
+  try{
+    navigator.serviceWorker.register('./sw.js').then(reg=>{
+      reg.addEventListener('updatefound',()=>{
+        const nw=reg.installing;
+        if(nw) nw.addEventListener('statechange',()=>{
+          if(nw.state==='installed' && navigator.serviceWorker.controller) toast('Update ready — reload for the latest');
+        });
+      });
+    }).catch(()=>{});
+  }catch(e){}
+}
+</script>
+</body>
+</html>

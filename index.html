@@ -148,7 +148,8 @@ body{
       <div class="icobtns flex gap-1.5 flex-none items-center"><span id="syncDot" class="hidden w-2 h-2 rounded-full mr-0.5" role="status"></span>
         <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="sizeBtn" type="button" aria-label="Change text size"><span class="font-display font-semibold text-sm">Aa</span></button>
         <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="calmBtn" type="button" aria-label="Calm sounds: womb-like brown noise" aria-pressed="false"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M3 12c1.5-3.5 3-3.5 4.5 0s3 3.5 4.5 0 3-3.5 4.5 0 3 3.5 4.5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-        <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+        <a href="./emergency.html" class="btn btn-circle btn-sm btn-soft btn-error flex-none" id="sosBtn" aria-label="Warning signs and emergency contacts" title="Warning signs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M12 8.5v4.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><circle cx="12" cy="16.6" r="1.15" fill="currentColor"/><path d="M10.3 3.9L2.6 17.4A2 2 0 004.3 20.5h15.4a2 2 0 001.7-3.1L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></a>
+      <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
         <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="resetTop" type="button" aria-label="Reset checkmarks"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M3.4 9.2a8 8 0 1 1-.5 5.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M2.5 4v5.5H8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
@@ -253,20 +254,21 @@ body{
       </div>
       <input type="file" id="fileInput" accept=".json,application/json" hidden>
     </div>
-    <p class="mb-2.5 text-[11px]">Baby List v2.3.0 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a></p>
+    <p class="mb-2.5 text-[11px]">Baby List v2.4.0 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a></p>
     <p class="mb-2.5">Follows AAP and CPSC safe-sleep guidance, but isn't medical advice. Confirm anything health-related with your pediatrician.</p>
     <p class="mb-2.5"><b class="text-base-content font-extrabold">Progress saves on this device automatically.</b> <b class="text-base-content font-extrabold">Share link</b> packs your checkmarks, added items, and due date into a URL anyone can open. <b class="text-base-content font-extrabold">Save / Load file</b> is a .json backup. <b class="text-base-content font-extrabold">Share copy</b> downloads this page with your list baked in. <b class="text-base-content font-extrabold">Cloud sync</b> keeps one live list across every device — set it up once in <a class="link link-primary font-bold" href="./settings.html">Settings</a>, then send a Share link; devices that open it join automatically and refresh about once a minute and whenever the app is opened. Anything synced or linked is visible to whoever has the link.</p>
   </footer>
 </div>
 
 <nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
-  <div class="max-w-[640px] mx-auto grid grid-cols-6">
-    <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[9px] font-extrabold tracking-tight whitespace-nowrap" aria-current="page" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-12 h-7 rounded-full transition-colors [&>svg]:w-5 [&>svg]:h-5"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.2l2.4 2.6 4.8-5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
-    <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[9px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-12 h-7 rounded-full transition-colors [&>svg]:w-5 [&>svg]:h-5"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-7.5-10.7A4.3 4.3 0 0112 7.6a4.3 4.3 0 017.5 2.7C19.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 12h2.4l1-1.8 1.4 3.2 1.1-1.4H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
-    <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[9px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-12 h-7 rounded-full transition-colors [&>svg]:w-5 [&>svg]:h-5"><svg viewBox="0 0 24 24" fill="none"><path d="M9 4.2h6a.8.8 0 01.8.8v1.2H8.2V5a.8.8 0 01.8-.8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.2 6.2H6.6A1.6 1.6 0 005 7.8v10.6A1.6 1.6 0 006.6 20h10.8a1.6 1.6 0 001.6-1.6V7.8a1.6 1.6 0 00-1.6-1.6h-1.6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 17s-3-1.9-3-4a1.75 1.75 0 013-1.2 1.75 1.75 0 013 1.2c0 2.1-3 4-3 4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>Birth Plan</a>
-    <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[9px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-12 h-7 rounded-full transition-colors [&>svg]:w-5 [&>svg]:h-5"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14c0-4.2-3-6.6-7.2-6.6C4.8 11.6 7.8 14 12 14z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 12.2c0-3.4 2.5-5.4 6-5.4 0 3.4-2.5 5.4-6 5.4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span>Upbringing</a>
-    <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[9px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-accent)"><span class="np grid place-items-center w-12 h-7 rounded-full transition-colors [&>svg]:w-5 [&>svg]:h-5"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9.5A6 6 0 0118 9.5c0 5 2 6 2 6H4s2-1 2-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.8 19a2.3 2.3 0 004.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Reminders</a>
-    <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[9px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-12 h-7 rounded-full transition-colors [&>svg]:w-5 [&>svg]:h-5"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Settings</a>
+  <div class="max-w-[640px] mx-auto grid grid-cols-7">
+    <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" aria-current="page" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.2l2.4 2.6 4.8-5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
+    <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-7.5-10.7A4.3 4.3 0 0112 7.6a4.3 4.3 0 017.5 2.7C19.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 12h2.4l1-1.8 1.4 3.2 1.1-1.4H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
+    <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M9 4.2h6a.8.8 0 01.8.8v1.2H8.2V5a.8.8 0 01.8-.8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.2 6.2H6.6A1.6 1.6 0 005 7.8v10.6A1.6 1.6 0 006.6 20h10.8a1.6 1.6 0 001.6-1.6V7.8a1.6 1.6 0 00-1.6-1.6h-1.6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 17s-3-1.9-3-4a1.75 1.75 0 013-1.2 1.75 1.75 0 013 1.2c0 2.1-3 4-3 4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>Birth Plan</a>
+    <a href="./tracker.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-accent)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7.5 15.5v-3M11.5 15.5v-6M15.5 15.5v-4M19 15.5v-8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>Tracker</a>
+    <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14c0-4.2-3-6.6-7.2-6.6C4.8 11.6 7.8 14 12 14z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 12.2c0-3.4 2.5-5.4 6-5.4 0 3.4-2.5 5.4-6 5.4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span>Upbringing</a>
+    <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-warning)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9.5A6 6 0 0118 9.5c0 5 2 6 2 6H4s2-1 2-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.8 19a2.3 2.3 0 004.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Reminders</a>
+    <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Settings</a>
   </div>
 </nav>
 
@@ -429,10 +431,34 @@ let searchTerm='', wasComplete=false, saveTimer=null;
 const RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const SAVE_VERSION=2;
 
+/* Other pages own keys this page knows nothing about (the feed log, the
+   emergency card, the birth date). A whitelist snapshot would delete them on
+   every save, so foreign keys are carried through untouched. */
+const OWNED=['checked','collapsed','hidePacked','due','who','custom','sort','dark','sizeIdx',
+  'hideNotes','sync','importedShare','tier','phase','cloud','themeV','savedAt'];
+let passthrough={};
+function keepForeign(saved){
+  /* applyState runs for local boots AND for incoming cloud or file states, so
+     this must never replace what we already carry: a remote doc that has not
+     seen this phone's feed entries would otherwise erase them before the next
+     push. Foreign keys merge; the log is unioned by entry id. */
+  const next=Object.assign({},passthrough);
+  Object.keys(saved||{}).forEach(k=>{ if(OWNED.indexOf(k)<0) next[k]=saved[k]; });
+  const log=mergeLogs(passthrough.log,(saved||{}).log);
+  if(log.length) next.log=log; else delete next.log;
+  passthrough=next;
+}
+/* append-only union by entry id; the newer edit of an id wins */
+function mergeLogs(a,b){
+  const m={};
+  (a||[]).forEach(e=>{ if(e&&e.i) m[e.i]=e; });
+  (b||[]).forEach(e=>{ if(e&&e.i){ const o=m[e.i]; if(!o||(e.u||0)>(o.u||0)) m[e.i]=e; } });
+  return Object.keys(m).map(k=>m[k]).sort((x,y)=>(x.at||0)-(y.at||0));
+}
 function snapshot(){
-  return {checked:state.checked,collapsed:state.collapsed,hidePacked:state.hidePacked,due:state.due,who:state.who,
+  return Object.assign({},passthrough,{checked:state.checked,collapsed:state.collapsed,hidePacked:state.hidePacked,due:state.due,who:state.who,
     custom:state.custom,sort:state.sort,dark:state.dark,sizeIdx:state.sizeIdx,hideNotes:state.hideNotes,
-    sync:state.sync,importedShare:state.importedShare,tier:state.tier,phase:state.phase,cloud:state.cloud,themeV:2,savedAt:new Date().toISOString()};
+    sync:state.sync,importedShare:state.importedShare,tier:state.tier,phase:state.phase,cloud:state.cloud,themeV:2,savedAt:new Date().toISOString()});
 }
 let cloudTimer=null, cloudOK=null, pendingLocal=false, pendingCloud=false;
 function setDot(ok){
@@ -508,6 +534,7 @@ async function hydrate(){
   return null;
 }
 function applyState(saved,skipWho){
+  keepForeign(saved);
   state.checked=saved.checked||{};
   state.collapsed=saved.collapsed||{};
   state.hidePacked=!!saved.hidePacked;
@@ -522,7 +549,7 @@ function applyState(saved,skipWho){
   state.importedShare=saved.importedShare||null;
   state.tier=(saved.tier===1||saved.tier===2||saved.tier===3)?saved.tier:'all';
   state.phase=(saved.phase==='pregnancy'||saved.phase==='baby')?saved.phase:'all';
-  if(saved.cloud && typeof saved.cloud.u==='string') state.cloud={u:saved.cloud.u,k:(typeof saved.cloud.k==='string'?saved.cloud.k:'')};
+  if(saved.cloud && typeof saved.cloud.u==='string'){ state.cloud={u:saved.cloud.u,k:(typeof saved.cloud.k==='string'?saved.cloud.k:'')}; if(saved.cloud.kt) state.cloud.kt=saved.cloud.kt; }
 }
 
 /* ================================================================
@@ -623,6 +650,11 @@ function phaseOf(cat,it){
 function mergeIncoming(their){
   let changed=false;
   const lsMs=Date.parse(lastSyncStamp||'')||0;
+  if(Array.isArray(their.log)){
+    const before=JSON.stringify(passthrough.log||[]);
+    passthrough.log=mergeLogs(passthrough.log,their.log);
+    if(JSON.stringify(passthrough.log)!==before) changed=true;
+  }
   const mine=state.checked||{};
   Object.keys(their.checked||{}).forEach(k=>{
     const tv=their.checked[k];
