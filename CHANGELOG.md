@@ -1,5 +1,18 @@
 # Baby List — Changelog
 
+## v2.4.3 — July 2026
+- **Notifications ask on open.** The permission prompt now fires as the app
+  loads instead of waiting for you to find the Enable notifications button on
+  the Schedule page. Chrome prompts immediately; Safari and Firefox refuse a
+  request that has no user gesture behind it, so those retry once on your first
+  tap anywhere in the app. Asked at most once per session, because a
+  multi-page app would otherwise re-prompt on every tab change and Chrome
+  auto-blocks an origin after repeated dismissals (`assets/notify.js`).
+- **Bigger touch targets.** Bottom tab bar: icons 18→21px, pill 44×28→48×32,
+  taller tap area, and labels that scale with the screen (clamp 8.5→11px —
+  "Upbringing" overflows a one-seventh column at a fixed 10px on narrow
+  phones). Header icon buttons: 32→36px circles with 18px glyphs.
+
 ## v2.4.2 — July 2026
 - **iOS launch screens.** 15 device sizes. Opening the app from the Home Screen
   used to show a white flash before the first paint; it now shows the mark on

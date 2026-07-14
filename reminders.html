@@ -106,6 +106,7 @@ body{
 
 @media print{ *{background:#fff!important;color:#000!important} #tabNav{display:none!important} }
 </style>
+<script src="./assets/notify.js" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
@@ -402,6 +403,7 @@ function scheduleRegistrySync(){ if(!pushSub) return; clearTimeout(regTimer); re
 setInterval(remTick,30000);
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden) remTick(); });
 renderReminders(); refreshNotifBtn();
+document.addEventListener('notif-permission',()=>refreshNotifBtn()); /* assets/notify.js prompts on load */
 (async()=>{ pushSub=await getPushSub(); refreshPushBtn(); if(pushSub) writePushRegistry(); })();
 
 if('serviceWorker' in navigator && location.protocol==='https:'){
