@@ -1,5 +1,38 @@
 # Baby List — Changelog
 
+## v2.4.2 — July 2026
+- **iOS launch screens.** 15 device sizes. Opening the app from the Home Screen
+  used to show a white flash before the first paint; it now shows the mark on
+  the brand background and hands over cleanly to the app.
+- **Fixed the notification badge.** `sw.js` was sending `badge: icon-192.png`.
+  Android draws the badge from the alpha channel only, and that file is 100%
+  opaque, so every push notification put a solid grey square in the status bar.
+  Now ships a real white-on-transparent silhouette (`badge-96.png`, 12% coverage).
+- **Home-screen shortcuts** now have four distinct tiles, each with its own
+  glyph, and point where you actually need them: Log a feed, Contraction timer,
+  Warning signs, Reminders. They previously reused the full app icon twice and
+  pointed at Labor and Reminders.
+- **Themed icon** (`purpose: monochrome`) so the icon tints with an Android 13+
+  themed home screen instead of ignoring it.
+- Added `favicon.ico` (16/32/48), icon sizes 96/144/256/384, and an
+  `og-image.png` link preview so texting the link stops showing a bare URL.
+- `gen_artwork.py` builds all of it from the same mark as `gen_icons.py`.
+
+
+## v2.4.1 — July 2026
+- Redrawn icon set. The old icons carried **ten different stroke weights**
+  (1.4 through 3.0), which is what made them read as amateur. Everything is now
+  one 24px grid, one 1.75 stroke, round caps and joins. The checkmark keeps a
+  heavier 2.5 because it renders at 13px on a checkbox and has to punch.
+- Redrawn: 7 nav icons, 11 checklist and utility icons, the theme toggle, the
+  night-mode toggle, and the warning-signs button.
+- New app icon: a gold crescent moon cradling a teal check, replacing the crude
+  overlap of the old one. Maskable variant now respects Android's 80% safe
+  circle, so it will not get cropped on a Pixel.
+- `gen_icons.py` is the single source for every icon and rewrites all 8 pages,
+  so the set cannot drift apart again.
+
+
 ## v2.4.0 — July 2026
 - New **Tracker** page. Feeds (nursing timer with sides, bottle ounces, pumping),
   diapers (wet, dirty, both), and sleep. The three numbers a pediatrician always

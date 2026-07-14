@@ -1,7 +1,7 @@
 /* Baby List service worker — network-first navigations (fresh deploys reach users),
    stale-while-revalidate for assets/CDNs, notification click focuses the app */
-const VERSION = 'babylist-v9';
-const CORE = ['./', './index.html', './labor.html', './reminders.html', './settings.html', './upbringing.html', './birthplan.html', './tracker.html', './emergency.html', './assets/app.css', './assets/confetti.min.js', './assets/fonts/fraunces-latin-opsz-normal.woff2', './assets/fonts/fraunces-latin-opsz-italic.woff2', './assets/fonts/nunito-sans-latin-normal.woff2', './assets/fonts/nunito-sans-latin-italic.woff2', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
+const VERSION = 'babylist-v11';
+const CORE = ['./', './index.html', './labor.html', './reminders.html', './settings.html', './upbringing.html', './birthplan.html', './tracker.html', './emergency.html', './assets/app.css', './assets/confetti.min.js', './assets/fonts/fraunces-latin-opsz-normal.woff2', './assets/fonts/fraunces-latin-opsz-italic.woff2', './assets/fonts/nunito-sans-latin-normal.woff2', './assets/fonts/nunito-sans-latin-italic.woff2', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './badge-96.png', './icon-mono-512.png'];
 
 self.addEventListener('install', e => {
   /* cache each file on its own: addAll() rejects the entire install if a single
@@ -61,7 +61,7 @@ self.addEventListener('push', e => {
   try { if (e.data) d = Object.assign(d, e.data.json()); } catch (_) {}
   e.waitUntil(self.registration.showNotification(d.title, {
     body: d.body, tag: d.tag || 'babylist',
-    icon: './icon-192.png', badge: './icon-192.png'
+    icon: './icon-192.png', badge: './badge-96.png'
   }));
 });
 
