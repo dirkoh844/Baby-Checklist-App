@@ -13,3 +13,16 @@
 @font-face{font-family:'Fraunces';font-style:italic;font-weight:100 900;font-display:swap;src:url('./fonts/fraunces-latin-opsz-italic.woff2') format('woff2-variations');}
 @font-face{font-family:'Nunito Sans';font-style:normal;font-weight:100 900;font-display:swap;src:url('./fonts/nunito-sans-latin-normal.woff2') format('woff2-variations');}
 @font-face{font-family:'Nunito Sans';font-style:italic;font-weight:100 900;font-display:swap;src:url('./fonts/nunito-sans-latin-italic.woff2') format('woff2-variations');}
+
+/* ============ Touch targets: bottom tab bar + header icon buttons ============
+   Plain CSS, deliberately unlayered so it outranks the Tailwind utilities on
+   the elements themselves without touching the markup.
+   Tab labels are viewport-scaled: "Upbringing" is the widest of the seven and
+   a fixed 10px overflows a 1/7 column below ~390px, so clamp() grows the label
+   with the screen and holds the floor on small phones. */
+#tabNav .nt{padding-top:.5rem;padding-bottom:.375rem;font-size:clamp(8.5px,2.55vw,11px)}
+#tabNav .np{width:3rem;height:2rem}
+#tabNav .np>svg{width:21px;height:21px}
+.navbar .btn-circle.btn-sm{--size:calc(var(--size-field,.25rem)*9)}
+.navbar .btn-circle.btn-sm svg{width:1.125rem;height:1.125rem}
+.navbar .btn-circle.btn-sm span{font-size:.9375rem}
