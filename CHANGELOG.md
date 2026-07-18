@@ -1,5 +1,39 @@
 # Baby List — Changelog
 
+## v2.5.1 — July 2026
+- **Satisfying checkboxes.** Packing an item now feels physical: empty boxes are
+  recessed into the row, checked boxes lift out as a raised, glossy fill, and
+  the tap has a spring. The core action finally has weight.
+- **Category charge-up.** Each category's glowing accent spine now brightens as
+  the category fills, and blazes when it's fully packed — a visible reward that
+  builds as you go (alongside the existing ring pop, haptics, and confetti).
+- **Hero labor timer.** The big contraction button is now an arcade-style cap;
+  while a contraction is timing it breathes with a calm pulse so "recording now"
+  reads at a glance. Labor and Tracker stat tiles lift as raised glass.
+- **Living background.** A slow, subtle mesh gradient drifts behind the header
+  for a calmer, more alive feel — frozen automatically if you prefer reduced
+  motion.
+
+## v2.5.0 — July 2026
+- **Depth & texture pass.** A new tactile visual layer across every page
+  (`assets/enhance.css`): a fine film-grain texture over the background,
+  category and zone cards that lift off the surface with layered shadows and a
+  glossy top sheen, the flat category accent bar reborn as a rounded, glowing
+  3D "spine," embossed icon chips, frosted-glass header and tab bar, inputs
+  recessed into the surface, a glossy progress bar, and a real press on every
+  button and card. Theme-aware for both dark ("womb") and light ("dawn"),
+  stripped automatically for printing, and honors reduced-motion.
+- **Bigger, unified bottom bar.** The tab bar is now driven by one shared
+  stylesheet (`assets/navbar.css`) so it is byte-for-byte identical on every
+  page and pinned to the very bottom. Tap targets grew ~20%: pill 48×32→58×38,
+  icons 21→25px, taller hit area (56px+). Labels keep their narrow-phone floor
+  so "Upbringing / Reminders / Settings" never collide, and grow only where
+  there's room.
+- **Labor page reorder.** The contraction timer now sits above the "When to
+  head in" card — the thing you reach for mid-labor is first.
+- **Offline-ready.** Service worker bumped to `babylist-v13` and precaches the
+  two new stylesheets, so the new look works fully offline on first load.
+
 ## v2.4.3 — July 2026
 - **Notifications ask on open.** The permission prompt now fires as the app
   loads instead of waiting for you to find the Enable notifications button on

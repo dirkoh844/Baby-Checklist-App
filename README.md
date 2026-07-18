@@ -19,7 +19,7 @@ Focus mode, a hardened print layout, and four ways to share.
 | `emergency.html` | POST-BIRTH warning signs, newborn red flags, emergency card. Offline. `noindex`. |
 | `birthplan.html` | Birth preferences in labor order, with the reasoning and the likely hospital answer for each. `noindex`. |
 | `CHANGELOG.md` | Version history. |
-| `assets/` | Precompiled stylesheet, confetti, and fonts — no CDN, works fully offline. |
+| `assets/` | Precompiled stylesheet (`app.css`) plus two layered stylesheets — `navbar.css` (shared, enlarged bottom tab bar, identical on every page) and `enhance.css` (texture + 3D depth) — confetti, and fonts. No CDN, works fully offline. |
 | `worker/` | Cloudflare Worker sync endpoint (recommended cloud store) + wrangler config. |
 | `manifest.webmanifest` | PWA install metadata (+ Labor shortcut). |
 | `sw.js` | Service worker: network-first pages, cached assets, notification clicks focus the app. |
@@ -113,7 +113,7 @@ that includes the folders:
 index.html labor.html upbringing.html reminders.html settings.html
 sw.js manifest.webmanifest package.json
 icon-192.png icon-512.png icon-maskable-512.png apple-touch-icon.png
-assets/          <- app.css, confetti.min.js, fonts/ (4 woff2)   REQUIRED
+assets/          <- app.css, navbar.css, enhance.css, confetti.min.js, fonts/ (4 woff2)   REQUIRED
 .github/         <- workflows for push reminders + keepalive
 scripts/         <- send-push.mjs, generate-vapid.mjs
 .nojekyll
@@ -142,3 +142,9 @@ npm run css
 ```
 
 That regenerates `assets/app.css`. Nothing else needs a build step.
+
+`assets/navbar.css` (shared enlarged tab bar) and `assets/enhance.css` (texture +
+3D depth) are hand-written layers that load *after* `app.css` on every page and
+override it where needed, so they are not part of the Tailwind build and survive
+`npm run css` untouched. Edit them directly. Both strip themselves under
+`@media print` and honor `prefers-reduced-motion`.

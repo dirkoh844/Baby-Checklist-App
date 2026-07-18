@@ -229,7 +229,7 @@ const $=id=>document.getElementById(id);
 let toastTimer=null;
 function toast(m){ const w=$('toastWrap'); $('toast').textContent=m; w.classList.remove('hidden'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),1900); }
 
-const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.4.2';
+const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.5.1';
 function loadState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):null; }catch(e){ return null; } }
 function patchState(fn){
   try{
@@ -457,6 +457,9 @@ $('babyReset').addEventListener('click',async()=>{
 
 /* ---------- what's new ---------- */
 const LOG=[
+  {v:'2.5.1',d:'Jul 2026',n:['Checkboxes feel physical now: empty ones sit recessed, checked ones lift out with a glossy fill and a little spring','Each category’s accent spine brightens as you pack it and blazes when it’s complete','Labor contraction button is now an arcade-style cap that gently pulses while a contraction is timing; Labor and Tracker stat tiles lift as raised glass','A slow, subtle mesh gradient drifts behind the header (frozen if you prefer reduced motion)']},
+  {v:'2.5.0',d:'Jul 2026',n:['New tactile look on every page: cards lift off the surface with soft shadows and a glossy sheen, category accents become glowing 3D spines, and a fine grain texture warms the background','Frosted-glass header and tab bar, recessed input fields, and a real press on every button — works in both dark and light','Bottom menu is now bigger and identical everywhere: ~20% larger tap targets, easier to press','Labor page: the contraction timer now sits above the "When to head in" card']},
+  {v:'2.4.3',d:'Jul 2026',n:['Notifications ask as the app opens instead of waiting for the Enable button (asked once per session; Safari and Firefox retry on your first tap)','Bigger touch targets: taller tab bar, larger header icon buttons, labels that scale with the screen']},
   {v:'2.4.2',d:'Jul 2026',n:['Launch screens: no more white flash when you open it from the home screen','Fixed the push notification badge, which Android was drawing as a grey square','Long-press the app icon: Log a feed, Contraction timer, Warning signs, Reminders','Themed icon for Android, favicon.ico, and a proper link preview']},
   {v:'2.4.1',d:'Jul 2026',n:['Redrawn icon set: one grid, one stroke weight, all 22 icons','New app icon: a gold crescent cradling a teal check','Diaper and parent-care icons no longer read as a soup bowl and a blob']},
   {v:'2.4.0',d:'Jul 2026',n:['New Tracker: feeds, diapers, sleep, nursing timer, both phones on one log','It warns you: too few wet diapers, no feed in hours, under 8 feeds a day','Copy for the doctor: 24h and 7d counts, ready to paste','Night mode for 3am: dim red, big buttons, screen stays awake','New Warning signs page, one tap from every screen, with your emergency card']},
