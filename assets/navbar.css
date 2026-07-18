@@ -1,0 +1,39 @@
+/* =============================================================================
+   navbar.css — shared bottom tab bar (DROP-IN, loaded on EVERY page)
+   -----------------------------------------------------------------------------
+   Guarantees the bottom menu bar is IDENTICAL on all pages, pinned to the very
+   bottom, with tap targets ~20% larger so the buttons are easier to press.
+   Overrides the compiled sizing in app.css via matching selectors + !important
+   (app.css's nav rules are plain/unlayered and use no !important, so these win
+   regardless of link order).
+   ============================================================================= */
+
+/* Pin to the very bottom on every page, above content, with a safe-area cushion. */
+#tabNav{
+  position:fixed !important;
+  bottom:0 !important; left:0 !important; right:0 !important;
+  z-index:50 !important;
+}
+
+/* +20% tap targets ------------------------------------------------------------
+   Was: pill 3rem×2rem, svg 21px, nt padding .5/.375rem, label clamp(8.5,2.55vw,11).
+   Now: pill 3.6rem×2.4rem, svg 25px, nt padding .6/.45rem, label scaled to stay
+   one line across phones. */
+#tabNav .nt{
+  padding-top:.6rem !important;
+  padding-bottom:.45rem !important;
+  /* Keep the small-screen floor/scaling identical to the original so labels
+     never collide on narrow phones; only lift the ceiling for roomy screens. */
+  font-size:clamp(8.5px, 2.55vw, 12.5px) !important;
+}
+#tabNav .np{
+  width:3.6rem !important;
+  height:2.4rem !important;
+}
+#tabNav .np > svg{
+  width:25px !important;
+  height:25px !important;
+}
+
+/* Comfortable minimum hit area for the whole tab (icon + label). */
+#tabNav .nt{ min-height:56px; }
