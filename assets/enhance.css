@@ -76,8 +76,19 @@ body > *{ position:relative; z-index:1; }
      color-mix(in oklab, var(--cat-a) 92%, white 18%),
      var(--cat-a) 45%,
      color-mix(in oklab, var(--cat-a) 78%, black 22%));
-  box-shadow:0 0 14px -2px color-mix(in oklab, var(--cat-a) 60%, transparent);
+  /* CHARGE-UP: the spine glow grows with how full the category is (--pct 0–100,
+     set per-section by the checklist JS). Falls back to a gentle static glow. */
+  box-shadow:0 0 calc(6px + var(--pct,40) * .13px) -2px
+     color-mix(in oklab, var(--cat-a) calc(34% + var(--pct,40) * .48%), transparent);
+  transition:box-shadow .35s ease, background .35s ease;
   z-index:2;
+}
+/* fully packed: spine blazes and lightens to a triumphant tone */
+.cat.card.done::after{
+  background:linear-gradient(180deg,
+     color-mix(in oklab, var(--cat-a) 90%, white 34%),
+     color-mix(in oklab, var(--cat-a) 96%, white 12%));
+  box-shadow:0 0 22px 0 color-mix(in oklab, var(--cat-a) 85%, transparent);
 }
 /* press feedback when a card header is tapped */
 .cat.card:active{ transform:translateY(1px) scale(.997); }
@@ -211,11 +222,95 @@ progress.progress-primary::-moz-progress-bar{
 }
 
 /* =============================================================================
-   9) PRINT — strip every enhancement so the print engine stays clean
+   9) TACTILE CHECKBOXES — the app's core action, made physical
+   -----------------------------------------------------------------------------
+   The checkmark is a ::before clip-path (verified), so overriding box-shadow is
+   safe. Unchecked = recessed well; checked = raised + glossy top highlight.
+   ============================================================================= */
+.item-wrap .checkbox{
+  transition:background-color .2s, box-shadow .2s, transform .12s cubic-bezier(.34,1.56,.64,1) !important;
+  box-shadow:inset 0 2px 4px var(--e-lo-soft), inset 0 1px 0 var(--e-lo-soft) !important;
+}
+.item-wrap .checkbox:checked{
+  box-shadow:
+    inset 0 1px 0 var(--e-hi-strong),          /* glossy top highlight        */
+    inset 0 -5px 7px -5px rgba(0,0,0,.28),     /* rounded lower shading        */
+    0 3px 7px -2px var(--e-lo) !important;      /* lifts off the row            */
+}
+.item-wrap .checkbox:active{ transform:scale(.86); }
+
+/* =============================================================================
+   10) HERO MOMENTS — labor contraction timer + tracker stat tiles
+   ============================================================================= */
+/* The big timer button: an arcade cap. Resting is btn-primary; while a
+   contraction is timing the JS swaps it to btn-secondary — we give that state a
+   calm breathing pulse so "recording now" reads without reading a word. */
+#ctBtn{
+  box-shadow:
+    inset 0 2px 0 var(--e-hi-strong),
+    inset 0 -5px 9px rgba(0,0,0,.20),
+    0 12px 24px -8px var(--e-lo) !important;
+  transition:transform .12s ease, box-shadow .2s ease, filter .25s ease !important;
+}
+#ctBtn:active{ transform:translateY(2px) scale(.995); }
+#ctBtn.btn-secondary{ animation:ct-pulse 1.8s ease-in-out infinite; }
+@keyframes ct-pulse{
+  0%,100%{ filter:brightness(1);
+    box-shadow:inset 0 2px 0 var(--e-hi-strong), 0 0 0 0 color-mix(in oklab, var(--color-secondary) 55%, transparent), 0 12px 24px -8px var(--e-lo); }
+  50%{ filter:brightness(1.07);
+    box-shadow:inset 0 2px 0 var(--e-hi-strong), 0 0 28px 5px color-mix(in oklab, var(--color-secondary) 55%, transparent), 0 12px 24px -8px var(--e-lo); }
+}
+
+/* Stat tiles — labor "last length / apart / 1h avg" and the tracker hero row —
+   become raised glass so the numbers sit on real objects. */
+#timerCard .grid > div{
+  box-shadow:inset 0 1px 0 var(--e-hi), 0 8px 16px -12px var(--e-lo);
+}
+#heroCard .grid > div{
+  background:color-mix(in oklab, var(--color-base-100) 88%, transparent);
+  border:1px solid color-mix(in oklab, var(--color-base-300) 65%, transparent);
+  border-radius:.9rem; padding:.6rem .3rem;
+  box-shadow:inset 0 1px 0 var(--e-hi), 0 8px 16px -12px var(--e-lo);
+}
+
+/* =============================================================================
+   11) LIVING AMBIENT BACKGROUND — a slow mesh drift behind the (sticky) header
+   -----------------------------------------------------------------------------
+   Overrides the flat radial glows with a richer, fixed mesh that breathes.
+   Fixed attachment keeps it under the frosted header as content scrolls.
+   ============================================================================= */
+body{
+  background-image:
+    radial-gradient(60% 46% at 14% -8%,  color-mix(in oklab, var(--color-secondary) 20%, transparent), transparent 62%),
+    radial-gradient(58% 46% at 102% -6%, color-mix(in oklab, var(--color-primary)   16%, transparent), transparent 64%),
+    radial-gradient(72% 52% at 56% -12%, color-mix(in oklab, var(--color-accent)    12%, transparent), transparent 66%) !important;
+  background-attachment:fixed !important;
+  background-repeat:no-repeat !important;
+  animation:bg-drift 24s ease-in-out infinite;
+}
+@keyframes bg-drift{
+  0%,100%{ background-position:0% 0%, 100% 0%, 50% 0%; }
+  50%    { background-position:7% 5%, 93% 2%, 55% 7%; }
+}
+
+/* =============================================================================
+   12) MOTION — respect reduced-motion for all the new animations
+   ============================================================================= */
+@media (prefers-reduced-motion:reduce){
+  #ctBtn.btn-secondary{ animation:none !important; }
+  body{ animation:none !important; }
+  .item-wrap .checkbox{ transition:background-color .2s, box-shadow .2s !important; }
+}
+
+/* =============================================================================
+   13) PRINT — strip every enhancement so the print engine stays clean
    ============================================================================= */
 @media print{
+  body{ animation:none !important; background-image:none !important; }
   body::before, body::after,
   .cat.card::before, .cat.card::after{ display:none !important; }
-  .cat.card, .navbar, #tabNav, .btn, .input, .badge, .tip,
+  #ctBtn{ animation:none !important; }
+  .cat.card, .navbar, #tabNav, .btn, .input, .badge, .tip, .checkbox,
+  #ctBtn, #timerCard .grid > div, #heroCard .grid > div,
   .zone-gold, .zone-green, .zone-info, .zone-coral{ box-shadow:none !important; }
 }
