@@ -63,3 +63,77 @@
     opened = [];
   });
 })();
+
+/* App-wide text size: apply the size chosen on the checklist (Aa button) to
+   every page. Same storage key, same zoom levels. */
+(function () {
+  try {
+    var st = JSON.parse(localStorage.getItem('newborn-checklist-v3') || '{}');
+    var z = [1, 1.12, 1.25][st.sizeIdx || 0] || 1;
+    if (z > 1) document.body.style.zoom = z;
+  } catch (e) {}
+})();
+
+/* Expand-all / collapse-all: injected on pages with many collapsible topics. */
+(function () {
+  var topics = document.querySelectorAll('details.topic');
+  if (topics.length < 6) return;
+  var wrap = document.querySelector('body > .w-full');
+  if (!wrap) return;
+  var bar = document.createElement('div');
+  bar.id = 'topicTools';
+  bar.className = 'flex justify-end gap-1.5 mt-3 -mb-1';
+  bar.innerHTML =
+    '<button type="button" data-x="open" class="btn btn-xs btn-ghost rounded-full font-bold ink-soft border border-base-300">Expand all</button>' +
+    '<button type="button" data-x="close" class="btn btn-xs btn-ghost rounded-full font-bold ink-soft border border-base-300">Collapse all</button>';
+  bar.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var open = b.dataset.x === 'open';
+    document.querySelectorAll('details.topic').forEach(function (d) { d.open = open; });
+  });
+  wrap.insertBefore(bar, wrap.firstElementChild);
+})();
+
+/* Reading progress: a thin accent line under the sticky header on long
+   reference pages. Skipped on the checklist (it has its own packing bar). */
+(function () {
+  if (document.getElementById('gprog')) return; /* checklist */
+  if (document.documentElement.scrollHeight < window.innerHeight * 2.2) return;
+  var bar = document.createElement('div');
+  bar.id = 'readbar';
+  bar.style.cssText = 'position:fixed;left:0;top:0;height:3px;width:0%;z-index:60;pointer-events:none;border-radius:0 2px 2px 0;background:linear-gradient(90deg,var(--color-primary),var(--color-secondary))';
+  document.body.appendChild(bar);
+  var hdr = document.querySelector('header.navbar');
+  function place () {
+    bar.style.top = (hdr ? hdr.getBoundingClientRect().bottom : 0) + 'px';
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', place, { passive: true });
+  window.addEventListener('resize', place);
+  place();
+})();
+
+/* Page-transition fallback: browsers without cross-document view transitions
+   (Firefox, older Safari) get a quick fade-out on tap and a fade-in on
+   arrival, so page changes are animated everywhere. Native VT browsers and
+   reduced-motion users are untouched. */
+(function () {
+  if (typeof CSSViewTransitionRule !== 'undefined') return; /* native support */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.body.classList.add('novt');
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href]');
+    if (!a || a.target || a.hasAttribute('download')) return;
+    var url; try { url = new URL(a.href, location.href); } catch (err) { return; }
+    if (url.origin !== location.origin) return;
+    if (url.pathname === location.pathname && url.hash) return; /* same-page anchor */
+    e.preventDefault();
+    document.body.classList.add('novt-out');
+    setTimeout(function () { location.href = a.href; }, 130);
+  }, true);
+  /* restore when coming back via the back/forward cache */
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) document.body.classList.remove('novt-out');
+  });
+})();

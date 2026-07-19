@@ -32,20 +32,22 @@
 /* =============================================================================
    1) TEXTURE — full-page film grain + a soft vignette for tactile paper feel
    ============================================================================= */
+/* The grain + vignette float ABOVE the page at very low opacity (soft-light),
+   like a film layer. Do NOT force position/z-index onto body children to get
+   under them — that overrides Tailwind's `sticky` on the header (unlayered CSS
+   beats layered utilities) and breaks sticky headers app-wide. */
 body::before{
   content:"";
-  position:fixed; inset:0; z-index:0; pointer-events:none;
+  position:fixed; inset:0; z-index:80; pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   opacity:var(--e-grain);
   mix-blend-mode:soft-light;
 }
 body::after{
   content:"";
-  position:fixed; inset:0; z-index:0; pointer-events:none;
+  position:fixed; inset:0; z-index:80; pointer-events:none;
   background:radial-gradient(120% 80% at 50% -10%, transparent 55%, var(--e-ring) 140%);
 }
-/* keep real content above the texture layers */
-body > *{ position:relative; z-index:1; }
 
 /* =============================================================================
    2) CATEGORY CARDS — raised, embossed, glossy, with a beveled accent spine
@@ -285,6 +287,15 @@ progress.progress-primary::-moz-progress-bar{
     box-shadow:inset 0 2px 0 var(--e-hi-strong), 0 0 28px 5px color-mix(in oklab, var(--color-secondary) 55%, transparent), 0 12px 24px -8px var(--e-lo); }
 }
 
+/* Big-button labor Focus mode: everything steps aside; the timer goes huge for
+   one-handed use between contractions. Exit via the same Focus button. */
+body.ctfocus .zone-gold, body.ctfocus .zone-info, body.ctfocus .zone-coral,
+body.ctfocus footer, body.ctfocus header.navbar, body.ctfocus #tabNav{ display:none !important; }
+body.ctfocus #timerCard{ margin-top:1.25rem; }
+body.ctfocus #ctBtn{ height:9.5rem !important; font-size:30px !important; border-radius:1.5rem !important; }
+body.ctfocus #timerCard .grid > div{ padding:.9rem .3rem; }
+body.ctfocus #timerCard .grid .font-display{ font-size:24px; }
+
 /* Stat tiles — labor "last length / apart / 1h avg" and the tracker hero row —
    become raised glass so the numbers sit on real objects. */
 #timerCard .grid > div{
@@ -362,12 +373,128 @@ details.topic[open] > summary::after{ transform:rotate(-135deg); }
 .swatch small{ display:block; font-weight:600; opacity:.75; margin-top:.1rem; }
 
 /* =============================================================================
+   15) ACCORDION MOTION & READABILITY POLISH
+   -----------------------------------------------------------------------------
+   Research-backed upgrades for the <details class="topic"> cards:
+   - Height animates open/closed via ::details-content + interpolate-size
+     (pure CSS; browsers without support simply open instantly).
+   - The body content fades/slides in as it opens.
+   - The chevron sits in a visible circular chip so it reads as a control.
+   - A divider separates title from content when open.
+   - focus-visible ring for keyboard users; scroll-margin clears the sticky
+     header; summary titles wrap balanced instead of ragged.
+   ============================================================================= */
+:root{ interpolate-size: allow-keywords; }
+details.topic::details-content{
+  block-size:0; overflow-y:clip;
+  transition:block-size .3s cubic-bezier(.2,.8,.2,1), content-visibility .3s allow-discrete;
+}
+details.topic[open]::details-content{ block-size:auto; }
+details.topic[open] .topic-body{ animation:topic-in .32s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes topic-in{ from{ opacity:0; transform:translateY(-4px); } to{ opacity:1; transform:none; } }
+
+/* chevron chip: the marker becomes a visible round control */
+details.topic > summary::after{
+  width:1.35rem; height:1.35rem; border:0;
+  border-radius:99px; flex:none;
+  background:color-mix(in oklab, var(--topic-a, var(--color-primary)) 16%, transparent)
+    no-repeat center / 10px 10px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%23888' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  box-shadow:inset 0 1px 0 var(--e-hi), 0 2px 5px -3px var(--e-lo);
+  opacity:.9; transform:none; transition:transform .3s cubic-bezier(.2,.8,.2,1), background-color .2s;
+}
+details.topic[open] > summary::after{ transform:rotate(180deg); }
+details.topic > summary{ text-wrap:balance; }
+details.topic[open] > summary{ border-bottom:1px solid color-mix(in oklab, var(--topic-a, var(--color-base-300)) 26%, transparent); }
+details.topic > summary:focus-visible{
+  outline:none;
+  box-shadow:inset 0 0 0 2px color-mix(in oklab, var(--topic-a, var(--color-primary)) 65%, transparent);
+  border-radius:inherit;
+}
+details.topic{ scroll-margin-top:84px; }
+
+/* =============================================================================
+   16) PAGE & TAB TRANSITIONS — cross-document view transitions
+   -----------------------------------------------------------------------------
+   Opt both directions of every same-origin navigation into a view transition
+   (this stylesheet loads on all pages, so both sides carry the rule).
+   - Page content does a quick fade + 10px rise.
+   - Header and tab bar carry their own names, so the app chrome stays put
+     while content swaps — feels like a native app.
+   - The ACTIVE tab pill is named too, so it glides from the old tab to the
+     new one when you pick a menu item.
+   Unsupported browsers just navigate instantly, as before.
+   ============================================================================= */
+@view-transition{ navigation:auto; }
+::view-transition-old(root){ animation:page-out .16s ease both; }
+::view-transition-new(root){ animation:page-in .24s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes page-out{ to{ opacity:0; } }
+@keyframes page-in{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
+header.navbar{ view-transition-name:app-header; }
+#tabNav{ view-transition-name:tab-bar; }
+#tabNav .nt[aria-current="page"] .np{ view-transition-name:active-tab-pill; }
+/* keep chrome static: no default cross-fade wiggle on the named chrome */
+::view-transition-old(app-header), ::view-transition-new(app-header),
+::view-transition-old(tab-bar), ::view-transition-new(tab-bar){ animation-duration:.01s; }
+/* the pill morphs position — give it a springy glide */
+::view-transition-group(active-tab-pill){ animation-duration:.32s; animation-timing-function:cubic-bezier(.2,.8,.2,1); }
+
+/* fallback page transitions (no cross-document view-transition support):
+   content rises in on arrival, fades out on departure — driven by notify.js */
+.novt > .w-full{ animation:page-in .28s cubic-bezier(.2,.8,.2,1) both; }
+.novt-out > .w-full{ opacity:0; transform:translateY(6px); transition:opacity .13s ease, transform .13s ease; }
+
+/* menu tap feedback while the page swap kicks off */
+#tabNav .nt:active .np{ transform:scale(.88); transition:transform .1s ease; }
+#tabNav .np{ transition:transform .18s cubic-bezier(.34,1.56,.64,1), background-color .2s; }
+
+
+/* =============================================================================
+   17) CHECKLIST ROWS, PILLS & JUMP-PULSE · BUTTON DEFINITION
+   ============================================================================= */
+/* alternating semi-transparent rows separate the items like a table */
+.cat .item-wrap{ border-radius:.6rem; }
+.cat .item-wrap:nth-child(even){ background:color-mix(in oklab, var(--cat-a) 7%, transparent); }
+.cat .item-wrap + .item-wrap{ border-top:1px solid color-mix(in oklab, var(--cat-a) 14%, transparent); }
+
+/* pills sit on their own line under the item name */
+.item-wrap .pillrow{ display:flex; gap:.3rem .35rem; flex-wrap:wrap; margin-top:.3rem; }
+.item-wrap .pillrow:empty{ display:none; }
+
+/* a packed item tucks its pills and description away */
+.item-wrap:has(.checkbox:checked) .pillrow,
+.item-wrap:has(.checkbox:checked) .it-note{ display:none; }
+
+/* jump-chip target: the category pulses its glow for ~2 seconds */
+.cat.pulse-glow{ animation:cat-pulse-glow 1s ease-in-out 2; }
+@keyframes cat-pulse-glow{
+  0%,100%{ box-shadow:0 1px 0 var(--e-hi) inset, 0 18px 30px -18px var(--e-lo); }
+  50%{ box-shadow:0 1px 0 var(--e-hi) inset,
+       0 0 0 3px color-mix(in oklab, var(--cat-a) 60%, transparent),
+       0 0 38px -2px var(--cat-a); }
+}
+
+/* buttons read as buttons before they're touched: visible border + fill on
+   the quiet variants */
+.btn-ghost:not(.add-btn){
+  border:1px solid color-mix(in oklab, var(--color-base-content) 18%, transparent);
+  background-color:color-mix(in oklab, var(--color-base-content) 5%, transparent);
+}
+.btn-soft{ border:1px solid color-mix(in oklab, currentColor 30%, transparent) !important; }
+
+/* =============================================================================
    12) MOTION — respect reduced-motion for all the new animations
    ============================================================================= */
 @media (prefers-reduced-motion:reduce){
   #ctBtn.btn-secondary{ animation:none !important; }
   body{ animation:none !important; }
   .item-wrap .checkbox{ transition:background-color .2s, box-shadow .2s !important; }
+  details.topic::details-content{ transition:none !important; }
+  details.topic[open] .topic-body{ animation:none !important; }
+  .cat.pulse-glow{ animation:none !important; }
+  details.topic > summary::after{ transition:none !important; }
+  @view-transition{ navigation:none; }
+  #tabNav .np{ transition:none !important; }
 }
 
 /* =============================================================================
@@ -384,5 +511,7 @@ details.topic[open] > summary::after{ transform:rotate(-135deg); }
   /* expand every topic so nothing is hidden on paper */
   details.topic > summary::after{ display:none !important; }
   details.topic .topic-body{ display:block !important; }
-  details.topic::details-content{ content-visibility:visible !important; display:block !important; }
+  details.topic::details-content{ content-visibility:visible !important; display:block !important; block-size:auto !important; transition:none !important; }
+  details.topic > summary{ border-bottom:none !important; }
+  #readbar, #topicTools, #toTop, #readyCard{ display:none !important; }
 }

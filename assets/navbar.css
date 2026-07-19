@@ -20,23 +20,25 @@
    Now: pill 3.6rem×2.4rem, svg 25px, nt padding .6/.45rem, label scaled to stay
    one line across phones. */
 #tabNav .nt{
-  padding-top:.6rem !important;
-  padding-bottom:.45rem !important;
+  padding-top:.5rem !important;
+  padding-bottom:.4rem !important;
   /* Keep the small-screen floor/scaling identical to the original so labels
      never collide on narrow phones; only lift the ceiling for roomy screens. */
   font-size:clamp(8.5px, 2.55vw, 12.5px) !important;
 }
 #tabNav .np{
-  width:3.6rem !important;
-  height:2.4rem !important;
+  /* full 3.6rem pill on normal phones; on narrow screens cap it to the
+     1/7 tab column so the first/last pills can't poke past the screen edge */
+  width:min(3.3rem, calc(100vw / 7 - 3px)) !important;
+  height:2.2rem !important;
 }
 #tabNav .np > svg{
-  width:25px !important;
-  height:25px !important;
+  width:23px !important;
+  height:23px !important;
 }
 
 /* Comfortable minimum hit area for the whole tab (icon + label). */
-#tabNav .nt{ min-height:56px; }
+#tabNav .nt{ min-height:52px; }
 
 /* ============================================================================
    SCROLL CONTAINMENT — you can't scroll past the bar
@@ -61,9 +63,31 @@ body > .w-full{ padding-bottom:calc(8rem + env(safe-area-inset-bottom, 0px)) !im
    gracefully instead of changing the header height. The checklist page's own
    two-line title (`Newborn / Essentials`) lives in the <em>, not this <span>,
    so it is unaffected. */
-header.navbar h1 > span{
+header.navbar h1 > span:not(#dueChip){
   display:block;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
+/* the countdown chip keeps its badge display — and stays gone when hidden */
+#dueChip.hidden{ display:none !important; }
+/* A nowrap subtitle sets the title's min-content width to the full text, and
+   flex items refuse to shrink below min-content — which shoved the header
+   icons off the right edge on pages with long subtitles (Birth Plan). Let the
+   title shrink so the subtitle ellipsizes and the icons always stay on-screen. */
+header.navbar h1{ min-width:0; }
+/* The checklist's wider header row (5 icon buttons) would over-shrink its
+   title; there, wrap the subtitle instead of ellipsizing it. */
+header.navbar h1 > span.h-3\.5{ white-space:normal; height:auto; }
+
+/* ============================================================================
+   ROW OVERFLOW FIXES
+   ---------------------------------------------------------------------------- */
+/* Chromium draws its own ✕ inside <input type=search>, on top of the app's
+   match counter and custom clear button. The app provides both; hide the
+   native one. */
+input[type="search"]::-webkit-search-cancel-button{ -webkit-appearance:none; appearance:none; }
+/* Filter chip rows are horizontal scrollers; without this the chip group
+   shrinks instead of scrolling, clipping "Nice to have" into the Clear
+   filters button when it appears. */
+#tierbar .join, #sortbar .join{ flex:none; }
