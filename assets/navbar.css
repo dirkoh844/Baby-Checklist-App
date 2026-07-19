@@ -91,3 +91,19 @@ input[type="search"]::-webkit-search-cancel-button{ -webkit-appearance:none; app
    shrinks instead of scrolling, clipping "Nice to have" into the Clear
    filters button when it appears. */
 #tierbar .join, #sortbar .join{ flex:none; }
+
+/* ============================================================================
+   EDGE COVERAGE — chrome backgrounds run off the screen edges
+   ----------------------------------------------------------------------------
+   The bar paints down past the home-indicator/safe area to the physical bottom
+   of the screen, and the header paints upward, so rubber-band scrolling never
+   reveals page content above the header or below the menu. */
+#tabNav::after{
+  content:""; position:absolute; left:0; right:0; top:100%; height:60vh;
+  background:var(--color-base-100); pointer-events:none;
+}
+header.navbar{ overflow:visible; }
+header.navbar::before{
+  content:""; position:absolute; left:0; right:0; bottom:100%; height:60vh;
+  background:var(--color-base-200); pointer-events:none;
+}

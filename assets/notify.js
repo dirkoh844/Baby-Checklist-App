@@ -94,25 +94,6 @@
   wrap.insertBefore(bar, wrap.firstElementChild);
 })();
 
-/* Reading progress: a thin accent line under the sticky header on long
-   reference pages. Skipped on the checklist (it has its own packing bar). */
-(function () {
-  if (document.getElementById('gprog')) return; /* checklist */
-  if (document.documentElement.scrollHeight < window.innerHeight * 2.2) return;
-  var bar = document.createElement('div');
-  bar.id = 'readbar';
-  bar.style.cssText = 'position:fixed;left:0;top:0;height:3px;width:0%;z-index:60;pointer-events:none;border-radius:0 2px 2px 0;background:linear-gradient(90deg,var(--color-primary),var(--color-secondary))';
-  document.body.appendChild(bar);
-  var hdr = document.querySelector('header.navbar');
-  function place () {
-    bar.style.top = (hdr ? hdr.getBoundingClientRect().bottom : 0) + 'px';
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
-  }
-  window.addEventListener('scroll', place, { passive: true });
-  window.addEventListener('resize', place);
-  place();
-})();
 
 /* Page-transition fallback: browsers without cross-document view transitions
    (Firefox, older Safari) get a quick fade-out on tap and a fade-in on

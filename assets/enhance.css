@@ -121,6 +121,17 @@ body::after{
   -webkit-backdrop-filter:blur(18px) saturate(1.3);
   box-shadow:0 1px 0 var(--e-hi) inset, 0 -10px 24px -18px var(--e-lo);
 }
+/* every tab pill wears a visible bevel at rest — a ring, top catch-light,
+   faint fill, and a whisper of drop — so each button reads as a button */
+#tabNav .np{
+  background:color-mix(in oklab, var(--color-base-content) 5%, transparent);
+  box-shadow:
+    inset 0 1px 0 var(--e-hi),
+    inset 0 -1px 2px rgba(0,0,0,.14),
+    inset 0 0 0 1px color-mix(in oklab, var(--color-base-content) 12%, transparent),
+    0 2px 5px -2px var(--e-lo);
+}
+
 /* active-tab pill: raised, glossy, glowing in the tab's color */
 #tabNav .nt[aria-current="page"] .np{
   background:
@@ -461,6 +472,9 @@ header.navbar{ view-transition-name:app-header; }
 .item-wrap .pillrow{ display:flex; gap:.3rem .35rem; flex-wrap:wrap; margin-top:.3rem; }
 .item-wrap .pillrow:empty{ display:none; }
 
+/* breathing room between the price and the note pencil */
+.item-wrap .nbtn{ margin-left:1rem; }
+
 /* a packed item tucks its pills and description away */
 .item-wrap:has(.checkbox:checked) .pillrow,
 .item-wrap:has(.checkbox:checked) .it-note{ display:none; }
@@ -513,5 +527,5 @@ header.navbar{ view-transition-name:app-header; }
   details.topic .topic-body{ display:block !important; }
   details.topic::details-content{ content-visibility:visible !important; display:block !important; block-size:auto !important; transition:none !important; }
   details.topic > summary{ border-bottom:none !important; }
-  #readbar, #topicTools, #toTop, #readyCard{ display:none !important; }
+  #topicTools, #toTop, #readyCard{ display:none !important; }
 }
