@@ -1,5 +1,40 @@
 # Baby List — Changelog
 
+## v2.12.5 — July 2026
+- **Upbringing, fully collapsible.** "The first 30 days," "1–6 months: tummy
+  time & milestones," and "6–12 months: solids & babyproofing" are now
+  tap-to-expand sections, same as "Recovery & the fourth trimester." All four
+  phase cards on the page collapse to just their title and badge by default,
+  with diagrams, tables, and topics nested inside.
+
+## v2.12.4 — July 2026
+- **Upbringing, one more collapsible.** "Recovery & the fourth trimester"
+  was the one section on the page that was always expanded. It's now a
+  tap-to-expand accordion like every other section, collapsed by default,
+  with its two topics (visitors, what mom's body is healing from) nested
+  inside.
+
+## v2.12.3 — July 2026
+- **Birth Plan headers, restyled.** Each numbered stage title now splits at
+  its dash: the part before it is bold and a size larger, the part after
+  drops to a smaller muted line underneath. The two headers that had a
+  second dash ("Immediately after birth — baby — 6 preferences" and
+  "Newborn procedures — pending decision — 1 preference") now render that
+  second part as a comma on the smaller line instead of a second dash.
+
+## v2.12.2 — July 2026
+- **Birth Plan, unwrapped.** The six numbered sections (0 through 5) were
+  each a `<details>` dropdown nested inside its own outer card. Removed that
+  outer card on all six so the numbered dropdowns sit directly on the page —
+  same accent-bordered accordion look, one less layer of container.
+
+## v2.12.1 — July 2026
+- **Warning signs, trimmed.** Removed the crisis-line callout paragraph and
+  the standalone "Who to call" hotline card from the mind-health section on
+  the Mom pane. The "Baby blues vs. postpartum depression" topic stays in
+  place, and 911 is still one tap away in the POST card at the top of the
+  page.
+
 ## v2.12.0 — July 2026
 - **Seven new diagrams.** Stomach size by day (cherry → walnut → egg), the
   four swaddle folds, three burping holds, and a first-year milestone strip on

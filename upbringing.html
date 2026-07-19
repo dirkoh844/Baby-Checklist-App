@@ -35,8 +35,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=2.12.0" rel="stylesheet">
-<link href="./assets/enhance.css?v=2.12.0" rel="stylesheet">
+<link href="./assets/navbar.css?v=2.12.5" rel="stylesheet">
+<link href="./assets/enhance.css?v=2.12.5" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -115,7 +115,7 @@ body{
 .utable td{font-size:12.5px;line-height:1.45;vertical-align:top}
 @media print{ *{background:#fff!important;color:#000!important} #tabNav{display:none!important} .card{border:1pt solid #999!important;page-break-inside:avoid} h1,h2{page-break-after:avoid} }
 </style>
-<script src="./assets/notify.js?v=2.12.0" defer></script>
+<script src="./assets/notify.js?v=2.12.5" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
@@ -132,12 +132,9 @@ body{
 <div class="w-full max-w-[640px] mx-auto px-3.5">
 
   <!-- Phase 1: fourth trimester -->
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-secondary">
-    <div class="card-body p-4 gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <h2 class="font-display font-semibold text-[17.5px] m-0 text-secondary flex-1">Recovery &amp; the fourth trimester</h2>
-        <span class="badge badge-secondary badge-soft badge-xs font-extrabold uppercase">weeks 0–8</span>
-      </div>
+  <details class="topic bpstage mt-4" style="--topic-a:var(--color-secondary)">
+    <summary><h2 class="font-display font-semibold text-[17.5px] m-0 text-secondary flex-1">Recovery &amp; the fourth trimester</h2><span class="badge badge-secondary badge-soft badge-xs font-extrabold uppercase flex-none">weeks 0–8</span></summary>
+    <div class="topic-body">
       <p class="m-0 text-[13.5px] leading-relaxed">The weeks right after birth belong to healing and bonding. Tap a topic to open it.</p>
       <details class="topic" style="--topic-a:var(--color-secondary)">
         <summary>Visitors: why the first 6–8 weeks stay quiet (+ a script)</summary>
@@ -151,7 +148,7 @@ body{
         <div class="topic-body ink-soft"><p>Hormonal shifts, uterine involution, physical trauma recovery, and possibly C-section aftercare all at once. Healing unfolds on its own schedule; planning for that ahead of time (meals, help, low expectations) protects mental health too. The <a class="link link-primary font-bold" href="./labor.html">Labor page</a> covers the when-to-call red flags.</p></div>
       </details>
     </div>
-  </section>
+  </details>
 
   <!-- Postpartum mental health -->
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
@@ -189,12 +186,9 @@ body{
   </section>
 
   <!-- Phase 2: first 30 days -->
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-green">
-    <div class="card-body p-4 gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <h2 class="font-display font-semibold text-[17.5px] m-0 text-primary flex-1">The first 30 days</h2>
-        <span class="badge badge-primary badge-soft badge-xs font-extrabold uppercase">sleep &amp; feeding</span>
-      </div>
+  <details class="topic mt-4" style="--topic-a:var(--color-primary)">
+    <summary><h2 class="font-display font-semibold text-[17.5px] m-0 text-primary flex-1">The first 30 days</h2><span class="badge badge-primary badge-soft badge-xs font-extrabold uppercase flex-none">sleep &amp; feeding</span></summary>
+    <div class="topic-body">
       <svg class="diagram" viewBox="0 0 340 96" role="img" aria-label="Safe sleep: baby alone, on the back, in an empty crib — no blankets, pillows, or bumpers" style="color:var(--ink-soft)">
         <g stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".85">
           <line x1="40" y1="18" x2="40" y2="72"/><line x1="300" y1="18" x2="300" y2="72"/>
@@ -302,15 +296,12 @@ body{
       </details>
       <p class="m-0 text-[12.5px] ink-soft">The <a class="link link-primary font-bold" href="./reminders.html">Reminders page</a> can nudge water and vitamins while you're running on newborn time.</p>
     </div>
-  </section>
+  </details>
 
   <!-- Phase 3: 1–6 months -->
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
-    <div class="card-body p-4 gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <h2 class="font-display font-semibold text-[17.5px] m-0 text-info flex-1">1–6 months: tummy time &amp; milestones</h2>
-        <span class="badge badge-info badge-soft badge-xs font-extrabold uppercase">motor development</span>
-      </div>
+  <details class="topic mt-4" style="--topic-a:var(--color-info)">
+    <summary><h2 class="font-display font-semibold text-[17.5px] m-0 text-info flex-1">1–6 months: tummy time &amp; milestones</h2><span class="badge badge-info badge-soft badge-xs font-extrabold uppercase flex-none">motor development</span></summary>
+    <div class="topic-body">
       <p class="m-0 text-[13.5px] leading-relaxed">Daily tummy time builds the neck, chest, and core strength behind every later milestone and helps prevent flat spots. Always awake and supervised:</p>
       <svg class="diagram" viewBox="0 0 340 84" role="img" aria-label="Tummy time builds up: about 20 minutes a day at 0 to 4 weeks, 20 to 30 minutes at 1 to 3 months, up to 60 minutes by 4 to 5 months" style="color:var(--ink-soft)">
         <line x1="12" y1="62" x2="328" y2="62" stroke="currentColor" stroke-width="1.2" opacity=".5"/>
@@ -354,15 +345,12 @@ body{
         <div class="topic-body ink-soft"><p>By around six months, many babies roll tummy-to-back, push up on straight arms, and lean on their hands while sitting. Socially, expect squeals, real laughs, raspberries, and back-and-forth "conversations." Everything goes in the mouth from here on, so start choking-hazard vigilance now, and keep the vaccination schedule on track at every well visit.</p></div>
       </details>
     </div>
-  </section>
+  </details>
 
   <!-- Phase 4: 6–12 months -->
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-warning">
-    <div class="card-body p-4 gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <h2 class="font-display font-semibold text-[17.5px] m-0 text-warning flex-1">6–12 months: solids &amp; babyproofing</h2>
-        <span class="badge badge-warning badge-soft badge-xs font-extrabold uppercase">big transitions</span>
-      </div>
+  <details class="topic mt-4" style="--topic-a:var(--color-warning)">
+    <summary><h2 class="font-display font-semibold text-[17.5px] m-0 text-warning flex-1">6–12 months: solids &amp; babyproofing</h2><span class="badge badge-warning badge-soft badge-xs font-extrabold uppercase flex-none">big transitions</span></summary>
+    <div class="topic-body">
       <p class="m-0 text-[13.5px] leading-relaxed">The AAP and the Dietary Guidelines both point to starting solids at <b class="text-base-content">about 6 months</b>, but readiness matters more than the calendar:</p>
       <div class="overflow-x-auto">
         <table class="table table-sm utable">
@@ -383,7 +371,7 @@ body{
         <div class="topic-body ink-soft"><p>Clear small swallowable objects, keep hot liquids out of reach, stay rear-facing in the car seat, and hold off on screens (video chat is the exception).</p></div>
       </details>
     </div>
-  </section>
+  </details>
 
   <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
     <p class="m-0">Drawn from AAP, CDC, and Nemours KidsHealth guidance. Educational reference, not medical advice — your pediatrician's instructions always come first.</p>

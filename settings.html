@@ -34,8 +34,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=2.12.0" rel="stylesheet">
-<link href="./assets/enhance.css?v=2.12.0" rel="stylesheet">
+<link href="./assets/navbar.css?v=2.12.5" rel="stylesheet">
+<link href="./assets/enhance.css?v=2.12.5" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -108,7 +108,7 @@ body{
 
 @media print{ *{background:#fff!important;color:#000!important} #tabNav{display:none!important} }
 </style>
-<script src="./assets/notify.js?v=2.12.0" defer></script>
+<script src="./assets/notify.js?v=2.12.5" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
@@ -248,7 +248,7 @@ const $=id=>document.getElementById(id);
 let toastTimer=null;
 function toast(m){ const w=$('toastWrap'); $('toast').textContent=m; w.classList.remove('hidden'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),1900); }
 
-const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.12.0';
+const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.12.5';
 function loadState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):null; }catch(e){ return null; } }
 function patchState(fn){
   try{
@@ -476,6 +476,11 @@ $('babyReset').addEventListener('click',async()=>{
 
 /* ---------- what's new ---------- */
 const LOG=[
+  {v:'2.12.5',d:'Jul 2026',n:['Upbringing: "The first 30 days," "1–6 months," and "6–12 months" are now tap-to-expand sections too, so the whole page collapses to four phase headers']},
+  {v:'2.12.4',d:'Jul 2026',n:['Upbringing: "Recovery & the fourth trimester" is now a tap-to-expand section like the rest of the page, instead of always being open']},
+  {v:'2.12.3',d:'Jul 2026',n:['Birth Plan headers: the title before the dash is now bold and larger, the detail after it drops to a smaller line underneath, and where a section had a second dash it now reads as a comma on that same smaller line']},
+  {v:'2.12.2',d:'Jul 2026',n:['Birth Plan: the six numbered sections (0–5) now sit directly on the page instead of inside an extra card wrapper — one layer of nesting removed, same accordion styling']},
+  {v:'2.12.1',d:'Jul 2026',n:['Warning signs page: trimmed the crisis-line callout and the separate "Who to call" hotline block from the mind-health card — the baby blues / PPD topic stays, and 911/988 are still one tap away up top']},
   {v:'2.12.0',d:'Jul 2026',n:['Seven new diagrams: stomach size by day, the four swaddle folds, three burping holds, a first-year milestone strip, the fever thermometer line, the wet-diaper ladder, and the newborn weight dip-and-recover curve']},
   {v:'2.11.8',d:'Jul 2026',n:['A little more space between each item\'s price and its note pencil']},
   {v:'2.11.7',d:'Jul 2026',n:['Removed the reading-progress line under the header on long pages']},

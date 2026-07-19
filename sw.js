@@ -1,7 +1,7 @@
 /* Baby List service worker — network-first navigations (fresh deploys reach users),
    stale-while-revalidate for assets/CDNs, notification click focuses the app */
-const VERSION = 'babylist-v33';
-const CORE = ['./', './index.html', './labor.html', './reminders.html', './settings.html', './upbringing.html', './birthplan.html', './tracker.html', './emergency.html', './assets/app.css', './assets/navbar.css?v=2.12.0', './assets/enhance.css?v=2.12.0', './assets/notify.js?v=2.12.0', './assets/confetti.min.js', './assets/fonts/fraunces-latin-opsz-normal.woff2', './assets/fonts/fraunces-latin-opsz-italic.woff2', './assets/fonts/nunito-sans-latin-normal.woff2', './assets/fonts/nunito-sans-latin-italic.woff2', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './badge-96.png', './icon-mono-512.png'];
+const VERSION = 'babylist-v38';
+const CORE = ['./', './index.html', './labor.html', './reminders.html', './settings.html', './upbringing.html', './birthplan.html', './tracker.html', './emergency.html', './assets/app.css', './assets/navbar.css?v=2.12.5', './assets/enhance.css?v=2.12.5', './assets/notify.js?v=2.12.5', './assets/confetti.min.js', './assets/fonts/fraunces-latin-opsz-normal.woff2', './assets/fonts/fraunces-latin-opsz-italic.woff2', './assets/fonts/nunito-sans-latin-normal.woff2', './assets/fonts/nunito-sans-latin-italic.woff2', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './badge-96.png', './icon-mono-512.png'];
 
 self.addEventListener('install', e => {
   /* cache each file on its own: addAll() rejects the entire install if a single

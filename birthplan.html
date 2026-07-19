@@ -36,8 +36,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=2.12.0" rel="stylesheet">
-<link href="./assets/enhance.css?v=2.12.0" rel="stylesheet">
+<link href="./assets/navbar.css?v=2.12.5" rel="stylesheet">
+<link href="./assets/enhance.css?v=2.12.5" rel="stylesheet">
 <script>
 addEventListener('DOMContentLoaded',function(){
   if(!window.__cssMissing) return;
@@ -117,6 +117,10 @@ body{
 .bptab td{border-color:var(--color-base-300)}
 .bptab td:first-child{width:1%}
 .sigline{border-bottom:1.5px solid var(--color-base-300);height:1.9rem}
+/* Numbered stage headers: bold title line, smaller detail line beneath */
+.bpstage-title{display:flex;flex-direction:column;flex:1 1 auto;min-width:0;line-height:1.28}
+.bpstage-main{font-weight:800;font-size:16px}
+.bpstage-sub{font-weight:600;font-size:11.5px;color:var(--ink-soft);margin-top:.15rem;text-transform:none;letter-spacing:normal}
 @media print{
   *{background:#fff!important;color:#000!important}
   #tabNav,#toastWrap,.icobtns,#bpTools{display:none!important}
@@ -126,7 +130,7 @@ body{
   body{padding-bottom:0!important}
 }
 </style>
-<script src="./assets/notify.js?v=2.12.0" defer></script>
+<script src="./assets/notify.js?v=2.12.5" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
@@ -202,10 +206,8 @@ body{
   </section>
 
 
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
-    <div class="card-body p-4 gap-2">
-      <details class="topic" style="--topic-a:var(--color-info)">
-        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">0</span>Before labor and at admission — 5 preferences</summary>
+  <details class="topic mt-4" style="--topic-a:var(--color-info)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">0</span><span class="bpstage-title"><span class="bpstage-main">Before labor and at admission</span><span class="bpstage-sub">5 preferences</span></span></summary>
         <div class="topic-body">
 <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
@@ -271,13 +273,9 @@ body{
       </article>
         </div>
       </details>
-    </div>
-  </section>
 
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-error">
-    <div class="card-body p-4 gap-2">
-      <details class="topic" style="--topic-a:var(--color-error)">
-        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-error) 25%, transparent);color:var(--color-error)">1</span>During labor — 7 preferences</summary>
+  <details class="topic mt-4" style="--topic-a:var(--color-error)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-error) 25%, transparent);color:var(--color-error)">1</span><span class="bpstage-title"><span class="bpstage-main">During labor</span><span class="bpstage-sub">7 preferences</span></span></summary>
         <div class="topic-body">
 <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
@@ -377,13 +375,9 @@ body{
       </article>
         </div>
       </details>
-    </div>
-  </section>
 
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-warning">
-    <div class="card-body p-4 gap-2">
-      <details class="topic" style="--topic-a:var(--color-warning)">
-        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-warning) 25%, transparent);color:var(--color-warning)">2</span>Delivery and pushing — 4 preferences</summary>
+  <details class="topic mt-4" style="--topic-a:var(--color-warning)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-warning) 25%, transparent);color:var(--color-warning)">2</span><span class="bpstage-title"><span class="bpstage-main">Delivery and pushing</span><span class="bpstage-sub">4 preferences</span></span></summary>
         <div class="topic-body">
 <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
@@ -438,13 +432,9 @@ body{
       </article>
         </div>
       </details>
-    </div>
-  </section>
 
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-success">
-    <div class="card-body p-4 gap-2">
-      <details class="topic" style="--topic-a:var(--color-success)">
-        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-success) 25%, transparent);color:var(--color-success)">3</span>Immediately after birth — baby — 6 preferences</summary>
+  <details class="topic mt-4" style="--topic-a:var(--color-success)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-success) 25%, transparent);color:var(--color-success)">3</span><span class="bpstage-title"><span class="bpstage-main">Immediately after birth</span><span class="bpstage-sub">baby, 6 preferences</span></span></summary>
         <div class="topic-body">
 <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
@@ -524,13 +514,9 @@ body{
       </article>
         </div>
       </details>
-    </div>
-  </section>
 
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
-    <div class="card-body p-4 gap-2">
-      <details class="topic" style="--topic-a:var(--color-info)">
-        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">4</span>Newborn procedures — pending decision — 1 preference</summary>
+  <details class="topic mt-4" style="--topic-a:var(--color-info)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">4</span><span class="bpstage-title"><span class="bpstage-main">Newborn procedures</span><span class="bpstage-sub">pending decision, 1 preference</span></span></summary>
         <div class="topic-body">
 <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
@@ -547,13 +533,9 @@ body{
       </article>
         </div>
       </details>
-    </div>
-  </section>
 
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-secondary">
-    <div class="card-body p-4 gap-2">
-      <details class="topic" style="--topic-a:var(--color-secondary)">
-        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-secondary) 25%, transparent);color:var(--color-secondary)">5</span>If a repeat cesarean becomes necessary — 5 preferences</summary>
+  <details class="topic mt-4" style="--topic-a:var(--color-secondary)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-secondary) 25%, transparent);color:var(--color-secondary)">5</span><span class="bpstage-title"><span class="bpstage-main">If a repeat cesarean becomes necessary</span><span class="bpstage-sub">5 preferences</span></span></summary>
         <div class="topic-body">
 <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
@@ -619,8 +601,6 @@ body{
       </article>
         </div>
       </details>
-    </div>
-  </section>
 
 
   <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
