@@ -1,5 +1,41 @@
 # Baby List — Changelog
 
+## v2.11.1 — July 2026
+- **Transitions on every browser.** Browsers without cross-document view
+  transitions (Firefox, older iOS Safari) previously navigated with no
+  animation at all. They now get a lightweight fallback — a quick fade-out on
+  tap and a rise-in on arrival — while modern browsers keep the full native
+  transition with the gliding tab pill. Reduced-motion still disables both.
+
+## v2.11.0 — July 2026
+- **Birth Plan slimmed to the essentials.** The hospital/patient identity card
+  (Sentara header, names, date-of-birth lines) and the Signatures card are
+  gone — the page is now the preferences and their reasoning, nothing else.
+- **Each step is collapsible.** The six numbered steps (0 Before labor → 5 If
+  a repeat cesarean becomes necessary) now present exactly like the Labor
+  page's stages: a numbered chip, the step name, and a preference count in the
+  collapsed title. Open a step to see its preferences; each still carries its
+  tap-to-expand "Why, for the doctor". Printing expands everything.
+- **Text pass.** Redundant "— the reasoning" dropped from the Why titles, the
+  cryptic "Three yeses, one fight" badge now reads "3 easy yeses · 1 fight",
+  and a stale reference to the "signed plan" was reworded.
+
+## v2.10.0 — July 2026
+- **Menu reshuffle.** Warning signs now lives in the bottom menu (it replaced
+  Tracker); the Baby tracker moved to Settings with its own card. The menu is
+  slightly smaller, and the emergency icon left every page header.
+- **Header decluttered.** Text size, theme, calm sounds, and reset moved off
+  the checklist header into Settings, which is reorganized: Appearance (theme ·
+  text · calm sounds), Due date, Your name, Baby tracker, Cloud sync, Reset
+  (checkmarks-only or full), What's new.
+- **Checklist rows read like a table.** Alternating semi-transparent rows with
+  hairline separators; the priority/qty pills moved to their own line under
+  each item name; a packed item tucks its pills and description away.
+- **Jump chips glow their target.** Tapping a mini category pill scrolls to the
+  category and pulses its glow for two seconds.
+- **Buttons are better defined at rest** — quiet button styles get a visible
+  border and fill before they're touched.
+
 ## v2.9.0 — July 2026
 - **The screen stays awake during labor.** Timing a contraction (or turning on
   the new Focus mode) holds a screen wake lock, so the phone can't sleep

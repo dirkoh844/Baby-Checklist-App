@@ -136,8 +136,8 @@ body{
       <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1">Planned VBAC · Sentara Norfolk General</span>
     </h1>
     <div class="icobtns flex gap-1.5 flex-none">
-      <a href="./emergency.html" class="btn btn-circle btn-sm btn-soft btn-error flex-none" id="sosBtn" aria-label="Warning signs and emergency contacts" title="Warning signs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></a>
-      <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 flex-none" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+      <a href="./emergency.html" class="btn btn-circle btn-sm btn-soft btn-error flex-none hidden" id="sosBtn" aria-label="Warning signs and emergency contacts" title="Warning signs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></a>
+      <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 flex-none hidden" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
     </div>
   </div>
 </header>
@@ -201,35 +201,19 @@ body{
     </div>
   </section>
 
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4">
-    <div class="card-body p-4 gap-1.5">
-      <p class="m-0 text-[11px] font-extrabold uppercase tracking-[.14em] ink-soft">Sentara Norfolk General Hospital · Family Maternity Center</p>
-      <h2 class="font-display font-semibold text-[18px] m-0">Birth Preferences — Elizabeth Weibel</h2>
-      <p class="m-0 text-[13.5px] leading-relaxed">A collaborative plan for our planned VBAC at SNGH.</p>
-      <p class="m-0 text-[12px] leading-relaxed ink-soft">Provided under VA Health Care Decisions Act and 12VAC5-20-100. Refusals require explicit verbal authorization to override outside of true emergency. On file in MyChart.</p>
-      <div class="grid grid-cols-2 gap-3 mt-2">
-        <div><span class="text-[10px] font-extrabold uppercase tracking-wider ink-soft">Patient</span><div class="text-[13.5px] font-semibold">Elizabeth Weibel</div></div>
-        <div><span class="text-[10px] font-extrabold uppercase tracking-wider ink-soft">Date of birth</span><div class="sigline"></div></div>
-        <div><span class="text-[10px] font-extrabold uppercase tracking-wider ink-soft">Husband</span><div class="sigline"></div></div>
-        <div><span class="text-[10px] font-extrabold uppercase tracking-wider ink-soft">Emergency contact</span><div class="sigline"></div></div>
-      </div>
-      <p class="m-0 mt-2 text-[13px] leading-relaxed">Thank you for partnering with us. These preferences are the conditional terms of my consent — for me and my baby. In any non-emergency, please obtain explicit verbal consent before any intervention, medication, or procedure. Please discuss alternatives first.</p>
-    </div>
-  </section>
 
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
     <div class="card-body p-4 gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <span class="w-7 h-7 rounded-lg grid place-items-center flex-none font-display font-semibold text-[15px]" style="background:color-mix(in oklab, var(--color-info) 20%, transparent);color:var(--color-info)">0</span>
-        <h2 class="font-display font-semibold text-[17.5px] m-0 flex-1" style="color:var(--color-info)">Before labor and at admission</h2>
-      </div>
-      <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
+      <details class="topic" style="--topic-a:var(--color-info)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">0</span>Before labor and at admission — 5 preferences</summary>
+        <div class="topic-body">
+<article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
       <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;These preferences are the conditional terms of my consent — for me and my baby. In any non-emergency, please obtain explicit verbal consent before any intervention, medication, or procedure. Please discuss alternatives first.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Informed consent is the legal baseline, not a favor. Federal Conditions of Participation (42 CFR 482.13) give a patient the right to participate in care planning and to refuse treatment. Framing preferences as the terms of consent is simply how consent works, and stating it up front saves the team from guessing at 3 a.m.</p>
       </div>
@@ -254,7 +238,7 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;On file in MyChart.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">The night nurse reads the chart, not the paper in your bag. Ask that it be attached where the L&D summary shows it, not buried in scanned documents, and bring two printed copies anyway: one for the nurse, one taped where the team can see it.</p>
       </div>
@@ -266,7 +250,7 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;No medical, nursing, or midwifery students. Introduce every caregiver by name and role (per Sentara Patient Rights). Residents per OB-practice arrangement — verbal consent before each exam or procedure.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Sentara Norfolk General is a teaching hospital. Declining students is routinely honored and costs the unit nothing. Residents are different: they are part of the practice's coverage, so expect them at the bedside. Asking for consent before each resident exam is reasonable and matches Sentara's own patient rights language. Ask the OB now which residents cover the practice.</p>
       </div>
@@ -285,16 +269,17 @@ body{
       </div>
       </details>
       </article>
+        </div>
+      </details>
     </div>
   </section>
 
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-error">
     <div class="card-body p-4 gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <span class="w-7 h-7 rounded-lg grid place-items-center flex-none font-display font-semibold text-[15px]" style="background:color-mix(in oklab, var(--color-error) 20%, transparent);color:var(--color-error)">1</span>
-        <h2 class="font-display font-semibold text-[17.5px] m-0 flex-1" style="color:var(--color-error)">During labor</h2>
-      </div>
-      <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
+      <details class="topic" style="--topic-a:var(--color-error)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-error) 25%, transparent);color:var(--color-error)">1</span>During labor — 7 preferences</summary>
+        <div class="topic-body">
+<article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
       <span class="badge badge-info badge-sm font-bold flex-none ml-auto bpb">Usually yes — ask</span>
       </div>
@@ -313,7 +298,7 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Freedom of movement. Walking, birth ball, peanut ball, squat bar, any position welcome.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Upright and mobile positions in the first stage shorten labor and are a first-line comfort measure. Fully compatible with wireless monitoring. Ask for the squat bar to be in the room before pushing rather than hunted down during it.</p>
       </div>
@@ -325,7 +310,7 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Minimize cervical exams. Ask before each one.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Every exam after the membranes rupture adds infection risk, and no exam predicts when birth will happen. She is not refusing them, only asking that each one have a reason and her consent. Easy yes.</p>
       </div>
@@ -347,7 +332,7 @@ body{
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
       <span class="badge badge-error badge-sm font-extrabold uppercase tracking-wide flex-none">FIRM — VBAC SAFETY</span>
-      <span class="badge badge-warning badge-sm font-bold flex-none ml-auto bpb">Three yeses, one fight</span>
+      <span class="badge badge-warning badge-sm font-bold flex-none ml-auto bpb">3 easy yeses · 1 fight</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;No Pitocin (induction or augmentation). No misoprostol (Cytotec). No prostaglandins (Cervidil / Prepidil). Induction, if necessary: mechanical ripening (Foley / Cook) only.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
@@ -384,22 +369,23 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Severe persistent scar pain, sudden change in pain quality, hematuria, recession of presenting part, abnormal FHR tracing, maternal tachycardia, loss of contraction pattern, sudden vaginal bleeding. We will alert nursing immediately.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">This list is the most persuasive thing in the whole document. It tells the team she understands the risk she is accepting and that she is a partner in catching it, which is exactly what makes the rest of the plan credible rather than adversarial. The earliest sign is usually the tracing, which is the argument for the wireless monitor. Ask the nurse to tell you promptly if the tracing changes.</p>
       </div>
       </details>
       </article>
+        </div>
+      </details>
     </div>
   </section>
 
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-warning">
     <div class="card-body p-4 gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <span class="w-7 h-7 rounded-lg grid place-items-center flex-none font-display font-semibold text-[15px]" style="background:color-mix(in oklab, var(--color-warning) 20%, transparent);color:var(--color-warning)">2</span>
-        <h2 class="font-display font-semibold text-[17.5px] m-0 flex-1" style="color:var(--color-warning)">Delivery and pushing</h2>
-      </div>
-      <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
+      <details class="topic" style="--topic-a:var(--color-warning)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-warning) 25%, transparent);color:var(--color-warning)">2</span>Delivery and pushing — 4 preferences</summary>
+        <div class="topic-body">
+<article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
       <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
       </div>
@@ -432,7 +418,7 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Delayed cord clamping &gt;=60 sec, or until cord stops pulsing (per ACOG).&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">ACOG recommends delaying clamping at least 30 to 60 seconds in vigorous term infants; it raises the newborn's iron stores. This is already standard practice, and her citation is correct.</p>
       </div>
@@ -444,22 +430,23 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Cord cutting: my husband.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Routine, and usually offered without being asked.</p>
       </div>
       </details>
       </article>
+        </div>
+      </details>
     </div>
   </section>
 
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-success">
     <div class="card-body p-4 gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <span class="w-7 h-7 rounded-lg grid place-items-center flex-none font-display font-semibold text-[15px]" style="background:color-mix(in oklab, var(--color-success) 20%, transparent);color:var(--color-success)">3</span>
-        <h2 class="font-display font-semibold text-[17.5px] m-0 flex-1" style="color:var(--color-success)">Immediately after birth — baby</h2>
-      </div>
-      <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
+      <details class="topic" style="--topic-a:var(--color-success)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-success) 25%, transparent);color:var(--color-success)">3</span>Immediately after birth — baby — 6 preferences</summary>
+        <div class="topic-body">
+<article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
       <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
       </div>
@@ -478,7 +465,7 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Protect the golden hour — defer weighing, measuring, and non-essential procedures 60+ min.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Nothing in the newborn assessment is time-critical for a stable baby. Weights and measurements keep. Say it once at delivery and again at the shift change, because the second nurse did not hear the first conversation.</p>
       </div>
@@ -504,7 +491,7 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Delay first bath 24+ hours, or decline entirely (preserving vernix).&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">WHO recommends delaying the first bath at least 24 hours; delayed bathing improves temperature and blood-sugar stability and breastfeeding rates. Many US units already default to 12 to 24 hours, so this is often already their policy.</p>
       </div>
@@ -516,7 +503,7 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Baby stays with me — all assessments in room. Husband accompanies baby if transported.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Couplet care is the standard model; the exam comes to the room. The second sentence is the one that matters, so say it out loud at the moment anyone picks the baby up.</p>
       </div>
@@ -535,16 +522,17 @@ body{
       </div>
       </details>
       </article>
+        </div>
+      </details>
     </div>
   </section>
 
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
     <div class="card-body p-4 gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <span class="w-7 h-7 rounded-lg grid place-items-center flex-none font-display font-semibold text-[15px]" style="background:color-mix(in oklab, var(--color-info) 20%, transparent);color:var(--color-info)">4</span>
-        <h2 class="font-display font-semibold text-[17.5px] m-0 flex-1" style="color:var(--color-info)">Newborn procedures — pending decision</h2>
-      </div>
-      <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
+      <details class="topic" style="--topic-a:var(--color-info)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">4</span>Newborn procedures — pending decision — 1 preference</summary>
+        <div class="topic-body">
+<article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
       <span class="badge badge-warning badge-sm font-bold flex-none ml-auto bpb">Settle prenatally</span>
       </div>
@@ -557,22 +545,23 @@ body{
       </div>
       </details>
       </article>
+        </div>
+      </details>
     </div>
   </section>
 
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-secondary">
     <div class="card-body p-4 gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <span class="w-7 h-7 rounded-lg grid place-items-center flex-none font-display font-semibold text-[15px]" style="background:color-mix(in oklab, var(--color-secondary) 20%, transparent);color:var(--color-secondary)">5</span>
-        <h2 class="font-display font-semibold text-[17.5px] m-0 flex-1" style="color:var(--color-secondary)">If a repeat cesarean becomes necessary</h2>
-      </div>
-      <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
+      <details class="topic" style="--topic-a:var(--color-secondary)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-secondary) 25%, transparent);color:var(--color-secondary)">5</span>If a repeat cesarean becomes necessary — 5 preferences</summary>
+        <div class="topic-body">
+<article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
       <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;True emergency: proceed without delay. We trust you.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Do not underestimate this line. It is the reason the team will take the rest of the document seriously instead of filing it as a fight. Keep it at the top of the page and say it out loud on admission.</p>
       </div>
@@ -597,7 +586,7 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Clear drape preferred — I want to see baby being born.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Increasingly common and usually granted when requested ahead of time. The catch is stock: many ORs do not keep clear drapes. Ask whether SNGH has them, and whether you may bring your own if not.</p>
       </div>
@@ -609,7 +598,7 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Delayed cord clamping &gt;=60 sec if clinically possible.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — the reasoning</summary>
+      <summary>Why, for the doctor</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Often possible in a non-emergent repeat cesarean, and her qualifier ("if clinically possible") already concedes the exception. Easy yes.</p>
       </div>
@@ -628,26 +617,14 @@ body{
       </div>
       </details>
       </article>
+        </div>
+      </details>
     </div>
   </section>
 
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4">
-    <div class="card-body p-4 gap-2">
-      <h2 class="font-display font-semibold text-[17.5px] m-0">Signatures</h2>
-      <div class="grid grid-cols-2 gap-3 mt-1">
-        <div><span class="text-[10px] font-extrabold uppercase tracking-wider ink-soft">Patient signature</span><div class="sigline"></div></div>
-        <div><span class="text-[10px] font-extrabold uppercase tracking-wider ink-soft">Date</span><div class="sigline"></div></div>
-        <div><span class="text-[10px] font-extrabold uppercase tracking-wider ink-soft">Husband signature</span><div class="sigline"></div></div>
-        <div><span class="text-[10px] font-extrabold uppercase tracking-wider ink-soft">Date</span><div class="sigline"></div></div>
-        <div><span class="text-[10px] font-extrabold uppercase tracking-wider ink-soft">OB / midwife — reviewed &amp; acknowledged prenatally</span><div class="sigline"></div></div>
-        <div><span class="text-[10px] font-extrabold uppercase tracking-wider ink-soft">Date</span><div class="sigline"></div></div>
-      </div>
-      <p class="m-0 mt-2 text-[13.5px] font-semibold">Thank you for caring for our family and supporting our VBAC.</p>
-    </div>
-  </section>
 
   <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
-    <p class="m-0">Every preference from the signed plan is reproduced here in full. The "why" and the badges are added context for the conversation with your OB, drawn from ACOG, AAP, CDC, USPSTF, and WHO guidance. They are not medical advice and they do not override your care team, whose judgment governs in an emergency. Hospital policy varies: confirm anything marked <b class="text-base-content">Settle prenatally</b> or <b class="text-base-content">Expect pushback</b> with the OB and the anesthesia group before labor.</p>
+    <p class="m-0">Every preference from the plan is reproduced here in full. The "why" and the badges are added context for the conversation with your OB, drawn from ACOG, AAP, CDC, USPSTF, and WHO guidance. They are not medical advice and they do not override your care team, whose judgment governs in an emergency. Hospital policy varies: confirm anything marked <b class="text-base-content">Settle prenatally</b> or <b class="text-base-content">Expect pushback</b> with the OB and the anesthesia group before labor.</p>
   </footer>
 </div>
 
@@ -656,7 +633,7 @@ body{
     <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="3.9" y="3.9" width="16.2" height="16.2" rx="4.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 12.15l2.55 2.55 4.85-5.35" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
     <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.4S4.6 15.8 4.6 10A4.2 4.2 0 0 1 12 7.5a4.2 4.2 0 0 1 7.4 2.5c0 5.8-7.4 10.4-7.4 10.4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.7 11.7h2.1l1.15-2.1 1.55 3.9 1-1.8h2.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
     <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" aria-current="page" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="8.7" y="3.3" width="6.6" height="3.5" rx="1.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.7 5.05H7.05A1.65 1.65 0 0 0 5.4 6.7v11.65A1.65 1.65 0 0 0 7.05 20h9.9a1.65 1.65 0 0 0 1.65-1.65V6.7a1.65 1.65 0 0 0-1.65-1.65H15.3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16.9s-3.05-1.85-3.05-4a1.75 1.75 0 0 1 3.05-1.2 1.75 1.75 0 0 1 3.05 1.2c0 2.15-3.05 4-3.05 4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Birth Plan</a>
-    <a href="./tracker.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-accent)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M4.4 19.6h15.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16.4V12M12 16.4V6.9M16 16.4v-6.6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span>Tracker</a>
+    <a href="./emergency.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></span>Warning</a>
     <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.5v-6.7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 13.8c0-3.95-2.8-6.25-6.85-6.25 0 3.95 2.8 6.25 6.85 6.25z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.1c0-3.2 2.4-5.1 5.75-5.1 0 3.2-2.4 5.1-5.75 5.1z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Upbringing</a>
     <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-warning)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M6.35 10.3a5.65 5.65 0 0 1 11.3 0c0 4.65 1.9 5.6 1.9 5.6H4.45s1.9-.95 1.9-5.6z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 18.6a2.25 2.25 0 0 0 4.2 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reminders</a>
     <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6 12h2.6M14.3 16l1.3 2.25M9.7 16l-1.3 2.25M7.4 12H4.8M9.7 8L8.4 5.75M14.3 8l1.3-2.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Settings</a>

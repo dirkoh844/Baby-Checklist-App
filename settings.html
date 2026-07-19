@@ -117,14 +117,56 @@ body{
     <h1 class="font-display font-semibold text-[21px] leading-tight m-0 flex-1">Settings
       <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1">Sync · due date · appearance</span>
     </h1>
-    <a href="./emergency.html" class="btn btn-circle btn-sm btn-soft btn-error flex-none" id="sosBtn" aria-label="Warning signs and emergency contacts" title="Warning signs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></a>
-      <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 flex-none" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+    <a href="./emergency.html" class="btn btn-circle btn-sm btn-soft btn-error flex-none hidden" id="sosBtn" aria-label="Warning signs and emergency contacts" title="Warning signs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></a>
+      <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 flex-none hidden" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
   </div>
 </header>
 
 <div class="w-full max-w-[640px] mx-auto px-3.5">
 
-  <!-- cloud sync -->
+    <!-- appearance -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4">
+    <div class="card-body p-4 gap-2">
+      <h2 class="font-display font-semibold text-[17.5px] m-0 text-secondary">Appearance</h2>
+      <div class="flex gap-2 flex-wrap">
+        <button id="themeToggle" type="button" class="btn btn-sm btn-soft btn-secondary rounded-xl font-bold">Theme: Dark</button>
+        <button id="sizeToggle" type="button" class="btn btn-sm btn-soft btn-accent rounded-xl font-bold">Text: Default</button>
+        <button id="calmToggle" type="button" class="btn btn-sm btn-soft btn-info rounded-xl font-bold" aria-pressed="false">Calm sounds: Off</button>
+      </div>
+    </div>
+  </section>
+
+    <!-- due date -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-gold">
+    <div class="card-body p-4 gap-2">
+      <h2 class="font-display font-semibold text-[17.5px] m-0 text-accent">Due date</h2>
+      <p class="text-[12.5px] ink-soft leading-relaxed m-0" id="dueReadout">Not set — the by-week chips on the checklist light up as deadlines approach.</p>
+      <div class="flex gap-2 items-center flex-wrap">
+        <input type="date" id="dueInput" aria-label="Due date" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px]">
+        <button id="dueSave" type="button" class="btn btn-sm btn-primary font-extrabold">Save</button>
+        <button id="dueClear" type="button" class="btn btn-sm btn-ghost font-extrabold">Clear</button>
+      </div>
+    </div>
+  </section>
+
+    <!-- name -->
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4">
+    <div class="card-body p-4 gap-2">
+      <h2 class="font-display font-semibold text-[17.5px] m-0 text-primary">Your name</h2>
+      <p class="text-[12.5px] ink-soft leading-relaxed m-0">Stamped on your checkmarks so the shared list shows who packed what.</p>
+      <input id="whoInput" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="e.g. Pablo" aria-label="Your name">
+    </div>
+  </section>
+
+  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-gold">
+    <div class="card-body p-4 gap-2">
+      <h2 class="font-display font-semibold text-[17.5px] m-0 text-accent">Baby tracker</h2>
+      <p class="text-[12.5px] ink-soft leading-relaxed m-0">Feeds, diapers, and sleep once the baby is here. It lives here now — the bottom menu carries Warning signs instead.</p>
+      <a href="./tracker.html" class="btn btn-sm btn-primary rounded-xl font-extrabold w-full">Open the tracker</a>
+    </div>
+  </section>
+
+    <!-- cloud sync -->
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
     <div class="card-body p-4 gap-2">
       <h2 class="font-display font-semibold text-[17.5px] m-0 text-info">Cloud sync</h2>
@@ -156,49 +198,17 @@ body{
     </div>
   </section>
 
-  <!-- due date -->
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-gold">
-    <div class="card-body p-4 gap-2">
-      <h2 class="font-display font-semibold text-[17.5px] m-0 text-accent">Due date</h2>
-      <p class="text-[12.5px] ink-soft leading-relaxed m-0" id="dueReadout">Not set — the by-week chips on the checklist light up as deadlines approach.</p>
-      <div class="flex gap-2 items-center flex-wrap">
-        <input type="date" id="dueInput" aria-label="Due date" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px]">
-        <button id="dueSave" type="button" class="btn btn-sm btn-primary font-extrabold">Save</button>
-        <button id="dueClear" type="button" class="btn btn-sm btn-ghost font-extrabold">Clear</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- name -->
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4">
-    <div class="card-body p-4 gap-2">
-      <h2 class="font-display font-semibold text-[17.5px] m-0 text-primary">Your name</h2>
-      <p class="text-[12.5px] ink-soft leading-relaxed m-0">Stamped on your checkmarks so the shared list shows who packed what.</p>
-      <input id="whoInput" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="e.g. Pablo" aria-label="Your name">
-    </div>
-  </section>
-
-  <!-- appearance -->
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4">
-    <div class="card-body p-4 gap-2">
-      <h2 class="font-display font-semibold text-[17.5px] m-0 text-secondary">Appearance</h2>
-      <div class="flex gap-2 flex-wrap">
-        <button id="themeToggle" type="button" class="btn btn-sm btn-soft btn-secondary rounded-xl font-bold">Theme: Dark</button>
-        <button id="sizeToggle" type="button" class="btn btn-sm btn-soft btn-accent rounded-xl font-bold">Text: Default</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- start over for baby #2 -->
+    <!-- start over for baby #2 -->
   <section class="card bg-base-100 border border-error/40 shadow-sm mt-4">
     <div class="card-body p-4 gap-2">
-      <h2 class="font-display font-semibold text-[17.5px] m-0 text-error">Start a new pregnancy</h2>
+      <h2 class="font-display font-semibold text-[17.5px] m-0 text-error">Reset</h2>
       <p class="text-[12.5px] ink-soft leading-relaxed m-0">Clears every checkmark and the due date — on all synced phones — while keeping your custom items, reminders, contacts, and the cloud connection.</p>
-      <button id="babyReset" type="button" class="btn btn-sm btn-soft btn-error rounded-xl font-bold w-full">Reset for the next baby</button>
+      <button id="resetChecks" type="button" class="btn btn-sm btn-soft btn-warning rounded-xl font-bold w-full">Reset checkmarks only</button>
+      <button id="babyReset" type="button" class="btn btn-sm btn-soft btn-error rounded-xl font-bold w-full">Start a new pregnancy (full reset)</button>
     </div>
   </section>
 
-  <!-- what's new -->
+    <!-- what's new -->
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-green">
     <div class="card-body p-4 gap-2">
       <h2 class="font-display font-semibold text-[17.5px] m-0 text-primary">What's new</h2>
@@ -222,7 +232,7 @@ body{
     <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="3.9" y="3.9" width="16.2" height="16.2" rx="4.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 12.15l2.55 2.55 4.85-5.35" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
     <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.4S4.6 15.8 4.6 10A4.2 4.2 0 0 1 12 7.5a4.2 4.2 0 0 1 7.4 2.5c0 5.8-7.4 10.4-7.4 10.4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.7 11.7h2.1l1.15-2.1 1.55 3.9 1-1.8h2.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
     <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="8.7" y="3.3" width="6.6" height="3.5" rx="1.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.7 5.05H7.05A1.65 1.65 0 0 0 5.4 6.7v11.65A1.65 1.65 0 0 0 7.05 20h9.9a1.65 1.65 0 0 0 1.65-1.65V6.7a1.65 1.65 0 0 0-1.65-1.65H15.3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16.9s-3.05-1.85-3.05-4a1.75 1.75 0 0 1 3.05-1.2 1.75 1.75 0 0 1 3.05 1.2c0 2.15-3.05 4-3.05 4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Birth Plan</a>
-    <a href="./tracker.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-accent)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M4.4 19.6h15.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16.4V12M12 16.4V6.9M16 16.4v-6.6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span>Tracker</a>
+    <a href="./emergency.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></span>Warning</a>
     <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.5v-6.7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 13.8c0-3.95-2.8-6.25-6.85-6.25 0 3.95 2.8 6.25 6.85 6.25z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.1c0-3.2 2.4-5.1 5.75-5.1 0 3.2-2.4 5.1-5.75 5.1z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Upbringing</a>
     <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-warning)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M6.35 10.3a5.65 5.65 0 0 1 11.3 0c0 4.65 1.9 5.6 1.9 5.6H4.45s1.9-.95 1.9-5.6z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 18.6a2.25 2.25 0 0 0 4.2 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reminders</a>
     <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" aria-current="page" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6 12h2.6M14.3 16l1.3 2.25M9.7 16l-1.3 2.25M7.4 12H4.8M9.7 8L8.4 5.75M14.3 8l1.3-2.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Settings</a>
@@ -238,7 +248,7 @@ const $=id=>document.getElementById(id);
 let toastTimer=null;
 function toast(m){ const w=$('toastWrap'); $('toast').textContent=m; w.classList.remove('hidden'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),1900); }
 
-const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.9.0';
+const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.11.1';
 function loadState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):null; }catch(e){ return null; } }
 function patchState(fn){
   try{
@@ -466,6 +476,9 @@ $('babyReset').addEventListener('click',async()=>{
 
 /* ---------- what's new ---------- */
 const LOG=[
+  {v:'2.11.1',d:'Jul 2026',n:['Page transitions now work on every browser — ones without native support get a lightweight fade fallback']},
+  {v:'2.11.0',d:'Jul 2026',n:['Birth Plan: the hospital/patient details and Signatures cards are gone — just the preferences and their reasoning now','The six numbered steps collapse like the Labor stages, each titled with its number, name, and preference count','Clearer wording throughout the Birth Plan']},
+  {v:'2.10.0',d:'Jul 2026',n:['Warning signs joined the bottom menu; the Baby tracker moved here to Settings','Text size, theme, calm sounds, and resets all live here now, in a reorganized layout','Checklist items sit in alternating rows with their pills on a second line — and a packed item tucks its pills and description away','Tapping a jump chip makes its category glow for two seconds; the menu is a touch smaller; quiet buttons are better defined']},
   {v:'2.9.0',d:'Jul 2026',n:['The screen stays awake while timing a contraction, and a new Focus mode turns the Labor page into one giant one-handed button','Jump-to-category chips and a back-to-top button on the checklist, notes on any item via the little pencil, and a countdown chip in the header ("T−42 days", then "Day 6 with baby")','Packing the very last item earns a proper celebration','Tracker: 7-day mini-charts for feeds, wet diapers, and sleep','Your text-size choice now applies on every page; topic-heavy pages get Expand/Collapse-all; long pages show a reading-progress line; the installed app icon badges overdue items','Fixed: page headers now stay pinned while you scroll (they had quietly stopped sticking)']},
   {v:'2.8.1',d:'Jul 2026',n:['Header buttons no longer slide off the right edge on pages with long subtitles (Birth Plan especially) — checked every page at narrow widths','Fixed the doubled ✕ overlapping the match count in the search field','"Clear filters" no longer squishes into the Nice-to-have chip — the row scrolls sideways instead','Bottom-bar pills sized to fit 360px phones exactly']},
   {v:'2.8.0',d:'Jul 2026',n:['Topics now ease open and closed, with the content fading in; the chevron sits in a round tinted chip so it reads as a button','Smooth page transitions: content fades and rises while the header and bottom bar stay still, and the active tab\'s pill glides to the tab you picked','All motion switches off automatically if your phone prefers reduced motion']},
@@ -491,6 +504,45 @@ const LOG=[
 ];
 $('changelog').innerHTML=LOG.map(e=>'<p class="m-0 mb-2"><b class="text-base-content">v'+e.v+'</b> <span class="ink-soft">· '+e.d+'</span><br>'+e.n.map(x=>'· '+x).join('<br>')+'</p>').join('');
 $('verLine').textContent='v'+VERSION;
+
+/* calm womb noise — moved here from the checklist header */
+let calm=null;
+$('calmToggle').addEventListener('click',()=>{
+  const btn=$('calmToggle');
+  if(calm && calm.on){
+    try{ calm.ctx.suspend(); }catch(e){}
+    calm.on=false; btn.textContent='Calm sounds: Off'; btn.setAttribute('aria-pressed','false');
+    toast('Calm sounds off'); return;
+  }
+  try{
+    if(!calm){
+      const Ctx=window.AudioContext||window.webkitAudioContext;
+      const ctx=new Ctx();
+      const len=ctx.sampleRate*12, buf=ctx.createBuffer(1,len,ctx.sampleRate), ch=buf.getChannelData(0);
+      let last=0;
+      for(let i=0;i<len;i++){ const w=Math.random()*2-1; last=(last+0.02*w)/1.02; ch[i]=last*3.5; }
+      const src=ctx.createBufferSource(); src.buffer=buf; src.loop=true;
+      const lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=420; lp.Q.value=0.4;
+      const pulse=ctx.createGain(); pulse.gain.value=1;
+      const lfo=ctx.createOscillator(); lfo.frequency.value=1.05;
+      const depth=ctx.createGain(); depth.gain.value=0.14;
+      lfo.connect(depth); depth.connect(pulse.gain);
+      const master=ctx.createGain(); master.gain.value=0.3;
+      src.connect(lp); lp.connect(pulse); pulse.connect(master); master.connect(ctx.destination);
+      src.start(); lfo.start();
+      calm={ctx,on:false};
+    }
+    calm.ctx.resume(); calm.on=true;
+    btn.textContent='Calm sounds: On'; btn.setAttribute('aria-pressed','true');
+    toast('Calm sounds on — womb-like brown noise');
+  }catch(e){ toast('Audio not available here'); }
+});
+
+/* reset checkmarks only — moved here from the checklist header */
+$('resetChecks').addEventListener('click',()=>{
+  patchState(st=>{ st.checked={}; });
+  toast('Checkmarks cleared — items, notes, and due date kept');
+});
 
 if('serviceWorker' in navigator && location.protocol==='https:'){
   try{
