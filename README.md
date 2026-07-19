@@ -19,6 +19,7 @@ Focus mode, a hardened print layout, and four ways to share.
 | `emergency.html` | POST-BIRTH warning signs, newborn red flags, emergency card. Offline. `noindex`. |
 | `birthplan.html` | Birth preferences in labor order, with the reasoning and the likely hospital answer for each. `noindex`. |
 | `CHANGELOG.md` | Version history. |
+| `ARCHITECTURE.md` | System diagrams (Mermaid): pages, assets, sync, service worker, push. |
 | `assets/` | Precompiled stylesheet (`app.css`) plus two layered stylesheets — `navbar.css` (shared, enlarged bottom tab bar, identical on every page) and `enhance.css` (texture + 3D depth) — confetti, and fonts. No CDN, works fully offline. |
 | `worker/` | Cloudflare Worker sync endpoint (recommended cloud store) + wrangler config. |
 | `manifest.webmanifest` | PWA install metadata (+ Labor shortcut). |

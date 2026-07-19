@@ -36,8 +36,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css" rel="stylesheet">
-<link href="./assets/enhance.css" rel="stylesheet">
+<link href="./assets/navbar.css?v=2.12.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=2.12.0" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -157,7 +157,7 @@ body{
   footer{font-size:9pt}
 }
 </style>
-<script src="./assets/notify.js" defer></script>
+<script src="./assets/notify.js?v=2.12.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-[env(safe-area-inset-bottom)]">
 
@@ -281,7 +281,7 @@ body{
       </div>
       <input type="file" id="fileInput" accept=".json,application/json" hidden>
     </div>
-    <p class="mb-2.5 text-[11px]">Baby List v2.11.1 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a></p>
+    <p class="mb-2.5 text-[11px]">Baby List v2.12.0 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a></p>
     <p class="mb-2.5">Follows AAP and CPSC safe-sleep guidance, but isn't medical advice. Confirm anything health-related with your pediatrician.</p>
     <details class="topic" style="--topic-a:var(--color-primary)">
       <summary>How saving, sharing &amp; cloud sync work</summary>
@@ -831,7 +831,8 @@ DATA.forEach(cat=>{
     const b=el('button','btn btn-xs h-8 rounded-full font-bold flex-none gap-1.5 border-transparent');
     b.type='button';
     b.style.cssText='background:var(--c-'+cat.id+'-t);color:var(--c-'+cat.id+')';
-    b.innerHTML='<span class="[&>svg]:w-[13px] [&>svg]:h-[13px]">'+ICONS[cat.icon]+'</span>'+cat.name;
+    b.innerHTML='<span style="display:inline-flex">'+ICONS[cat.icon]+'</span>'+cat.name;
+    const cicon=b.querySelector('svg'); if(cicon){ cicon.setAttribute('width',13); cicon.setAttribute('height',13); }
     b.addEventListener('click',()=>{
       const s=document.querySelector('.cat[data-cat="'+cat.id+'"]'); if(!s) return;
       const hdr=document.querySelector('header.navbar');
@@ -908,9 +909,9 @@ function makeRow(cat,it){
   if(it.lo===0&&it.hi===0&&!it._custom) pr.classList.add('text-primary');
   lab.append(input,main,pr);
   wrap.append(lab);
-  const nb=el('button','nbtn btn btn-ghost btn-sm flex-none w-9 px-0 ink-soft self-center opacity-70');
-  nb.type='button'; nb.setAttribute('aria-label','Note for '+it.n); nb.title='Add a note';
-  nb.innerHTML='<svg class="w-[14px] h-[14px]" viewBox="0 0 24 24" fill="none"><path d="M4 20l4.2-1 11-11a2 2 0 000-2.8l-1.4-1.4a2 2 0 00-2.8 0l-11 11L4 20z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>';
+  const nb=el('button','nbtn btn btn-ghost btn-sm flex-none px-0 ink-soft self-center opacity-70');
+  nb.type='button'; nb.style.width='2.25rem'; nb.setAttribute('aria-label','Note for '+it.n); nb.title='Add a note';
+  nb.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20l4.2-1 11-11a2 2 0 000-2.8l-1.4-1.4a2 2 0 00-2.8 0l-11 11L4 20z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>';
   nb.addEventListener('click',(e)=>{ e.preventDefault(); e.stopPropagation();
     let ed=wrap.querySelector('.nedit');
     if(ed){ ed.remove(); return; }
@@ -1046,8 +1047,8 @@ function readyCard(total){
   const o=el('div','fixed inset-0 z-50 grid place-items-center p-6'); o.id='readyCard';
   o.style.cssText='background:color-mix(in oklab, var(--color-base-200) 62%, transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)';
   o.innerHTML='<div class="card bg-base-100 border border-primary/60 shadow-xl max-w-sm w-full"><div class="card-body p-6 text-center gap-2">'+
-    '<div class="text-[46px] leading-none">\uD83C\uDF89</div>'+
-    '<h2 class="font-display font-semibold text-[24px] m-0">You\'re ready.</h2>'+
+    '<div style="font-size:46px;line-height:1">\uD83C\uDF89</div>'+
+    '<h2 class="font-display font-semibold m-0" style="font-size:24px">You\'re ready.</h2>'+
     '<p class="m-0 text-[13.5px] ink-soft leading-relaxed">Every single item is packed — all <b class="text-base-content">'+total+' of '+total+'</b>. The list is done. All that\'s left is the good part: meeting them.</p>'+
     '<button class="btn btn-primary font-extrabold mt-2 w-full" type="button">\uD83D\uDC9B</button>'+
     '</div></div>';

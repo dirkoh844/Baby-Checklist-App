@@ -36,8 +36,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css" rel="stylesheet">
-<link href="./assets/enhance.css" rel="stylesheet">
+<link href="./assets/navbar.css?v=2.12.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=2.12.0" rel="stylesheet">
 <script>
 addEventListener('DOMContentLoaded',function(){
   if(!window.__cssMissing) return;
@@ -111,7 +111,7 @@ body{
 .pane[hidden]{display:none}
 @media print{ *{background:#fff!important;color:#000!important} #tabNav,#toastWrap,.icobtns,.seg{display:none!important} .pane[hidden]{display:block!important} .card{border:1pt solid #999!important;page-break-inside:avoid} }
 </style>
-<script src="./assets/notify.js" defer></script>
+<script src="./assets/notify.js?v=2.12.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
@@ -242,7 +242,18 @@ body{
         <p class="m-0 text-[12.5px] ink-soft leading-relaxed mb-1">Under 3 months, a newborn can go from fine to very sick quickly, and the early signs are quiet.</p>
       <details class="topic" style="--topic-a:var(--color-error)">
         <summary>Fever: 100.4 °F (38 °C)+ rectal — go now</summary>
-        <div class="topic-body ink-soft"><p>A rectal temperature of <b class="text-base-content">100.4 F (38 C) or higher, under 3 months, is an emergency</b>. Do not give fever medicine first. Do not re-check in an hour to see if it drops. Do not wait for a callback. Under 3 months, take the temperature rectally, not in the ear or armpit.</p></div>
+        <div class="topic-body ink-soft"><p>A rectal temperature of <b class="text-base-content">100.4 F (38 C) or higher, under 3 months, is an emergency</b>. Do not give fever medicine first. Do not re-check in an hour to see if it drops. Do not wait for a callback. Under 3 months, take the temperature rectally, not in the ear or armpit.</p>
+          <svg class="diagram" viewBox="0 0 340 64" role="img" aria-label="Thermometer showing the emergency line at 100.4 degrees Fahrenheit, 38 Celsius: anything at or past that line, under 3 months old, means go to the ER now" style="color:var(--ink-soft)">
+            <circle cx="26" cy="30" r="11" fill="var(--color-error)"/>
+            <rect x="32" y="24" width="286" height="12" rx="6" fill="color-mix(in oklab, currentColor 16%, transparent)"/>
+            <rect x="32" y="24" width="176" height="12" rx="6" fill="var(--color-error)"/>
+            <line x1="208" y1="12" x2="208" y2="48" stroke="var(--color-error)" stroke-width="2" stroke-dasharray="3 3"/>
+            <g fill="currentColor" font-weight="800" font-size="9">
+              <text x="60" y="16">97°</text><text x="130" y="16">99°</text>
+              <text x="214" y="16" fill="var(--color-error)">100.4 °F / 38 °C</text>
+              <text x="170" y="59" fill="var(--color-error)" text-anchor="middle">at or past this line → ER now</text>
+            </g>
+          </svg></div>
       </details>
       <details class="topic" style="--topic-a:var(--color-error)">
         <summary>Breathing trouble: grunting, flaring, blue lips</summary>
@@ -272,7 +283,23 @@ body{
       </details>
       <details class="topic" style="--topic-a:var(--color-warning)">
         <summary>Too few wet diapers (under 6 a day)</summary>
-        <div class="topic-body ink-soft"><p>After the first week, fewer than <b class="text-base-content">6 wet diapers in 24 hours</b>, or no wet diaper at all for 6 to 8 hours. The tracker counts this for you and warns.</p></div>
+        <div class="topic-body ink-soft"><p>After the first week, fewer than <b class="text-base-content">6 wet diapers in 24 hours</b>, or no wet diaper at all for 6 to 8 hours. The tracker counts this for you and warns.</p>
+          <svg class="diagram" viewBox="0 0 340 92" role="img" aria-label="Wet diapers climb with age: about 1 on day one, 2 on day two, 3 on day three, 4 on day four, then 6 or more every day from day five on" style="color:var(--ink-soft)">
+            <line x1="16" y1="66" x2="324" y2="66" stroke="currentColor" stroke-width="1.2" opacity=".5"/>
+            <g fill="color-mix(in oklab, var(--color-info) 60%, transparent)">
+              <rect x="30" y="57" width="40" height="9" rx="2.5"/>
+              <rect x="90" y="48" width="40" height="18" rx="2.5"/>
+              <rect x="150" y="39" width="40" height="27" rx="2.5"/>
+              <rect x="210" y="30" width="40" height="36" rx="2.5"/>
+            </g>
+            <rect x="270" y="12" width="40" height="54" rx="2.5" fill="var(--color-info)"/>
+            <g fill="currentColor" font-weight="800" font-size="9" text-anchor="middle">
+              <text x="50" y="52">1</text><text x="110" y="43">2</text><text x="170" y="34">3</text><text x="230" y="25">4</text>
+              <text x="290" y="8" fill="var(--color-info)">6+</text>
+              <g opacity=".75"><text x="50" y="80">day 1</text><text x="110" y="80">day 2</text><text x="170" y="80">day 3</text><text x="230" y="80">day 4</text><text x="290" y="80">day 5+</text></g>
+              <text x="170" y="91" opacity=".7" font-size="8">wet diapers per 24 hours — under the bar for the age, call</text>
+            </g>
+          </svg></div>
       </details>
       <details class="topic" style="--topic-a:var(--color-warning)">
         <summary>Not back to birth weight by 2 weeks</summary>
@@ -356,6 +383,19 @@ body{
           <summary>Losing weight at first</summary>
           <div class="topic-body ink-soft">
             <p>Babies normally lose up to about 7–10% of their birth weight in the first days, then climb back to it by around two weeks. Your pediatrician tracks this at the early visits.</p>
+            <svg class="diagram" viewBox="0 0 340 92" role="img" aria-label="Normal newborn weight curve: dips about 7 to 10 percent below birth weight around day 3 to 5, then climbs back to birth weight by about two weeks" style="color:var(--ink-soft)">
+              <line x1="20" y1="30" x2="324" y2="30" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3" opacity=".55"/>
+              <path d="M24 30 Q80 62 118 58 Q200 50 300 26" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round"/>
+              <circle cx="24" cy="30" r="4" fill="var(--color-primary)"/>
+              <circle cx="110" cy="58" r="4" fill="var(--color-warning)"/>
+              <circle cx="300" cy="26" r="4" fill="var(--color-primary)"/>
+              <g fill="currentColor" font-weight="800" font-size="9">
+                <text x="24" y="18">birth weight</text>
+                <text x="80" y="78" fill="var(--color-warning)">low point · day 3–5 (−7–10%)</text>
+                <text x="226" y="14" fill="var(--color-primary)">back by ~2 weeks</text>
+                <g opacity=".7" text-anchor="middle"><text x="24" y="90">birth</text><text x="110" y="90">day 4</text><text x="300" y="90">week 2</text></g>
+              </g>
+            </svg>
           </div>
         </details>
       </div>

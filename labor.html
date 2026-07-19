@@ -35,8 +35,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css" rel="stylesheet">
-<link href="./assets/enhance.css" rel="stylesheet">
+<link href="./assets/navbar.css?v=2.12.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=2.12.0" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -116,7 +116,7 @@ body{
   h1,h2,h3{page-break-after:avoid}
 }
 </style>
-<script src="./assets/notify.js" defer></script>
+<script src="./assets/notify.js?v=2.12.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-[env(safe-area-inset-bottom)]">
 
@@ -186,6 +186,28 @@ body{
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
     <div class="card-body p-4 gap-1.5">
       <h2 class="font-display font-semibold text-[17.5px] m-0 text-info">Stages, at a glance</h2>
+      <svg class="diagram" viewBox="0 0 340 72" role="img" aria-label="The path of labor: early labor to 6 centimeters at home, active labor to the hospital, transition to 10 centimeters, pushing and birth, then the golden hour" style="color:var(--ink-soft)">
+        <line x1="24" y1="30" x2="316" y2="30" stroke="currentColor" stroke-width="1.6" opacity=".45"/>
+        <g font-weight="800" text-anchor="middle">
+          <circle cx="34" cy="30" r="11" fill="var(--color-info)"/>
+          <text x="34" y="34" font-size="11" fill="var(--color-info-content)">1</text>
+          <circle cx="104" cy="30" r="11" fill="var(--color-info)"/>
+          <text x="104" y="34" font-size="11" fill="var(--color-info-content)">2</text>
+          <circle cx="174" cy="30" r="11" fill="var(--color-info)"/>
+          <text x="174" y="34" font-size="11" fill="var(--color-info-content)">3</text>
+          <circle cx="244" cy="30" r="11" fill="var(--color-info)"/>
+          <text x="244" y="34" font-size="11" fill="var(--color-info-content)">4</text>
+          <circle cx="314" cy="30" r="11" fill="var(--color-primary)"/>
+          <text x="314" y="34" font-size="11" fill="var(--color-primary-content)">5</text>
+          <g fill="currentColor" font-size="8.5">
+            <text x="34" y="56">Early</text><text x="34" y="66" opacity=".75">to ~6 cm · home</text>
+            <text x="104" y="56">Active</text><text x="104" y="66" opacity=".75">5-1-1 · go in</text>
+            <text x="174" y="56">Transition</text><text x="174" y="66" opacity=".75">to 10 cm</text>
+            <text x="244" y="56">Pushing</text><text x="244" y="66" opacity=".75">birth</text>
+            <text x="314" y="56" fill="var(--color-primary)">Golden hr</text><text x="314" y="66" opacity=".75">skin-to-skin</text>
+          </g>
+        </g>
+      </svg>
       <details class="topic" style="--topic-a:var(--color-info)">
         <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">1</span>Early labor — 5–20 min apart · stay home</summary>
         <div class="topic-body ink-soft"><p>Contractions 5–20 min apart, mild and irregular; cervix to ~6 cm. Often hours (or a day). Home is usually the place: rest, eat light, hydrate, shower.</p></div>

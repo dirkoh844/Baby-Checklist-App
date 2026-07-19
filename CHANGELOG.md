@@ -1,5 +1,59 @@
 # Baby List — Changelog
 
+## v2.12.0 — July 2026
+- **Seven new diagrams.** Stomach size by day (cherry → walnut → egg), the
+  four swaddle folds, three burping holds, and a first-year milestone strip on
+  Upbringing; a thermometer with the 100.4 °F emergency line, the wet-diaper
+  ladder (1/day → 6+/day), and the normal weight dip-and-recover curve on
+  Warning signs. All inline SVG — theme-aware, offline, screen-reader
+  labeled. The app now carries 12 diagrams.
+
+## v2.11.8 — July 2026
+- **Spacing.** More room between each checklist item's price and its note
+  pencil.
+
+## v2.11.7 — July 2026
+- **Removed the reading-progress bar** that ran under the header on long
+  reference pages.
+
+## v2.11.6 — July 2026
+- **Solid stage circles.** The path-of-labor diagram's numbered circles are now
+  solid fills with high-contrast numbers instead of semi-transparent rings.
+
+## v2.11.5 — July 2026
+- **Fixed the stray tick next to prices.** The note-pencil button on each
+  checklist row was rendering collapsed (its icon sizing classes weren't in
+  the precompiled stylesheet), leaving only a 2px border sliver — the "awkward
+  line" beside every price. It now renders as a proper 36px pencil button, so
+  the notes feature is actually visible for the first time. Audited every
+  script-injected element for the same failure; also fixed the jump-chip icon
+  sizing and the celebration card's heading sizes.
+
+## v2.11.4 — July 2026
+- **Three new diagrams.** A labor-path diagram on the Labor page (five numbered
+  stops from Early labor at home to the golden hour, with cm markers), a
+  hunger-cues sequence inside Upbringing's feeding topic (rooting → hands to
+  mouth → crying = late), and a tummy-time build-up chart (20 → 30 → 60
+  minutes) above the age table. All inline SVG — theme-aware and offline.
+- **Removed** the crisis-outreach callout and support-lines note from the
+  Upbringing mental-health section. The hotline buttons remain on the Warning
+  signs page.
+
+## v2.11.3 — July 2026
+- **Beveled menu buttons.** Every tab pill in the bottom menu has a visible
+  bevel at rest — ring, catch-light, and faint fill — not just the active one.
+- **Edge-to-edge chrome.** The menu's background extends to the physical
+  bottom of the screen (through the home-indicator area) and the header's
+  extends to the physical top, so bounce-scrolling never shows page content
+  above the header or below the menu.
+
+## v2.11.2 — July 2026
+- **Fresh styles arrive with fresh pages.** After a deploy, the app could show
+  the new version number with the previous release's styling for one launch —
+  pages update network-first while stylesheets served cache-first. Asset links
+  are now versioned (`?v=`), so new HTML always pulls matching CSS/JS on the
+  very first load. If your app ever looked "not updated," this was why.
+
 ## v2.11.1 — July 2026
 - **Transitions on every browser.** Browsers without cross-document view
   transitions (Firefox, older iOS Safari) previously navigated with no

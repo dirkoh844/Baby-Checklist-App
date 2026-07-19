@@ -34,8 +34,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css" rel="stylesheet">
-<link href="./assets/enhance.css" rel="stylesheet">
+<link href="./assets/navbar.css?v=2.12.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=2.12.0" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -108,7 +108,7 @@ body{
 
 @media print{ *{background:#fff!important;color:#000!important} #tabNav{display:none!important} }
 </style>
-<script src="./assets/notify.js" defer></script>
+<script src="./assets/notify.js?v=2.12.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
@@ -248,7 +248,7 @@ const $=id=>document.getElementById(id);
 let toastTimer=null;
 function toast(m){ const w=$('toastWrap'); $('toast').textContent=m; w.classList.remove('hidden'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),1900); }
 
-const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.11.1';
+const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.12.0';
 function loadState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):null; }catch(e){ return null; } }
 function patchState(fn){
   try{
@@ -476,6 +476,14 @@ $('babyReset').addEventListener('click',async()=>{
 
 /* ---------- what's new ---------- */
 const LOG=[
+  {v:'2.12.0',d:'Jul 2026',n:['Seven new diagrams: stomach size by day, the four swaddle folds, three burping holds, a first-year milestone strip, the fever thermometer line, the wet-diaper ladder, and the newborn weight dip-and-recover curve']},
+  {v:'2.11.8',d:'Jul 2026',n:['A little more space between each item\'s price and its note pencil']},
+  {v:'2.11.7',d:'Jul 2026',n:['Removed the reading-progress line under the header on long pages']},
+  {v:'2.11.6',d:'Jul 2026',n:['The path-of-labor circles are now solid with crisp numbers']},
+  {v:'2.11.5',d:'Jul 2026',n:['Fixed the stray vertical tick beside each checklist price — it was the note-pencil button rendering collapsed; the pencil is now a real, visible button']},
+  {v:'2.11.4',d:'Jul 2026',n:['New diagrams: the path of labor (five numbered stops), the hunger-cue sequence, and a tummy-time build-up chart','Removed the crisis-outreach callout from Upbringing (the hotline buttons stay on Warning signs)']},
+  {v:'2.11.3',d:'Jul 2026',n:['Every bottom-menu button wears a visible bevel','The menu background now runs to the very bottom of the screen, and the header\'s runs to the very top — no page content peeks past them when scrolling bounces']},
+  {v:'2.11.2',d:'Jul 2026',n:['Updates now apply fully on the first launch — new pages always load their matching styles instead of last release\'s cached ones']},
   {v:'2.11.1',d:'Jul 2026',n:['Page transitions now work on every browser — ones without native support get a lightweight fade fallback']},
   {v:'2.11.0',d:'Jul 2026',n:['Birth Plan: the hospital/patient details and Signatures cards are gone — just the preferences and their reasoning now','The six numbered steps collapse like the Labor stages, each titled with its number, name, and preference count','Clearer wording throughout the Birth Plan']},
   {v:'2.10.0',d:'Jul 2026',n:['Warning signs joined the bottom menu; the Baby tracker moved here to Settings','Text size, theme, calm sounds, and resets all live here now, in a reorganized layout','Checklist items sit in alternating rows with their pills on a second line — and a packed item tucks its pills and description away','Tapping a jump chip makes its category glow for two seconds; the menu is a touch smaller; quiet buttons are better defined']},
