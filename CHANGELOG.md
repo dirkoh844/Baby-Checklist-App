@@ -1,5 +1,63 @@
 # Baby List — Changelog
 
+## v2.9.0 — July 2026
+- **The screen stays awake during labor.** Timing a contraction (or turning on
+  the new Focus mode) holds a screen wake lock, so the phone can't sleep
+  mid-contraction. Re-acquired automatically when you switch back to the app.
+- **Labor Focus mode.** One tap on "Focus" hides everything but a giant
+  contraction button and the three stats — a one-handed 3 a.m. layout. Same
+  button exits.
+- **Jump to any category.** A scrollable row of colored category chips above
+  the checklist, plus a floating back-to-top button.
+- **Text size applies everywhere.** The checklist's Aa setting now carries to
+  every page, including Warning signs.
+- **A real finish line.** Packing the final item now triggers a triple confetti
+  volley and a "You're ready." card with the full count.
+- **Notes on any item.** The little pencil on each row saves a note ("borrowed
+  from Sarah", "the blue one") that syncs and shares with the list.
+- **Countdown in the header.** "T−42 days" before the due date, "Day 6 with
+  baby" after the birth date is set.
+- **Tracker trends.** Three 7-day mini-charts — feeds, wet diapers, sleep
+  hours — so a slow day stands out at a glance.
+- **Expand / collapse all.** Pages with many topics (Warning signs, Birth Plan,
+  Upbringing, Labor) get one-tap controls for all topics at once.
+- **App icon badge.** The installed app's icon shows how many "by this week"
+  items are still unpacked (Badging API, where supported).
+- **Reading progress.** A thin accent line under the header tracks how far
+  through the long reference pages you are.
+- **Fixed: sticky headers.** A texture-layer rule had been silently overriding
+  `position:sticky` since v2.5 — headers scrolled away with the page instead of
+  pinning. They stick again on every page.
+
+## v2.8.1 — July 2026
+- **Header icons can no longer fall off the screen.** Pages with long
+  subtitles (Birth Plan especially) pushed the warning/theme buttons past the
+  right edge; titles now truncate instead, and the checklist keeps its full
+  two-line subtitle. Audited every page at narrow and normal widths — no
+  element sits off-screen anywhere.
+- **Search field double-✕ fixed.** The browser's built-in search-clear ✕ was
+  drawn on top of the "N items" match counter; it's hidden now — the app's own
+  clear button does that job.
+- **Clear filters no longer collides with the chips.** The Show row scrolls
+  sideways instead of squishing "Nice to have" into the Clear filters button.
+- **Nav pills fit narrow phones.** The enlarged tab pills capped to their
+  column so the first and last can't poke past the screen edge at 360px.
+
+## v2.8.0 — July 2026
+- **Animated topics.** Collapsible topic cards now ease open and closed (pure
+  CSS via `::details-content` + `interpolate-size`; browsers without support
+  open instantly as before), and the body content fades in as it expands.
+- **More readable topic cards.** The chevron now sits in a visible round chip
+  tinted with the topic's accent so it reads as a control; an accent divider
+  separates title from content when open; titles wrap balanced; keyboard focus
+  gets a clear ring; opening a topic near the sticky header no longer hides it.
+- **Page transitions.** Moving between pages now runs a cross-document view
+  transition: the old page fades, the new content rises in, and the header and
+  bottom bar stay perfectly still — while the active tab's colored pill glides
+  from the old tab to the one you picked. Tab icons also get a small press
+  bounce. Pure CSS (`@view-transition`); unsupported browsers navigate
+  instantly, and reduced-motion turns it all off.
+
 ## v2.7.0 — July 2026
 - **Birth Plan joins the collapse pass.** The old "Hide explanations" toggle is
   gone. Every preference stays visible; its reasoning now lives in a

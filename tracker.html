@@ -174,6 +174,7 @@ body.night #tabNav .nt[aria-current="page"] .np{background:#2A1013!important;box
         </div>
       </div>
       <div class="flex gap-2 justify-center flex-wrap text-[12px] font-bold mt-1" id="today"></div>
+      <div id="spark" class="grid grid-cols-3 gap-2 mt-1.5"></div>
     </div>
   </section>
 
@@ -446,11 +447,46 @@ function warnings(){
 
 /* ---------- render ---------- */
 let nurse=null;   /* {side, start} */
+/* 7-day sparklines: feeds, wet diapers, sleep hours. One accent per series,
+   today's bar solid, earlier days tinted; aria-labels carry the numbers. */
+function sparkTile(vals,color,label,unit){
+  const mx=Math.max(1,...vals);
+  let bars='';
+  vals.forEach((v,i)=>{
+    const h=v?Math.max(4,Math.round(v/mx*30)):2;
+    const fill=(i===vals.length-1)?color:'color-mix(in oklab, '+color+' 45%, transparent)';
+    bars+='<rect x="'+(i*14.3+1.6)+'" y="'+(34-h)+'" width="11" height="'+h+'" rx="2" fill="'+fill+'"/>';
+  });
+  const disp=unit==='h'?(Math.round(vals[vals.length-1]*10)/10):vals[vals.length-1];
+  return '<div class="rounded-xl pt-2 pb-1.5 px-1.5 text-center" style="background:var(--color-base-200)">'+
+    '<div class="text-[9.5px] tracking-[.07em] uppercase ink-soft font-extrabold">'+label+'</div>'+
+    '<svg viewBox="0 0 100 34" class="w-full h-8 mt-0.5" role="img" aria-label="'+label+', last 7 days: '+vals.map(v=>unit==='h'?Math.round(v*10)/10:v).join(', ')+'">'+bars+'</svg>'+
+    '<div class="text-[10px] ink-soft font-bold">today '+disp+(unit==='h'?' h':'')+'</div></div>';
+}
+function renderSpark(){
+  const box=$('spark'); if(!box) return;
+  const days=[];
+  for(let i=6;i>=0;i--){ const d=new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()-i); days.push(d.getTime()); }
+  const idx=t=>{ for(let i=days.length-1;i>=0;i--){ if(t>=days[i]) return i; } return -1; };
+  const feeds=new Array(7).fill(0), wets=new Array(7).fill(0), sleep=new Array(7).fill(0);
+  (S.log||[]).forEach(e=>{
+    const i=idx(e.at||e.u||0); if(i<0) return;
+    if(e.t==='feed') feeds[i]++;
+    else if(e.t==='diaper' && e.w) wets[i]++;
+    else if(e.t==='sleep' && e.e){ sleep[i]+=Math.max(0,(e.e-(e.at||e.u))/36e5); }
+  });
+  box.innerHTML=
+    sparkTile(feeds,'var(--color-primary)','Feeds','')+
+    sparkTile(wets,'var(--color-info)','Wet','')+
+    sparkTile(sleep.map(v=>Math.round(v*10)/10),'var(--color-accent)','Sleep','h');
+}
+
 function render(){
   const started=!!S.born;
   $('bornCard').classList.toggle('hidden',started);
   ['heroCard','nurseCard','logCard','histCard'].forEach(id=>$(id).classList.toggle('hidden',!started));
   if(!started) return;
+  renderSpark();
 
   const dol=dayOfLife();
   $('dol').textContent='Day '+dol+' of life';

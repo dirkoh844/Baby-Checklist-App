@@ -138,6 +138,7 @@ body{
     <div class="card-body p-4 gap-2">
       <div class="flex items-center gap-2">
         <h2 class="font-display font-semibold text-[17.5px] m-0 text-primary flex-1">Contraction timer</h2>
+        <button id="ctFocus" type="button" class="btn btn-xs rounded-full btn-soft btn-primary font-bold" aria-pressed="false">Focus</button>
         <button id="ctCopy" type="button" class="btn btn-xs rounded-full border-base-300 font-bold">Copy log</button>
         <button id="ctClear" type="button" class="btn btn-xs rounded-full border-base-300 font-bold">Clear</button>
       </div>
@@ -307,14 +308,39 @@ function ctRender(){
     list.append(row);
   });
 }
+/* Screen wake lock: the phone must not sleep while a contraction is being
+   timed, or while Focus mode is on. Re-acquired when the tab comes back. */
+let wl=null;
+async function wlOn(){
+  if(wl || !('wakeLock' in navigator)) return;
+  try{ wl=await navigator.wakeLock.request('screen'); wl.addEventListener('release',()=>{ wl=null; }); }catch(e){}
+}
+function wlOff(){
+  if(ct.active || document.body.classList.contains('ctfocus')) return; /* still needed */
+  try{ wl && wl.release(); }catch(e){}
+  wl=null;
+}
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible' && (ct.active || document.body.classList.contains('ctfocus'))) wlOn();
+});
+
+/* Focus mode: a giant one-handed timer — everything else steps aside */
+$('ctFocus').addEventListener('click',()=>{
+  const on=document.body.classList.toggle('ctfocus');
+  $('ctFocus').textContent=on?'Exit focus':'Focus';
+  $('ctFocus').setAttribute('aria-pressed',on);
+  if(on){ wlOn(); window.scrollTo({top:0,behavior:'auto'}); } else wlOff();
+  buzz(8);
+});
+
 $('ctBtn').addEventListener('click',()=>{
   const now=Date.now();
-  if(!ct.active){ ct.active=now; buzz(10); }
+  if(!ct.active){ ct.active=now; buzz(10); wlOn(); }
   else{
     const dur=Math.max(1,(now-ct.active)/1000);
     ct.log.push({start:ct.active,dur});
     if(ct.log.length>200) ct.log=ct.log.slice(-200);
-    ct.active=null; buzz([10,30,10]);
+    ct.active=null; buzz([10,30,10]); wlOff();
   }
   ctSave(); ctRender();
 });

@@ -143,7 +143,7 @@ body{
   @page{margin:14mm}
   *,*::before,*::after{background:#ffffff!important;color:#000000!important;box-shadow:none!important;text-shadow:none!important}
   html,body{background:#ffffff!important;background-image:none!important;font-family:Georgia,"Times New Roman",serif!important;font-size:12.5pt!important;line-height:1.45}
-  .navbar,.icobtns,#searchWrap,#phasebar,#toolbar,#sortbar,#tierbar,#legend,#donext,.foot-actions,.dn-date,.del,.add-area,#budget,.toast,.stamp,#smatch,#tabNav,#storageWarn,#installBanner,#syncDot{display:none!important}
+  .navbar,.icobtns,#searchWrap,#phasebar,#toolbar,#sortbar,#tierbar,#legend,#donext,.foot-actions,.dn-date,.del,.add-area,#budget,.toast,.stamp,#smatch,#tabNav,#storageWarn,#installBanner,#syncDot,#jumpbar,#toTop,#dueChip,.nbtn,.nedit{display:none!important}
   h1,h2,h3,h4,h5,h6,.cat-head{page-break-after:avoid;break-after:avoid}
   .cat,.item-wrap{page-break-inside:avoid;break-inside:avoid}
   .cat{border:1pt solid #999!important;border-radius:0!important;margin-top:10pt;padding:6pt 10pt;display:block!important}
@@ -168,6 +168,7 @@ body{
       <h1 class="font-display font-semibold text-[22px] leading-tight m-0">
         Newborn <em class="italic font-medium text-secondary">Essentials</em>
         <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1 h-3.5">Pediatrician-aligned · tap to pack</span>
+        <span id="dueChip" class="badge badge-secondary badge-soft badge-xs font-extrabold mt-1.5 hidden"></span>
       </h1>
       <div class="icobtns flex gap-1.5 flex-none items-center"><span id="syncDot" class="hidden w-2 h-2 rounded-full mr-0.5" role="status"></span>
         <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70" id="sizeBtn" type="button" aria-label="Change text size"><span class="font-display font-semibold text-sm">Aa</span></button>
@@ -260,6 +261,8 @@ body{
     <span class="inline-flex items-center gap-1.5"><span class="badge badge-neutral badge-xs font-extrabold uppercase">mine</span>your item</span>
   </div>
 
+  <div class="flex gap-1.5 overflow-x-auto mt-3 pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" id="jumpbar" role="navigation" aria-label="Jump to category"></div>
+
 
   <main id="list"></main>
 
@@ -278,7 +281,7 @@ body{
       </div>
       <input type="file" id="fileInput" accept=".json,application/json" hidden>
     </div>
-    <p class="mb-2.5 text-[11px]">Baby List v2.7.0 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a></p>
+    <p class="mb-2.5 text-[11px]">Baby List v2.9.0 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a></p>
     <p class="mb-2.5">Follows AAP and CPSC safe-sleep guidance, but isn't medical advice. Confirm anything health-related with your pediatrician.</p>
     <details class="topic" style="--topic-a:var(--color-primary)">
       <summary>How saving, sharing &amp; cloud sync work</summary>
@@ -286,6 +289,8 @@ body{
     </details>
   </footer>
 </div>
+
+<button id="toTop" type="button" class="btn btn-circle btn-sm bg-base-100/90 border border-base-300 shadow-lg fixed right-3 z-40 hidden" style="bottom:calc(env(safe-area-inset-bottom) + 96px)" aria-label="Back to top"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M12 19V5m0 0l-6 6m6-6l6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 
 <nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
   <div class="max-w-[640px] mx-auto grid grid-cols-7">
@@ -484,7 +489,7 @@ function mergeLogs(a,b){
 }
 function snapshot(){
   return Object.assign({},passthrough,{checked:state.checked,collapsed:state.collapsed,hidePacked:state.hidePacked,due:state.due,who:state.who,
-    custom:state.custom,sort:state.sort,dark:state.dark,sizeIdx:state.sizeIdx,hideNotes:state.hideNotes,
+    custom:state.custom,notes:state.notes,sort:state.sort,dark:state.dark,sizeIdx:state.sizeIdx,hideNotes:state.hideNotes,
     sync:state.sync,importedShare:state.importedShare,tier:state.tier,phase:state.phase,cloud:state.cloud,themeV:2,savedAt:new Date().toISOString()});
 }
 let cloudTimer=null, cloudOK=null, pendingLocal=false, pendingCloud=false;
@@ -568,6 +573,8 @@ function applyState(saved,skipWho){
   state.due=(typeof saved.due==='string'&&saved.due)?saved.due:null;
   if(!skipWho && typeof saved.who==='string' && saved.who) setWho(saved.who);
   state.custom=saved.custom||{};
+  state.notes=(saved.notes&&typeof saved.notes==='object')?saved.notes:{};
+  state.bornRaw=(typeof saved.born==='string')?saved.born:null;
   if(saved.sort) state.sort=saved.sort;
   if(saved.themeV===2){ if(typeof saved.dark==='boolean') state.dark=saved.dark; } else state.dark=true;
   if(typeof saved.sizeIdx==='number') state.sizeIdx=saved.sizeIdx;
@@ -698,6 +705,9 @@ function mergeIncoming(their){
     });
   });
   if(!state.due && typeof their.due==='string' && their.due){ state.due=their.due; changed=true; }
+  if(their.notes && typeof their.notes==='object'){
+    for(const k in their.notes){ if(!state.notes[k] && their.notes[k]){ state.notes[k]=their.notes[k]; changed=true; } }
+  }
   return changed;
 }
 
@@ -814,11 +824,51 @@ DATA.forEach(cat=>{
   list.append(sec);
 });
 
+/* ---------- quick-jump chips + back-to-top ---------- */
+(function(){
+  const jb=$('jumpbar'); if(!jb) return;
+  DATA.forEach(cat=>{
+    const b=el('button','btn btn-xs h-8 rounded-full font-bold flex-none gap-1.5 border-transparent');
+    b.type='button';
+    b.style.cssText='background:var(--c-'+cat.id+'-t);color:var(--c-'+cat.id+')';
+    b.innerHTML='<span class="[&>svg]:w-[13px] [&>svg]:h-[13px]">'+ICONS[cat.icon]+'</span>'+cat.name;
+    b.addEventListener('click',()=>{
+      const s=document.querySelector('.cat[data-cat="'+cat.id+'"]'); if(!s) return;
+      const hdr=document.querySelector('header.navbar');
+      const y=s.getBoundingClientRect().top+window.scrollY-(hdr?hdr.getBoundingClientRect().height:0)-8;
+      window.scrollTo({top:Math.max(0,y),behavior:RM?'auto':'smooth'});
+    });
+    jb.append(b);
+  });
+  const tt=$('toTop');
+  addEventListener('scroll',()=>{ tt.classList.toggle('hidden',scrollY<600); },{passive:true});
+  tt.addEventListener('click',()=>window.scrollTo({top:0,behavior:RM?'auto':'smooth'}));
+})();
+
+/* ---------- due-date / baby-age chip in the header ---------- */
+function setDueChip(){
+  const c=$('dueChip'); if(!c) return;
+  let txt=null;
+  if(state.bornRaw){
+    const b=Date.parse(state.bornRaw);
+    if(!isNaN(b) && b<=Date.now()){ txt='Day '+(Math.floor((Date.now()-b)/864e5)+1)+' with baby'; }
+  }
+  if(!txt){
+    const p=preg();
+    if(p){
+      txt = p.days>0 ? 'T\u2212'+p.days+' day'+(p.days===1?'':'s')
+          : p.days===0 ? 'Due today'
+          : (Math.abs(p.days)<=21 ? 'Due '+(-p.days)+'d ago' : null);
+    }
+  }
+  c.textContent=txt||''; c.classList.toggle('hidden',!txt);
+}
+
 /* ---------- item rows ---------- */
 const tierBadge={1:'badge badge-error badge-xs font-extrabold uppercase',2:'badge badge-warning badge-outline badge-xs font-extrabold uppercase',3:'badge badge-info badge-soft badge-xs font-extrabold uppercase'};
 const tierText={1:'must',2:'important',3:'nice'};
 function makeRow(cat,it){
-  const wrap=el('div','item-wrap group flex items-stretch');
+  const wrap=el('div','item-wrap group flex items-stretch flex-wrap');
   wrap.dataset.id=it._id;
   const lab=el('label','item flex-1 min-w-0 flex items-start gap-3 py-3 px-2 -mx-2 rounded-xl cursor-pointer transition-opacity hover:bg-base-200/60');
   const input=document.createElement('input');
@@ -845,11 +895,31 @@ function makeRow(cat,it){
     nt.textContent=it.note; main.append(nt);
   }
   const st=el('span','stamp block text-[11.5px] text-primary font-bold mt-0.5 empty:hidden'); main.append(st);
+  const noteEl=el('div','unote text-[12px] italic font-semibold mt-0.5 empty:hidden');
+  noteEl.style.color='var(--cat-a)'; noteEl.textContent=(state.notes&&state.notes[it._id])||''; main.append(noteEl);
   const pr=el('span','it-price flex-none text-[13.5px] font-extrabold whitespace-nowrap mt-0.5 tabular-nums self-start');
   pr.textContent=money(it.lo,it.hi,it._custom);
   if(it.lo===0&&it.hi===0&&!it._custom) pr.classList.add('text-primary');
   lab.append(input,main,pr);
   wrap.append(lab);
+  const nb=el('button','nbtn btn btn-ghost btn-sm flex-none w-9 px-0 ink-soft self-center opacity-70');
+  nb.type='button'; nb.setAttribute('aria-label','Note for '+it.n); nb.title='Add a note';
+  nb.innerHTML='<svg class="w-[14px] h-[14px]" viewBox="0 0 24 24" fill="none"><path d="M4 20l4.2-1 11-11a2 2 0 000-2.8l-1.4-1.4a2 2 0 00-2.8 0l-11 11L4 20z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>';
+  nb.addEventListener('click',(e)=>{ e.preventDefault(); e.stopPropagation();
+    let ed=wrap.querySelector('.nedit');
+    if(ed){ ed.remove(); return; }
+    ed=el('div','nedit flex gap-2 w-full mt-1 mb-1');
+    ed.innerHTML='<input class="input input-sm input-bordered bg-base-100 flex-1 min-w-0 font-semibold text-[16px]" maxlength="140" placeholder="Add a note — brand, who\'s lending it, where it is…" aria-label="Note">'+
+      '<button class="btn btn-sm btn-primary font-extrabold" type="button">Save</button>';
+    const inp=ed.querySelector('input'); inp.value=(state.notes&&state.notes[it._id])||'';
+    const saveN=()=>{ const v=inp.value.trim();
+      if(v) state.notes[it._id]=v; else delete state.notes[it._id];
+      noteEl.textContent=v; persist(); ed.remove(); if(v) toast('Note saved'); };
+    ed.querySelector('button').addEventListener('click',saveN);
+    inp.addEventListener('keydown',ev=>{ if(ev.key==='Enter'){ ev.preventDefault(); saveN(); } });
+    wrap.append(ed); inp.focus();
+  });
+  wrap.append(nb);
   if(it._custom){
     const del=el('button','del btn btn-ghost btn-sm flex-none w-10 px-0 ink-soft hover:text-error');
     del.type='button'; del.setAttribute('aria-label','Remove '+it.n);
@@ -888,7 +958,7 @@ function preg(){
 function update(){
   const hide=state.hidePacked, q=searchTerm.trim().toLowerCase(), tier=state.tier, phase=state.phase||'all';
   const pg=preg(), curWeek=pg?pg.week:null;
-  let gPacked=0,gTotal=0,gRemLo=0,gRemHi=0,gPackedVal=0,gMatches=0;
+  let gPacked=0,gTotal=0,gRemLo=0,gRemHi=0,gPackedVal=0,gMatches=0,gHot=0;
   DATA.forEach(cat=>{
     const sec=list.querySelector('.cat[data-cat="'+cat.id+'"]');
     let cShown=0,cPacked=0,cRemLo=0,cRemHi=0,hasVisible=false;
@@ -911,6 +981,7 @@ function update(){
       const wkEl=wrap.querySelector('.wk');
       if(wkEl){
         const hot=!isChecked && curWeek!==null && typeof it.wk==='number' && it.wk<=curWeek+1;
+        if(hot) gHot++;
         wkEl.classList.toggle('badge-warning',hot); wkEl.classList.toggle('badge-ghost',!hot);
       }
       wrap.classList.toggle('hidden',!visible);
@@ -953,7 +1024,9 @@ function update(){
   $('packedVal').textContent=gPackedVal>0?('≈$'+Math.round(gPackedVal)+' packed'):'';
   const complete=gTotal>0 && gPacked===gTotal;
   document.body.classList.toggle('complete',complete);
-  if(complete && !wasComplete && !q && tier==='all' && phase==='all') celebrate();
+  if('setAppBadge' in navigator){ try{ gHot?navigator.setAppBadge(gHot):navigator.clearAppBadge(); }catch(e){} }
+  setDueChip();
+  if(complete && !wasComplete && !q && tier==='all' && phase==='all') celebrate(gTotal);
   wasComplete=complete;
   document.body.classList.toggle('searching',!!q);
   $('smatch').textContent=q? gMatches+(gMatches===1?' item':' items') : '';
@@ -962,12 +1035,28 @@ function update(){
 }
 
 /* ---------- celebration (canvas-confetti with offline fallback) ---------- */
-function celebrate(){
+function readyCard(total){
+  if($('readyCard')) return;
+  const o=el('div','fixed inset-0 z-50 grid place-items-center p-6'); o.id='readyCard';
+  o.style.cssText='background:color-mix(in oklab, var(--color-base-200) 62%, transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)';
+  o.innerHTML='<div class="card bg-base-100 border border-primary/60 shadow-xl max-w-sm w-full"><div class="card-body p-6 text-center gap-2">'+
+    '<div class="text-[46px] leading-none">\uD83C\uDF89</div>'+
+    '<h2 class="font-display font-semibold text-[24px] m-0">You\'re ready.</h2>'+
+    '<p class="m-0 text-[13.5px] ink-soft leading-relaxed">Every single item is packed — all <b class="text-base-content">'+total+' of '+total+'</b>. The list is done. All that\'s left is the good part: meeting them.</p>'+
+    '<button class="btn btn-primary font-extrabold mt-2 w-full" type="button">\uD83D\uDC9B</button>'+
+    '</div></div>';
+  o.querySelector('button').addEventListener('click',()=>o.remove());
+  o.addEventListener('click',e=>{ if(e.target===o) o.remove(); });
+  document.body.append(o);
+}
+function celebrate(total){
   buzz([20,50,20,50,40]);
+  readyCard(total||96);
   if(RM) return;
   if(window.confetti){
-    confetti({particleCount:90,spread:75,origin:{y:.75}});
-    setTimeout(()=>{ confetti({particleCount:45,angle:60,spread:60,origin:{x:0,y:.8}}); confetti({particleCount:45,angle:120,spread:60,origin:{x:1,y:.8}}); },220);
+    confetti({particleCount:110,spread:80,origin:{y:.72}});
+    setTimeout(()=>{ confetti({particleCount:55,angle:60,spread:60,origin:{x:0,y:.8}}); confetti({particleCount:55,angle:120,spread:60,origin:{x:1,y:.8}}); },220);
+    setTimeout(()=>{ confetti({particleCount:70,spread:100,startVelocity:38,origin:{y:.3}}); },520);
     return;
   }
   const colors=['#7DD3BC','#F5AD7E','#F2CB6C','#AEB9FF','#F794B8'];

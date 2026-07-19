@@ -238,7 +238,7 @@ const $=id=>document.getElementById(id);
 let toastTimer=null;
 function toast(m){ const w=$('toastWrap'); $('toast').textContent=m; w.classList.remove('hidden'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),1900); }
 
-const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.7.0';
+const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.9.0';
 function loadState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):null; }catch(e){ return null; } }
 function patchState(fn){
   try{
@@ -466,6 +466,9 @@ $('babyReset').addEventListener('click',async()=>{
 
 /* ---------- what's new ---------- */
 const LOG=[
+  {v:'2.9.0',d:'Jul 2026',n:['The screen stays awake while timing a contraction, and a new Focus mode turns the Labor page into one giant one-handed button','Jump-to-category chips and a back-to-top button on the checklist, notes on any item via the little pencil, and a countdown chip in the header ("T−42 days", then "Day 6 with baby")','Packing the very last item earns a proper celebration','Tracker: 7-day mini-charts for feeds, wet diapers, and sleep','Your text-size choice now applies on every page; topic-heavy pages get Expand/Collapse-all; long pages show a reading-progress line; the installed app icon badges overdue items','Fixed: page headers now stay pinned while you scroll (they had quietly stopped sticking)']},
+  {v:'2.8.1',d:'Jul 2026',n:['Header buttons no longer slide off the right edge on pages with long subtitles (Birth Plan especially) — checked every page at narrow widths','Fixed the doubled ✕ overlapping the match count in the search field','"Clear filters" no longer squishes into the Nice-to-have chip — the row scrolls sideways instead','Bottom-bar pills sized to fit 360px phones exactly']},
+  {v:'2.8.0',d:'Jul 2026',n:['Topics now ease open and closed, with the content fading in; the chevron sits in a round tinted chip so it reads as a button','Smooth page transitions: content fades and rises while the header and bottom bar stay still, and the active tab\'s pill glides to the tab you picked','All motion switches off automatically if your phone prefers reduced motion']},
   {v:'2.7.0',d:'Jul 2026',n:['Birth Plan: the Hide-explanations toggle is gone — each preference stays visible with its reasoning in a tap-to-expand "Why, for the doctor" topic beneath it','Labor stages are numbered 1–5 so the sequence reads at a glance','Every button is 3D now, including the checklist footer grid and the Call 911 button']},
   {v:'2.6.0',d:'Jul 2026',n:['Long reference pages are now scannable: every text block is a tap-to-expand topic whose title tells you what\'s inside before you open it','New diagrams: the 5-1-1 contraction pattern on Labor, the ABCs of safe sleep on Upbringing, and a stool color guide on Warning signs','You can no longer scroll or bounce past the bottom menu, and every page ends the same distance above it','Slightly larger, looser text inside topics for easier reading']},
   {v:'2.5.3',d:'Jul 2026',n:['New "How you\'re really doing" section on Upbringing: baby blues vs postpartum depression, when to call, and guidance for partners — with crisis numbers one tap away','New "Most of this is normal" guide on the Warning signs page: cluster feeding, funny breathing, newborn skin, surprising diapers, and more — each with a clear "call if" line','Long reference sections now use tap-to-expand topic buttons so you can open just what you need']},
