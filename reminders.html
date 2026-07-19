@@ -142,8 +142,14 @@ body{
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4">
     <div class="card-body p-4 gap-1.5 text-[13px] leading-relaxed">
       <h2 class="font-display font-semibold text-[16.5px] m-0 text-info">How delivery works</h2>
-      <p class="m-0"><b class="text-base-content">Push on</b> means reminders arrive even with the app fully closed — a repo workflow checks every 15 minutes and sends what's due in this phone's timezone. Push needs Cloud sync (<a class="link link-primary font-bold" href="./settings.html">set up in Settings</a>) and, on iPhone, the app added to the Home Screen.</p>
-      <p class="m-0 ink-soft">Without push, reminders fire while this app is open or installed and running, with a 3-hour catch-up when reopened.</p>
+      <details class="topic" style="--topic-a:var(--color-info)">
+        <summary>With Push on: arrives even when the app is closed</summary>
+        <div class="topic-body ink-soft"><p>A repo workflow checks every 15 minutes and sends what's due in this phone's timezone. Push needs Cloud sync (<a class="link link-primary font-bold" href="./settings.html">set up in Settings</a>) and, on iPhone, the app added to the Home Screen.</p></div>
+      </details>
+      <details class="topic" style="--topic-a:var(--color-info)">
+        <summary>Without push: only while the app is open</summary>
+        <div class="topic-body ink-soft"><p>Reminders fire while this app is open or installed and running, with a 3-hour catch-up when reopened.</p></div>
+      </details>
     </div>
   </section>
 

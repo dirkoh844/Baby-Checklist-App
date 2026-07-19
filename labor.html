@@ -157,12 +157,26 @@ body{
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-gold">
     <div class="card-body p-4 gap-2">
       <h2 class="font-display font-semibold text-[17.5px] m-0 text-accent">When to head in</h2>
-      <div class="rounded-xl p-3 text-[13.5px] font-semibold leading-relaxed" style="background:var(--color-base-200);border-left:3px solid var(--color-accent)">
-        <b class="text-accent">The 5-1-1 rule</b> — contractions every <b>5 minutes</b>, lasting <b>1 minute</b>, for <b>1 hour</b>. That pattern usually means active labor: call your provider and go. Your OB may give you different numbers (4-1-1 is common for second babies) — theirs win.
-      </div>
-      <div class="rounded-xl p-3 text-[13.5px] font-semibold leading-relaxed" style="background:var(--color-base-200);border-left:3px solid var(--color-error)">
-        <b class="text-error">Call right away, any time,</b> for: water breaking (note the time and color — green or brown means say so), heavy bleeding, severe headache or vision changes, noticeably reduced baby movement, fever, or regular contractions before 37 weeks.
-      </div>
+      <svg class="diagram" viewBox="0 0 340 74" role="img" aria-label="The 5-1-1 pattern: contractions lasting one minute, five minutes apart, continuing for one hour" style="color:var(--ink-soft)">
+        <line x1="10" y1="46" x2="330" y2="46" stroke="currentColor" stroke-width="1.4" opacity=".5"/>
+        <g fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round">
+          <path d="M22 46 q9 -26 18 0"/><path d="M92 46 q9 -26 18 0"/><path d="M162 46 q9 -26 18 0"/><path d="M232 46 q9 -26 18 0"/><path d="M302 46 q9 -26 18 0"/>
+        </g>
+        <g fill="currentColor" font-family="inherit" font-weight="700" font-size="9.5">
+          <text x="31" y="14" text-anchor="middle" fill="var(--color-accent)">1 min long</text>
+          <path d="M40 46 h52" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3" opacity=".7"/>
+          <text x="66" y="60" text-anchor="middle">5 min apart</text>
+          <text x="170" y="72" text-anchor="middle" opacity=".85">… repeating for 1 hour → call, then go</text>
+        </g>
+      </svg>
+      <details class="topic" style="--topic-a:var(--color-accent)">
+        <summary>The 5-1-1 rule — when it's time to go</summary>
+        <div class="topic-body ink-soft"><p>Contractions every <b class="text-base-content">5 minutes</b>, lasting <b class="text-base-content">1 minute</b>, for <b class="text-base-content">1 hour</b>. That pattern usually means active labor: call your provider and go. Your OB may give you different numbers (4-1-1 is common for second babies) — theirs win.</p></div>
+      </details>
+      <details class="topic" style="--topic-a:var(--color-error)">
+        <summary>Call right away, any time — the 6 exceptions</summary>
+        <div class="topic-body ink-soft"><p>Water breaking (note the time and color — green or brown means say so), heavy bleeding, severe headache or vision changes, noticeably reduced baby movement, fever, or regular contractions before 37 weeks.</p></div>
+      </details>
       <p class="text-[12px] ink-soft m-0">General guidance, not medical advice. When unsure, call — Labor &amp; Delivery lines answer 24/7 and would rather hear from you.</p>
     </div>
   </section>
@@ -171,13 +185,26 @@ body{
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
     <div class="card-body p-4 gap-1.5">
       <h2 class="font-display font-semibold text-[17.5px] m-0 text-info">Stages, at a glance</h2>
-      <div class="text-[13.5px] leading-relaxed space-y-2 mt-1">
-        <p class="m-0"><b class="text-base-content">Early labor</b> <span class="ink-soft">— contractions 5–20 min apart, mild and irregular; cervix to ~6 cm. Often hours (or a day). Home is usually the place: rest, eat light, hydrate, shower.</span></p>
-        <p class="m-0"><b class="text-base-content">Active labor</b> <span class="ink-soft">— stronger, ~3–5 min apart, about a minute long; this is the 5-1-1 zone and hospital time.</span></p>
-        <p class="m-0"><b class="text-base-content">Transition</b> <span class="ink-soft">— the most intense and usually the shortest; contractions 2–3 min apart to full 10 cm.</span></p>
-        <p class="m-0"><b class="text-base-content">Pushing &amp; birth</b> <span class="ink-soft">— minutes to a few hours, guided by your team.</span></p>
-        <p class="m-0"><b class="text-base-content">Placenta + golden hour</b> <span class="ink-soft">— delivery of the placenta, then skin-to-skin and the first feed. Say it's in your birth plan.</span></p>
-      </div>
+      <details class="topic" style="--topic-a:var(--color-info)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">1</span>Early labor — 5–20 min apart · stay home</summary>
+        <div class="topic-body ink-soft"><p>Contractions 5–20 min apart, mild and irregular; cervix to ~6 cm. Often hours (or a day). Home is usually the place: rest, eat light, hydrate, shower.</p></div>
+      </details>
+      <details class="topic" style="--topic-a:var(--color-info)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">2</span>Active labor — 3–5 min apart · hospital time</summary>
+        <div class="topic-body ink-soft"><p>Stronger, ~3–5 min apart, about a minute long; this is the 5-1-1 zone and hospital time.</p></div>
+      </details>
+      <details class="topic" style="--topic-a:var(--color-info)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">3</span>Transition — 2–3 min apart · shortest, most intense</summary>
+        <div class="topic-body ink-soft"><p>The most intense and usually the shortest; contractions 2–3 min apart to full 10 cm.</p></div>
+      </details>
+      <details class="topic" style="--topic-a:var(--color-info)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">4</span>Pushing &amp; birth — minutes to a few hours</summary>
+        <div class="topic-body ink-soft"><p>Minutes to a few hours, guided by your team.</p></div>
+      </details>
+      <details class="topic" style="--topic-a:var(--color-info)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">5</span>Placenta &amp; the golden hour — skin-to-skin</summary>
+        <div class="topic-body ink-soft"><p>Delivery of the placenta, then skin-to-skin and the first feed. Say it's in your birth plan.</p></div>
+      </details>
     </div>
   </section>
 

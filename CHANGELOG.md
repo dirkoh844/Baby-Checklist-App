@@ -1,5 +1,61 @@
 # Baby List — Changelog
 
+## v2.7.0 — July 2026
+- **Birth Plan joins the collapse pass.** The old "Hide explanations" toggle is
+  gone. Every preference stays visible; its reasoning now lives in a
+  tap-to-expand "Why, for the doctor" topic beneath it ("— plus a heads-up"
+  flags the ones with a caution). The five-decisions list and badge legend
+  collapse too; the nurse-summary card stays open. Printing still expands
+  everything.
+- **Numbered labor stages.** The five stage topics on the Labor page now carry
+  1–5 chips so the sequence reads at a glance.
+- **Every button is 3D now.** The soft/tinted buttons (the checklist's footer
+  grid — Copy list, Save to file, Print list…, timer chips, hotline rows) and
+  the remaining solid colors (Call 911) get the same glossy raised-cap
+  treatment and press as the primary buttons.
+
+## v2.6.0 — July 2026
+- **Tap-to-expand everywhere.** Every purely-text block across the app is now a
+  collapsed topic with a title that tells you what's inside before you open it
+  ("Active labor — 3–5 min apart · hospital time", "Fever: 100.4 °F (38 °C)+
+  rectal — go now"). Long pages read as scannable lists of headings; sections
+  with controls, tables, or diagrams stay open. 50+ topics converted. Topics
+  auto-expand for printing (CSS + a beforeprint fallback in notify.js).
+- **Three new diagrams.** A 5-1-1 contraction-pattern timeline on the Labor
+  page, an ABCs-of-safe-sleep crib illustration (Alone · on the Back · in an
+  empty Crib) on Upbringing, and a stool color guide with swatches inside the
+  Warning signs diaper topic. All inline SVG/HTML — theme-aware, offline, no
+  image files.
+- **Can't scroll past the bottom bar.** Overscroll rubber-banding is disabled
+  and every page's content now gets the same clearance above the tab bar, so
+  the last card always scrolls fully clear — previously some pages under- or
+  over-padded and the page could bounce past the menu.
+- **Readability.** Topic titles and body text sized up slightly with looser
+  line spacing.
+
+## v2.5.3 — July 2026
+- **Postpartum mental health.** The Upbringing page now has a "How you're really
+  doing" section: baby blues vs. postpartum depression/anxiety, a plain "call
+  your provider if…" list, and guidance for partners and support people — plus
+  the crisis numbers (988, Maternal Mental Health Hotline, PSI) one tap away.
+  The Warning signs page gains a matching "Your mind counts too" entry beside
+  its existing hotlines.
+- **"Is this normal?" for newborns.** A calming companion to the baby red flags:
+  cluster feeding and the witching hour, funny breathing and hiccups, newborn
+  skin and crossed eyes, surprising diapers, loud sleep and spit-up, and early
+  weight loss — each with a clear "…but call if" line. Fewer 3 a.m. spirals.
+- **Tap-to-expand topics.** Long reference sections now use expandable topic
+  buttons so you can scan headings and open just what you need. Keyboard- and
+  screen-reader-friendly, and they open automatically when you print.
+
+## v2.5.2 — July 2026
+- **Consistent header height.** The top bar no longer jumps ~12px between pages.
+  Some subpage subtitles (e.g. "When to go · timer · contacts") wrapped to two
+  lines while others stayed on one; every header breadcrumb is now pinned to a
+  single line, so the bar is the same height on every page. The full text still
+  shows on normal phones and ellipsizes gracefully only on very narrow screens.
+  (The bottom tab bar was already identical across pages.)
+
 ## v2.5.1 — July 2026
 - **Satisfying checkboxes.** Packing an item now feels physical: empty boxes are
   recessed into the row, checked boxes lift out as a raised, glossy fill, and

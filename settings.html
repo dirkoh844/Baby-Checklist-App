@@ -143,10 +143,14 @@ body{
         <input id="cloudUrl" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="https://… endpoint URL" aria-label="Sync endpoint URL">
         <input id="cloudKey" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="Token or access key" aria-label="Sync access key">
         <button id="cloudConnect" type="button" class="btn btn-sm btn-primary font-extrabold w-full">Connect</button>
-        <div class="text-[11.5px] ink-soft leading-relaxed rounded-xl p-3 mt-1" style="background:var(--color-base-200)">
-          <p class="m-0 mb-1.5"><b class="text-base-content">Cloudflare Worker (recommended)</b> — free, nothing expires, and the list cannot be read without the token. Deploy <code class="text-[11px]">worker/baby-list-worker.js</code>, then paste the workers.dev URL plus your TOKEN.</p>
-          <p class="m-0"><b class="text-base-content">JSONBin.io</b> — free account, private bins, no auto-deletion. Paste <code class="text-[11px]">https://api.jsonbin.io/v3/b/YOUR_BIN_ID</code> and an <b class="text-base-content">Access Key</b> with read + update, not your Master Key. The free allowance is 10,000 requests total, so it fits light use.</p>
-        </div>
+        <details class="topic" style="--topic-a:var(--color-info)">
+          <summary>Option A — Cloudflare Worker (recommended, free)</summary>
+          <div class="topic-body ink-soft"><p>Free, nothing expires, and the list cannot be read without the token. Deploy <code class="text-[11px]">worker/baby-list-worker.js</code>, then paste the workers.dev URL plus your TOKEN.</p></div>
+        </details>
+        <details class="topic" style="--topic-a:var(--color-info)">
+          <summary>Option B — JSONBin.io (free account)</summary>
+          <div class="topic-body ink-soft"><p>Free account, private bins, no auto-deletion. Paste <code class="text-[11px]">https://api.jsonbin.io/v3/b/YOUR_BIN_ID</code> and an <b class="text-base-content">Access Key</b> with read + update, not your Master Key. The free allowance is 10,000 requests total, so it fits light use.</p></div>
+        </details>
         <button id="cloudCreate" type="button" class="btn btn-xs btn-ghost w-full font-bold">Quick throwaway store (JSONBlob: public, deleted after 75 idle days)</button>
       </div>
     </div>
@@ -198,7 +202,12 @@ body{
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-green">
     <div class="card-body p-4 gap-2">
       <h2 class="font-display font-semibold text-[17.5px] m-0 text-primary">What's new</h2>
-      <div id="changelog" class="text-[13px] leading-relaxed"></div>
+      <details class="topic" style="--topic-a:var(--color-primary)">
+        <summary>Version history — every release, newest first</summary>
+        <div class="topic-body">
+          <div id="changelog" class="text-[13px] leading-relaxed"></div>
+        </div>
+      </details>
       <p class="text-[11px] ink-soft m-0">Full history in CHANGELOG.md in the repo.</p>
     </div>
   </section>
@@ -229,7 +238,7 @@ const $=id=>document.getElementById(id);
 let toastTimer=null;
 function toast(m){ const w=$('toastWrap'); $('toast').textContent=m; w.classList.remove('hidden'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),1900); }
 
-const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.5.1';
+const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.7.0';
 function loadState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):null; }catch(e){ return null; } }
 function patchState(fn){
   try{
@@ -457,6 +466,10 @@ $('babyReset').addEventListener('click',async()=>{
 
 /* ---------- what's new ---------- */
 const LOG=[
+  {v:'2.7.0',d:'Jul 2026',n:['Birth Plan: the Hide-explanations toggle is gone — each preference stays visible with its reasoning in a tap-to-expand "Why, for the doctor" topic beneath it','Labor stages are numbered 1–5 so the sequence reads at a glance','Every button is 3D now, including the checklist footer grid and the Call 911 button']},
+  {v:'2.6.0',d:'Jul 2026',n:['Long reference pages are now scannable: every text block is a tap-to-expand topic whose title tells you what\'s inside before you open it','New diagrams: the 5-1-1 contraction pattern on Labor, the ABCs of safe sleep on Upbringing, and a stool color guide on Warning signs','You can no longer scroll or bounce past the bottom menu, and every page ends the same distance above it','Slightly larger, looser text inside topics for easier reading']},
+  {v:'2.5.3',d:'Jul 2026',n:['New "How you\'re really doing" section on Upbringing: baby blues vs postpartum depression, when to call, and guidance for partners — with crisis numbers one tap away','New "Most of this is normal" guide on the Warning signs page: cluster feeding, funny breathing, newborn skin, surprising diapers, and more — each with a clear "call if" line','Long reference sections now use tap-to-expand topic buttons so you can open just what you need']},
+  {v:'2.5.2',d:'Jul 2026',n:['The top bar is now the same height on every page — page subtitles no longer wrap to a second line on some pages and not others']},
   {v:'2.5.1',d:'Jul 2026',n:['Checkboxes feel physical now: empty ones sit recessed, checked ones lift out with a glossy fill and a little spring','Each category’s accent spine brightens as you pack it and blazes when it’s complete','Labor contraction button is now an arcade-style cap that gently pulses while a contraction is timing; Labor and Tracker stat tiles lift as raised glass','A slow, subtle mesh gradient drifts behind the header (frozen if you prefer reduced motion)']},
   {v:'2.5.0',d:'Jul 2026',n:['New tactile look on every page: cards lift off the surface with soft shadows and a glossy sheen, category accents become glowing 3D spines, and a fine grain texture warms the background','Frosted-glass header and tab bar, recessed input fields, and a real press on every button — works in both dark and light','Bottom menu is now bigger and identical everywhere: ~20% larger tap targets, easier to press','Labor page: the contraction timer now sits above the "When to head in" card']},
   {v:'2.4.3',d:'Jul 2026',n:['Notifications ask as the app opens instead of waiting for the Enable button (asked once per session; Safari and Firefox retry on your first tap)','Bigger touch targets: taller tab bar, larger header icon buttons, labels that scale with the screen']},
