@@ -47,3 +47,19 @@
 
   ask();
 })();
+
+/* Print support for <details class="topic"> accordions: open all collapsed
+   topics before printing so nothing is hidden on paper, then restore. */
+(function () {
+  var opened = [];
+  window.addEventListener('beforeprint', function () {
+    opened = [];
+    document.querySelectorAll('details.topic:not([open])').forEach(function (d) {
+      d.setAttribute('open', ''); opened.push(d);
+    });
+  });
+  window.addEventListener('afterprint', function () {
+    opened.forEach(function (d) { d.removeAttribute('open'); });
+    opened = [];
+  });
+})();

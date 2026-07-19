@@ -37,3 +37,33 @@
 
 /* Comfortable minimum hit area for the whole tab (icon + label). */
 #tabNav .nt{ min-height:56px; }
+
+/* ============================================================================
+   SCROLL CONTAINMENT — you can't scroll past the bar
+   ----------------------------------------------------------------------------
+   1) overscroll-behavior stops the page rubber-banding beyond its edges (the
+      "scrolled past the menu" feel on touch devices).
+   2) Every page's main content wrapper gets the SAME bottom clearance, sized
+      to the enlarged bar + safe area, so the last card always scrolls fully
+      clear of the bar on every page (some pages under- or over-padded). */
+html, body{ overscroll-behavior-y:none; }
+body{ padding-bottom:0 !important; }
+body > .w-full{ padding-bottom:calc(8rem + env(safe-area-inset-bottom, 0px)) !important; }
+
+/* ============================================================================
+   TOP HEADER — uniform height across pages
+   ----------------------------------------------------------------------------
+   The sticky header (`header.navbar`) jumped ~12px between pages: subpages with
+   a longer breadcrumb subtitle (e.g. "WHEN TO GO · TIMER · CONTACTS") plus a
+   back button wrapped to two lines, while shorter ones stayed on one. Pin every
+   header subtitle to a single line so the bar is the same height everywhere.
+   Full text shows on normal phones; on very narrow screens it ellipsizes
+   gracefully instead of changing the header height. The checklist page's own
+   two-line title (`Newborn / Essentials`) lives in the <em>, not this <span>,
+   so it is unaffected. */
+header.navbar h1 > span{
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
