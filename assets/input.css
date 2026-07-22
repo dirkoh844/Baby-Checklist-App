@@ -8,6 +8,7 @@
 @source "../birthplan.html";
 @source "../tracker.html";
 @source "../emergency.html";
+@source "../sources.html";
 
 @font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:swap;src:url('./fonts/fraunces-latin-opsz-normal.woff2') format('woff2-variations');}
 @font-face{font-family:'Fraunces';font-style:italic;font-weight:100 900;font-display:swap;src:url('./fonts/fraunces-latin-opsz-italic.woff2') format('woff2-variations');}
@@ -17,11 +18,10 @@
 /* ============ Touch targets: bottom tab bar + header icon buttons ============
    Plain CSS, deliberately unlayered so it outranks the Tailwind utilities on
    the elements themselves without touching the markup.
-   Tab labels are viewport-scaled: "Upbringing" is the widest of the seven and
-   a fixed 10px overflows a 1/7 column below ~390px, so clamp() grows the label
-   with the screen and holds the floor on small phones.
+   Tab labels are viewport-scaled so the five stage-aware destinations retain
+   readable labels without crowding narrow phones.
 
-   NOTE: as of v2.5.0 the bottom tab bar is owned at runtime by the standalone
+   The bottom tab bar is owned at runtime by the standalone
    `assets/navbar.css` (loaded on every page after app.css), which sets the
    enlarged ~20% tap targets below with !important. These values are kept in
    sync so the Tailwind source is not misleading, but navbar.css is the source

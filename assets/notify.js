@@ -1,52 +1,6 @@
-/* Ask for notification permission the moment the app opens, instead of waiting
-   for the user to find the "Enable notifications" button on the Schedule page.
-
-   Chrome/Edge honour a request made without a user gesture. Safari throws and
-   Firefox resolves 'default' immediately, so those browsers get one retry on
-   the first tap/keypress anywhere in the app — still no button hunt.
-
-   Asked at most once per session: this is a multi-page app, so an unguarded
-   request would re-fire on every tab change, and repeated dismissals make
-   Chrome auto-block the origin. */
-(function () {
-  if (!('Notification' in window)) return;          /* iOS Safari outside an installed PWA */
-  if (Notification.permission !== 'default') return; /* already granted or denied */
-
-  var KEY = 'notif-asked';
-  try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
-
-  var EVENTS = ['pointerdown', 'keydown', 'touchend'];
-  var armed = false;
-
-  function mark() { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} }
-  function announce(p) {
-    try { document.dispatchEvent(new CustomEvent('notif-permission', { detail: p })); } catch (e) {}
-  }
-  function onGesture() { disarm(); ask(); }
-  function arm() {
-    if (armed || Notification.permission !== 'default') return;
-    armed = true;  /* one retry only — never loop the prompt */
-    EVENTS.forEach(function (t) { document.addEventListener(t, onGesture, { once: true, capture: true }); });
-  }
-  function disarm() {
-    EVENTS.forEach(function (t) { document.removeEventListener(t, onGesture, { capture: true }); });
-  }
-
-  function ask() {
-    var t0 = Date.now(), req;
-    try { req = Notification.requestPermission(); }
-    catch (e) { arm(); return; }                       /* Safari: gesture required */
-    if (!req || typeof req.then !== 'function') { announce(Notification.permission); return; }
-    req.then(function (p) {
-      announce(p);
-      if (p !== 'default') { mark(); return; }         /* answered */
-      if (Date.now() - t0 < 150) { arm(); return; }    /* too fast for a human: the call was ignored */
-      mark();                                          /* prompt was shown and dismissed — leave them alone */
-    }).catch(function () { arm(); });
-  }
-
-  ask();
-})();
+/* Notification permission is requested only from the explicit controls on the
+   Reminders page. Browsers increasingly require a user gesture, and an
+   unexplained launch-time prompt harms both trust and grant rates. */
 
 /* Print support for <details class="topic"> accordions: open all collapsed
    topics before printing so nothing is hidden on paper, then restore. */
@@ -64,20 +18,19 @@
   });
 })();
 
-/* App-wide text size: apply the size chosen on the checklist (Aa button) to
-   every page. Same storage key, same zoom levels. */
+/* App-wide text size marker. Shared CSS can enlarge readable text without
+   scaling fixed navigation or creating horizontal overflow. */
 (function () {
   try {
     var st = JSON.parse(localStorage.getItem('newborn-checklist-v3') || '{}');
-    var z = [1, 1.12, 1.25][st.sizeIdx || 0] || 1;
-    if (z > 1) document.body.style.zoom = z;
+    document.documentElement.dataset.textSize = String(Math.max(0, Math.min(2, st.sizeIdx || 0)));
   } catch (e) {}
 })();
 
 /* Expand-all / collapse-all: injected on pages with many collapsible topics. */
 (function () {
   var topics = document.querySelectorAll('details.topic');
-  if (topics.length < 6) return;
+  if (topics.length < 6 || document.body.dataset.page === 'emergency') return;
   var wrap = document.querySelector('body > .w-full');
   if (!wrap) return;
   var bar = document.createElement('div');
@@ -104,6 +57,7 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.body.classList.add('novt');
   document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var a = e.target.closest('a[href]');
     if (!a || a.target || a.hasAttribute('download')) return;
     var url; try { url = new URL(a.href, location.href); } catch (err) { return; }
