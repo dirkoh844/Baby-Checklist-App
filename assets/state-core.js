@@ -10,6 +10,10 @@
   const SCHEMA = 4;
   const MAX_DOC_BYTES = 512 * 1024;
   const MAX_STRING = 2000;
+  /* Generic per-object key cap in scrub(). Must stay ABOVE every domain cap
+     below (checked/notes 3000, tombstones/entities 12000) so those limits stay
+     authoritative; MAX_DOC_BYTES is the real size backstop. */
+  const MAX_KEYS = 20000;
   const MAX_TOMBSTONE_AGE = 365 * 864e5;
   const SHARED_SCALARS = ['due', 'born', 'card'];
   const LOCAL_ONLY = new Set([
@@ -20,6 +24,20 @@
 
   function isObject(v) { return !!v && typeof v === 'object' && !Array.isArray(v); }
   function iso(ms) { return new Date(ms || Date.now()).toISOString(); }
+  /* Byte length in UTF-8, so the size guard matches real payload bytes rather
+     than UTF-16 code units (a multibyte doc is ~2-4x its .length). */
+  function byteLength(str) {
+    if (typeof TextEncoder !== 'undefined') return new TextEncoder().encode(str).length;
+    let b = 0;
+    for (let i = 0; i < str.length; i++) {
+      const c = str.charCodeAt(i);
+      if (c < 0x80) b += 1;
+      else if (c < 0x800) b += 2;
+      else if (c >= 0xd800 && c <= 0xdbff) { b += 4; i++; }
+      else b += 3;
+    }
+    return b;
+  }
   function time(v, fallback) {
     const n = typeof v === 'number' ? v : Date.parse(v || '');
     return Number.isFinite(n) && n > 0 ? n : (fallback || 0);
@@ -40,7 +58,7 @@
     if (Array.isArray(value)) return value.slice(0, 10000).map(v => scrub(v, depth + 1));
     if (!isObject(value)) return null;
     const out = {};
-    Object.keys(value).slice(0, 2000).forEach(k => {
+    Object.keys(value).slice(0, MAX_KEYS).forEach(k => {
       if (safeKey(k)) out[k] = scrub(value[k], depth + 1);
     });
     return out;
@@ -98,7 +116,7 @@
     if (!isObject(raw)) return {};
     let encoded;
     try { encoded = JSON.stringify(raw); } catch (_) { throw new Error('State is not serializable'); }
-    if (encoded.length > MAX_DOC_BYTES) throw new Error('State exceeds 512 KiB');
+    if (byteLength(encoded) > MAX_DOC_BYTES) throw new Error('State exceeds 512 KiB');
     const s = scrub(raw, 0);
     s.checked = limitedMap(s.checked, 3000, v => {
       if (v === true) return { at: 0, by: '' };
@@ -191,18 +209,46 @@
         const own = Math.max(meta.entities[kind][k] || 0,
           kind === 'checked' ? time(v && v.at) : 0,
           kind === 'custom' || kind === 'log' ? time(v && v.u, time(v && v.at)) : 0);
-        return own || fallback;
+        /* A field with no per-field stamp (e.g. data carried across the v2->v3
+           upgrade) is treated as time 0 — the OLDEST possible — NOT the document
+           savedAt. Falling back to savedAt let an unstamped item outrank a real
+           delete tombstone (resurrection) or a genuinely newer remote edit. */
+        return own;
       };
       const lLive = valueTime(localMap, lm, localFallback);
       const rLive = valueTime(remoteMap, rm, remoteFallback);
       const deleted = Math.max(lm.deleted[kind][k] || 0, rm.deleted[kind][k] || 0);
       const live = Math.max(lLive, rLive);
       if (deleted >= live && deleted > 0) return;
+      const hasL = k in (localMap || {}), hasR = k in (remoteMap || {});
       if (rLive > lLive) out[k] = copy(remoteMap[k]);
-      else if (k in (localMap || {})) out[k] = copy(localMap[k]);
-      else if (k in (remoteMap || {})) out[k] = copy(remoteMap[k]);
+      else if (lLive > rLive) out[k] = copy(localMap[k]);
+      else if (hasL && hasR) out[k] = copy(tiebreak(localMap[k], remoteMap[k]));
+      else if (hasL) out[k] = copy(localMap[k]);
+      else if (hasR) out[k] = copy(remoteMap[k]);
     });
     return out;
+  }
+  /* When two values tie on time (e.g. both unstamped pre-upgrade copies), pick
+     a winner SYMMETRICALLY so both devices converge on the same value.
+     Substance beats emptiness first — a fresh device carries due:null/card:{}
+     at time 0, and a plain JSON comparison would let that emptiness beat the
+     family's real data ('null' > '"2026…"' lexicographically). Only between two
+     substantive values does the greater JSON encoding decide. */
+  function emptiness(v) {
+    if (v === null || v === undefined) return 0;
+    if (isObject(v) && Object.keys(v).length === 0) return 1;
+    if (Array.isArray(v) && v.length === 0) return 1;
+    if (v === '') return 1;
+    return 2;
+  }
+  function tiebreak(a, b) {
+    if (same(a, b)) return a;
+    const ea = emptiness(a), eb = emptiness(b);
+    if (ea !== eb) return ea > eb ? a : b;
+    let sa, sb;
+    try { sa = JSON.stringify(a); sb = JSON.stringify(b); } catch (_) { return a; }
+    return sb >= sa ? b : a;
   }
   function mergeStates(localRaw, remoteRaw) {
     const local = sanitizeState(localRaw || {});
@@ -211,8 +257,12 @@
     const lm = normalizeMeta(local._sync), rm = normalizeMeta(remote._sync);
     const lf = time(local.savedAt), rf = time(remote.savedAt);
     SHARED_SCALARS.forEach(k => {
-      const lt = lm.fields[k] || lf, rt = rm.fields[k] || rf;
+      /* Unstamped scalar (pre-upgrade) counts as time 0, so a real remote edit
+         wins and a stale local value can't clobber it via the doc savedAt. On a
+         genuine tie, break deterministically so both devices converge. */
+      const lt = lm.fields[k] || 0, rt = rm.fields[k] || 0;
       if (rt > lt) out[k] = copy(remote[k]);
+      else if (rt === lt && !same(out[k], remote[k])) out[k] = copy(tiebreak(out[k], remote[k]));
     });
     out.checked = mergeMap(local.checked, remote.checked, lm, rm, 'checked', lf, rf);
     out.notes = mergeMap(local.notes, remote.notes, lm, rm, 'notes', lf, rf);

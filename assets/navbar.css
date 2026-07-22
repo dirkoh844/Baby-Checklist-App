@@ -128,7 +128,7 @@ html[data-text-size="1"] #tabNav *,html[data-text-size="2"] #tabNav *,
 html[data-text-size="1"] header.navbar *,html[data-text-size="2"] header.navbar *{ line-height:normal; }
 
 :where(a,button,input,select,summary):focus-visible{
-  outline:3px solid color-mix(in oklab,var(--color-primary) 75%,white);
+  outline:3px solid var(--e-focus, color-mix(in oklab,var(--color-primary) 75%,white));
   outline-offset:2px;
 }
 details.topic > summary{ min-height:44px; }

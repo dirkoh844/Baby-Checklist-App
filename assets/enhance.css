@@ -17,6 +17,9 @@
   --e-grain:     .05;                       /* noise overlay opacity           */
   --e-gloss:     linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0) 42%);
   --e-sheen:     rgba(255,255,255,.16);
+  --e-focus:     color-mix(in oklab, var(--color-primary) 82%, white);  /* luminous ring on dark */
+  /* chart-series tokens: match the app hues; dark pastels already clear 3:1 here */
+  --chart-1:var(--color-primary); --chart-2:var(--color-info); --chart-3:var(--color-accent);
 }
 [data-theme="dawn"]{
   --e-hi:        rgba(255,255,255,.95);
@@ -27,6 +30,11 @@
   --e-grain:     .035;
   --e-gloss:     linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,0) 46%);
   --e-sheen:     rgba(255,255,255,.9);
+  --e-focus:     color-mix(in oklab, var(--color-primary) 72%, black);   /* deep ring, ≥3:1 on cream */
+  /* chart-series tokens: accent is darkened for marks only — #D9A741 is 2.2:1
+     on the light tile surface, below the 3:1 mark floor; text labels stay ink */
+  --chart-1:var(--color-primary); --chart-2:var(--color-info);
+  --chart-3:color-mix(in oklab, var(--color-accent) 62%, black);
 }
 
 /* =============================================================================
@@ -497,9 +505,294 @@ header.navbar{ view-transition-name:app-header; }
 .btn-soft{ border:1px solid color-mix(in oklab, currentColor 30%, transparent) !important; }
 
 /* =============================================================================
+   18) FLAGSHIP POLISH — premium edges, light, spring motion, refined type
+   -----------------------------------------------------------------------------
+   A cohesive lift over the tactile base: crisper card edges with an edge-light,
+   springier press, a living header hairline, refined display type, a single
+   focus ring, richer selected states, and a themed scrollbar. Theme-aware and
+   fully stripped under reduced-motion / print below.
+   ============================================================================= */
+:root{ --e-spring:cubic-bezier(.34,1.4,.5,1); --e-ease:cubic-bezier(.2,.8,.2,1); }
+
+/* Every generic content card reads as one premium material. The checklist's
+   .cat.card keeps its own !important rules; zone cards keep theirs. */
+.card{
+  border-radius:1.1rem;
+  box-shadow:
+    inset 0 1px 0 var(--e-hi-strong),
+    inset 0 0 0 1px color-mix(in oklab, var(--color-base-content) 7%, transparent),
+    0 1px 1px -0.5px var(--e-lo-soft),
+    0 18px 34px -22px var(--e-lo),
+    0 5px 12px -9px var(--e-lo-soft);
+  transition:transform .2s var(--e-spring), box-shadow .25s var(--e-ease);
+}
+@media (hover:hover){
+  .card:hover{
+    box-shadow:
+      inset 0 1px 0 var(--e-hi-strong),
+      inset 0 0 0 1px color-mix(in oklab, var(--color-base-content) 11%, transparent),
+      0 2px 2px -1px var(--e-lo-soft),
+      0 26px 46px -22px var(--e-lo),
+      0 8px 16px -9px var(--e-lo-soft);
+  }
+}
+
+/* Accordions feel like real objects: lift on hover, lift more when open. */
+details.topic{ transition:box-shadow .2s var(--e-ease), border-color .2s ease; }
+@media (hover:hover){
+  details.topic:hover{
+    border-color:color-mix(in oklab, var(--topic-a, var(--color-primary)) 40%, var(--color-base-300));
+    box-shadow:inset 0 1px 0 var(--e-hi), 0 12px 24px -14px var(--e-lo);
+  }
+}
+details.topic[open]{ box-shadow:inset 0 1px 0 var(--e-hi), 0 14px 28px -14px var(--e-lo); }
+
+/* Springy, alive press across every button. */
+.btn{ transition:transform .16s var(--e-spring), box-shadow .15s ease, filter .15s ease; }
+.btn:active{ transform:translateY(1px) scale(.975); }
+@media (hover:hover){
+  .btn-primary:hover, .btn-secondary:hover, .btn-accent:hover, .btn-neutral:hover,
+  .btn-error:hover, .btn-info:hover, .btn-success:hover, .btn-warning:hover{ filter:brightness(1.05); }
+}
+
+/* Header: a touch more glass and a soft gradient hairline that catches the eye. */
+header.navbar{ backdrop-filter:blur(20px) saturate(1.4); -webkit-backdrop-filter:blur(20px) saturate(1.4); }
+header.navbar::after{
+  content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px; pointer-events:none;
+  background:linear-gradient(90deg, transparent,
+    color-mix(in oklab, var(--color-primary) 55%, transparent) 24%,
+    color-mix(in oklab, var(--color-secondary) 55%, transparent) 76%, transparent);
+  opacity:.65;
+}
+
+/* Display type: refined tracking, balanced wrap, a whisper of luminosity in dark. */
+.font-display{ letter-spacing:-.018em; }
+h1.font-display, h2.font-display{ text-wrap:balance; }
+[data-theme="womb"] header .font-display{ text-shadow:0 1px 22px color-mix(in oklab, var(--color-primary) 20%, transparent); }
+
+/* One consistent, beautiful focus ring for keyboard users (theme-aware, ≥3:1). */
+:where(.btn, a.link, summary.sg, .sg, .nt, .more-link):focus-visible{
+  outline:none;
+  box-shadow:
+    0 0 0 2px var(--color-base-100),
+    0 0 0 4px var(--e-focus),
+    0 6px 16px -4px color-mix(in oklab, var(--e-focus) 55%, transparent) !important;
+}
+/* In-panel controls use an INSET ring so the collapsible filter's overflow:hidden
+   (and the chip rows' overflow-x) can't clip it. */
+.filter-panel :where(.btn, .select, select, input):focus-visible{
+  outline:none !important;
+  box-shadow:inset 0 0 0 2px var(--color-base-100), inset 0 0 0 4px var(--e-focus) !important;
+}
+
+/* Segmented control (Warning signs · Mom/Baby/Card): the selected tab lifts. */
+.seg .sg{ transition:transform .16s var(--e-spring), box-shadow .2s ease, background-color .2s ease; }
+.seg .sg[aria-selected="true"]{
+  background-image:var(--e-gloss);
+  box-shadow:
+    inset 0 1px 0 var(--e-hi-strong),
+    inset 0 -2px 4px rgba(0,0,0,.18),
+    0 7px 16px -6px color-mix(in oklab, var(--color-error) 50%, transparent);
+}
+
+/* Active nav pill: deepen the colored bloom so the current tab really glows. */
+#tabNav .nt[aria-current="page"] .np{
+  box-shadow:
+    inset 0 1px 0 var(--e-hi-strong),
+    inset 0 0 0 1px color-mix(in oklab, var(--tab-a) 46%, transparent),
+    0 4px 14px -3px color-mix(in oklab, var(--tab-a) 60%, transparent),
+    0 0 22px -6px color-mix(in oklab, var(--tab-a) 55%, transparent) !important;
+}
+
+/* Top progress bar: a slow traveling sheen rides the fill. */
+progress.progress-primary::-webkit-progress-value{
+  background-image:
+    linear-gradient(100deg, transparent 22%, var(--e-sheen) 42%, transparent 62%),
+    linear-gradient(180deg, color-mix(in oklab, var(--color-primary) 78%, white 22%), var(--color-primary));
+  background-size:220% 100%, 100% 100%;
+  background-repeat:no-repeat;
+  animation:prog-sheen 2.8s ease-in-out infinite;
+}
+@keyframes prog-sheen{ 0%{ background-position:130% 0, 0 0; } 100%{ background-position:-50% 0, 0 0; } }
+
+/* Celebration "ready" card: a triumphant gradient frame + glow. */
+#readyCard{
+  box-shadow:
+    inset 0 1px 0 var(--e-hi-strong),
+    0 0 0 1px color-mix(in oklab, var(--color-success) 42%, transparent),
+    0 20px 44px -18px var(--e-lo),
+    0 0 44px -6px color-mix(in oklab, var(--color-success) 45%, transparent) !important;
+}
+
+/* ---- "More" overflow menu: a floating sheet of the off-bar pages ----------- */
+.more-sheet{ position:fixed; inset:0; z-index:60; }
+.more-sheet[hidden]{ display:none; }
+.more-scrim{
+  position:absolute; inset:0;
+  background:color-mix(in oklab, var(--color-base-200) 52%, transparent);
+  backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+  opacity:0; transition:opacity .24s var(--e-ease);
+}
+.more-sheet.open .more-scrim{ opacity:1; }
+.more-panel{
+  position:absolute; left:.6rem; right:.6rem; margin:0 auto;
+  bottom:calc(env(safe-area-inset-bottom) + 3.7rem);
+  max-width:min(560px, calc(100% - 1.2rem));
+  padding:.55rem .8rem .85rem;
+  background:color-mix(in oklab, var(--color-base-100) 86%, transparent);
+  backdrop-filter:blur(24px) saturate(1.5); -webkit-backdrop-filter:blur(24px) saturate(1.5);
+  border:1px solid color-mix(in oklab, var(--color-base-content) 10%, transparent);
+  border-radius:1.5rem;
+  box-shadow:
+    inset 0 1px 0 var(--e-hi-strong),
+    0 22px 50px -20px var(--e-lo),
+    0 8px 20px -12px var(--e-lo-soft);
+  transform:translateY(14px) scale(.98); transform-origin:bottom center; opacity:0;
+  transition:transform .3s var(--e-spring), opacity .2s ease;
+}
+.more-sheet.open .more-panel{ transform:none; opacity:1; }
+.more-grip{ width:2.4rem; height:.3rem; border-radius:99px; margin:.15rem auto .55rem; background:color-mix(in oklab, var(--color-base-content) 22%, transparent); }
+.more-title{ margin:0 0 .55rem .3rem; font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:15px; letter-spacing:-.012em; color:var(--color-base-content); }
+.more-grid{ display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+.more-link{
+  display:flex; align-items:center; gap:.65rem; min-height:56px;
+  padding:.7rem .8rem; border-radius:1rem; text-decoration:none;
+  font-weight:800; font-size:13.5px; line-height:1.15; color:var(--color-base-content);
+  background:color-mix(in oklab, var(--tab-a) 8%, var(--color-base-100));
+  border:1px solid color-mix(in oklab, var(--tab-a) 22%, var(--color-base-300));
+  box-shadow:inset 0 1px 0 var(--e-hi), 0 7px 15px -11px var(--e-lo);
+  transition:transform .16s var(--e-spring), box-shadow .2s ease, background-color .2s, border-color .2s;
+}
+@media (hover:hover){ .more-link:hover{ border-color:color-mix(in oklab, var(--tab-a) 45%, transparent); box-shadow:inset 0 1px 0 var(--e-hi), 0 12px 22px -12px var(--e-lo); } }
+.more-link:active{ transform:scale(.97); }
+.more-link[aria-current="page"]{
+  background:color-mix(in oklab, var(--tab-a) 17%, var(--color-base-100));
+  border-color:color-mix(in oklab, var(--tab-a) 48%, transparent);
+}
+.more-ic{
+  flex:none; width:2.15rem; height:2.15rem; display:grid; place-items:center; border-radius:.72rem;
+  color:var(--tab-a); background:color-mix(in oklab, var(--tab-a) 16%, transparent);
+  box-shadow:inset 0 1px 0 var(--e-hi), inset 0 0 0 1px color-mix(in oklab, var(--tab-a) 30%, transparent);
+}
+.more-ic svg{ width:1.18rem; height:1.18rem; }
+.more-tx{ min-width:0; }
+/* a lone final tile (5 off-bar pages → odd count) spans the full width */
+.more-grid > .more-link:last-child:nth-child(odd){ grid-column:1 / -1; }
+
+/* ---- Light-theme (dawn) contrast corrections ------------------------------ */
+[data-theme="dawn"] .filter-toggle .ft-count{ background:color-mix(in oklab, var(--color-primary) 62%, black); }
+[data-theme="dawn"] .seg .sg[aria-selected="true"]{ background-color:color-mix(in oklab, var(--color-error) 68%, black); }
+[data-theme="dawn"] #tabNav .nt[aria-current="page"]{ color:var(--color-base-content); }
+[data-theme="dawn"] .more-ic{ color:color-mix(in oklab, var(--tab-a) 78%, black); background:color-mix(in oklab, var(--tab-a) 20%, transparent); }
+
+/* ---- Checklist filters collapsed behind one button ------------------------ */
+.filter-toggle{
+  display:flex; align-items:center; gap:.6rem; width:100%;
+  margin-top:.875rem; padding:.72rem .9rem; border-radius:1rem;
+  font-weight:800; font-size:14px; color:var(--color-base-content);
+  background:color-mix(in oklab, var(--color-base-100) 85%, transparent);
+  border:1px solid color-mix(in oklab, var(--color-base-content) 12%, transparent);
+  box-shadow:inset 0 1px 0 var(--e-hi), 0 8px 18px -12px var(--e-lo);
+  transition:transform .16s var(--e-spring), box-shadow .2s ease, border-color .2s, background-color .2s;
+  -webkit-tap-highlight-color:transparent; cursor:pointer;
+}
+@media (hover:hover){ .filter-toggle:hover{ box-shadow:inset 0 1px 0 var(--e-hi), 0 12px 24px -12px var(--e-lo); } }
+.filter-toggle:active{ transform:scale(.99); }
+.filter-toggle.active{
+  border-color:color-mix(in oklab, var(--color-primary) 45%, transparent);
+  background:color-mix(in oklab, var(--color-primary) 8%, var(--color-base-100));
+}
+.filter-toggle .ft-ic{
+  flex:none; width:1.75rem; height:1.75rem; display:grid; place-items:center; border-radius:.55rem;
+  color:var(--color-primary); background:color-mix(in oklab, var(--color-primary) 15%, transparent);
+  box-shadow:inset 0 0 0 1px color-mix(in oklab, var(--color-primary) 28%, transparent);
+}
+.filter-toggle .ft-ic svg{ width:1.05rem; height:1.05rem; }
+.filter-toggle .ft-label{ flex:1 1 auto; text-align:left; }
+.filter-toggle .ft-count{
+  flex:none; min-width:1.35rem; height:1.35rem; padding:0 .42rem; display:inline-grid; place-items:center;
+  border-radius:99px; font-size:11px; font-weight:900; line-height:1;
+  color:var(--color-primary-content); background:var(--color-primary);
+  box-shadow:inset 0 1px 0 var(--e-hi);
+}
+.filter-toggle .ft-chev{ flex:none; display:grid; place-items:center; color:var(--ink-soft); transition:transform .3s var(--e-ease); }
+.filter-toggle .ft-chev svg{ width:1.1rem; height:1.1rem; }
+.filter-toggle[aria-expanded="true"] .ft-chev{ transform:rotate(180deg); }
+.filter-panel{ display:grid; grid-template-rows:0fr; opacity:.001; transition:grid-template-rows .32s var(--e-ease), opacity .25s ease; }
+.filter-panel.open{ grid-template-rows:1fr; opacity:1; }
+.filter-panel > .filter-inner{ overflow:hidden; min-height:0; }
+
+/* =============================================================================
+   19) ROUND-2 POLISH — aurora header, More-sheet stagger, tracker chart tiles
+   ============================================================================= */
+/* Aurora: two very-low-alpha color washes drift slowly across the sticky
+   header. Alpha is kept ≤9% so title/subtitle contrast is untouched. */
+header.navbar{
+  background-image:
+    radial-gradient(46% 130% at 16% 0%, color-mix(in oklab, var(--color-secondary) 9%, transparent), transparent 70%),
+    radial-gradient(42% 130% at 84% 0%, color-mix(in oklab, var(--color-primary) 8%, transparent), transparent 72%) !important;
+  background-size:230% 100%, 230% 100%;
+  background-repeat:no-repeat;
+  animation:hdr-aurora 19s ease-in-out infinite alternate;
+}
+@keyframes hdr-aurora{
+  from{ background-position:0% 0, 100% 0; }
+  to  { background-position:100% 0, 0% 0; }
+}
+
+/* More sheet: tiles rise in with a gentle stagger each time it opens. */
+.more-sheet.open .more-link{ animation:more-in .34s var(--e-spring) both; }
+.more-sheet.open .more-link:nth-child(1){ animation-delay:.02s; }
+.more-sheet.open .more-link:nth-child(2){ animation-delay:.06s; }
+.more-sheet.open .more-link:nth-child(3){ animation-delay:.10s; }
+.more-sheet.open .more-link:nth-child(4){ animation-delay:.14s; }
+.more-sheet.open .more-link:nth-child(5){ animation-delay:.18s; }
+@keyframes more-in{
+  from{ opacity:0; transform:translateY(12px) scale(.96); }
+  to  { opacity:1; transform:none; }
+}
+
+/* Tracker sparkline tiles: raised glass, a colored identity dot beside the
+   label (identity never rides on color alone — the label names the series),
+   ink-token text, and a recessive baseline under baseline-anchored bars. */
+.spark-tile{
+  border-radius:.9rem; padding:.55rem .45rem .5rem; text-align:center;
+  background:color-mix(in oklab, var(--color-base-200) 72%, var(--color-base-100));
+  border:1px solid color-mix(in oklab, var(--color-base-content) 8%, transparent);
+  box-shadow:inset 0 1px 0 var(--e-hi), 0 8px 16px -12px var(--e-lo);
+}
+.sp-label{
+  display:flex; align-items:center; justify-content:center; gap:.32rem;
+  font-size:9.5px; letter-spacing:.07em; text-transform:uppercase;
+  font-weight:800; color:var(--ink-soft);
+}
+.sp-label i{
+  width:6px; height:6px; border-radius:99px; background:var(--sp);
+  box-shadow:0 0 6px color-mix(in oklab, var(--sp) 55%, transparent);
+}
+.spark-tile svg{ display:block; width:100%; height:2.2rem; margin:.15rem 0 .1rem; color:var(--ink-soft); }
+.sp-val{ font-size:10px; font-weight:700; color:var(--ink-soft); }
+.sp-val b{ font-weight:900; color:var(--color-base-content); font-variant-numeric:tabular-nums; }
+
+/* A themed, thin scrollbar instead of the OS default. */
+*{ scrollbar-width:thin; scrollbar-color:color-mix(in oklab, var(--color-base-content) 24%, transparent) transparent; }
+::-webkit-scrollbar{ width:10px; height:10px; }
+::-webkit-scrollbar-thumb{ background:color-mix(in oklab, var(--color-base-content) 22%, transparent); background-clip:content-box; border:3px solid transparent; border-radius:99px; }
+::-webkit-scrollbar-thumb:hover{ background:color-mix(in oklab, var(--color-base-content) 34%, transparent); background-clip:content-box; }
+
+/* =============================================================================
    12) MOTION — respect reduced-motion for all the new animations
    ============================================================================= */
 @media (prefers-reduced-motion:reduce){
+  .card, .btn, .seg .sg, details.topic{ transition:none !important; }
+  progress.progress-primary::-webkit-progress-value{ animation:none !important; }
+  .more-panel, .more-scrim, .more-link{ transition:none !important; }
+  .more-panel{ transform:none !important; }
+  .filter-panel, .filter-toggle, .filter-toggle .ft-chev{ transition:none !important; }
+  .cat.card::after{ transition:none !important; }
+  .novt > .w-full{ animation:none !important; }
+  header.navbar{ animation:none !important; }
+  .more-sheet.open .more-link{ animation:none !important; }
   #ctBtn.btn-secondary{ animation:none !important; }
   body{ animation:none !important; }
   .item-wrap .checkbox{ transition:background-color .2s, box-shadow .2s !important; }
@@ -516,10 +809,13 @@ header.navbar{ view-transition-name:app-header; }
    ============================================================================= */
 @media print{
   body{ animation:none !important; background-image:none !important; }
+  header.navbar{ animation:none !important; background-image:none !important; }
+  .spark-tile{ box-shadow:none !important; border:1pt solid #999 !important; }
   body::before, body::after,
-  .cat.card::before, .cat.card::after{ display:none !important; }
+  .cat.card::before, .cat.card::after, header.navbar::after{ display:none !important; }
+  .more-sheet{ display:none !important; }
   #ctBtn{ animation:none !important; }
-  .cat.card, .navbar, #tabNav, .btn, .input, .badge, .tip, .checkbox,
+  .cat.card, .card, .navbar, #tabNav, .btn, .input, .badge, .tip, .checkbox,
   #ctBtn, #timerCard .grid > div, #heroCard .grid > div, details.topic,
   .zone-gold, .zone-green, .zone-info, .zone-coral{ box-shadow:none !important; }
   /* expand every topic so nothing is hidden on paper */
@@ -527,5 +823,5 @@ header.navbar{ view-transition-name:app-header; }
   details.topic .topic-body{ display:block !important; }
   details.topic::details-content{ content-visibility:visible !important; display:block !important; block-size:auto !important; transition:none !important; }
   details.topic > summary{ border-bottom:none !important; }
-  #topicTools, #toTop, #readyCard{ display:none !important; }
+  #topicTools, #toTop, #readyCard, .filter-toggle, #filterPanel{ display:none !important; }
 }

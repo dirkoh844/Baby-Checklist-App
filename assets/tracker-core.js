@@ -7,6 +7,11 @@
   'use strict';
 
   const DAY = 864e5;
+  /* An "open" sleep (no end logged) is clamped to at most this long. Without a
+     cap, a forgotten "sleep end" would count a full 24h toward every calendar
+     day between its start and now. 14h is far beyond any real newborn stretch,
+     so a genuine ongoing sleep is unaffected but a forgotten one can't run away. */
+  const MAX_OPEN_SLEEP = 14 * 3600e3;
 
   function number(v, fallback) {
     const n = Number(v);
@@ -16,7 +21,8 @@
   function overlapMs(entry, start, end, now) {
     if (!entry || entry.t !== 'sleep') return 0;
     const a = number(entry.at);
-    const b = entry.e == null ? number(now, Date.now()) : number(entry.e);
+    const current = number(now, Date.now());
+    const b = entry.e == null ? Math.min(current, a + MAX_OPEN_SLEEP) : number(entry.e);
     if (!a || b <= a) return 0;
     return Math.max(0, Math.min(b, end) - Math.max(a, start));
   }
