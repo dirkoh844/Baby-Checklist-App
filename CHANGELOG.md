@@ -1,5 +1,17 @@
 # Baby List — Changelog
 
+## v3.2.1 — July 22, 2026
+
+- **Night mode on every page.** The light/dark toggle button (already wired on
+  each page's header but hidden since the control moved to Settings) is now
+  revealed app-wide by the shared shell, so the theme is always one tap away.
+  The choice still syncs across pages and sessions as before.
+- **Sources removed from the More menu.** The menu is now a clean 2×2 of true
+  destinations (pregnancy: Tracker, Warning signs, Guides, Settings; baby:
+  Checklist, Labor, Birth plan, Settings). The Sources page itself is
+  unchanged and stays reachable through the "Safety sources" links on seven
+  content pages.
+
 ## v3.2.0 — July 22, 2026
 
 - **Living motion.** The sticky header carries a slow, two-tone aurora drift

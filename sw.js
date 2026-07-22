@@ -1,14 +1,14 @@
 /* Baby List service worker — static shell only. API, authenticated, no-store,
    and cross-origin requests always bypass CacheStorage. */
-const VERSION = 'babylist-v320';
+const VERSION = 'babylist-v321';
 const CACHE_PREFIX = 'babylist-';
 const CORE = [
   './', './index.html', './labor.html', './reminders.html', './settings.html',
   './upbringing.html', './birthplan.html', './tracker.html', './emergency.html',
-  './sources.html', './assets/app.css', './assets/navbar.css?v=3.2.0',
-  './assets/enhance.css?v=3.2.0', './assets/state-core.js?v=3.2.0',
-  './assets/sync-core.js?v=3.2.0', './assets/tracker-core.js?v=3.2.0', './assets/app-shell.js?v=3.2.0',
-  './assets/notify.js?v=3.2.0', './assets/confetti.min.js',
+  './sources.html', './assets/app.css', './assets/navbar.css?v=3.2.1',
+  './assets/enhance.css?v=3.2.1', './assets/state-core.js?v=3.2.1',
+  './assets/sync-core.js?v=3.2.1', './assets/tracker-core.js?v=3.2.1', './assets/app-shell.js?v=3.2.1',
+  './assets/notify.js?v=3.2.1', './assets/confetti.min.js',
   './assets/fonts/fraunces-latin-opsz-normal.woff2',
   './assets/fonts/fraunces-latin-opsz-italic.woff2',
   './assets/fonts/nunito-sans-latin-normal.woff2',
