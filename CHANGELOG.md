@@ -1,5 +1,84 @@
 # Baby List — Changelog
 
+## v3.2.0 — July 22, 2026
+
+- **Living motion.** The sticky header carries a slow, two-tone aurora drift
+  (alpha ≤9%, so text contrast is untouched), and the More menu's page tiles
+  rise in with a gentle 20–180 ms stagger. Both are fully disabled under
+  `prefers-reduced-motion` and stripped for print.
+- **Tracker charts, rebuilt as premium tiles.** The 7-day feeds / wet / sleep
+  sparklines became raised glass tiles with a colored identity dot beside each
+  label, top-rounded bars anchored to a recessive baseline, per-bar native
+  tooltips ("Mon · 7"), and ink-token text. Chart colors were validated for
+  mark contrast: light mode's amber was darkened for the Sleep bars (2.2:1 →
+  6.6:1); series identity never rides on color alone.
+- **Sync correctness (audited).** Two fixes from an adversarial review of the
+  new merge logic: a fresh device joining the family can no longer wipe an
+  upgraded document's unstamped `due` / `born` / emergency card (empty values
+  no longer win timestamp ties), and an edit made while a sync request was in
+  flight — a checkmark during the 2 s debounce push, a feed logged during the
+  60 s poll — is now re-merged and kept instead of silently reverted, on the
+  checklist, tracker, and emergency-card pages alike.
+- **First-visit fix.** Saving an item note in a brand-new profile no longer
+  throws (the initial state was missing its `notes` map); "Since fed / Since
+  wet" clamp to `0m` if an entry arrives future-stamped from a skewed clock.
+- **Modal hygiene.** Returning to a page via Back (bfcache) can no longer
+  restore a stuck-open More menu with the page inert; a nav rebuild while the
+  menu is open tears it down cleanly; and the sheet's teardown is centralized
+  so no path can strand `inert`.
+- **Filter polish.** The active-filter count badge now reflects restored
+  filters after a reload, "Hide notes" alone now surfaces the Clear-filters
+  button, and a dead hidden reset button was removed from the header.
+- **Test suite: 33 checks.** New regressions cover the fresh-device scalar
+  wipe, and the mock sync server now mirrors the worker's strict If-Match
+  (missing header → 428) so a client regression can't slip through.
+
+## v3.1.0 — July 22, 2026
+
+- **Flagship visual pass.** A cohesive depth system across every page: premium
+  card elevation with an edge-light, springier button/press feedback, a living
+  gradient hairline under the sticky header, refined display typography, richer
+  active-tab and segmented-control states, a progress-bar sheen, and a themed
+  scrollbar. One unified, theme-aware focus ring that meets WCAG 2.4.11 (≥3:1)
+  in both light and dark — including an inset variant so the collapsible filter
+  can't clip it. All new motion is disabled under `prefers-reduced-motion` and
+  stripped for print.
+- **"More" is now an overflow menu.** Tapping **More** in the bottom bar opens a
+  floating, frosted sheet of the pages that aren't on the current stage's bar
+  (pregnancy → Tracker, Warning signs, Guides, Settings, Sources; baby →
+  Checklist, Labor, Birth plan, Settings, Sources) instead of jumping straight
+  to Settings. It's a real modal: focus-trapped, `Escape`/scrim to close, focus
+  returns to the button, and the rest of the screen is `inert` while it's open.
+- **Collapsible checklist filters.** Phase, Sort, Show, the Hide toggles, and the
+  legend now live behind a single **Filters & sort** button, collapsed by
+  default (the controls are `inert` when closed) and expanding on tap, with a
+  badge showing how many filters are active. **Clear filters** now resets every
+  filter the badge counts. Search and the category jump-chips stay visible.
+- **Light-theme contrast corrections.** The active nav label, segmented-control
+  selection, filter count badge, and More-menu icons were darkened in the
+  "dawn" theme to meet AA.
+- **Sync correctness.** Data carried across the v2→v3 upgrade (which has no
+  per-field timestamp) is now treated as oldest, so a remotely-deleted item can
+  no longer resurrect and a stale local value can't overwrite a newer remote
+  edit; a deterministic tiebreak makes two such devices converge instead of
+  ping-ponging. The generic key cap no longer silently overrides the larger
+  tombstone/entity limits, and the document-size guard is measured in UTF-8
+  bytes.
+- **Reminder delivery is at-least-once.** A slot is marked sent only after the
+  push is delivered, so a crashed or failed run retries next time rather than
+  silently dropping a reminder; a rare duplicate is preferred to a miss for a
+  best-effort schedule.
+- **Worker hardening.** State writes require an explicit revision precondition,
+  token checks are constant-time, and push endpoints must be public hosts
+  (internal/loopback/metadata/rebinding targets are rejected).
+- **Safer restore.** Imported backup extras (reminders, contraction log,
+  contacts, tracker archive) are validated for type and size before being
+  stored, and contact phone numbers render defensively.
+- **Offline resilience.** The service worker again installs resiliently, so one
+  missing file in a partial deploy can't wipe the whole offline cache, and the
+  monthly keep-alive workflow that prevents the reminder cron from being
+  auto-disabled after 60 idle days was restored.
+
 ## v3.0.0 — July 21, 2026
 
 - **Private, conflict-safe family sync.** Anonymous JSON stores were removed.

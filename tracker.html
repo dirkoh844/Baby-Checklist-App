@@ -36,8 +36,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=3.0.0" rel="stylesheet">
-<link href="./assets/enhance.css?v=3.0.0" rel="stylesheet">
+<link href="./assets/navbar.css?v=3.2.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=3.2.0" rel="stylesheet">
 <script>
 addEventListener('DOMContentLoaded',function(){
   if(!window.__cssMissing) return;
@@ -127,11 +127,11 @@ body.night #tabNav .nt[aria-current="page"] .np{background:#2A1013!important;box
 .tracking-quality{background:var(--color-base-200);border:1px solid var(--color-base-300)}
 @media print{ *{background:#fff!important;color:#000!important} #tabNav,#toastWrap,.icobtns,.logrow,#nightBtn{display:none!important} }
 </style>
-<script src="./assets/state-core.js?v=3.0.0"></script>
-<script src="./assets/sync-core.js?v=3.0.0"></script>
-<script src="./assets/tracker-core.js?v=3.0.0"></script>
-<script src="./assets/app-shell.js?v=3.0.0" defer></script>
-<script src="./assets/notify.js?v=3.0.0" defer></script>
+<script src="./assets/state-core.js?v=3.2.0"></script>
+<script src="./assets/sync-core.js?v=3.2.0"></script>
+<script src="./assets/tracker-core.js?v=3.2.0"></script>
+<script src="./assets/app-shell.js?v=3.2.0" defer></script>
+<script src="./assets/notify.js?v=3.2.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
@@ -335,8 +335,14 @@ async function pushCloud(){
   pushing=true;
   try{
     const result=await BabyListSync.syncState(S.cloud,S);
-    acceptState(result.state,false);
+    /* An entry logged while the request was in flight lives in the CURRENT S
+       (save() stamps on every add) — merge it in rather than reverting it,
+       and push again so the server catches up. */
+    const merged=BabyListState.mergeStates(S,result.state);
+    const dirty=JSON.stringify(BabyListState.toRemote(merged))!==JSON.stringify(BabyListState.toRemote(result.state));
+    acceptState(merged,false);
     setDot('synced');
+    if(dirty) queuePush();
   }catch(e){ setDot('offline'); }
   pushing=false;
 }
@@ -345,9 +351,12 @@ async function pullCloud(){
   try{
     const before=JSON.stringify((S.log||[]).map(e=>e.i+':'+e.u));
     const result=await BabyListSync.pullState(S.cloud,S);
-    const after=JSON.stringify((result.state.log||[]).map(e=>e.i+':'+e.u));
-    acceptState(result.state,before!==after);
+    const merged=BabyListState.mergeStates(S,result.state);
+    const dirty=JSON.stringify(BabyListState.toRemote(merged))!==JSON.stringify(BabyListState.toRemote(result.state));
+    const after=JSON.stringify((merged.log||[]).map(e=>e.i+':'+e.u));
+    acceptState(merged,before!==after);
     setDot('synced');
+    if(dirty) queuePush();
   }catch(e){ setDot('offline'); }
 }
 
@@ -366,7 +375,9 @@ function prune(){
 /* ---------- helpers ---------- */
 const live=()=>S.log.filter(e=>!e.del);
 const since=ms=>{
-  const m=Math.floor(ms/6e4);
+  /* Clamp negatives: an entry stamped slightly in the future (clock skew
+     between synced phones) must read "0m", never "-300m". */
+  const m=Math.max(0,Math.floor(ms/6e4));
   if(m<60) return m+'m';
   const h=Math.floor(m/60);
   return h+'h'+(m%60?' '+(m%60)+'m':'');
@@ -387,53 +398,71 @@ const isDirty=e=>e.t==='diaper'&&e.p;
 function warnings(){
   const dol=dayOfLife(), out=[];
   if(!dol || dol>28) return out;
-  if(S.loggingComplete!==true){
-    out.push(['info','Count prompts are paused','This log may be incomplete, so the app will not infer a feeding or diaper problem from missing entries. Urgent symptoms still matter — use Warning signs at any time.']);
-    return out;
-  }
   const L=live();
-  const feeds24=L.filter(e=>isFeed(e)&&inWindow(e,DAY)).length;
-  const wet24=L.filter(e=>isWet(e)&&inWindow(e,DAY)).length;
   const lastFeed=L.filter(isFeed).sort((a,b)=>b.at-a.at)[0];
   const lastWet=L.filter(isWet).sort((a,b)=>b.at-a.at)[0];
-  const age=Date.now()-Date.parse(S.born);
 
+  /* Gap- and date-based signals come from entries the family actually logged (or
+     from the birth date), not from inferring a problem out of MISSING entries, so
+     they stay on even before the log is marked complete. A real gap since a real
+     wet diaper or feed still matters. */
   if(lastWet && Date.now()-lastWet.at>=8*HOUR)
     out.push(['error','No wet diaper in '+since(Date.now()-lastWet.at),'A long gap can be a dehydration warning in a newborn. Call the pediatrician now, especially with poor feeding, dry mouth, or unusual sleepiness.']);
+  if(lastFeed && Date.now()-lastFeed.at>=4*HOUR)
+    out.push(['warning','No feed logged in '+since(Date.now()-lastFeed.at),'Newborn feeding intervals depend on feeding method, growth, and the care plan. Follow that plan; call promptly if the baby refuses feeds or is too sleepy to feed.']);
+  if(dol>=14 && dol<=21)
+    out.push(['info','Two-week check','Babies should be back to birth weight by about 2 weeks. If the weight check has not happened, book it.']);
+
+  /* Count-based inference (totals over 24h) can be fooled by incomplete logging,
+     so it pauses until the family confirms the log is complete. */
+  if(S.loggingComplete!==true){
+    out.push(['info','Count prompts are paused','Daily-count checks stay off until you mark the log complete, so the app will not infer a feeding or diaper problem from missing entries. The gap and date checks above still run, and urgent symptoms always matter — use Warning signs at any time.']);
+    return out;
+  }
+  const feeds24=L.filter(e=>isFeed(e)&&inWindow(e,DAY)).length;
+  const wet24=L.filter(e=>isWet(e)&&inWindow(e,DAY)).length;
+  const age=Date.now()-Date.parse(S.born);
   if(dol>=7 && wet24<6 && age>=DAY)
     out.push(['error','Only '+wet24+' wet diapers in 24 hours','This is below the common breastfeeding guide of 6 wet diapers after day 5. Feeding method and care plans vary; call the pediatrician today.']);
   else if(dol>=5 && dol<7 && wet24<5 && age>=DAY)
     out.push(['warning','Only '+wet24+' wet diapers in 24 hours','By day 5, common breastfeeding guidance expects about 6 wet diapers. Call the pediatrician or feeding-support team to review intake.']);
-  if(lastFeed && Date.now()-lastFeed.at>=4*HOUR)
-    out.push(['warning','No feed logged in '+since(Date.now()-lastFeed.at),'Newborn feeding intervals depend on feeding method, growth, and the care plan. Follow that plan; call promptly if the baby refuses feeds or is too sleepy to feed.']);
   if(dol>=2 && feeds24<8 && age>=DAY)
     out.push(['warning','Only '+feeds24+' feeds in 24 hours','For breastfeeding newborns, CDC lists 8 to 12 feeds per day as a common sign of adequate intake. Other feeding plans differ; review this count with the pediatrician or feeding-support team.']);
-  if(dol>=14 && dol<=21)
-    out.push(['info','Two-week check','Babies should be back to birth weight by about 2 weeks. If the weight check has not happened, book it.']);
   return out;
 }
 
 /* ---------- render ---------- */
 let nurse=null;   /* {side, start} */
-/* 7-day sparklines: feeds, wet diapers, sleep hours. One accent per series,
-   today's bar solid, earlier days tinted; aria-labels carry the numbers. */
-function sparkTile(vals,color,label,unit){
+/* 7-day sparklines: feeds, wet diapers, sleep hours. One hue per tile (single
+   series — the label names it, never color alone), today's bar solid, earlier
+   days tinted, top-rounded bars anchored to a recessive baseline, per-bar
+   native tooltips, and aria-labels carrying the numbers. */
+function sparkTile(vals,color,label,unit,dayNames){
   const mx=Math.max(1,...vals);
   let bars='';
   vals.forEach((v,i)=>{
-    const h=v?Math.max(4,Math.round(v/mx*30)):2;
-    const fill=(i===vals.length-1)?color:'color-mix(in oklab, '+color+' 45%, transparent)';
-    bars+='<rect x="'+(i*14.3+1.6)+'" y="'+(34-h)+'" width="11" height="'+h+'" rx="2" fill="'+fill+'"/>';
+    const h=v?Math.max(4,Math.round(v/mx*29)):2;
+    const solid=(i===vals.length-1);
+    const fill=solid?color:'color-mix(in oklab, '+color+' 45%, transparent)';
+    const x=i*14.3+1.6, w=11, y=35-h, r=Math.min(3,h/2);
+    /* top-rounded only, so the bar stays anchored to the baseline */
+    const d='M'+x+' 35 V'+(y+r)+' Q'+x+' '+y+' '+(x+r)+' '+y+' H'+(x+w-r)+' Q'+(x+w)+' '+y+' '+(x+w)+' '+(y+r)+' V35 Z';
+    const shown=unit==='h'?(Math.round(v*10)/10)+' h':v;
+    bars+='<path d="'+d+'" fill="'+fill+'"><title>'+dayNames[i]+' · '+shown+'</title></path>';
   });
   const disp=unit==='h'?(Math.round(vals[vals.length-1]*10)/10):vals[vals.length-1];
-  return '<div class="rounded-xl pt-2 pb-1.5 px-1.5 text-center" style="background:var(--color-base-200)">'+
-    '<div class="text-[9.5px] tracking-[.07em] uppercase ink-soft font-extrabold">'+label+'</div>'+
-    '<svg viewBox="0 0 100 34" class="w-full h-8 mt-0.5" role="img" aria-label="'+label+', last 7 days: '+vals.map(v=>unit==='h'?Math.round(v*10)/10:v).join(', ')+'">'+bars+'</svg>'+
-    '<div class="text-[10px] ink-soft font-bold">today '+disp+(unit==='h'?' h':'')+'</div></div>';
+  return '<div class="spark-tile" style="--sp:'+color+'">'+
+    '<div class="sp-label"><i aria-hidden="true"></i>'+label+'</div>'+
+    '<svg viewBox="0 0 100 38" role="img" aria-label="'+label+', last 7 days: '+vals.map(v=>unit==='h'?Math.round(v*10)/10:v).join(', ')+'">'+
+      bars+
+      '<line x1="1" y1="36" x2="99" y2="36" stroke="currentColor" stroke-width="1" opacity=".22"/>'+
+    '</svg>'+
+    '<div class="sp-val">today <b>'+disp+(unit==='h'?' h':'')+'</b></div></div>';
 }
 function renderSpark(){
   const box=$('spark'); if(!box) return;
   const now=Date.now(), days=BabyListTracker.dayStarts(7,now);
+  const dayNames=days.map(t=>new Date(t).toLocaleDateString(undefined,{weekday:'short'}));
   const idx=t=>{ for(let i=days.length-1;i>=0;i--){ if(t>=days[i]) return i; } return -1; };
   const feeds=new Array(7).fill(0), wets=new Array(7).fill(0);
   live().forEach(e=>{
@@ -443,9 +472,9 @@ function renderSpark(){
   });
   const sleep=BabyListTracker.dailySleep(live(),7,now).map(v=>v/HOUR);
   box.innerHTML=
-    sparkTile(feeds,'var(--color-primary)','Feeds','')+
-    sparkTile(wets,'var(--color-info)','Wet','')+
-    sparkTile(sleep.map(v=>Math.round(v*10)/10),'var(--color-accent)','Sleep','h');
+    sparkTile(feeds,'var(--chart-1)','Feeds','',dayNames)+
+    sparkTile(wets,'var(--chart-2)','Wet','',dayNames)+
+    sparkTile(sleep.map(v=>Math.round(v*10)/10),'var(--chart-3)','Sleep','h',dayNames);
 }
 
 function render(){

@@ -36,8 +36,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=3.0.0" rel="stylesheet">
-<link href="./assets/enhance.css?v=3.0.0" rel="stylesheet">
+<link href="./assets/navbar.css?v=3.2.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=3.2.0" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -157,10 +157,10 @@ body{
   footer{font-size:9pt}
 }
 </style>
-<script src="./assets/state-core.js?v=3.0.0"></script>
-<script src="./assets/sync-core.js?v=3.0.0"></script>
-<script src="./assets/app-shell.js?v=3.0.0" defer></script>
-<script src="./assets/notify.js?v=3.0.0" defer></script>
+<script src="./assets/state-core.js?v=3.2.0"></script>
+<script src="./assets/sync-core.js?v=3.2.0"></script>
+<script src="./assets/app-shell.js?v=3.2.0" defer></script>
+<script src="./assets/notify.js?v=3.2.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-[env(safe-area-inset-bottom)]">
 
@@ -178,7 +178,6 @@ body{
         <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 hidden" id="calmBtn" type="button" aria-label="Calm sounds: womb-like brown noise" aria-pressed="false"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M3 12c1.5-3.5 3-3.5 4.5 0s3 3.5 4.5 0 3-3.5 4.5 0 3 3.5 4.5 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button>
         <a href="./emergency.html" class="btn btn-circle btn-sm btn-soft btn-error flex-none hidden" id="sosBtn" aria-label="Warning signs and emergency contacts" title="Warning signs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></a>
       <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 hidden" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
-        <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 hidden" id="resetTop" type="button" aria-label="Reset checkmarks"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M3.4 9.2a8 8 0 1 1-.5 5.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M2.5 4v5.5H8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
     <div class="flex items-center gap-3.5 mt-2.5">
@@ -202,6 +201,15 @@ body{
 </header>
 
 <div class="w-full max-w-[640px] mx-auto px-3.5 pb-28">
+
+  <!-- filters: one button, collapsed by default, expands on tap -->
+  <button id="filterToggle" type="button" class="filter-toggle" aria-expanded="false" aria-controls="filterPanel">
+    <span class="ft-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>
+    <span class="ft-label">Filters &amp; sort</span>
+    <span id="filterCount" class="ft-count" hidden></span>
+    <span class="ft-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+  </button>
+  <div id="filterPanel" class="filter-panel"><div class="filter-inner">
 
   <!-- life phase filter -->
   <div class="flex gap-2 items-center pt-3.5" id="phasebar">
@@ -242,6 +250,17 @@ body{
     <button id="clrFilters" type="button" class="btn btn-xs h-8 rounded-full btn-ghost text-error font-extrabold hidden flex-none">✕ Clear filters</button>
   </div>
 
+  <!-- legend -->
+  <div class="flex gap-3.5 flex-wrap mt-3.5 mx-0.5 text-[11.5px] ink-soft font-semibold" id="legend">
+    <span class="inline-flex items-center gap-1.5"><span class="badge badge-error badge-xs font-extrabold uppercase">must</span>1 · can't skip</span>
+    <span class="inline-flex items-center gap-1.5"><span class="badge badge-warning badge-outline badge-xs font-extrabold uppercase">important</span>2 · recommended</span>
+    <span class="inline-flex items-center gap-1.5"><span class="badge badge-info badge-soft badge-xs font-extrabold uppercase">nice</span>3 · optional</span>
+    <span class="inline-flex items-center gap-1.5"><span class="badge badge-secondary badge-soft badge-xs font-extrabold">+</span>added</span>
+    <span class="inline-flex items-center gap-1.5"><span class="badge badge-neutral badge-xs font-extrabold uppercase">mine</span>your item</span>
+  </div>
+
+  </div></div><!-- /filterPanel -->
+
   <div class="alert bg-base-100 border border-warning/60 text-[13px] font-semibold leading-relaxed mt-3.5 hidden" id="storageWarn" role="alert">
     <svg class="w-4 h-4 flex-none text-warning" viewBox="0 0 24 24" fill="none"><path d="M12 8v5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.1" fill="currentColor"/><path d="M10.3 3.9L2.6 17.4A2 2 0 004.3 20.5h15.4a2 2 0 001.7-3.1L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>
     <span>This browser is blocking saved data (private mode, most likely). Checkmarks won't survive closing this window. Open your <b class="text-base-content">Share link</b> here to load the family list, or switch out of private browsing.</span>
@@ -254,15 +273,6 @@ body{
     <button id="installDismiss" type="button" class="btn btn-sm btn-ghost" aria-label="Dismiss install banner">✕</button>
   </div>
   <span id="srAnnounce" class="sr-only" aria-live="polite"></span>
-
-  <!-- legend -->
-  <div class="flex gap-3.5 flex-wrap mt-3.5 mx-0.5 text-[11.5px] ink-soft font-semibold" id="legend">
-    <span class="inline-flex items-center gap-1.5"><span class="badge badge-error badge-xs font-extrabold uppercase">must</span>1 · can't skip</span>
-    <span class="inline-flex items-center gap-1.5"><span class="badge badge-warning badge-outline badge-xs font-extrabold uppercase">important</span>2 · recommended</span>
-    <span class="inline-flex items-center gap-1.5"><span class="badge badge-info badge-soft badge-xs font-extrabold uppercase">nice</span>3 · optional</span>
-    <span class="inline-flex items-center gap-1.5"><span class="badge badge-secondary badge-soft badge-xs font-extrabold">+</span>added</span>
-    <span class="inline-flex items-center gap-1.5"><span class="badge badge-neutral badge-xs font-extrabold uppercase">mine</span>your item</span>
-  </div>
 
   <div class="flex gap-1.5 overflow-x-auto mt-3 pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" id="jumpbar" role="navigation" aria-label="Jump to category"></div>
 
@@ -284,7 +294,7 @@ body{
       </div>
       <input type="file" id="fileInput" accept=".json,application/json" hidden>
     </div>
-    <p class="mb-2.5 text-[11px]">Baby List v3.0.0 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a> · <a class="link font-bold" href="./sources.html">Safety sources</a></p>
+    <p class="mb-2.5 text-[11px]">Baby List v3.2.0 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a> · <a class="link font-bold" href="./sources.html">Safety sources</a></p>
     <p class="mb-2.5">Source-reviewed July 21, 2026. This planning tool is not medical advice; confirm health decisions with your clinician.</p>
     <details class="topic" style="--topic-a:var(--color-primary)">
       <summary>How saving, sharing &amp; cloud sync work</summary>
@@ -446,7 +456,7 @@ const KEY='newborn-checklist-v3';
 /* Shared sync is deliberately limited to the revisioned private v3 worker.
    Anonymous/global artifact KV stores cannot provide the consistency or
    privacy guarantees required for family and newborn data. */
-let state={checked:{},collapsed:{},hidePacked:false,dark:true,custom:{},sort:'importance',sizeIdx:0,hideNotes:false,sync:false,importedShare:null,tier:'all',phase:'all',due:null,who:'',cloud:null};
+let state={checked:{},collapsed:{},hidePacked:false,dark:true,custom:{},notes:{},sort:'importance',sizeIdx:0,hideNotes:false,sync:false,importedShare:null,tier:'all',phase:'all',due:null,who:'',cloud:null};
 const WHO_KEY='newborn-who';
 try{ state.who=localStorage.getItem(WHO_KEY)||''; }catch(e){}
 function setWho(n){ state.who=(n||'').trim(); try{localStorage.setItem(WHO_KEY,state.who);}catch(e){} }
@@ -508,9 +518,18 @@ async function pushCloud(){
   try{
     const local=prepareSnapshot();
     const result=await BabyListSync.syncState(state.cloud,local);
-    applyState(result.state,true); state.sync=true;
-    baselineSnapshot=BabyListState.copy(result.state);
-    writeLocal(result.state); refreshUI(); setDot(true,'Synced just now');
+    /* Edits made while the request was in flight live in the CURRENT state, not
+       in `local` — merge them into the server result instead of letting the
+       response silently revert them, and push again if anything new survived. */
+    const merged=BabyListState.mergeStates(prepareSnapshot(),result.state);
+    applyState(merged,true); state.sync=true;
+    baselineSnapshot=BabyListState.copy(merged);
+    writeLocal(merged); refreshUI(); setDot(true,'Synced just now');
+    try{
+      if(JSON.stringify(BabyListState.toRemote(merged))!==JSON.stringify(BabyListState.toRemote(result.state))){
+        pendingCloud=true; clearTimeout(cloudTimer); cloudTimer=setTimeout(pushCloud,1500);
+      }
+    }catch(_){ }
   }catch(e){ setDot(false); }
 }
 function persist(pushShared){
@@ -795,6 +814,7 @@ function makeRow(cat,it){
       '<button class="btn btn-sm btn-primary font-extrabold" type="button">Save</button>';
     const inp=ed.querySelector('input'); inp.value=(state.notes&&state.notes[it._id])||'';
     const saveN=()=>{ const v=inp.value.trim();
+      if(!state.notes||typeof state.notes!=='object') state.notes={};   /* belt-and-braces for reset paths */
       if(v) state.notes[it._id]=v; else delete state.notes[it._id];
       noteEl.textContent=v; persist(); ed.remove(); if(v) toast('Note saved'); };
     ed.querySelector('button').addEventListener('click',saveN);
@@ -913,7 +933,7 @@ function update(){
   document.body.classList.toggle('searching',!!q);
   $('smatch').textContent=q? gMatches+(gMatches===1?' item':' items') : '';
   $('smatch').classList.toggle('hidden',!q);
-  $('clrFilters').classList.toggle('hidden', !(q || tier!=='all' || phase!=='all'));
+  $('clrFilters').classList.toggle('hidden', !(q || tier!=='all' || phase!=='all' || state.sort!=='importance' || state.hidePacked || state.hideNotes));
 }
 
 /* ---------- celebration (canvas-confetti with offline fallback) ---------- */
@@ -970,7 +990,7 @@ $('clrBtn').addEventListener('click',()=>{ clearTimeout(searchTimer); $('search'
 const chipHide=$('chipHide'), chipNotes=$('chipNotes'), chipCollapse=$('chipCollapse');
 chipHide.addEventListener('click',()=>{ state.hidePacked=!state.hidePacked; setPressed(chipHide,state.hidePacked); persist(); update(); });
 chipNotes.addEventListener('click',()=>{ state.hideNotes=!state.hideNotes; setPressed(chipNotes,state.hideNotes);
-  document.querySelectorAll('.it-note').forEach(n=>n.classList.toggle('hidden',state.hideNotes)); persist(); });
+  document.querySelectorAll('.it-note').forEach(n=>n.classList.toggle('hidden',state.hideNotes)); persist(); update(); });
 chipCollapse.addEventListener('click',()=>{
   const anyOpen=DATA.some(c=>!isCollapsed(c));
   DATA.forEach(c=>{ state.collapsed[c.id]=anyOpen; });
@@ -1025,9 +1045,43 @@ $('phaseSel').addEventListener('change',()=>{
 });
 $('clrFilters').addEventListener('click',()=>{ clearTimeout(searchTimer);
   $('search').value=''; searchTerm=''; $('clrBtn').classList.add('hidden');
-  state.tier='all'; state.phase='all';
+  state.tier='all'; state.phase='all'; state.sort='importance';
+  state.hidePacked=false; state.hideNotes=false;
+  $('phaseSel').value='all';
+  setPressed($('chipHide'),false); setPressed($('chipNotes'),false);
+  document.querySelectorAll('.it-note').forEach(n=>n.classList.remove('hidden'));
   styleChips(); persist(); update(); toast('Filters cleared');
 });
+
+/* ---------- filters collapse: one button, closed by default ---------- */
+(function(){
+  const t=$('filterToggle'), p=$('filterPanel'), c=$('filterCount');
+  if(!t||!p) return;
+  function activeCount(){
+    let n=0;
+    const ph=$('phaseSel'); if(ph && ph.value!=='all') n++;
+    const st=document.querySelector('.sortchip[aria-pressed="true"]'); if(st && st.dataset.sort!=='importance') n++;
+    const tr=document.querySelector('.tchip[aria-pressed="true"]'); if(tr && tr.dataset.tier!=='all') n++;
+    const hp=$('chipHide'); if(hp && hp.getAttribute('aria-pressed')==='true') n++;
+    const hn=$('chipNotes'); if(hn && hn.getAttribute('aria-pressed')==='true') n++;
+    return n;
+  }
+  function refresh(){
+    const n=activeCount();
+    if(n>0){ c.textContent=n; c.hidden=false; t.classList.add('active'); }
+    else { c.hidden=true; t.classList.remove('active'); }
+  }
+  function setOpen(open){
+    p.classList.toggle('open',open);
+    t.setAttribute('aria-expanded',open?'true':'false');
+    if(open) p.removeAttribute('inert'); else p.setAttribute('inert','');
+  }
+  setOpen(false); refresh();
+  t.addEventListener('click',()=>setOpen(!p.classList.contains('open')));
+  p.addEventListener('change',refresh);
+  p.addEventListener('click',()=>setTimeout(refresh,0));
+  window.__refreshFilterBadge=refresh;   /* refreshUI() re-syncs the badge after hydrate/sync */
+})();
 
 /* ---------- theme + size ---------- */
 const SIZES=['0','1','2'];
@@ -1105,7 +1159,6 @@ if(!isStandalone && !installDismissed() && /iPhone|iPad|iPod/.test(navigator.use
   $('installBanner').classList.remove('hidden');
 }
 
-$('resetTop').addEventListener('click',resetAll);
 $('resetBottom').addEventListener('click',resetAll);
 
 /* ---------- full UI refresh ---------- */
@@ -1127,6 +1180,8 @@ function refreshUI(){
   setPressed(chipHide,state.hidePacked);
   chipCollapse.textContent = DATA.some(c=>!isCollapsed(c)) ? 'Collapse all' : 'Expand all';
   update();
+  /* keep the collapsed filter button's active-count badge true to restored state */
+  if(window.__refreshFilterBadge) window.__refreshFilterBadge();
 }
 
 /* ---------- save file / load file (.json backup) ---------- */
@@ -1157,7 +1212,11 @@ function loadFromFile(file){
       applyState(incoming,true); wasComplete=false; persist(); refreshUI();
       let restored='';
       if(data.extras){
-        const s=(k,v)=>{ try{ if(v) localStorage.setItem(k,JSON.stringify(v)); }catch(e){} };
+        /* Validate each extra before trusting it: correct top-level type, a size
+           cap, and a JSON round-trip that drops functions/prototype tricks. A
+           hand-edited backup can no longer inject a shape that breaks a consumer. */
+        const okJson=v=>{ if(v==null||typeof v!=='object') return null; let t; try{t=JSON.stringify(v);}catch(_){return null;} if(t.length>256*1024) return null; try{return JSON.parse(t);}catch(_){return null;} };
+        const s=(k,v)=>{ const clean=okJson(v); if(clean!==null) try{ localStorage.setItem(k,JSON.stringify(clean)); }catch(e){} };
         s('newborn-reminders',data.extras.reminders);
         s('labor-contractions',data.extras.laborLog);
         s('labor-contacts',data.extras.laborContacts);
@@ -1392,9 +1451,12 @@ async function pollShared(){
     setDot('pending','Checking…');
     const local=prepareSnapshot();
     const result=await BabyListSync.pullState(state.cloud,local);
-    const changed=JSON.stringify(BabyListState.toRemote(result.state))!==JSON.stringify(BabyListState.toRemote(local));
-    applyState(result.state,true); state.sync=true; baselineSnapshot=BabyListState.copy(result.state);
-    writeLocal(result.state); refreshUI(); setDot(true,changed?'Updated just now':'Synced just now');
+    /* Re-merge with the CURRENT state so a checkmark or log entry made while
+       this poll's request was in flight is kept, not reverted. */
+    const merged=BabyListState.mergeStates(prepareSnapshot(),result.state);
+    const changed=JSON.stringify(BabyListState.toRemote(merged))!==JSON.stringify(BabyListState.toRemote(local));
+    applyState(merged,true); state.sync=true; baselineSnapshot=BabyListState.copy(merged);
+    writeLocal(merged); refreshUI(); setDot(true,changed?'Updated just now':'Synced just now');
     if(changed) toast('Updated from the shared list');
   }catch(e){ setDot(false); }
 }
@@ -1457,8 +1519,9 @@ async function pollShared(){
       if(state.sync || (!saved && state.cloud)){
         const local=prepareSnapshot();
         const result=await BabyListSync.pullState(state.cloud,local);
-        applyState(result.state,true); state.sync=true; baselineSnapshot=BabyListState.copy(result.state);
-        writeLocal(result.state);
+        const merged=BabyListState.mergeStates(prepareSnapshot(),result.state);
+        applyState(merged,true); state.sync=true; baselineSnapshot=BabyListState.copy(merged);
+        writeLocal(merged);
         toast('Synced with the shared list'); setDot(true,'Synced just now');
       }
     }catch(e){ setDot(false); }

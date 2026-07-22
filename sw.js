@@ -1,14 +1,14 @@
 /* Baby List service worker — static shell only. API, authenticated, no-store,
    and cross-origin requests always bypass CacheStorage. */
-const VERSION = 'babylist-v300';
+const VERSION = 'babylist-v320';
 const CACHE_PREFIX = 'babylist-';
 const CORE = [
   './', './index.html', './labor.html', './reminders.html', './settings.html',
   './upbringing.html', './birthplan.html', './tracker.html', './emergency.html',
-  './sources.html', './assets/app.css', './assets/navbar.css?v=3.0.0',
-  './assets/enhance.css?v=3.0.0', './assets/state-core.js?v=3.0.0',
-  './assets/sync-core.js?v=3.0.0', './assets/tracker-core.js?v=3.0.0', './assets/app-shell.js?v=3.0.0',
-  './assets/notify.js?v=3.0.0', './assets/confetti.min.js',
+  './sources.html', './assets/app.css', './assets/navbar.css?v=3.2.0',
+  './assets/enhance.css?v=3.2.0', './assets/state-core.js?v=3.2.0',
+  './assets/sync-core.js?v=3.2.0', './assets/tracker-core.js?v=3.2.0', './assets/app-shell.js?v=3.2.0',
+  './assets/notify.js?v=3.2.0', './assets/confetti.min.js',
   './assets/fonts/fraunces-latin-opsz-normal.woff2',
   './assets/fonts/fraunces-latin-opsz-italic.woff2',
   './assets/fonts/nunito-sans-latin-normal.woff2',
@@ -19,7 +19,15 @@ const CORE = [
 const STATIC_PATHS = new Set(CORE.map(x => new URL(x, self.location.href).pathname));
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(VERSION).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting()));
+  /* Add each file on its own. addAll() rejects the whole install if a single
+     entry 404s (e.g. a partial deploy where one asset was missed), which would
+     silently leave the app with no offline cache at all. allSettled keeps
+     whatever succeeded. */
+  event.waitUntil(
+    caches.open(VERSION)
+      .then(cache => Promise.allSettled(CORE.map(u => cache.add(u))))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', event => {

@@ -35,8 +35,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=3.0.0" rel="stylesheet">
-<link href="./assets/enhance.css?v=3.0.0" rel="stylesheet">
+<link href="./assets/navbar.css?v=3.2.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=3.2.0" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -116,10 +116,10 @@ body{
   h1,h2,h3{page-break-after:avoid}
 }
 </style>
-<script src="./assets/state-core.js?v=3.0.0"></script>
-<script src="./assets/sync-core.js?v=3.0.0"></script>
-<script src="./assets/app-shell.js?v=3.0.0" defer></script>
-<script src="./assets/notify.js?v=3.0.0" defer></script>
+<script src="./assets/state-core.js?v=3.2.0"></script>
+<script src="./assets/sync-core.js?v=3.2.0"></script>
+<script src="./assets/app-shell.js?v=3.2.0" defer></script>
+<script src="./assets/notify.js?v=3.2.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-[env(safe-area-inset-bottom)]">
 
@@ -418,15 +418,16 @@ function cnRender(){
     const lab=document.createElement('span');
     lab.className='flex-none w-[118px] text-[12px] font-extrabold ink-soft uppercase tracking-[.04em]';
     lab.textContent=c.label;
+    const telStr=String(c.tel==null?'':c.tel);
     const tel=document.createElement('input');
-    tel.type='tel'; tel.value=c.tel; tel.placeholder='Phone number';
+    tel.type='tel'; tel.value=telStr; tel.placeholder='Phone number';
     tel.className='input input-sm input-bordered bg-base-200 font-semibold text-[16px] flex-1 min-w-0 tabular-nums';
     tel.setAttribute('aria-label',c.label+' phone number');
     tel.addEventListener('change',()=>{ c.tel=tel.value.trim(); cnSave(); cnRender(); });
     row.append(lab,tel);
-    if(c.tel){
+    if(telStr){
       const call=document.createElement('a');
-      call.href='tel:'+c.tel.replace(/[^+\d]/g,'');
+      call.href='tel:'+telStr.replace(/[^+\d]/g,'');
       call.className='btn btn-circle btn-sm btn-primary flex-none';
       call.setAttribute('aria-label','Call '+c.label);
       call.innerHTML='<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M5 4h4l1.5 4.5L8 10a12 12 0 006 6l1.5-2.5L20 15v4a1.5 1.5 0 01-1.7 1.5C10.5 19.6 4.4 13.5 3.5 5.7A1.5 1.5 0 015 4z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>';

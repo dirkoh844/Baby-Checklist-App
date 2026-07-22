@@ -34,8 +34,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=3.0.0" rel="stylesheet">
-<link href="./assets/enhance.css?v=3.0.0" rel="stylesheet">
+<link href="./assets/navbar.css?v=3.2.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=3.2.0" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -108,10 +108,10 @@ body{
 
 @media print{ *{background:#fff!important;color:#000!important} #tabNav{display:none!important} }
 </style>
-<script src="./assets/state-core.js?v=3.0.0"></script>
-<script src="./assets/sync-core.js?v=3.0.0"></script>
-<script src="./assets/app-shell.js?v=3.0.0" defer></script>
-<script src="./assets/notify.js?v=3.0.0" defer></script>
+<script src="./assets/state-core.js?v=3.2.0"></script>
+<script src="./assets/sync-core.js?v=3.2.0"></script>
+<script src="./assets/app-shell.js?v=3.2.0" defer></script>
+<script src="./assets/notify.js?v=3.2.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
@@ -255,7 +255,7 @@ const $=id=>document.getElementById(id);
 let toastTimer=null;
 function toast(m){ const w=$('toastWrap'); $('toast').textContent=m; w.classList.remove('hidden'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),1900); }
 
-const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='3.0.0';
+const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='3.2.0';
 function loadState(){
   try{ const v=localStorage.getItem(KEY); return BabyListState.sanitizeState(v?JSON.parse(v):{}); }
   catch(e){ return BabyListState.sanitizeState({}); }
@@ -455,6 +455,8 @@ $('babyReset').addEventListener('click',async()=>{
 
 /* ---------- what's new ---------- */
 const LOG=[
+  {v:'3.2.0',d:'Jul 2026',n:['Living touches: the header carries a slow aurora drift, the More menu’s pages rise in with a gentle stagger, and the tracker’s 7-day charts became raised tiles with day-by-day tooltips and colors tuned for readability in both themes','Sync safety: a new phone joining the family can no longer blank the due date, birth date, or emergency card, and a checkmark or log entry made while a sync was in flight is kept instead of quietly reverted','Fixes: saving an item note on a very first visit works, returning via Back never lands on a stuck More menu, the filter badge shows your restored filters after reload, "Since fed" can never read negative, and Clear filters appears for every active filter']},
+  {v:'3.1.0',d:'Jul 2026',n:['A flagship visual pass: premium card depth and edge-light, springier taps, a living header hairline, refined type, and a single high-contrast focus ring in both light and dark','The bottom-bar "More" button now opens a menu of the other pages instead of jumping straight to Settings','The checklist filters (phase, sort, show, hide) collapse behind one "Filters & sort" button, closed by default, with an active-filter count badge','Sync hardening: migrated items no longer resurrect after a delete and two devices always converge; reminders are at-least-once so one is never silently missed; plus required write preconditions, constant-time tokens, and tighter push-endpoint checks']},
   {v:'3.0.0',d:'Jul 2026',n:['Conflict-safe private sync with revision checks, field-level merging, deletion tombstones, isolated push subscriptions, and no API response caching','Stage-aware five-item navigation, stronger focus and touch states, and an always-visible urgent-warning shortcut','Tracker data-quality control, corrected sleep-window math, safe history rendering, complete archive backups, and a source-reviewed safety pass','Snapshot links and backups omit sync credentials; live-sync invites now require an explicit security warning']},
   {v:'2.12.6',d:'Jul 2026',n:['Upbringing: "How you’re really doing" now nests inside "Recovery & the fourth trimester" instead of sitting as its own card, so the fourth-trimester section covers both body and mind']},
   {v:'2.12.5',d:'Jul 2026',n:['Upbringing: "The first 30 days," "1–6 months," and "6–12 months" are now tap-to-expand sections too, so the whole page collapses to four phase headers']},
