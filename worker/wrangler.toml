@@ -1,10 +1,19 @@
-# Optional CLI deploy:  npx wrangler deploy
-#   npx wrangler kv namespace create LIST     -> paste the id below
-#   npx wrangler secret put TOKEN             -> paste your openssl rand -hex 24
 name = "baby-list-sync"
 main = "baby-list-worker.js"
-compatibility_date = "2026-01-01"
+compatibility_date = "2026-07-01"
 
-[[kv_namespaces]]
-binding = "LIST"
-id = "PASTE_YOUR_KV_NAMESPACE_ID"
+[durable_objects]
+bindings = [
+  { name = "FAMILY", class_name = "FamilyList" }
+]
+
+[[migrations]]
+tag = "v3-durable-state"
+new_sqlite_classes = ["FamilyList"]
+
+# Set these as secrets/variables before deployment:
+#   wrangler secret put TOKEN
+#   wrangler secret put PUSH_TOKEN
+#   wrangler secret put ALLOWED_ORIGINS
+# ALLOWED_ORIGINS is a comma-separated list, for example:
+# https://your-name.github.io,https://baby.example.com
