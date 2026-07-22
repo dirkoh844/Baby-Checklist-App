@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Birth Preferences — Baby List</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Birth preferences, in labor order, with the clinical reasoning behind each one.">
+<meta name="description" content="A personal VBAC birth-preferences draft with discussion prompts to review with the care team.">
 <meta name="theme-color" content="#10141F">
 <meta name="color-scheme" content="dark light">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,8 +36,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=2.12.5" rel="stylesheet">
-<link href="./assets/enhance.css?v=2.12.5" rel="stylesheet">
+<link href="./assets/navbar.css?v=3.0.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=3.0.0" rel="stylesheet">
 <script>
 addEventListener('DOMContentLoaded',function(){
   if(!window.__cssMissing) return;
@@ -130,14 +130,17 @@ body{
   body{padding-bottom:0!important}
 }
 </style>
-<script src="./assets/notify.js?v=2.12.5" defer></script>
+<script src="./assets/state-core.js?v=3.0.0"></script>
+<script src="./assets/sync-core.js?v=3.0.0"></script>
+<script src="./assets/app-shell.js?v=3.0.0" defer></script>
+<script src="./assets/notify.js?v=3.0.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
 <header class="navbar sticky top-0 z-30 bg-base-200/85 backdrop-blur-md border-b border-base-300 px-3.5 pt-[calc(env(safe-area-inset-top)+8px)] pb-2 min-h-0">
   <div class="w-full max-w-[640px] mx-auto flex items-center gap-2">
     <h1 class="font-display font-semibold text-[21px] leading-tight m-0 flex-1">Birth <em class="italic font-medium text-secondary">Preferences</em>
-      <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1">Planned VBAC · Sentara Norfolk General</span>
+      <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1">Planned VBAC draft · personalize before printing</span>
     </h1>
     <div class="icobtns flex gap-1.5 flex-none">
       <a href="./emergency.html" class="btn btn-circle btn-sm btn-soft btn-error flex-none hidden" id="sosBtn" aria-label="Warning signs and emergency contacts" title="Warning signs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></a>
@@ -149,7 +152,11 @@ body{
 <div class="w-full max-w-[640px] mx-auto px-3.5">
 
   <div class="alert bg-base-100 border-2 border-error mt-4 py-3 text-[13.5px] font-semibold leading-relaxed block">
-    <p class="m-0"><b class="text-error uppercase text-[11px] tracking-widest block mb-1">In a true emergency</b>"Proceed without delay. We trust you." Everything below applies to non-emergency care only.</p>
+    <p class="m-0"><b class="text-error uppercase text-[11px] tracking-widest block mb-1">In an emergency</b>Prioritize stabilization and explain what is happening as soon as feasible. Preferences still apply wherever the clinical situation allows.</p>
+  </div>
+
+  <div class="alert bg-base-100 border border-warning mt-3 py-3 text-[12.5px] leading-relaxed block">
+    <p class="m-0"><b class="text-warning">Personal draft:</b> confirm the hospital, support-person wording, maternal lab results, VBAC plan, medication choices, newborn care, and local policies with the obstetric and pediatric teams. This page is not legal or medical advice.</p>
   </div>
 
   <div id="bpTools" class="flex gap-2 mt-3">
@@ -163,7 +170,7 @@ body{
         <li><b class="text-base-content">Consent before anything</b> non-emergency. Discuss alternatives first.</li>
         <li><b class="text-base-content">No Pitocin, no misoprostol, no prostaglandins.</b> Mechanical ripening (Foley / Cook) only.</li>
         <li><b class="text-base-content">No episiotomy.</b> Warm compresses; natural tearing accepted.</li>
-        <li><b class="text-base-content">No erythromycin eye ointment.</b> Refusal form prepared.</li>
+        <li><b class="text-base-content">Erythromycin decision documented.</b> Review benefits, maternal screening, Virginia requirements, and hospital process prenatally.</li>
         <li><b class="text-base-content">VBAC:</b> continuous wireless monitoring, and we are watching for rupture signs with you.</li>
       </ul>
     </div>
@@ -172,16 +179,16 @@ body{
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-gold">
     <div class="card-body p-4 gap-2">
       <h2 class="font-display font-semibold text-[17.5px] m-0" style="color:var(--color-warning)">Settle these five before labor</h2>
-      <p class="m-0 text-[13px] leading-relaxed ink-soft">Everything else the hospital will either agree to or decide in the room. These five change the outcome only if you handle them <i>now</i>, at a prenatal visit.</p>
+      <p class="m-0 text-[13px] leading-relaxed ink-soft">These choices depend most on individual VBAC history, hospital capability, and current clinical guidance. Discuss them at a prenatal visit while there is time to understand options and document a fallback.</p>
       <details class="topic" style="--topic-a:var(--color-warning)">
         <summary>The five: Pitocin, citations, OR access, monitoring, HBsAg</summary>
         <div class="topic-body">
       <ol class="m-0 pl-4 leading-relaxed list-decimal">
         <li><b class="text-base-content">The Pitocin position.</b> Decide what happens if labor arrests, before it does.</li>
-        <li><b class="text-base-content">The two legal citations.</b> Both are wrong for what they are cited for (see sections 0 and 3).</li>
-        <li><b class="text-base-content">Husband in the OR during spinal placement.</b> An anesthesia decision, and the likeliest refusal.</li>
+        <li><b class="text-base-content">Consent and refusal wording.</b> Keep it plain; review the hospital's patient-rights policy rather than presenting this draft as legal advice.</li>
+        <li><b class="text-base-content">Support person in the OR during spinal placement.</b> An anesthesia decision, and a likely point of discussion.</li>
         <li><b class="text-base-content">Wireless monitoring.</b> Confirm the unit has it and reserve one.</li>
-        <li><b class="text-base-content">The HBsAg result.</b> In hand at admission, and the Hep B question answers itself.</li>
+        <li><b class="text-base-content">The HBsAg result and Hep B plan.</b> Bring the result and discuss the current AAP and CDC recommendations with the pediatrician.</li>
       </ol>
         </div>
       </details>
@@ -192,13 +199,13 @@ body{
     <div class="card-body p-4 gap-2">
       <h2 class="font-display font-semibold text-[15px] m-0">What the badges mean</h2>
       <details class="topic" style="--topic-a:var(--color-info)">
-        <summary>The four verdicts, from "expect a yes" to "expect pushback"</summary>
+        <summary>The four discussion levels, from common to complex</summary>
         <div class="topic-body">
       <div class="flex flex-col gap-1.5 text-[12.5px] leading-snug">
-        <div class="flex items-center gap-2"><span class="badge badge-success badge-sm font-bold flex-none bpb">Routine here</span><span class="ink-soft">Standard practice or guideline-backed. Expect a yes.</span></div>
+        <div class="flex items-center gap-2"><span class="badge badge-success badge-sm font-bold flex-none bpb">Often routine</span><span class="ink-soft">Common or guideline-aligned, but local practice and the clinical situation still matter.</span></div>
         <div class="flex items-center gap-2"><span class="badge badge-info badge-sm font-bold flex-none bpb">Usually yes — ask</span><span class="ink-soft">Commonly accommodated, but confirm it. Availability or staffing can decide it.</span></div>
         <div class="flex items-center gap-2"><span class="badge badge-warning badge-sm font-bold flex-none bpb">Settle prenatally</span><span class="ink-soft">A judgment or paperwork call. Fix it at a prenatal visit, not in triage.</span></div>
-        <div class="flex items-center gap-2"><span class="badge badge-error badge-sm font-bold flex-none bpb">Expect pushback</span><span class="ink-soft">Real friction. Know the trade-off and your fallback before you are asked.</span></div>
+        <div class="flex items-center gap-2"><span class="badge badge-error badge-sm font-bold flex-none bpb">Discuss carefully</span><span class="ink-soft">A preference with meaningful trade-offs. Make an individualized fallback with the relevant team.</span></div>
       </div>
         </div>
       </details>
@@ -211,38 +218,13 @@ body{
         <div class="topic-body">
 <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;These preferences are the conditional terms of my consent — for me and my baby. In any non-emergency, please obtain explicit verbal consent before any intervention, medication, or procedure. Please discuss alternatives first.&quot;</p>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;For non-emergency care, please explain the recommendation, material benefits and risks, and reasonable alternatives, then ask for my consent before an intervention, medication, or procedure.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Informed consent is the legal baseline, not a favor. Federal Conditions of Participation (42 CFR 482.13) give a patient the right to participate in care planning and to refuse treatment. Framing preferences as the terms of consent is simply how consent works, and stating it up front saves the team from guessing at 3 a.m.</p>
-      </div>
-      </details>
-      </article>
-      <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
-      <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-warning badge-sm font-bold flex-none ml-auto bpb">Settle prenatally</span>
-      </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Provided under VA Health Care Decisions Act and 12VAC5-20-100. Refusals require explicit verbal authorization to override outside of true emergency.&quot;</p>
-      <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
-      <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">The Virginia Health Care Decisions Act (Va. Code 54.1-2981 et seq.) is solid ground for informed refusal.</p>
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> <b>Fix this citation before you print.</b> 12VAC5-20-100 is the informed-consent section of Virginia's <i>Regulations for the Conduct of Human Research</i>. It governs research subjects, not maternity care. A risk-management nurse who looks it up can use it to wave off the whole legal framing. Drop it, or replace it with 42 CFR 482.13 and Sentara's own Patient Rights.</p>
-      </div>
-      </details>
-      </article>
-      <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
-      <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
-      </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;On file in MyChart.&quot;</p>
-      <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
-      <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">The night nurse reads the chart, not the paper in your bag. Ask that it be attached where the L&D summary shows it, not buried in scanned documents, and bring two printed copies anyway: one for the nurse, one taped where the team can see it.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Federal hospital patient-rights rules address participation in care planning and informed decisions. Plain, collaborative wording is easier to use at the bedside than a legal conclusion; ask the hospital how it documents consent and refusal.</p>
       </div>
       </details>
       </article>
@@ -250,11 +232,35 @@ body{
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
       <span class="badge badge-info badge-sm font-bold flex-none ml-auto bpb">Usually yes — ask</span>
       </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;No medical, nursing, or midwifery students. Introduce every caregiver by name and role (per Sentara Patient Rights). Residents per OB-practice arrangement — verbal consent before each exam or procedure.&quot;</p>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;If I decline a non-emergency recommendation after discussion, please document the conversation and my decision. If circumstances change, explain what changed and ask me again.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Sentara Norfolk General is a teaching hospital. Declining students is routinely honored and costs the unit nothing. Residents are different: they are part of the practice's coverage, so expect them at the bedside. Asking for consent before each resident exam is reasonable and matches Sentara's own patient rights language. Ask the OB now which residents cover the practice.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Documentation gives the next shift an accurate record and leaves room to revisit a decision if the facts change. The prior draft cited 12VAC5-20-100, but that section governs human-subject research and is not authority for routine maternity care, so it has been removed.</p>
+      </div>
+      </details>
+      </article>
+      <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
+      <div class="flex items-start gap-2 flex-wrap mb-1.5">
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
+      </div>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;On file in MyChart.&quot;</p>
+      <details class="topic expl" style="--topic-a:var(--color-secondary)">
+      <summary>Why / what to discuss</summary>
+      <div class="topic-body">
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">An electronic-chart copy helps each shift find the preferences. Ask where patient preferences are displayed in the hospital's record, and bring two printed copies as a practical backup.</p>
+      </div>
+      </details>
+      </article>
+      <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
+      <div class="flex items-start gap-2 flex-wrap mb-1.5">
+      <span class="badge badge-info badge-sm font-bold flex-none ml-auto bpb">Usually yes — ask</span>
+      </div>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;No medical, nursing, or midwifery students. Please introduce every caregiver by name and role. Residents per the OB-practice arrangement; ask before each exam or procedure.&quot;</p>
+      <details class="topic expl" style="--topic-a:var(--color-secondary)">
+      <summary>Why / what to discuss</summary>
+      <div class="topic-body">
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Teaching roles and consent processes vary by hospital and practice. Ask prenatally who may participate, which clinicians are part of the covering team, and how a preference to decline student involvement is recorded.</p>
       </div>
       </details>
       </article>
@@ -264,10 +270,10 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Saline lock — no continuous IV fluids. 18-gauge, non-dominant forearm. Hydrating by mouth.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">For any trial of labor after cesarean the unit wants reliable large-bore access in case of an emergent cesarean or hemorrhage. An 18-gauge saline lock gives them exactly that while leaving her free to walk, so this is an easy yes. Oral hydration in labor is appropriate for low-risk patients.</p>
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> Two things reverse it: an epidural needs a fluid bolus first, and if oxytocin is ever accepted it runs in fluids. Expect "no continuous IV" to bend if either happens.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">IV-access expectations during TOLAC vary by unit and individual risk. A saline lock can preserve mobility while keeping access available, but the team should choose placement and gauge. ACOG supports moderate amounts of clear liquids for many uncomplicated labors; anesthesia, medication, or clinical concerns can change that plan.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> Epidural, oxytocin, dehydration, bleeding, or another clinical change may require fluids or different access. Ask what would trigger the change.</p>
       </div>
       </details>
       </article>
@@ -283,20 +289,20 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Continuous wireless EFM — preserves mobility. No scalp electrode unless external uninterpretable.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">This is the single most important VBAC safety measure, and she is asking for it, not declining it. An abnormal fetal heart rate tracing is the most common and usually the earliest sign of uterine rupture, so continuous monitoring is the thing that catches a rupture in time. She is only asking for the wireless version so monitoring and movement can coexist. Her condition on the scalp electrode (only when the external trace cannot be read) is the standard indication anyway, so there is nothing to argue about.</p>
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> Telemetry units are limited and get claimed on a busy floor. Confirm SNGH has wireless monitoring and ask them to reserve one at admission.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Continuous fetal-heart-rate monitoring is commonly recommended during TOLAC because tracing changes can be a sign of uterine rupture or another problem. Wireless telemetry can preserve mobility when the unit has reliable equipment. Ask how the team handles an unreadable external tracing and when an internal monitor would be considered.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> Wireless telemetry availability varies and units may be limited. Confirm the hospital's equipment and process before labor; have a mobility plan for wired monitoring too.</p>
       </div>
       </details>
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Freedom of movement. Walking, birth ball, peanut ball, squat bar, any position welcome.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Upright and mobile positions in the first stage shorten labor and are a first-line comfort measure. Fully compatible with wireless monitoring. Ask for the squat bar to be in the room before pushing rather than hunted down during it.</p>
       </div>
@@ -304,13 +310,13 @@ body{
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Minimize cervical exams. Ask before each one.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Every exam after the membranes rupture adds infection risk, and no exam predicts when birth will happen. She is not refusing them, only asking that each one have a reason and her consent. Easy yes.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Repeated cervical exams after membranes rupture can contribute to infection risk. Exams can still provide clinically useful information, so ask what question each exam will answer and consent to it in context.</p>
       </div>
       </details>
       </article>
@@ -320,56 +326,56 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;No artificial rupture of membranes (AROM). Membranes to rupture on their own.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">AROM shortens labor modestly at best, and it starts an infection clock that increases the pressure toward augmentation and a delivery deadline. Declining it is low risk and reasonable.</p>
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> If labor stalls, AROM is usually the <i>first</i> thing offered as the alternative to Pitocin. If both are declined, the remaining options are time or a cesarean. Decide in advance which of the two you would rather accept, because you will be asked in the moment.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Artificial rupture can sometimes be used to augment labor, but its benefit and risks depend on dilation, fetal position, infection context, and the rest of the plan. Ask the clinician what problem it is intended to solve and what alternatives are reasonable at that moment.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> If labor stalls and both AROM and oxytocin are declined, continued observation may or may not remain safe, and a repeat cesarean may become the recommended fallback. Discuss that pathway before labor.</p>
       </div>
       </details>
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
       <span class="badge badge-error badge-sm font-extrabold uppercase tracking-wide flex-none">FIRM — VBAC SAFETY</span>
-      <span class="badge badge-warning badge-sm font-bold flex-none ml-auto bpb">3 easy yeses · 1 fight</span>
+      <span class="badge badge-warning badge-sm font-bold flex-none ml-auto bpb">Separate decisions</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;No Pitocin (induction or augmentation). No misoprostol (Cytotec). No prostaglandins (Cervidil / Prepidil). Induction, if necessary: mechanical ripening (Foley / Cook) only.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">This block is three easy wins and one real fight, so split it when you talk to the OB.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">These methods do not have identical evidence or risk. Review them one at a time with the obstetric team and tie the final plan to the prior uterine incision, reason for induction, cervical exam, and hospital protocol.</p>
       <div class="overflow-x-auto mt-2"><table class="table table-sm bptab"><tbody>
-      <tr><td class="font-bold whitespace-nowrap align-top">Misoprostol (Cytotec)<br><span class="badge badge-success badge-xs font-bold mt-1 bpb">Routine here</span></td><td class="text-[12.5px] leading-relaxed"><b>ACOG agrees with her.</b> ACOG states misoprostol should not be used for cervical ripening or induction at term in patients with a prior cesarean (Level A). A randomized trial of misoprostol for TOLAC induction was stopped early for safety after ruptures. Her refusal <i>is</i> the guideline.</td></tr>
-      <tr><td class="font-bold whitespace-nowrap align-top">Prostaglandins (Cervidil / Prepidil)<br><span class="badge badge-success badge-xs font-bold mt-1 bpb">Routine here</span></td><td class="text-[12.5px] leading-relaxed">Evidence is inconsistent and several large studies show a higher rupture rate with prostaglandin induction after a cesarean; ACOG declines to make a definitive recommendation. Refusing is comfortably within the evidence, and most units avoid them in a TOLAC anyway.</td></tr>
-      <tr><td class="font-bold whitespace-nowrap align-top">Mechanical (Foley / Cook)<br><span class="badge badge-success badge-xs font-bold mt-1 bpb">Routine here</span></td><td class="text-[12.5px] leading-relaxed"><b>This is the right ask.</b> ACOG notes no compelling evidence of increased rupture risk with transcervical catheters and says they may be an option for TOLAC candidates with an unfavorable cervix. Naming the alternative you <i>will</i> accept is what makes a refusal easy to say yes to.</td></tr>
-      <tr><td class="font-bold whitespace-nowrap align-top">Pitocin (oxytocin)<br><span class="badge badge-error badge-xs font-bold mt-1 bpb">Expect pushback</span></td><td class="text-[12.5px] leading-relaxed"><b>Here is the fight.</b> Oxytocin remains the mainstay both for induction and for treating a stalled labor in TOLAC, and ACOG does not prohibit it. The risk looks dose-dependent rather than all-or-nothing: a 2025 meta-analysis found higher rupture risk with escalation intervals shorter than 30 minutes and maximum doses above 20 mU/min. Expect the OB to push, and expect it hardest at the moment labor arrests.</td></tr>
+      <tr><td class="font-bold whitespace-nowrap align-top">Misoprostol (Cytotec)<br><span class="badge badge-success badge-xs font-bold mt-1 bpb">Often avoided</span></td><td class="text-[12.5px] leading-relaxed">Current ACOG VBAC guidance states that misoprostol should not be used for cervical ripening or induction at term after a prior cesarean. Confirm how that guidance applies to this pregnancy.</td></tr>
+      <tr><td class="font-bold whitespace-nowrap align-top">Other prostaglandins (for example, dinoprostone)<br><span class="badge badge-warning badge-xs font-bold mt-1 bpb">Discuss carefully</span></td><td class="text-[12.5px] leading-relaxed">Agents and evidence differ, and hospital protocols may be more restrictive than a general guideline. Ask the obstetric team which agents it uses in TOLAC, the estimated risks, and the alternatives.</td></tr>
+      <tr><td class="font-bold whitespace-nowrap align-top">Mechanical (Foley / Cook)<br><span class="badge badge-info badge-xs font-bold mt-1 bpb">Ask if appropriate</span></td><td class="text-[12.5px] leading-relaxed">A transcervical catheter may be an option for some TOLAC candidates with an unfavorable cervix. Suitability depends on the individual situation and unit protocol.</td></tr>
+      <tr><td class="font-bold whitespace-nowrap align-top">Pitocin (oxytocin)<br><span class="badge badge-error badge-xs font-bold mt-1 bpb">Discuss carefully</span></td><td class="text-[12.5px] leading-relaxed">Oxytocin can be considered for induction or augmentation in some TOLACs, but it changes the risk conversation and monitoring plan. There is no app-selected dose or escalation schedule that is appropriate for every patient.</td></tr>
       </tbody></table></div>
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> <b>Know the trade-off before you are 8 cm and exhausted.</b> If labor arrests and both Pitocin and AROM are refused, the realistic path is a repeat cesarean. A middle position worth raising with the OB now, entirely her call: accept augmentation only under a low-dose protocol, escalation no more often than every 30 minutes, a ceiling near 20 mU/min, and only for a defined arrest. That keeps the VBAC alive while staying in the safest part of the dose-response curve.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> Ask the obstetric team to document which methods are acceptable, what clinical trigger would lead to each, how risk is monitored, and what happens if labor arrests while AROM and oxytocin remain declined. Do not use a dose ceiling copied from an app as an individualized prescription.</p>
       </div>
       </details>
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Epidural decision pending. Offer non-pharmacologic first (position, shower, breathing, counter-pressure) and nitrous oxide if available. Do not offer epidural — I will ask.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">"Do not offer" is an easy request for a nurse to honor; put it on the whiteboard. Worth telling the team what is <i>not</i> being said here: an epidural does not mask uterine rupture, and ACOG considers epidural analgesia acceptable during a trial of labor, partly because good pain control helps a woman keep going. If she asks for one at hour 20, that is not a VBAC safety failure.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">A request not to offer an epidural can be written on the room board while leaving the option available on request. Epidural analgesia can be used during TOLAC; ask anesthesia how it changes mobility, fluids, monitoring, and urgent-cesarean preparation.</p>
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> Nitrous oxide availability varies by unit and is not guaranteed. Ask on the tour, not in triage.</p>
       </div>
       </details>
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-secondary badge-sm font-extrabold uppercase tracking-wide flex-none">Signs of uterine rupture we are watching for</span>
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-secondary badge-sm font-extrabold uppercase tracking-wide flex-none">VBAC monitoring communication</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Severe persistent scar pain, sudden change in pain quality, hematuria, recession of presenting part, abnormal FHR tracing, maternal tachycardia, loss of contraction pattern, sudden vaginal bleeding. We will alert nursing immediately.&quot;</p>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Please explain the VBAC monitoring plan and tell us promptly about concerning changes. We will report new severe pain, bleeding, faintness, breathing trouble, or any sudden change without trying to interpret it ourselves.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">This list is the most persuasive thing in the whole document. It tells the team she understands the risk she is accepting and that she is a partner in catching it, which is exactly what makes the rest of the plan credible rather than adversarial. The earliest sign is usually the tracing, which is the argument for the wireless monitor. Ask the nurse to tell you promptly if the tracing changes.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Uterine rupture is uncommon but time-sensitive and is assessed by the clinical team using the fetal tracing, maternal signs, labor progress, and symptoms together. A lay symptom list cannot rule it in or out; the useful preference is rapid two-way communication.</p>
       </div>
       </details>
       </article>
@@ -381,13 +387,13 @@ body{
         <div class="topic-body">
 <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Spontaneous, open-glottis pushing on my urge and timing. No directed counting. Any position as tracing permits.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Directed Valsalva counting has no proven benefit; spontaneous pushing performs at least as well, with less perineal trauma and better fetal oxygenation. Her own clause, "as tracing permits," is what makes this an easy yes: she has already conceded the safety condition.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">ACOG supports individualized pushing and positions when maternal and fetal status permit. Ask the bedside team to coach only when useful and to explain if the tracing, exhaustion, epidural effects, or an urgent delivery changes the approach.</p>
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> With an epidural, position options narrow to what she can hold safely.</p>
       </div>
       </details>
@@ -395,36 +401,36 @@ body{
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
       <span class="badge badge-error badge-sm font-extrabold uppercase tracking-wide flex-none">FIRM</span>
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;No episiotomy. Perineal support and warm compresses preferred. I accept natural tearing.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">ACOG recommends restricted rather than routine episiotomy, and routine cutting increases severe perineal injury. Warm compresses on the perineum in the second stage reduce third- and fourth-degree tears. She is asking for current best practice, so this should be a yes without discussion.</p>
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> A shoulder dystocia or an operative (vacuum or forceps) delivery can create a genuine indication. Decide whether you want an explicit carve-out in the text, or you are content to rely on the emergency clause at the top.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Routine episiotomy is not recommended. Warm compresses and perineal support may be offered during the second stage. Ask the clinician to explain any proposed episiotomy and why it is thought necessary in that moment.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> An urgent operative delivery can change the risk-benefit assessment. The emergency and consent language at the top already leaves room for that conversation.</p>
       </div>
       </details>
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Delayed cord clamping &gt;=60 sec, or until cord stops pulsing (per ACOG).&quot;</p>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Delay cord clamping for at least 30–60 seconds when the baby is vigorous and the clinical situation allows; discuss a longer delay if appropriate.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">ACOG recommends delaying clamping at least 30 to 60 seconds in vigorous term infants; it raises the newborn's iron stores. This is already standard practice, and her citation is correct.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">ACOG recommends delaying clamping for at least 30–60 seconds in vigorous term and preterm infants. A longer delay is a separate preference to discuss; it should not be attributed to ACOG's minimum recommendation.</p>
       </div>
       </details>
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Cord cutting: my husband.&quot;</p>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Cord cutting: my support person, if clinically feasible.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Routine, and usually offered without being asked.</p>
       </div>
@@ -438,64 +444,64 @@ body{
         <div class="topic-body">
 <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Immediate, uninterrupted skin-to-skin — drying and APGAR on my chest. No separation.&quot;</p>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;When parent and baby are stable, immediate skin-to-skin with drying and initial observation on my chest. Avoid separation when clinically appropriate; explain first if circumstances allow.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">For a vigorous newborn, drying, stimulation, and APGAR scoring are all done on the chest; nothing is lost clinically. Skin-to-skin stabilizes temperature, blood sugar, and heart rate and improves breastfeeding. Standard at any center doing family-centered care.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">When parent and newborn are stable, many teams can provide drying, stimulation, initial observation, and Apgar scoring during skin-to-skin. Ask what the local unit does at the bedside and what clinical findings would require separation.</p>
       <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> A baby who needs resuscitation goes to the warmer. That is the emergency clause working as intended, not a broken promise.</p>
       </div>
       </details>
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Protect the golden hour — defer weighing, measuring, and non-essential procedures 60+ min.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Nothing in the newborn assessment is time-critical for a stable baby. Weights and measurements keep. Say it once at delivery and again at the shift change, because the second nurse did not hear the first conversation.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">For a stable newborn, routine weighing and measurements can often wait while required assessments and treatments remain on schedule. Ask which care can happen at the bedside and what would require an interruption.</p>
       </div>
       </details>
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-error badge-sm font-extrabold uppercase tracking-wide flex-none">FIRM</span>
-      <span class="badge badge-error badge-sm font-bold flex-none ml-auto bpb">Expect pushback</span>
+      <span class="badge badge-warning badge-sm font-extrabold uppercase tracking-wide flex-none">DECIDE</span>
+      <span class="badge badge-warning badge-sm font-bold flex-none ml-auto bpb">Settle prenatally</span>
       </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;No erythromycin eye ointment. Prepare refusal form (VA law 12VAC5-90-140).&quot;</p>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Please review newborn erythromycin prophylaxis with us before administration, including its benefits, maternal screening results, Virginia requirements, and the hospital's consent or declination process. Document our final decision.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Understand why they will not drop this casually: the ointment prevents gonococcal ophthalmia neonatorum, which can scar the cornea and blind a newborn within roughly 24 to 48 hours. The USPSTF grades universal prophylaxis A. <b>Your strongest argument is the one that is missing from the document:</b> a negative prenatal gonorrhea and chlamydia screen. With a negative maternal screen, the infection this prevents is effectively off the table. Bring the lab result, do not just assert it.</p>
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> <b>Second citation problem.</b> 12VAC5-90-140 is the regulation that <i>requires</i> the clinician to place the ointment. It is a duty on the provider, not a parental opt-out, and it contains no refusal mechanism. In practice, a documented parental refusal is accepted and Sentara will hand you a declination form to sign. But citing this rule as your <i>authority to refuse</i> invites an immediate correction. Rest the refusal on informed consent and the negative screen instead.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Erythromycin helps prevent gonococcal eye infection, which can cause severe eye injury. CDC guidance recommends universal neonatal ocular prophylaxis because not every pregnant patient is screened and infection can be acquired after an earlier negative test. A documented negative maternal screen is relevant context, but it does not make the risk zero; bring the result and discuss timing and exposure risk with the pediatric team.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Virginia note:</b> 12VAC5-90-140 directs the attending clinician to ensure erythromycin is administered. It is not an opt-out statute and does not describe a refusal process. Hospital handling of a parental declination may vary, so do not cite this rule as authority to refuse; ask the hospital and pediatrician before delivery.</p>
       </div>
       </details>
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Delay first bath 24+ hours, or decline entirely (preserving vernix).&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">WHO recommends delaying the first bath at least 24 hours; delayed bathing improves temperature and blood-sugar stability and breastfeeding rates. Many US units already default to 12 to 24 hours, so this is often already their policy.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">WHO recommends delaying the first bath for at least 24 hours while keeping the newborn warm. Ask the local unit about timing, temperature stability, and any clinical reason to bathe sooner.</p>
       </div>
       </details>
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Baby stays with me — all assessments in room. Husband accompanies baby if transported.&quot;</p>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Baby stays with me when clinically appropriate; please perform routine assessments in the room. My support person accompanies the baby if transport is needed and policy allows.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Couplet care is the standard model; the exam comes to the room. The second sentence is the one that matters, so say it out loud at the moment anyone picks the baby up.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Many units support rooming-in and bedside assessments, but capabilities and clinical needs vary. Confirm what can happen in the room and how a support person can accompany the baby if separation is necessary.</p>
       </div>
       </details>
       </article>
@@ -505,10 +511,10 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Exclusive breastfeeding. No pacifiers, bottles, or formula without my consent. Lactation consult within 24 hrs.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Standard in any Baby-Friendly-aligned unit, and lactation consults are usually available same day. Ask for the consult to be ordered at admission rather than requested afterward.</p>
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> If the baby has documented low blood sugar or excessive weight loss, they will recommend supplementation, and they should. Consent is still yours. Decide now whether your first choice would be expressed colostrum, donor milk, or formula, so the answer is ready.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Feeding-support availability and timing vary by hospital. Ask during prenatal planning how to request lactation help and what coverage is available overnight or on weekends.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> A clinician may recommend supplementation for low blood sugar, excessive weight loss, dehydration, or another concern. Ask for the indication and feeding plan, and discuss whether expressed colostrum, donor milk, or formula is available and appropriate.</p>
       </div>
       </details>
       </article>
@@ -524,10 +530,10 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Hepatitis B vaccine (birth dose): pending — confirming HBsAg-negative status. Explicit consent required before administration.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Expect a firm recommendation. AAP and CDC advise the birth dose within 24 hours for every medically stable newborn regardless of maternal status, because it is a safety net against unknown status, lab error, and household exposure. Your position is a deferral tied to a lab result rather than a refusal, which is defensible and easy to explain.</p>
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> Have the HBsAg result in hand at admission and the question resolves itself. Otherwise expect a deferral or declination form, and expect the pediatric team to raise it again at discharge.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">As reviewed July 2026, AAP continues to recommend a universal birth dose within 24 hours for medically stable newborns. CDC's December 2025 guidance calls for an individual shared decision when the mother is confirmed HBsAg-negative, while babies of HBsAg-positive or unknown-status mothers still need time-critical prophylaxis. Ask the pediatrician to explain which schedule they recommend and why.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> Bring the verified HBsAg result, but do not treat it as the whole decision. Maternal status, household exposure, follow-up reliability, current recommendations, and hospital policy all matter. Record the agreed plan before delivery when possible.</p>
       </div>
       </details>
       </article>
@@ -539,26 +545,26 @@ body{
         <div class="topic-body">
 <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Routine here</span>
+      <span class="badge badge-success badge-sm font-bold flex-none ml-auto bpb">Often routine</span>
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;True emergency: proceed without delay. We trust you.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Do not underestimate this line. It is the reason the team will take the rest of the document seriously instead of filing it as a fight. Keep it at the top of the page and say it out loud on admission.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">This sentence makes the emergency exception unmistakable while preserving preferences when circumstances allow. Keep it near the top and review it with the admitting nurse.</p>
       </div>
       </details>
       </article>
       <article class="bpi rounded-xl border border-base-300 p-3.5" style="background:var(--color-base-100)">
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
-      <span class="badge badge-error badge-sm font-bold flex-none ml-auto bpb">Expect pushback</span>
+      <span class="badge badge-error badge-sm font-bold flex-none ml-auto bpb">Discuss carefully</span>
       </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;My husband present in OR throughout — including during spinal / epidural placement.&quot;</p>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;I would like my support person present in the OR, including during spinal or epidural placement, if the anesthesia team and safety policy allow.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">This one is an anesthesia decision, not the OB's, and it is the item most likely to be refused. Many units keep the partner outside until the block is placed and the drape is up, citing sterile field and the anesthesiologist's need for an unobstructed patient.</p>
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> <b>Settle this prenatally with the anesthesia group, not on the day.</b> Ask for the answer to be documented in the chart. If they will not agree, know it in advance rather than discovering it at the OR door.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">The anesthesia team and operating-room policy determine when a support person may enter. Some units wait until neuraxial anesthesia is placed and the sterile field is ready; practices vary.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> Ask the anesthesia group prenatally, document the answer in the chart, and make a backup support plan in case clinical circumstances or staffing change.</p>
       </div>
       </details>
       </article>
@@ -568,9 +574,9 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Clear drape preferred — I want to see baby being born.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Increasingly common and usually granted when requested ahead of time. The catch is stock: many ORs do not keep clear drapes. Ask whether SNGH has them, and whether you may bring your own if not.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Availability and sterile-field rules vary. Ask the hospital in advance whether clear drapes are stocked and whether outside equipment is prohibited.</p>
       </div>
       </details>
       </article>
@@ -580,9 +586,9 @@ body{
       </div>
       <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Delayed cord clamping &gt;=60 sec if clinically possible.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Often possible in a non-emergent repeat cesarean, and her qualifier ("if clinically possible") already concedes the exception. Easy yes.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">ACOG recommends delaying cord clamping for at least 30 to 60 seconds for vigorous term and preterm infants. It may also be possible during cesarean birth; ask how the local team handles clinical exceptions.</p>
       </div>
       </details>
       </article>
@@ -590,12 +596,12 @@ body{
       <div class="flex items-start gap-2 flex-wrap mb-1.5">
       <span class="badge badge-info badge-sm font-bold flex-none ml-auto bpb">Usually yes — ask</span>
       </div>
-      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Immediate skin-to-skin in OR (husband if I cannot), continued in recovery. No nursery. Husband accompanies baby if separated.&quot;</p>
+      <p class="pref m-0 text-[14.5px] font-semibold leading-snug">&quot;Skin-to-skin in the OR when parent and baby are stable (my support person if I cannot), continued in recovery. Keep the baby with us when clinically appropriate; my support person accompanies the baby if separated and policy allows.&quot;</p>
       <details class="topic expl" style="--topic-a:var(--color-secondary)">
-      <summary>Why, for the doctor — plus a heads-up</summary>
+      <summary>Why / what to discuss</summary>
       <div class="topic-body">
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">This is a family-centered cesarean, and it is a staffing question more than a policy one: it needs a nurse assigned to the baby at the mother's chest. Centers that do it routinely need to know in advance to staff it.</p>
-      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> Confirm prenatally that SNGH does skin-to-skin in the OR and put it in the chart. Asking during a cesarean is too late to arrange a person.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed ink-soft">Operating-room skin-to-skin depends on parent and newborn stability, team workflow, and available staff. Prenatal planning gives the unit time to explain its process and alternatives.</p>
+      <p class="m-0 mt-2 text-[12.5px] leading-relaxed rounded-lg p-2.5 bpflag"><b>Heads up:</b> Confirm prenatally whether the hospital supports OR skin-to-skin and what staffing is required, then put the preference in the chart.</p>
       </div>
       </details>
       </article>
@@ -604,21 +610,11 @@ body{
 
 
   <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
-    <p class="m-0">Every preference from the plan is reproduced here in full. The "why" and the badges are added context for the conversation with your OB, drawn from ACOG, AAP, CDC, USPSTF, and WHO guidance. They are not medical advice and they do not override your care team, whose judgment governs in an emergency. Hospital policy varies: confirm anything marked <b class="text-base-content">Settle prenatally</b> or <b class="text-base-content">Expect pushback</b> with the OB and the anesthesia group before labor.</p>
+    <p class="m-0">Personal draft, source-reviewed July 21, 2026. The explanations and badges are conversation prompts, not medical or legal advice. Clinical circumstances and hospital policy vary; review every preference—especially anything marked <b class="text-base-content">Settle prenatally</b> or <b class="text-base-content">Discuss carefully</b>—with the obstetric, anesthesia, and pediatric teams before labor. <a class="link link-primary font-bold" href="./sources.html">Safety and policy sources</a>.</p>
   </footer>
 </div>
 
-<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
-  <div class="max-w-[640px] mx-auto grid grid-cols-7">
-    <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="3.9" y="3.9" width="16.2" height="16.2" rx="4.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 12.15l2.55 2.55 4.85-5.35" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
-    <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.4S4.6 15.8 4.6 10A4.2 4.2 0 0 1 12 7.5a4.2 4.2 0 0 1 7.4 2.5c0 5.8-7.4 10.4-7.4 10.4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.7 11.7h2.1l1.15-2.1 1.55 3.9 1-1.8h2.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
-    <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" aria-current="page" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="8.7" y="3.3" width="6.6" height="3.5" rx="1.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.7 5.05H7.05A1.65 1.65 0 0 0 5.4 6.7v11.65A1.65 1.65 0 0 0 7.05 20h9.9a1.65 1.65 0 0 0 1.65-1.65V6.7a1.65 1.65 0 0 0-1.65-1.65H15.3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16.9s-3.05-1.85-3.05-4a1.75 1.75 0 0 1 3.05-1.2 1.75 1.75 0 0 1 3.05 1.2c0 2.15-3.05 4-3.05 4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Birth Plan</a>
-    <a href="./emergency.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></span>Warning</a>
-    <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.5v-6.7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 13.8c0-3.95-2.8-6.25-6.85-6.25 0 3.95 2.8 6.25 6.85 6.25z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.1c0-3.2 2.4-5.1 5.75-5.1 0 3.2-2.4 5.1-5.75 5.1z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Upbringing</a>
-    <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-warning)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M6.35 10.3a5.65 5.65 0 0 1 11.3 0c0 4.65 1.9 5.6 1.9 5.6H4.45s1.9-.95 1.9-5.6z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 18.6a2.25 2.25 0 0 0 4.2 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reminders</a>
-    <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6 12h2.6M14.3 16l1.3 2.25M9.7 16l-1.3 2.25M7.4 12H4.8M9.7 8L8.4 5.75M14.3 8l1.3-2.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Settings</a>
-  </div>
-</nav>
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav"><div class="app-nav-grid"></div></nav>
 
 <div class="toast toast-center toast-bottom z-[80] mb-20 hidden" id="toastWrap">
   <div class="alert bg-neutral text-neutral-content rounded-2xl py-3.5 px-6 text-[15px] leading-snug font-extrabold shadow-lg border-0 max-w-[92vw] whitespace-normal justify-center text-center" id="toast" role="status" aria-live="polite"></div>
@@ -629,8 +625,11 @@ const $=id=>document.getElementById(id);
 let toastTimer=null;
 function toast(m){ const w=$('toastWrap'); $('toast').textContent=m; w.classList.remove('hidden'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),2400); }
 const KEY='newborn-checklist-v3';
-function readState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):{}; }catch(e){ return {}; } }
-function patch(fn){ try{ const s=readState(); fn(s); localStorage.setItem(KEY,JSON.stringify(s)); }catch(e){} }
+function readState(){ try{ const v=localStorage.getItem(KEY); return BabyListState.sanitizeState(v?JSON.parse(v):{}); }catch(e){ return BabyListState.sanitizeState({}); } }
+function patch(fn){
+  try{ const before=readState(),next=BabyListState.copy(before); fn(next); localStorage.setItem(KEY,JSON.stringify(BabyListState.stamp(next,before))); }
+  catch(e){}
+}
 
 /* theme, shared with every other page */
 let dark=true;

@@ -1,5 +1,46 @@
 # Baby List — Changelog
 
+## v3.0.0 — July 21, 2026
+
+- **Private, conflict-safe family sync.** Anonymous JSON stores were removed.
+  The bundled Cloudflare Durable Object now uses independent app/sender tokens,
+  exact origin allowlisting, revisions, ETags, conditional writes, input limits,
+  per-field timestamps, and deletion tombstones.
+- **Stage-aware five-item navigation.** Pregnancy and Baby each get a focused
+  bottom bar with Settings and secondary tools collected under More. Auto mode
+  follows the recorded birth date; a manual override is available.
+- **Safer sharing and backups.** Ordinary links and backups exclude sync
+  credentials. Live invites require an explicit disclosure. Backups now cover
+  reminders, contacts, labor history, and tracker archives with validated import.
+- **Tracker math corrected.** Rolling sleep includes ongoing and cross-midnight
+  intervals, calendar-day totals split intervals correctly, and averages use
+  tracked days instead of the baby's age. Count-based prompts pause when logging
+  is marked incomplete.
+- **Medical/legal content reviewed.** Fever escalation, dehydration signs,
+  monitor/safe-sleep language, bottle sanitation, tummy-time progression,
+  Virginia eye-prophylaxis wording, and July 2026 hepatitis-B context were
+  corrected. Newborn count prompts now stop after day 28 and distinguish
+  breastfeeding guidance from individualized feeding plans. A primary-source
+  registry and review date were added.
+- **Notification privacy and reliability.** Permission is requested only after a
+  user action. Push subscriptions live in an isolated registry, timezone handling
+  is DST-aware, delivery is de-duplicated, and dead subscriptions are pruned.
+  The UI now states clearly that hosted schedules are best-effort.
+- **Offline and injection hardening.** The service worker caches only static
+  same-origin resources; authenticated/API responses are network-only. Stored
+  user text is sanitized and rendered as text, and import sizes are capped.
+- **Verification suite.** Release checks cover HTML/local references, inline
+  syntax, state merging, sync conflicts, tracker math, Worker auth/revisions, and
+  timezone-aware push selection.
+
+## v2.12.6 — July 2026
+- **Upbringing, mental health re-homed.** "How you're really doing" (baby
+  blues vs. PPD, when to call your provider, for partners & support people)
+  moved from its own standalone card into a nested sub-section inside
+  "Recovery & the fourth trimester," alongside visitors and physical healing.
+  Same three topics, same content, now grouped with the rest of the
+  fourth-trimester recovery material instead of sitting apart from it.
+
 ## v2.12.5 — July 2026
 - **Upbringing, fully collapsible.** "The first 30 days," "1–6 months: tummy
   time & milestones," and "6–12 months: solids & babyproofing" are now

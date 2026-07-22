@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Labor &amp; Delivery — Baby List</title>
-<meta name="description" content="When to head to the hospital, a 5-1-1 contraction timer, labor stages, and your key contacts.">
+<meta name="description" content="A call-prompt contraction timer, labor reference, and key contacts; follow your obstetric team's individualized plan.">
 <meta name="theme-color" content="#10141F">
 <meta name="color-scheme" content="dark light">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,8 +35,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=2.12.5" rel="stylesheet">
-<link href="./assets/enhance.css?v=2.12.5" rel="stylesheet">
+<link href="./assets/navbar.css?v=3.0.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=3.0.0" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -116,7 +116,10 @@ body{
   h1,h2,h3{page-break-after:avoid}
 }
 </style>
-<script src="./assets/notify.js?v=2.12.5" defer></script>
+<script src="./assets/state-core.js?v=3.0.0"></script>
+<script src="./assets/sync-core.js?v=3.0.0"></script>
+<script src="./assets/app-shell.js?v=3.0.0" defer></script>
+<script src="./assets/notify.js?v=3.0.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-[env(safe-area-inset-bottom)]">
 
@@ -167,12 +170,12 @@ body{
           <text x="31" y="14" text-anchor="middle" fill="var(--color-accent)">1 min long</text>
           <path d="M40 46 h52" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3" opacity=".7"/>
           <text x="66" y="60" text-anchor="middle">5 min apart</text>
-          <text x="170" y="72" text-anchor="middle" opacity=".85">… repeating for 1 hour → call, then go</text>
+          <text x="170" y="72" text-anchor="middle" opacity=".85">… repeating for 1 hour → call and follow your plan</text>
         </g>
       </svg>
       <details class="topic" style="--topic-a:var(--color-accent)">
-        <summary>The 5-1-1 rule — when it's time to go</summary>
-        <div class="topic-body ink-soft"><p>Contractions every <b class="text-base-content">5 minutes</b>, lasting <b class="text-base-content">1 minute</b>, for <b class="text-base-content">1 hour</b>. That pattern usually means active labor: call your provider and go. Your OB may give you different numbers (4-1-1 is common for second babies) — theirs win.</p></div>
+        <summary>The 5-1-1 pattern — when to call</summary>
+        <div class="topic-body ink-soft"><p>Contractions about every <b class="text-base-content">5 minutes</b>, lasting about <b class="text-base-content">1 minute</b>, for <b class="text-base-content">1 hour</b> are a common prompt to call. Follow the individualized plan from your obstetric team about when and where to be evaluated; distance, prior births, VBAC, risk factors, and symptoms can change the timing. Do not drive based on the app alone.</p></div>
       </details>
       <details class="topic" style="--topic-a:var(--color-error)">
         <summary>Call right away, any time — the 6 exceptions</summary>
@@ -201,7 +204,7 @@ body{
           <text x="314" y="34" font-size="11" fill="var(--color-primary-content)">5</text>
           <g fill="currentColor" font-size="8.5">
             <text x="34" y="56">Early</text><text x="34" y="66" opacity=".75">to ~6 cm · home</text>
-            <text x="104" y="56">Active</text><text x="104" y="66" opacity=".75">5-1-1 · go in</text>
+            <text x="104" y="56">Active</text><text x="104" y="66" opacity=".75">call · follow plan</text>
             <text x="174" y="56">Transition</text><text x="174" y="66" opacity=".75">to 10 cm</text>
             <text x="244" y="56">Pushing</text><text x="244" y="66" opacity=".75">birth</text>
             <text x="314" y="56" fill="var(--color-primary)">Golden hr</text><text x="314" y="66" opacity=".75">skin-to-skin</text>
@@ -210,11 +213,11 @@ body{
       </svg>
       <details class="topic" style="--topic-a:var(--color-info)">
         <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">1</span>Early labor — 5–20 min apart · stay home</summary>
-        <div class="topic-body ink-soft"><p>Contractions 5–20 min apart, mild and irregular; cervix to ~6 cm. Often hours (or a day). Home is usually the place: rest, eat light, hydrate, shower.</p></div>
+        <div class="topic-body ink-soft"><p>Contractions may be mild and irregular and this phase can last many hours. If your care team says staying home is appropriate, rest, hydrate, and follow their eating and comfort instructions; call sooner for any exception above.</p></div>
       </details>
       <details class="topic" style="--topic-a:var(--color-info)">
-        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">2</span>Active labor — 3–5 min apart · hospital time</summary>
-        <div class="topic-body ink-soft"><p>Stronger, ~3–5 min apart, about a minute long; this is the 5-1-1 zone and hospital time.</p></div>
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">2</span>Active labor — stronger and more regular</summary>
+        <div class="topic-body ink-soft"><p>Contractions often become stronger, longer, and closer together. Call the obstetric team and follow the evaluation or arrival plan they gave you.</p></div>
       </details>
       <details class="topic" style="--topic-a:var(--color-info)">
         <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-info) 25%, transparent);color:var(--color-info)">3</span>Transition — 2–3 min apart · shortest, most intense</summary>
@@ -241,21 +244,11 @@ body{
   </section>
 
   <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
-    <p class="m-0">Part of <a class="link link-primary font-bold" href="./index.html">Newborn Essentials</a>. Educational reference, not medical advice — your OB or midwife's instructions always come first.</p>
+    <p class="m-0">Educational timing aid, not fetal monitoring or medical advice. Your obstetric team's individualized instructions take priority; call for concerning symptoms even when the timer does not show a pattern. <a class="link link-primary font-bold" href="./sources.html">Review scope and sources</a>.</p>
   </footer>
 </div>
 
-<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
-  <div class="max-w-[640px] mx-auto grid grid-cols-7">
-    <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="3.9" y="3.9" width="16.2" height="16.2" rx="4.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 12.15l2.55 2.55 4.85-5.35" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
-    <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" aria-current="page" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.4S4.6 15.8 4.6 10A4.2 4.2 0 0 1 12 7.5a4.2 4.2 0 0 1 7.4 2.5c0 5.8-7.4 10.4-7.4 10.4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.7 11.7h2.1l1.15-2.1 1.55 3.9 1-1.8h2.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
-    <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="8.7" y="3.3" width="6.6" height="3.5" rx="1.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.7 5.05H7.05A1.65 1.65 0 0 0 5.4 6.7v11.65A1.65 1.65 0 0 0 7.05 20h9.9a1.65 1.65 0 0 0 1.65-1.65V6.7a1.65 1.65 0 0 0-1.65-1.65H15.3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16.9s-3.05-1.85-3.05-4a1.75 1.75 0 0 1 3.05-1.2 1.75 1.75 0 0 1 3.05 1.2c0 2.15-3.05 4-3.05 4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Birth Plan</a>
-    <a href="./emergency.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></span>Warning</a>
-    <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.5v-6.7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 13.8c0-3.95-2.8-6.25-6.85-6.25 0 3.95 2.8 6.25 6.85 6.25z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.1c0-3.2 2.4-5.1 5.75-5.1 0 3.2-2.4 5.1-5.75 5.1z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Upbringing</a>
-    <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-warning)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M6.35 10.3a5.65 5.65 0 0 1 11.3 0c0 4.65 1.9 5.6 1.9 5.6H4.45s1.9-.95 1.9-5.6z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 18.6a2.25 2.25 0 0 0 4.2 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reminders</a>
-    <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6 12h2.6M14.3 16l1.3 2.25M9.7 16l-1.3 2.25M7.4 12H4.8M9.7 8L8.4 5.75M14.3 8l1.3-2.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Settings</a>
-  </div>
-</nav>
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav"><div class="app-nav-grid"></div></nav>
 
 <div class="toast toast-center toast-bottom z-[80] mb-20 hidden" id="toastWrap">
   <div class="alert bg-neutral text-neutral-content rounded-2xl py-3.5 px-6 text-[15px] leading-snug font-extrabold shadow-lg border-0 max-w-[92vw] whitespace-normal justify-center text-center" id="toast" role="status" aria-live="polite"></div>
@@ -279,7 +272,11 @@ function applyTheme(){
 }
 $('themeBtn').addEventListener('click',()=>{
   dark=!dark; applyTheme();
-  try{ const v=localStorage.getItem(KEY); const s=v?JSON.parse(v):{}; s.dark=dark; s.themeV=2; localStorage.setItem(KEY,JSON.stringify(s)); }catch(e){}
+  try{
+    const v=localStorage.getItem(KEY), before=BabyListState.sanitizeState(v?JSON.parse(v):{}), next=BabyListState.copy(before);
+    next.dark=dark; next.themeV=2;
+    localStorage.setItem(KEY,JSON.stringify(BabyListState.stamp(next,before)));
+  }catch(e){}
 });
 applyTheme();
 
@@ -311,11 +308,15 @@ function ctRender(){
     $('ctAvg').textContent=fmtGap(avgGap)+' / '+fmtS(avgDur);
   } else $('ctAvg').textContent='—';
 
-  /* 5-1-1 detector: ≥1h of data, avg gap ≤ 5.5 min, avg length ≥ 50s */
+  /* Approximate 5-1-1 prompt. Require sustained data and most—not merely the
+     average—gaps and durations to qualify, so a few outliers cannot trigger it. */
   const alert=$('ctAlert');
   const spanH = recent.length>=2 ? (recent[recent.length-1].start-recent[0].start)/36e5 : 0;
-  if(avgGap!==null && spanH>=0.9 && avgGap<=330 && avgDur>=50){
-    alert.textContent='Pattern matches 5-1-1 — contractions about '+fmtGap(avgGap)+' apart, averaging '+fmtS(avgDur)+', for the past hour. Time to call your provider.';
+  const gaps=[]; for(let i=1;i<recent.length;i++) gaps.push((recent[i].start-recent[i-1].start)/1000);
+  const gapShare=gaps.length?gaps.filter(g=>g<=330).length/gaps.length:0;
+  const durShare=recent.length?recent.filter(c=>c.dur>=50).length/recent.length:0;
+  if(avgGap!==null && recent.length>=8 && spanH>=0.9 && gapShare>=0.8 && durShare>=0.8){
+    alert.textContent='This log is close to a sustained 5-1-1 pattern — about '+fmtGap(avgGap)+' apart and '+fmtS(avgDur)+' long. Call your obstetric team and follow your plan; do not use the app as the only reason to drive.';
     alert.classList.remove('hidden');
   } else alert.classList.add('hidden');
 

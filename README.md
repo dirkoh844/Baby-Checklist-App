@@ -1,151 +1,153 @@
-# Newborn Essentials — Baby List
+# Newborn Essentials — Baby List 3.0
 
-A pediatrician-aligned newborn checklist. 96 priced, priority-tiered items across
-8 categories, due-date timing with a "Do next" queue, name-stamped checkmarks,
-cross-device cloud sync, mom-care reminders with notifications, a Labor & Delivery
-page with a 5-1-1 contraction timer, undo, haptics, confetti, a womb-noise Calm
-Focus mode, a hardened print layout, and four ways to share.
+A private, local-first pregnancy and newborn PWA. It combines a 95-item
+checklist with labor tools, a birth-preferences draft, reminders, feeding /
+diaper / sleep tracking, warning-sign references, and first-year guides.
 
-## Files
+The app works offline without an account. Optional family sync uses a small
+Cloudflare Durable Object that you deploy and protect with your own secret.
+
+## What is included
 
 | File | Purpose |
 |---|---|
-| `index.html` | The checklist. |
-| `labor.html` | Labor & Delivery: when-to-go guidance, contraction timer, stages, key contacts. |
-| `reminders.html` | Mom-care reminders and push enrollment. |
-| `settings.html` | Cloud sync setup, due date, name, appearance, what's new. |
-| `upbringing.html` | Recovery through the first year: sleep, feeding, tummy time, solids, babyproofing. |
-| `tracker.html` | Feeds, diapers, sleep. Warns on AAP thresholds. Syncs to both phones. `noindex`. |
-| `emergency.html` | POST-BIRTH warning signs, newborn red flags, emergency card. Offline. `noindex`. |
-| `birthplan.html` | Birth preferences in labor order, with the reasoning and the likely hospital answer for each. `noindex`. |
-| `CHANGELOG.md` | Version history. |
-| `ARCHITECTURE.md` | System diagrams (Mermaid): pages, assets, sync, service worker, push. |
-| `assets/` | Precompiled stylesheet (`app.css`) plus two layered stylesheets — `navbar.css` (shared, enlarged bottom tab bar, identical on every page) and `enhance.css` (texture + 3D depth) — confetti, and fonts. No CDN, works fully offline. |
-| `worker/` | Cloudflare Worker sync endpoint (recommended cloud store) + wrangler config. |
-| `manifest.webmanifest` | PWA install metadata (+ Labor shortcut). |
-| `sw.js` | Service worker: network-first pages, cached assets, notification clicks focus the app. |
-| `icon-192.png` / `icon-512.png` / `apple-touch-icon.png` | App icons. |
+| `index.html` | Checklist, packing progress, notes, custom items, backup, and sharing. |
+| `labor.html` | Contraction timer and labor reference. |
+| `birthplan.html` | Editable birth-preferences draft with print support. |
+| `reminders.html` | Local notifications and optional closed-app Web Push. |
+| `tracker.html` | Feed, diaper, and sleep log with rolling summaries. |
+| `emergency.html` | Maternal and infant warning-sign reference plus private emergency card. |
+| `upbringing.html` | Recovery, feeding, sleep, tummy time, solids, and safety guides. |
+| `settings.html` | Sync, dates, navigation stage, appearance, backup, and reset. |
+| `sources.html` | Primary medical, legal, and technical sources and review date. |
+| `assets/` | Local styles, fonts, and shared state/sync/navigation/tracker modules. |
+| `worker/` | Private revisioned sync and push-registry API for Cloudflare Workers. |
+| `sw.js` | Offline shell and notification handling. Private API responses are never cached. |
 
-## Deploy to GitHub Pages
+The bottom navigation automatically changes when the baby is marked born. A
+manual Pregnancy/Baby override is available in Settings.
 
-1. Push all files to the root of `main`.
-2. Settings → Pages → Deploy from a branch → `main` / `/ (root)`.
-3. Open `https://<username>.github.io/<repo>/`.
+## Run and verify locally
 
-## Cross-device sync (one shared list)
+The shipped CSS is already compiled, so no build is required to deploy:
 
-GitHub Pages is static and cannot store data, so the app syncs through a JSON
-endpoint you own. It must answer `GET` with the stored document and accept
-`PUT` of a new one, with CORS open to the site. The endpoint plus its key is
-the password: anyone holding both can read and edit the list.
-
-**Cloudflare Worker + KV (recommended).** Free, nothing expires, and the list
-is unreadable without your token. Deploy `worker/baby-list-worker.js`:
-
-1. Cloudflare dashboard, Workers & Pages, Create, Worker. Paste the file, deploy.
-2. Storage & Databases, KV, create a namespace. Bind it to the Worker as `LIST`.
-3. Worker, Settings, Variables: add a **secret** named `TOKEN`, value from
-   `openssl rand -hex 24`.
-4. In the app: Settings, endpoint `https://<worker>.workers.dev`, key `TOKEN`.
-   Tap **Test connection**.
-
-Or `cd worker && npx wrangler kv namespace create LIST && npx wrangler secret put TOKEN && npx wrangler deploy`.
-
-**JSONBin.io.** No deploy. Free account, private bins, no auto-deletion. Create
-a bin, then an **Access Key** with read + update permission (not the Master Key,
-which is your whole account). Endpoint `https://api.jsonbin.io/v3/b/YOUR_BIN_ID`,
-key = the access key. The free allowance is 10,000 requests in total rather than
-per month, so it suits light use.
-
-**JSONBlob quick-create.** Public blobs, deleted after 75 idle days, and blob
-creation depends on their CORS policy exposing the `Location` header. It stays in
-the app as a throwaway option, not a home for the real list.
-
-Put the same endpoint and key in the repository secrets `CLOUD_URL` and
-`CLOUD_KEY` so the reminder workflow can read the list. If you use a JSONBin
-Master Key there, also set `CLOUD_KEY_TYPE` to `master`.
-
-Checkmarks, custom items, and the due date sync about once a minute and whenever
-the app is opened. Send the **Share link** from the checklist, or the **invite
-link** from Settings, to join another phone.
-
-## Reminders
-
-The Mom care card schedules a prenatal-vitamin reminder, water every N hours, and
-custom reminders, delivered as system notifications after you tap Enable. On a
-static site there is no push server, so reminders fire while the app is open or
-installed and running; missed daily reminders catch up within 3 hours of opening.
-
-
-## True push (closed-app delivery) — one-time setup, ~10 minutes
-
-1. In the app, set up **Cloud sync** (Create shared storage). Reopen the sync
-   panel and copy the endpoint URL shown in the field.
-2. Repo → Settings → Secrets and variables → Actions → add:
-   `CLOUD_URL` (that endpoint), `CLOUD_KEY` (only if your endpoint needs one),
-   and the three VAPID values from `SECRET-vapid-private-key.txt`
-   (never commit that file; it is gitignored).
-3. Commit `package.json`, `scripts/`, and `.github/workflows/push-reminders.yml`.
-4. On each phone: add the app to the Home Screen (required on iPhone), then in
-   the Mom care card tap **Enable notifications**, then **Enable push**.
-5. Actions tab → "Send push reminders" → Run workflow once to verify.
-
-The cron checks every 15 minutes, sends whatever is due in each device's own
-timezone, de-duplicates via slots stored in the bin, and prunes dead
-subscriptions. While push is on, in-app timers stand down so nothing doubles.
-The monthly `keepalive.yml` workflow makes an empty commit so GitHub never
-suspends the cron after 60 idle days. After deploying, walk through
-POST-DEPLOY.md once. See APPSTORE.md for the App Store and Play Store routes.
-
-## Notes
-
-- Item order in `DATA` defines share-link bit positions; append new items at the
-  end of a category to keep old links valid.
-- The contraction timer flags the 5-1-1 pattern (about 5 min apart, about 1 min
-  long, sustained an hour) and keeps its log on-device.
-- Print (Ctrl/Cmd+P) outputs a black-on-white serif checklist with pagination guards.
-
-## Deploying
-
-The whole repo is the site. Every file in the zip must land in the repo, and
-that includes the folders:
-
-```
-index.html labor.html upbringing.html reminders.html settings.html
-sw.js manifest.webmanifest package.json
-icon-192.png icon-512.png icon-maskable-512.png apple-touch-icon.png
-assets/          <- app.css, navbar.css, enhance.css, confetti.min.js, fonts/ (4 woff2)   REQUIRED
-.github/         <- workflows for push reminders + keepalive
-scripts/         <- send-push.mjs, generate-vapid.mjs
-.nojekyll
+```sh
+npm ci
+npm run verify
+npm run serve
 ```
 
-Extract the zip over your clone, then:
+Open the URL printed by `npm run serve`. If HTML utility classes change, rebuild
+the stylesheet with `npm run css` and rerun `npm run verify`.
 
+## Deploy the PWA
+
+GitHub Pages is sufficient for the app itself:
+
+1. Extract the complete release into the root of a repository.
+2. Push every file and folder, including `assets/`, `worker/`, `scripts/`, and
+   `.github/`.
+3. In GitHub: Settings → Pages → Deploy from a branch → `main` / `/ (root)`.
+4. Open `https://<username>.github.io/<repo>/` and complete
+   `POST-DEPLOY.md`.
+
+HTTPS is required for service workers and notifications. On iPhone, install
+from Safari using Share → Add to Home Screen.
+
+## Optional private family sync
+
+Version 3 intentionally supports only the bundled private Worker. Anonymous
+JSON storage endpoints are no longer accepted because the URL itself could
+expose family and health information.
+
+### 1. Deploy the Worker
+
+Install Wrangler, authenticate, then run:
+
+```sh
+cd worker
+npx wrangler deploy
+npx wrangler secret put TOKEN
+npx wrangler secret put PUSH_TOKEN
+npx wrangler secret put ALLOWED_ORIGINS
 ```
-git add -A
-git commit -m "Baby List update"
-git push
+
+Use independently generated secrets for `TOKEN` and `PUSH_TOKEN`, for example:
+
+```sh
+openssl rand -hex 32
 ```
 
-If you upload through the GitHub web page instead, drag the extracted **folder**
-onto the drop zone. The "choose your files" picker cannot select folders, so
-`assets/` gets left behind and the site renders with no styling at all.
+- `TOKEN` lets the app read and update family state.
+- `PUSH_TOKEN` lets the scheduled sender access only the push registry and
+  delivery acknowledgements. It cannot read family state.
+- `ALLOWED_ORIGINS` is a comma-separated allowlist of exact origins, such as
+  `https://example.github.io,http://localhost:4173`. An origin has no path.
 
-## Rebuilding the stylesheet
+Do not commit these values. The Worker uses a Durable Object, revisions,
+conditional updates, per-field timestamps, and deletion tombstones so concurrent
+changes merge instead of blindly overwriting one another.
 
-The CSS is precompiled (Tailwind 4 + daisyUI 5, fonts vendored). If you edit
-any HTML classes, rebuild once before deploying:
+### 2. Connect each phone
 
-```
-npm install
-npm run css
-```
+In Settings → Private family sync, enter the Worker URL and `TOKEN`, then tap
+Test & connect. To add a second phone, either configure it manually or create a
+live invite after accepting the on-screen warning that the link contains the
+family secret. Share that invite only through a trusted private channel.
 
-That regenerates `assets/app.css`. Nothing else needs a build step.
+Ordinary checklist share links and downloaded backups never contain sync
+credentials. Backups can include the full tracker archive, reminders, contacts,
+and labor history; treat them as sensitive files.
 
-`assets/navbar.css` (shared enlarged tab bar) and `assets/enhance.css` (texture +
-3D depth) are hand-written layers that load *after* `app.css` on every page and
-override it where needed, so they are not part of the Tailwind build and survive
-`npm run css` untouched. Edit them directly. Both strip themselves under
-`@media print` and honor `prefers-reduced-motion`.
+### Migrating from 2.x
+
+The old KV/anonymous endpoint is not migrated automatically:
+
+1. In the old app, download a backup from the checklist.
+2. Deploy and connect the 3.0 Worker.
+3. Import the backup on one device, review it, and allow sync to finish.
+4. Connect other devices only after the first device shows “Synced.”
+
+## Optional closed-app push
+
+Local reminders work while the installed app is active. Closed-app delivery
+uses Web Push plus the included scheduled GitHub Action.
+
+1. Generate VAPID keys with `npm run vapid`. Put the displayed public key in
+   `VAPID_PUBLIC` in `reminders.html` before deploying; never commit the private
+   key.
+2. Add these repository Actions secrets:
+   - `CLOUD_URL`: Worker URL
+   - `PUSH_KEY`: the Worker's `PUSH_TOKEN` value
+   - `VAPID_PUBLIC_KEY`
+   - `VAPID_PRIVATE_KEY`
+   - `VAPID_SUBJECT`, such as `mailto:you@example.com`
+3. Install the PWA and use Reminders → Enable notifications → Enable push on
+   each device.
+4. Run the “Send push reminders” workflow manually once to test.
+
+The workflow checks every five minutes, but GitHub schedules are best-effort and
+can be delayed or dropped. Public-repository scheduled workflows can also be
+disabled after 60 days without repository activity. Re-enable the workflow
+manually or use a dedicated scheduler if reliability matters. Do not use these
+reminders for medication, feeding, or safety-critical timing.
+
+## Privacy and safety boundaries
+
+- All ordinary use is local to the device; sync and push are opt-in.
+- Sync credentials remain local and are excluded from caches, backups, and
+  ordinary share links.
+- The service worker caches only same-origin static files.
+- Tracker prompts are informational and only appear when logging is marked
+  complete. They are not diagnosis or monitoring.
+- Medical and legal content is a compact reference, not individualized advice.
+  Review the linked primary sources in `sources.html` and follow the family's
+  clinician, hospital, and local emergency guidance.
+- The contraction pattern is a call prompt, never an instruction to drive.
+
+## Release discipline
+
+`npm run verify` checks local references and inline script syntax, then runs the
+state merge, sync-conflict, tracker-math, Worker-auth, and push-timezone tests.
+Keep checklist item ordering stable because compact legacy share links encode
+items by position; append new items rather than inserting them.

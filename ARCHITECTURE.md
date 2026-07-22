@@ -1,92 +1,110 @@
-# Baby List — Architecture
+# Baby List 3.0 — architecture
 
-A zero-build, offline-first PWA: eight static HTML pages sharing three
-stylesheets and one helper script, a service worker for offline + push, and an
-owner-hosted JSON endpoint for cross-device sync. GitHub renders the diagrams
-below natively.
+Baby List is a static, offline-first PWA. The browser owns the primary copy;
+the optional Worker is a private replication target, not a required backend.
 
-## 1 · Pages & navigation
+## Page shell and stage navigation
 
-```mermaid
-flowchart LR
-  subgraph menu[Bottom menu — 7 tabs]
-    C[Checklist\nindex.html]
-    L[Labor\nlabor.html]
-    B[Birth Plan\nbirthplan.html]
-    W[Warning signs\nemergency.html]
-    U[Upbringing\nupbringing.html]
-    R[Reminders\nreminders.html]
-    S[Settings\nsettings.html]
-  end
-  T[Tracker\ntracker.html]
-  S -- "Open the tracker" --> T
-  C -. "Warning signs links" .-> W
-  U -. crisis & red-flag links .-> W
-  T -. thresholds link .-> W
-```
-
-## 2 · Assets & load order
+`assets/app-shell.js` renders one consistent five-item bottom bar. The visible
+destinations follow the selected life stage while Settings and secondary pages
+remain reachable through More.
 
 ```mermaid
 flowchart TD
-  H[Any page .html] --> A["app.css\n(precompiled Tailwind + DaisyUI\n+ per-page theme tokens)"]
-  A --> N["navbar.css\n(shared bar · header rules\nscroll containment · overflow fixes)"]
-  N --> E["enhance.css\n(texture · 3D depth · topics\ntransitions · diagrams · focus mode)"]
-  H --> J["notify.js\n(push enrol · print-expand\ntext-size · expand-all · VT fallback)"]
-  H --> F[fonts/ woff2 ×4]
-  H --> K[confetti.min.js]
-  style E fill:#7DD3BC22,stroke:#7DD3BC
-  style N fill:#AEB9FF22,stroke:#AEB9FF
+  S{"Navigation stage"}
+  S -->|Pregnancy| P["Checklist · Labor · Birth Plan · Reminders · More"]
+  S -->|Baby| B["Tracker · Warning · Guides · Reminders · More"]
+  P --> X["Settings and secondary tools"]
+  B --> X
 ```
 
-Asset links carry a `?v=` version so fresh HTML always pulls matching CSS/JS
-on the first load after a deploy.
+The stage defaults to Pregnancy until `born` is recorded. A Settings override
+can pin Pregnancy or Baby without changing the birth date.
 
-## 3 · Data flow & sync
+## Local state and synchronization
+
+All pages use `assets/state-core.js`. It validates state, caps untrusted input,
+strips prototype keys, timestamps scalar fields and entities, and records
+deletion tombstones. `assets/sync-core.js` performs conditional Worker updates
+and retries a merge when the server revision changed.
 
 ```mermaid
 flowchart LR
-  subgraph phoneA[Phone A]
-    LSa[(localStorage\nnewborn-checklist-v3)]
-    UIa[Checklist / Tracker UI]
-    UIa <--> LSa
-  end
-  subgraph phoneB[Phone B]
-    LSb[(localStorage)]
-    UIb[UI]
-    UIb <--> LSb
-  end
-  EP["Owner-hosted JSON endpoint\nCloudflare Worker (token) or JSONBin\nGET current · PUT merged"]
-  LSa <-- "poll ~60 s + on open\nmerge, last-write per field" --> EP
-  LSb <-- same --> EP
-  SHARE[Share link\nstate baked into URL] --> LSb
-  LSa --> SHARE
+  UI["Static pages"] <--> L["localStorage · schema 4"]
+  L <--> M["Sanitize + merge"]
+  M <-->|"HTTPS · Bearer TOKEN · ETag"| W["Durable Object"]
+  B["Backup / ordinary share"] --> F["Credential-free document"]
+  F --> M
 ```
 
-## 4 · Service worker strategy
+Conflict resolution is last-write-wins per stamped field or entity. Checked
+items, notes, custom items, and tracker entries retain tombstones so an older
+device cannot resurrect a deletion. The Worker rejects oversized or malformed
+documents and only accepts exact configured web origins.
+
+## Worker authorization boundary
+
+The two tokens deliberately expose different APIs:
+
+| Credential | Allowed operations | Forbidden operation |
+|---|---|---|
+| `TOKEN` | Read/push family state; register the current device subscription | List all push subscriptions |
+| `PUSH_TOKEN` | List push registry; acknowledge/prune delivery records | Read or modify family state |
+
+This keeps the scheduled sender from becoming a reader of the family document.
+The push registry is stored beside state in the Durable Object but returned
+only through sender-specific routes.
+
+## Offline and cache boundary
 
 ```mermaid
 flowchart TD
-  REQ[Request] -->|navigation| NF{network first}
-  NF -->|ok| FRESH[serve + refresh cache]
-  NF -->|offline| CACHED[serve cached page]
-  REQ -->|asset| SWR{stale-while-revalidate}
-  SWR --> HIT[serve cache instantly]
-  HIT --> BG[refresh in background]
-  INST[install: precache CORE\nskipWaiting] --> ACT[activate: drop old caches\nclients.claim]
+  R{"Request type"}
+  R -->|Navigation| N["Network first · cached page fallback"]
+  R -->|Same-origin static asset| A["Cache and refresh"]
+  R -->|API, auth, cross-origin, no-store| X["Network only · never cache"]
 ```
 
-## 5 · Push reminders (closed-app)
+`sw.js` precaches the static shell, clears obsolete release caches on activate,
+and opens a notification's page/deep link. Sync responses and credentials are
+outside the cache. Disconnect also asks the service worker to clear private
+legacy caches.
+
+## Reminder delivery
 
 ```mermaid
 sequenceDiagram
-  participant GH as GitHub Actions (cron ~15 min)
-  participant EP as Sync endpoint
-  participant PS as Web Push service
-  participant PH as Installed app
-  GH->>EP: read reminder schedule + subscriptions
-  GH->>PS: send due notifications (VAPID)
-  PS->>PH: push event → sw.js showNotification
-  PH->>PH: notification click focuses app
-  Note over GH: keepalive.yml prevents the 60-day\nscheduled-workflow shutoff
+  participant App as Installed PWA
+  participant Worker as Private Worker
+  participant Action as Scheduled sender
+  participant Push as Web Push service
+  App->>Worker: Register subscription (TOKEN)
+  Action->>Worker: Fetch registry (PUSH_TOKEN)
+  Action->>Push: Send due reminders with VAPID
+  Push->>App: Service worker shows notification
+  Action->>Worker: Ack slot / prune dead endpoint
 ```
+
+Reminder times are interpreted with each subscription's IANA timezone, including
+DST. Delivery is de-duplicated by occurrence slot. GitHub's five-minute schedule
+is best-effort, so this subsystem is convenience-only and must not be used for
+safety-critical reminders.
+
+## Security and privacy assumptions
+
+- The hosting origin and Worker must use HTTPS in production.
+- Whoever possesses `TOKEN` can read and edit the family document.
+- Live invites contain that token and are intentionally gated by a disclosure.
+- Backups and tracker archives can contain health-adjacent personal data even
+  though they omit credentials.
+- The emergency card is local/synced data rendered safely as text; stored user
+  text is never injected as HTML.
+- Medical/legal copy is versioned content with a source registry and review date,
+  not a clinical decision engine.
+
+## Test boundaries
+
+`npm run verify` runs HTML/reference checks plus deterministic tests for state
+sanitization and deletion merging, ETag conflict retries, calendar-day and
+rolling tracker math, Worker token isolation/revisions, and timezone-aware push
+selection. Visual/device checks remain part of `POST-DEPLOY.md`.

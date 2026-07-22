@@ -11,7 +11,7 @@ def safe_write(p, c):
 # pull the mark and the icon set from the single source
 src = open('gen_icons.py').read()
 ns = {}
-exec(src[:src.index('# ================================================================ rewrite pages')], ns)
+exec(src[:src.index('# ================================================================ reusable icon source ends')], ns)
 NAV, ICONS = ns['NAV'], ns['ICONS']
 SOS_SVG, BG, GOLD, TEAL = ns['SOS_SVG'], ns['BG'], ns['GOLD'], ns['TEAL']
 MOON_OUT, MOON_CUT, CHECK, CHECK_W = ns['MOON_OUT'], ns['MOON_CUT'], ns['CHECK'], ns['CHECK_W']
@@ -154,8 +154,9 @@ print('link preview: og-image.png (1200x630)')
 
 # ---------------------------------------------------------------- 8. manifest
 mf = json.load(open('manifest.webmanifest'))
-mf['description'] = ('Newborn checklist, contraction timer, birth plan, feed and diaper tracker, '
-                     'and post-birth warning signs. Works offline, syncs between both parents.')
+mf['description'] = ('Newborn checklist, contraction timer, birth-preference draft, feed and diaper '
+                     'tracker, reminders, and source-reviewed warning signs. Works offline with '
+                     'optional private sync between trusted devices.')
 mf['icons'] = (
     [{'src': f'./icon-{s}.png', 'sizes': f'{s}x{s}', 'type': 'image/png', 'purpose': 'any'}
      for s in (96, 144, 192, 256, 384, 512)]
@@ -170,19 +171,9 @@ mf['shortcuts'] = [
 safe_write('manifest.webmanifest', json.dumps(mf, indent=2) + '\n')
 print('manifest: 6 sizes + maskable + monochrome, 4 distinct shortcuts')
 
-# ---------------------------------------------------------------- 9. service worker
-sw = open('sw.js').read()
-old = "    icon: './icon-192.png', badge: './icon-192.png'"
-assert old in sw, 'sw push payload'
-sw = sw.replace(old, "    icon: './icon-192.png', badge: './badge-96.png'")
-sw = sw.replace("const VERSION = 'babylist-v10';", "const VERSION = 'babylist-v11';")
-sw = sw.replace("'./apple-touch-icon.png']", "'./apple-touch-icon.png', './badge-96.png', './icon-mono-512.png']")
-safe_write('sw.js', sw)
-print('sw: badge fixed, v11')
-
-# ---------------------------------------------------------------- 10. page heads
+# ---------------------------------------------------------------- 9. page heads
 PAGES = ['index.html', 'labor.html', 'birthplan.html', 'tracker.html', 'emergency.html',
-         'upbringing.html', 'reminders.html', 'settings.html']
+         'upbringing.html', 'reminders.html', 'settings.html', 'sources.html']
 links = '\n'.join(
     f'<link rel="apple-touch-startup-image" media="screen and (device-width: {dw}px) and (device-height: {dh}px) '
     f'and (-webkit-device-pixel-ratio: {dpr}) and (orientation: portrait)" href="./{name}">'
@@ -191,6 +182,7 @@ links = '\n'.join(
 for p in PAGES:
     s = open(p).read()
     s = re.sub(r'\n<link rel="apple-touch-startup-image".*?>(?=\n)', '', s, flags=re.S)
+    s = re.sub(r'\n<link rel="icon" href="\./favicon\.ico" sizes="48x48">', '', s)
     s = re.sub(r'\n<meta property="og:.*?>|\n<meta name="twitter:.*?>', '', s)
     s = s.replace('<link rel="apple-touch-icon" href="./apple-touch-icon.png">',
                   '<link rel="apple-touch-icon" href="./apple-touch-icon.png">\n'

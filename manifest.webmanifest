@@ -1,10 +1,12 @@
 {
   "name": "Newborn Essentials \u2014 Baby List",
   "short_name": "Baby List",
-  "description": "Newborn checklist, contraction timer, birth plan, feed and diaper tracker, and post-birth warning signs. Works offline, syncs between both parents.",
+  "description": "Newborn checklist, contraction timer, birth-preference draft, feed and diaper tracker, reminders, and source-reviewed warning signs. Works offline with optional private sync between trusted devices.",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "categories": ["health", "lifestyle", "utilities"],
   "background_color": "#10141F",
   "theme_color": "#10141F",
   "icons": [

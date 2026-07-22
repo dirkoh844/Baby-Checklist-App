@@ -1,12 +1,20 @@
 {
   "name": "baby-list",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
   "description": "Newborn Essentials checklist PWA + push sender",
   "scripts": {
+    "check": "node scripts/check-html.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify": "npm run check && npm test",
     "push": "node scripts/send-push.mjs",
     "vapid": "node scripts/generate-vapid.mjs",
+    "serve": "node scripts/serve.mjs",
     "css": "tailwindcss -i assets/input.css -o assets/app.css --minify"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.2",

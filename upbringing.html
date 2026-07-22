@@ -35,8 +35,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=2.12.5" rel="stylesheet">
-<link href="./assets/enhance.css?v=2.12.5" rel="stylesheet">
+<link href="./assets/navbar.css?v=3.0.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=3.0.0" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -115,7 +115,10 @@ body{
 .utable td{font-size:12.5px;line-height:1.45;vertical-align:top}
 @media print{ *{background:#fff!important;color:#000!important} #tabNav{display:none!important} .card{border:1pt solid #999!important;page-break-inside:avoid} h1,h2{page-break-after:avoid} }
 </style>
-<script src="./assets/notify.js?v=2.12.5" defer></script>
+<script src="./assets/state-core.js?v=3.0.0"></script>
+<script src="./assets/sync-core.js?v=3.0.0"></script>
+<script src="./assets/app-shell.js?v=3.0.0" defer></script>
+<script src="./assets/notify.js?v=3.0.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
@@ -147,43 +150,40 @@ body{
         <summary>What mom's body is healing from</summary>
         <div class="topic-body ink-soft"><p>Hormonal shifts, uterine involution, physical trauma recovery, and possibly C-section aftercare all at once. Healing unfolds on its own schedule; planning for that ahead of time (meals, help, low expectations) protects mental health too. The <a class="link link-primary font-bold" href="./labor.html">Labor page</a> covers the when-to-call red flags.</p></div>
       </details>
+
+      <!-- Postpartum mental health, nested inside Recovery -->
+      <details class="topic" style="--topic-a:var(--color-info)">
+        <summary><h2 class="font-display font-semibold text-[17.5px] m-0 text-info flex-1">How you're really doing</h2><span class="badge badge-info badge-soft badge-xs font-extrabold uppercase flex-none">your mind</span></summary>
+        <div class="topic-body">
+          <p class="m-0 text-[13.5px] leading-relaxed">Your body isn't the only thing recovering. Big feelings after birth are normal and expected — this is here to help you tell an ordinary hard day from something worth a call. None of it is a diagnosis, and none of it is your fault. Tap a topic to open it.</p>
+
+          <details class="topic" style="--topic-a:var(--color-info)">
+            <summary>Baby blues, or something more?</summary>
+            <div class="topic-body ink-soft">
+              <p><b class="text-base-content">Baby blues</b> hit up to 80% of new parents: weepy, overwhelmed, moody, running hot and cold. They usually peak around days 3–5 and ease by about two weeks as hormones settle.</p>
+              <p>If it lasts <b class="text-base-content">longer than two weeks</b>, gets heavier instead of lighter, or steals the good moments, it may be <b class="text-base-content">postpartum depression or anxiety</b> — which affect about 1 in 7 and are very treatable. It can begin any time in the first year, not just right after birth.</p>
+            </div>
+          </details>
+
+          <details class="topic" style="--topic-a:var(--color-warning)">
+            <summary>Call your provider if…</summary>
+            <div class="topic-body ink-soft">
+              <p>Reach out to your OB, midwife, or doctor if — most days, for more than two weeks — you notice: sadness or emptiness that won't lift; crying you can't explain; no interest in things you used to enjoy, or in the baby; can't sleep even when the baby sleeps, or sleeping all the time; constant dread, racing thoughts, or a pounding heart; anger or irritability that feels out of character; or feeling like a failure, or that your family would be better off without you.</p>
+              <p>You don't have to be at your worst to call. A quick questionnaire at your visit can sort it out, and treatment works.</p>
+            </div>
+          </details>
+
+          <details class="topic" style="--topic-a:var(--color-secondary)">
+            <summary>For partners &amp; support people</summary>
+            <div class="topic-body ink-soft">
+              <p>You often see it first. Watch for withdrawal, hopelessness, not eating or sleeping, rage, or frightening comments — and take it seriously rather than waiting it out. Ask directly ("how are you <i>really</i> doing?"), take a night feed, book the appointment, and go along to it.</p>
+              <p>Partners get this too — roughly 1 in 10 non-birthing parents experience postpartum depression. This is for you as well.</p>
+            </div>
+          </details>
+        </div>
+      </details>
     </div>
   </details>
-
-  <!-- Postpartum mental health -->
-  <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
-    <div class="card-body p-4 gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <h2 class="font-display font-semibold text-[17.5px] m-0 text-info flex-1">How you're really doing</h2>
-        <span class="badge badge-info badge-soft badge-xs font-extrabold uppercase">your mind</span>
-      </div>
-      <p class="m-0 text-[13.5px] leading-relaxed">Your body isn't the only thing recovering. Big feelings after birth are normal and expected — this is here to help you tell an ordinary hard day from something worth a call. None of it is a diagnosis, and none of it is your fault. Tap a topic to open it.</p>
-
-      <details class="topic" style="--topic-a:var(--color-info)">
-        <summary>Baby blues, or something more?</summary>
-        <div class="topic-body ink-soft">
-          <p><b class="text-base-content">Baby blues</b> hit up to 80% of new parents: weepy, overwhelmed, moody, running hot and cold. They usually peak around days 3–5 and ease by about two weeks as hormones settle.</p>
-          <p>If it lasts <b class="text-base-content">longer than two weeks</b>, gets heavier instead of lighter, or steals the good moments, it may be <b class="text-base-content">postpartum depression or anxiety</b> — which affect about 1 in 7 and are very treatable. It can begin any time in the first year, not just right after birth.</p>
-        </div>
-      </details>
-
-      <details class="topic" style="--topic-a:var(--color-warning)">
-        <summary>Call your provider if…</summary>
-        <div class="topic-body ink-soft">
-          <p>Reach out to your OB, midwife, or doctor if — most days, for more than two weeks — you notice: sadness or emptiness that won't lift; crying you can't explain; no interest in things you used to enjoy, or in the baby; can't sleep even when the baby sleeps, or sleeping all the time; constant dread, racing thoughts, or a pounding heart; anger or irritability that feels out of character; or feeling like a failure, or that your family would be better off without you.</p>
-          <p>You don't have to be at your worst to call. A quick questionnaire at your visit can sort it out, and treatment works.</p>
-        </div>
-      </details>
-
-      <details class="topic" style="--topic-a:var(--color-secondary)">
-        <summary>For partners &amp; support people</summary>
-        <div class="topic-body ink-soft">
-          <p>You often see it first. Watch for withdrawal, hopelessness, not eating or sleeping, rage, or frightening comments — and take it seriously rather than waiting it out. Ask directly ("how are you <i>really</i> doing?"), take a night feed, book the appointment, and go along to it.</p>
-          <p>Partners get this too — roughly 1 in 10 non-birthing parents experience postpartum depression. This is for you as well.</p>
-        </div>
-      </details>
-    </div>
-  </section>
 
   <!-- Phase 2: first 30 days -->
   <details class="topic mt-4" style="--topic-a:var(--color-primary)">
@@ -207,12 +207,12 @@ body{
       </svg>
       <p class="diagram-cap m-0" style="color:var(--ink-soft)">The ABCs of safe sleep — every sleep, day and night</p>
       <details class="topic" style="--topic-a:var(--color-primary)">
-        <summary>Newborn sleep: 11–17 broken hours is normal</summary>
-        <div class="topic-body ink-soft"><p>Newborns total <b class="text-base-content">11–17 hours</b> a day in bursts of 30 minutes to 3 hours, with awake windows rarely past 2 hours. That fragmentation is normal physiology (their circadian rhythm barely exists yet); true regular cycles don't solidify until around 6 months. Sleep when the baby sleeps is advice, not a cliché.</p></div>
+        <summary>Newborn sleep: short, irregular stretches are normal</summary>
+        <div class="topic-body ink-soft"><p>Many newborns sleep about <b class="text-base-content">14–17 hours across 24 hours</b>, split into short stretches, but individual patterns vary. Day-night rhythms develop gradually. Protect at least one caregiver rest block when possible, and call the pediatrician if the baby is unusually hard to wake or cannot stay awake to feed.</p></div>
       </details>
       <details class="topic" style="--topic-a:var(--color-primary)">
         <summary>Feed on cues, not the clock — the early hunger signs</summary>
-        <div class="topic-body ink-soft"><p>The first feed usually happens within 30–60 minutes of delivery, delivering early immune protection and heading off low blood sugar. After that, watch for early hunger cues: rooting, nuzzling toward the breast, hands to mouth. Crying is a <i>late</i> hunger cue; catching the earlier ones makes latching and settling far easier.</p>
+        <div class="topic-body ink-soft"><p>For a stable parent and baby, skin-to-skin and support for the first feed are commonly offered soon after birth. After that, watch for early hunger cues: rooting, nuzzling, stirring, and hands to mouth. Crying is a later cue; feeding support and any medical plan from the newborn team take priority.</p>
           <svg class="diagram" viewBox="0 0 340 64" role="img" aria-label="Hunger cues in order: rooting and stirring is early, hands to mouth means feed now, crying is late" style="color:var(--ink-soft)">
             <g font-weight="800" font-size="9.5" text-anchor="middle">
               <rect x="4" y="10" width="100" height="30" rx="8" fill="color-mix(in oklab, var(--color-primary) 18%, transparent)" stroke="var(--color-primary)" stroke-width="1.3"/>
@@ -268,7 +268,7 @@ body{
               <text x="300" y="90">4 · Right corner</text><text x="300" y="101">around &amp; tuck</text>
             </g>
           </svg>
-          <p>Snug at the arms, loose at the hips — legs should bend freely. <b class="text-base-content">Stop swaddling at the first sign of rolling</b>, usually around 2 months.</p>
+          <p>Snug at the arms, loose at the hips — legs should bend freely. Always place a swaddled baby on the back, keep loose bedding out, and <b class="text-base-content">stop swaddling at the first sign of trying to roll</b>; this can happen earlier than expected.</p>
         </div>
       </details>
       <details class="topic" style="--topic-a:var(--color-accent)">
@@ -298,34 +298,34 @@ body{
     </div>
   </details>
 
-  <!-- Phase 3: 1–6 months -->
+  <!-- Phase 3: birth–6 months -->
   <details class="topic mt-4" style="--topic-a:var(--color-info)">
-    <summary><h2 class="font-display font-semibold text-[17.5px] m-0 text-info flex-1">1–6 months: tummy time &amp; milestones</h2><span class="badge badge-info badge-soft badge-xs font-extrabold uppercase flex-none">motor development</span></summary>
+    <summary><h2 class="font-display font-semibold text-[17.5px] m-0 text-info flex-1">Birth–6 months: tummy time &amp; milestones</h2><span class="badge badge-info badge-soft badge-xs font-extrabold uppercase flex-none">motor development</span></summary>
     <div class="topic-body">
       <p class="m-0 text-[13.5px] leading-relaxed">Daily tummy time builds the neck, chest, and core strength behind every later milestone and helps prevent flat spots. Always awake and supervised:</p>
-      <svg class="diagram" viewBox="0 0 340 84" role="img" aria-label="Tummy time builds up: about 20 minutes a day at 0 to 4 weeks, 20 to 30 minutes at 1 to 3 months, up to 60 minutes by 4 to 5 months" style="color:var(--ink-soft)">
+      <svg class="diagram" viewBox="0 0 340 84" role="img" aria-label="Tummy time builds gradually: two or three sessions of three to five minutes for a newborn, 15 to 30 minutes total by about seven weeks, then more supervised awake time as tolerated" style="color:var(--ink-soft)">
         <line x1="12" y1="62" x2="328" y2="62" stroke="currentColor" stroke-width="1.2" opacity=".5"/>
         <g>
-          <rect x="34" y="44" width="64" height="18" rx="4" fill="color-mix(in oklab, var(--color-info) 55%, transparent)"/>
-          <rect x="138" y="35" width="64" height="27" rx="4" fill="color-mix(in oklab, var(--color-info) 75%, transparent)"/>
-          <rect x="242" y="14" width="64" height="48" rx="4" fill="var(--color-info)"/>
+          <rect x="34" y="48" width="64" height="14" rx="4" fill="color-mix(in oklab, var(--color-info) 55%, transparent)"/>
+          <rect x="138" y="34" width="64" height="28" rx="4" fill="color-mix(in oklab, var(--color-info) 75%, transparent)"/>
+          <rect x="242" y="20" width="64" height="42" rx="4" fill="var(--color-info)"/>
         </g>
         <g fill="currentColor" font-weight="800" font-size="9.5" text-anchor="middle">
-          <text x="66" y="39" fill="var(--color-info)">~20 min</text>
-          <text x="170" y="30" fill="var(--color-info)">20–30 min</text>
-          <text x="274" y="9.5" fill="var(--color-info)">up to 60 min</text>
-          <text x="66" y="76">0–4 wk</text>
-          <text x="170" y="76">1–3 mo</text>
-          <text x="274" y="76">4–5 mo</text>
+          <text x="66" y="43" fill="var(--color-info)">3–5 min × 2–3</text>
+          <text x="170" y="29" fill="var(--color-info)">15–30 min total</text>
+          <text x="274" y="15" fill="var(--color-info)">build as tolerated</text>
+          <text x="66" y="76">newborn</text>
+          <text x="170" y="76">by ~7 wk</text>
+          <text x="274" y="76">older baby</text>
         </g>
       </svg>
       <div class="overflow-x-auto">
         <table class="table table-sm utable">
           <thead><tr><th>Age</th><th>Daily amount</th><th>How</th></tr></thead>
           <tbody>
-            <tr><td class="font-bold whitespace-nowrap">0–4 wk</td><td>~20 min in 3–5 min micro-sessions</td><td>On your chest, across the lap, or a firm clean blanket</td></tr>
-            <tr><td class="font-bold whitespace-nowrap">1–3 mo</td><td>20–30 min in 5–10 min sessions</td><td>Flat, safe floor surface such as a play mat</td></tr>
-            <tr><td class="font-bold whitespace-nowrap">4–5 mo</td><td>Build up to ~60 min</td><td>Add toys to encourage reaching, rolling, and pivoting</td></tr>
+            <tr><td class="font-bold whitespace-nowrap">Newborn</td><td>2–3 sessions of 3–5 min</td><td>Start soon after coming home; chest or lap time counts while fully awake and watched</td></tr>
+            <tr><td class="font-bold whitespace-nowrap">By ~7 wk</td><td>Work toward 15–30 min total</td><td>Use several short sessions on a firm, clear floor surface</td></tr>
+            <tr><td class="font-bold whitespace-nowrap">Older baby</td><td>Keep adding time as tolerated</td><td>Add floor play and toys; stop if sleepy or distressed and try again later</td></tr>
           </tbody>
         </table>
       </div>
@@ -358,7 +358,7 @@ body{
           <tbody>
             <tr><td class="font-bold">Strong head &amp; neck control</td><td>Sits in a high chair with steady head control, keeping the airway safe</td></tr>
             <tr><td class="font-bold">Tongue-thrust reflex fading</td><td>Food moves back to be swallowed instead of being pushed straight out</td></tr>
-            <tr><td class="font-bold">Roughly doubled birth weight</td><td>Around 13 lb or more, when the gut can handle solids</td></tr>
+            <tr><td class="font-bold">Reaches for food and brings objects to mouth</td><td>Shows interest and the coordination needed to explore food with support</td></tr>
           </tbody>
         </table>
       </div>
@@ -374,21 +374,11 @@ body{
   </details>
 
   <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
-    <p class="m-0">Drawn from AAP, CDC, and Nemours KidsHealth guidance. Educational reference, not medical advice — your pediatrician's instructions always come first.</p>
+    <p class="m-0">Source-reviewed July 21, 2026. Educational reference, not medical advice; individual feeding, sleep, development, and recovery needs vary. <a class="link link-primary font-bold" href="./sources.html">Safety sources and review scope</a>.</p>
   </footer>
 </div>
 
-<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
-  <div class="max-w-[640px] mx-auto grid grid-cols-7">
-    <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="3.9" y="3.9" width="16.2" height="16.2" rx="4.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 12.15l2.55 2.55 4.85-5.35" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
-    <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.4S4.6 15.8 4.6 10A4.2 4.2 0 0 1 12 7.5a4.2 4.2 0 0 1 7.4 2.5c0 5.8-7.4 10.4-7.4 10.4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.7 11.7h2.1l1.15-2.1 1.55 3.9 1-1.8h2.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
-    <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="8.7" y="3.3" width="6.6" height="3.5" rx="1.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.7 5.05H7.05A1.65 1.65 0 0 0 5.4 6.7v11.65A1.65 1.65 0 0 0 7.05 20h9.9a1.65 1.65 0 0 0 1.65-1.65V6.7a1.65 1.65 0 0 0-1.65-1.65H15.3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16.9s-3.05-1.85-3.05-4a1.75 1.75 0 0 1 3.05-1.2 1.75 1.75 0 0 1 3.05 1.2c0 2.15-3.05 4-3.05 4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Birth Plan</a>
-    <a href="./emergency.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></span>Warning</a>
-    <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" aria-current="page" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.5v-6.7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 13.8c0-3.95-2.8-6.25-6.85-6.25 0 3.95 2.8 6.25 6.85 6.25z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.1c0-3.2 2.4-5.1 5.75-5.1 0 3.2-2.4 5.1-5.75 5.1z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Upbringing</a>
-    <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-warning)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M6.35 10.3a5.65 5.65 0 0 1 11.3 0c0 4.65 1.9 5.6 1.9 5.6H4.45s1.9-.95 1.9-5.6z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 18.6a2.25 2.25 0 0 0 4.2 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reminders</a>
-    <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6 12h2.6M14.3 16l1.3 2.25M9.7 16l-1.3 2.25M7.4 12H4.8M9.7 8L8.4 5.75M14.3 8l1.3-2.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Settings</a>
-  </div>
-</nav>
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav"><div class="app-nav-grid"></div></nav>
 
 <div class="toast toast-center toast-bottom z-[80] mb-20 hidden" id="toastWrap">
   <div class="alert bg-neutral text-neutral-content rounded-2xl py-3.5 px-6 text-[15px] leading-snug font-extrabold shadow-lg border-0 max-w-[92vw] whitespace-normal justify-center text-center" id="toast" role="status" aria-live="polite"></div>
@@ -409,7 +399,7 @@ function applyTheme(){
 }
 $('themeBtn').addEventListener('click',()=>{
   dark=!dark; applyTheme();
-  try{ const v=localStorage.getItem(KEY); const s=v?JSON.parse(v):{}; s.dark=dark; s.themeV=2; localStorage.setItem(KEY,JSON.stringify(s)); }catch(e){}
+  try{ const v=localStorage.getItem(KEY),before=BabyListState.sanitizeState(v?JSON.parse(v):{}),next=BabyListState.copy(before); next.dark=dark; next.themeV=2; localStorage.setItem(KEY,JSON.stringify(BabyListState.stamp(next,before))); }catch(e){}
 });
 applyTheme();
 if('serviceWorker' in navigator && location.protocol==='https:'){

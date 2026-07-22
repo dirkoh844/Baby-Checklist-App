@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tracker — Baby List</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Feeds, diapers, and sleep. Answers the three questions the pediatrician always asks.">
+<meta name="description" content="A private feed, diaper, and sleep log with rolling summaries for caregiver and pediatric visits.">
 <meta name="theme-color" content="#10141F">
 <meta name="color-scheme" content="dark light">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,8 +36,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=2.12.5" rel="stylesheet">
-<link href="./assets/enhance.css?v=2.12.5" rel="stylesheet">
+<link href="./assets/navbar.css?v=3.0.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=3.0.0" rel="stylesheet">
 <script>
 addEventListener('DOMContentLoaded',function(){
   if(!window.__cssMissing) return;
@@ -124,9 +124,14 @@ body.night #tabNav .nt[aria-current="page"] .np{background:#2A1013!important;box
 .hero-num{font-variant-numeric:tabular-nums}
 .logbtn{min-height:58px}
 .ent:nth-child(odd){background:color-mix(in oklab, var(--color-base-200) 60%, transparent)}
+.tracking-quality{background:var(--color-base-200);border:1px solid var(--color-base-300)}
 @media print{ *{background:#fff!important;color:#000!important} #tabNav,#toastWrap,.icobtns,.logrow,#nightBtn{display:none!important} }
 </style>
-<script src="./assets/notify.js?v=2.12.5" defer></script>
+<script src="./assets/state-core.js?v=3.0.0"></script>
+<script src="./assets/sync-core.js?v=3.0.0"></script>
+<script src="./assets/tracker-core.js?v=3.0.0"></script>
+<script src="./assets/app-shell.js?v=3.0.0" defer></script>
+<script src="./assets/notify.js?v=3.0.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
@@ -150,7 +155,8 @@ body.night #tabNav .nt[aria-current="page"] .np{background:#2A1013!important;box
   <section class="card bg-base-100 border border-primary/50 shadow-sm mt-4" id="bornCard">
     <div class="card-body p-4 gap-2">
       <h2 class="font-display font-semibold text-[17.5px] m-0">Is the baby here?</h2>
-      <p class="m-0 text-[12.5px] ink-soft leading-relaxed">The day-of-life count drives the diaper and feeding thresholds, so the tracker needs the birth date and time.</p>
+      <p class="m-0 text-[12.5px] ink-soft leading-relaxed">The birth date keeps optional newborn count prompts limited to the first 28 days.</p>
+      <label for="bornInput" class="text-[12px] font-extrabold uppercase tracking-wider ink-soft">Birth date and time</label>
       <input id="bornInput" type="datetime-local" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full">
       <button id="bornSave" type="button" class="btn btn-sm btn-primary rounded-xl font-extrabold w-full">Start tracking</button>
     </div>
@@ -175,6 +181,13 @@ body.night #tabNav .nt[aria-current="page"] .np{background:#2A1013!important;box
       </div>
       <div class="flex gap-2 justify-center flex-wrap text-[12px] font-bold mt-1" id="today"></div>
       <div id="spark" class="grid grid-cols-3 gap-2 mt-1.5"></div>
+      <div class="tracking-quality rounded-xl p-3 mt-1">
+        <label class="flex items-start gap-2 cursor-pointer font-bold text-[13px]">
+          <input id="completeToggle" type="checkbox" class="checkbox checkbox-sm checkbox-primary mt-0.5" aria-describedby="qualityHelp">
+          <span>Everything is being logged on this tracker</span>
+        </label>
+        <p id="qualityHelp" class="m-0 mt-1 text-[11.5px] ink-soft leading-relaxed">Turn this on only when feeds and diapers are logged consistently. Newborn count prompts stay off otherwise and stop after day 28.</p>
+      </div>
     </div>
   </section>
 
@@ -227,22 +240,12 @@ body.night #tabNav .nt[aria-current="page"] .np{background:#2A1013!important;box
   <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
     <details class="topic" style="--topic-a:var(--color-accent)">
       <summary>How the tracker syncs, archives &amp; warns</summary>
-      <div class="topic-body ink-soft"><p>Both phones write to the same log. Entries older than 30 days move to a local archive and ride along in your Save-to-file backup. The thresholds here follow AAP guidance and are a prompt to call, never a diagnosis. <a class="link link-error font-bold" href="./emergency.html">Warning signs</a>.</p></div>
+      <div class="topic-body ink-soft"><p>Connected phones merge individual entries instead of replacing the whole log. Entries older than 30 days move to a local archive included in Save-to-file backups. Newborn count prompts appear only through day 28 and only after you mark the log complete; feeding method, gestational age, growth, and the clinician's plan still take priority. <a class="link link-error font-bold" href="./emergency.html">Warning signs</a> · <a class="link link-primary font-bold" href="./sources.html">Safety sources</a>.</p></div>
     </details>
   </footer>
 </div>
 
-<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
-  <div class="max-w-[640px] mx-auto grid grid-cols-7">
-    <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="3.9" y="3.9" width="16.2" height="16.2" rx="4.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 12.15l2.55 2.55 4.85-5.35" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
-    <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.4S4.6 15.8 4.6 10A4.2 4.2 0 0 1 12 7.5a4.2 4.2 0 0 1 7.4 2.5c0 5.8-7.4 10.4-7.4 10.4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.7 11.7h2.1l1.15-2.1 1.55 3.9 1-1.8h2.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
-    <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="8.7" y="3.3" width="6.6" height="3.5" rx="1.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.7 5.05H7.05A1.65 1.65 0 0 0 5.4 6.7v11.65A1.65 1.65 0 0 0 7.05 20h9.9a1.65 1.65 0 0 0 1.65-1.65V6.7a1.65 1.65 0 0 0-1.65-1.65H15.3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16.9s-3.05-1.85-3.05-4a1.75 1.75 0 0 1 3.05-1.2 1.75 1.75 0 0 1 3.05 1.2c0 2.15-3.05 4-3.05 4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Birth Plan</a>
-    <a href="./emergency.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></span>Warning</a>
-    <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.5v-6.7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 13.8c0-3.95-2.8-6.25-6.85-6.25 0 3.95 2.8 6.25 6.85 6.25z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.1c0-3.2 2.4-5.1 5.75-5.1 0 3.2-2.4 5.1-5.75 5.1z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Upbringing</a>
-    <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-warning)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M6.35 10.3a5.65 5.65 0 0 1 11.3 0c0 4.65 1.9 5.6 1.9 5.6H4.45s1.9-.95 1.9-5.6z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 18.6a2.25 2.25 0 0 0 4.2 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reminders</a>
-    <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6 12h2.6M14.3 16l1.3 2.25M9.7 16l-1.3 2.25M7.4 12H4.8M9.7 8L8.4 5.75M14.3 8l1.3-2.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Settings</a>
-  </div>
-</nav>
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav"><div class="app-nav-grid"></div></nav>
 
 <div class="toast toast-center toast-bottom z-[80] mb-20 hidden" id="toastWrap">
   <div class="alert bg-neutral text-neutral-content rounded-2xl py-3.5 px-6 text-[15px] leading-snug font-extrabold shadow-lg border-0 max-w-[92vw] whitespace-normal justify-center text-center" id="toast" role="status" aria-live="polite"></div>
@@ -268,14 +271,26 @@ const KEY='newborn-checklist-v3', ARCH='newborn-log-archive';
 const DAY=864e5, HOUR=36e5;
 
 /* ---------- state ---------- */
-function readState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):{}; }catch(e){ return {}; } }
-let S=readState();
-if(!Array.isArray(S.log)) S.log=[];
+function readState(){
+  try{
+    const v=localStorage.getItem(KEY);
+    return BabyListState.sanitizeState(v?JSON.parse(v):{});
+  }catch(e){ return BabyListState.sanitizeState({}); }
+}
+let S=readState(), baseline=BabyListState.copy(S);
 function save(){
-  S.savedAt=new Date().toISOString();
+  try{ S=BabyListState.stamp(S,baseline); baseline=BabyListState.copy(S); }
+  catch(e){ toast('That change could not be saved safely'); return; }
   try{ localStorage.setItem(KEY,JSON.stringify(S)); }
   catch(e){ toast('This browser is blocking saved data'); }
   queuePush();
+}
+function acceptState(next,showUpdate){
+  S=BabyListState.sanitizeState(next||{});
+  baseline=BabyListState.copy(S);
+  try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){}
+  render();
+  if(showUpdate) toast('Updated from the other phone');
 }
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 function add(e){
@@ -285,106 +300,55 @@ function add(e){
   return e.i;
 }
 function drop(id){
-  const e=S.log.find(x=>x.i===id);
-  if(!e) return;
-  e.del=true; e.u=Date.now();
+  const i=S.log.findIndex(x=>x.i===id);
+  if(i<0) return null;
+  const e=S.log.splice(i,1)[0];
   save(); render();
+  return e;
 }
 
-/* ---------- cloud: same adapter and auth rules as the checklist ---------- */
-function cloudHeaders(cfg,useMaster){
-  const hd={'Content-Type':'application/json'};
-  if(!cfg||!cfg.k) return hd;
-  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
-  if(host.includes('jsonbin.io')) hd[(useMaster||cfg.kt==='m')?'X-Master-Key':'X-Access-Key']=cfg.k;
-  else if(host.includes('extendsclass.com')) hd['Security-key']=cfg.k;
-  else hd['Authorization']='Bearer '+cfg.k;
-  return hd;
-}
-function cloudUrlFor(cfg){
-  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
-  if(host.includes('jsonstorage.net') && cfg.k && cfg.u.indexOf('apiKey=')<0)
-    return cfg.u+(cfg.u.includes('?')?'&':'?')+'apiKey='+encodeURIComponent(cfg.k);
-  return cfg.u;
-}
-async function cloudFetch(cfg,method,body){
-  const opts={method,headers:cloudHeaders(cfg),cache:'no-store'};
-  if(body!=null) opts.body=body;
-  let res=await fetch(cloudUrlFor(cfg),opts);
-  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
-  if((res.status===401||res.status===403) && host.includes('jsonbin.io') && cfg.kt!=='m'){
-    const o2={method,headers:cloudHeaders(cfg,true),cache:'no-store'};
-    if(body!=null) o2.body=body;
-    res=await fetch(cloudUrlFor(cfg),o2);
-    if(res.ok){ cfg.kt='m'; S.cloud=cfg; }
-  }
-  return res;
-}
-function unwrap(b){ if(b&&typeof b==='object'){ if(b.record&&b.record.app==='newborn-checklist') return b.record; if(b.app==='newborn-checklist') return b; } return null; }
-/* append-only union by entry id, newest edit of an id wins */
-function mergeLogs(a,b){
-  const m={};
-  (a||[]).forEach(e=>{ if(e&&e.i) m[e.i]=e; });
-  (b||[]).forEach(e=>{ if(e&&e.i){ const o=m[e.i]; if(!o||(e.u||0)>(o.u||0)) m[e.i]=e; } });
-  return Object.keys(m).map(k=>m[k]).sort((x,y)=>(x.at||0)-(y.at||0));
-}
-function setDot(ok){
+/* ---------- conflict-safe cloud sync ---------- */
+function syncConfigured(){ return !!(S.sync && S.cloud && S.cloud.u); }
+function setDot(status){
   const d=$('syncDot');
-  if(!(S.sync && S.cloud && S.cloud.u)){ d.classList.add('hidden'); return; }
+  const label=$('syncLabel');
+  if(!syncConfigured()){
+    d.classList.add('hidden');
+    if(label) label.textContent='On this device';
+    return;
+  }
   d.classList.remove('hidden');
-  d.classList.toggle('bg-success',ok); d.classList.toggle('bg-warning',!ok);
-  d.title=ok?'Synced':'Sync unreachable — saved on this phone';
+  d.classList.toggle('bg-success',status==='synced');
+  d.classList.toggle('bg-warning',status!=='synced');
+  d.title=status==='synced'?'Synced':status==='pending'?'Sync pending':'Offline — saved on this phone';
+  if(label) label.textContent=status==='synced'?'Synced':status==='pending'?'Syncing…':'Saved here · retrying';
 }
 let pushTimer=null, pushing=false;
 function queuePush(){
-  if(!(S.sync && S.cloud && S.cloud.u)) return;
+  if(!syncConfigured()) return;
+  setDot('pending');
   clearTimeout(pushTimer);
   pushTimer=setTimeout(pushCloud,2000);
 }
 async function pushCloud(){
-  if(pushing || !(S.sync && S.cloud && S.cloud.u)) return;
+  if(pushing || !syncConfigured()) return;
   pushing=true;
   try{
-    let doc=null;
-    try{
-      const r=await cloudFetch(S.cloud,'GET');
-      if(r.ok) doc=unwrap(await r.json());
-    }catch(e){}
-    /* never PUT a doc we did not merge first: the other phone owns the
-       checklist half of it and may have written since we loaded */
-    const base=(doc&&doc.state)?doc.state:{};
-    const merged=Object.assign({},base,S,{log:mergeLogs(base.log,S.log)});
-    S.log=merged.log;
-    try{ localStorage.setItem(KEY,JSON.stringify(merged)); }catch(e){}
-    S=merged;
-    const out={app:'newborn-checklist',version:2,savedAt:new Date().toISOString(),state:merged};
-    if(doc&&doc.push) out.push=doc.push;
-    const res=await cloudFetch(S.cloud,'PUT',JSON.stringify(out));
-    setDot(res.ok!==false);
-    render();
-  }catch(e){ setDot(false); }
+    const result=await BabyListSync.syncState(S.cloud,S);
+    acceptState(result.state,false);
+    setDot('synced');
+  }catch(e){ setDot('offline'); }
   pushing=false;
 }
 async function pullCloud(){
-  if(!(S.sync && S.cloud && S.cloud.u)) return;
+  if(!syncConfigured()) return;
   try{
-    const r=await cloudFetch(S.cloud,'GET');
-    if(!r.ok){ setDot(false); return; }
-    const doc=unwrap(await r.json());
-    if(doc && doc.state){
-      const before=S.log.length;
-      const merged=mergeLogs(S.log,doc.state.log);
-      if(JSON.stringify(merged)!==JSON.stringify(S.log)){
-        S.log=merged;
-        if(!S.born && doc.state.born) S.born=doc.state.born;
-        if(!S.card && doc.state.card) S.card=doc.state.card;
-        try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){}
-        render();
-        if(S.log.length>before) toast('Updated from the other phone');
-      }
-    }
-    setDot(true);
-  }catch(e){ setDot(false); }
+    const before=JSON.stringify((S.log||[]).map(e=>e.i+':'+e.u));
+    const result=await BabyListSync.pullState(S.cloud,S);
+    const after=JSON.stringify((result.state.log||[]).map(e=>e.i+':'+e.u));
+    acceptState(result.state,before!==after);
+    setDot('synced');
+  }catch(e){ setDot('offline'); }
 }
 
 /* ---------- archive entries older than 30 days ---------- */
@@ -419,10 +383,14 @@ const isFeed=e=>e.t==='feed';
 const isWet=e=>e.t==='diaper'&&e.w;
 const isDirty=e=>e.t==='diaper'&&e.p;
 
-/* ---------- thresholds: AAP-derived, and only ever a prompt to call ---------- */
+/* ---------- count prompts: shown only when the family says the log is complete ---------- */
 function warnings(){
   const dol=dayOfLife(), out=[];
-  if(!dol) return out;
+  if(!dol || dol>28) return out;
+  if(S.loggingComplete!==true){
+    out.push(['info','Count prompts are paused','This log may be incomplete, so the app will not infer a feeding or diaper problem from missing entries. Urgent symptoms still matter — use Warning signs at any time.']);
+    return out;
+  }
   const L=live();
   const feeds24=L.filter(e=>isFeed(e)&&inWindow(e,DAY)).length;
   const wet24=L.filter(e=>isWet(e)&&inWindow(e,DAY)).length;
@@ -431,15 +399,15 @@ function warnings(){
   const age=Date.now()-Date.parse(S.born);
 
   if(lastWet && Date.now()-lastWet.at>=8*HOUR)
-    out.push(['error','No wet diaper in '+since(Date.now()-lastWet.at),'Eight hours with no wet diaper is a dehydration flag. Call the pediatrician.']);
+    out.push(['error','No wet diaper in '+since(Date.now()-lastWet.at),'A long gap can be a dehydration warning in a newborn. Call the pediatrician now, especially with poor feeding, dry mouth, or unusual sleepiness.']);
   if(dol>=7 && wet24<6 && age>=DAY)
-    out.push(['error','Only '+wet24+' wet diapers in 24 hours','After the first week, fewer than 6 a day suggests the baby is not getting enough. Call the pediatrician today.']);
+    out.push(['error','Only '+wet24+' wet diapers in 24 hours','This is below the common breastfeeding guide of 6 wet diapers after day 5. Feeding method and care plans vary; call the pediatrician today.']);
   else if(dol>=5 && dol<7 && wet24<5 && age>=DAY)
-    out.push(['warning','Only '+wet24+' wet diapers in 24 hours','By day 5, expect the count to be climbing toward 6 or more. Worth a call.']);
+    out.push(['warning','Only '+wet24+' wet diapers in 24 hours','By day 5, common breastfeeding guidance expects about 6 wet diapers. Call the pediatrician or feeding-support team to review intake.']);
   if(lastFeed && Date.now()-lastFeed.at>=4*HOUR)
-    out.push(['warning','No feed logged in '+since(Date.now()-lastFeed.at),'Newborns feed 8 to 12 times a day, about every 2 to 3 hours. A baby too sleepy to feed needs to be checked.']);
+    out.push(['warning','No feed logged in '+since(Date.now()-lastFeed.at),'Newborn feeding intervals depend on feeding method, growth, and the care plan. Follow that plan; call promptly if the baby refuses feeds or is too sleepy to feed.']);
   if(dol>=2 && feeds24<8 && age>=DAY)
-    out.push(['warning','Only '+feeds24+' feeds in 24 hours','The target is 8 to 12. If the baby keeps falling asleep at the breast or refuses, call.']);
+    out.push(['warning','Only '+feeds24+' feeds in 24 hours','For breastfeeding newborns, CDC lists 8 to 12 feeds per day as a common sign of adequate intake. Other feeding plans differ; review this count with the pediatrician or feeding-support team.']);
   if(dol>=14 && dol<=21)
     out.push(['info','Two-week check','Babies should be back to birth weight by about 2 weeks. If the weight check has not happened, book it.']);
   return out;
@@ -465,16 +433,15 @@ function sparkTile(vals,color,label,unit){
 }
 function renderSpark(){
   const box=$('spark'); if(!box) return;
-  const days=[];
-  for(let i=6;i>=0;i--){ const d=new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()-i); days.push(d.getTime()); }
+  const now=Date.now(), days=BabyListTracker.dayStarts(7,now);
   const idx=t=>{ for(let i=days.length-1;i>=0;i--){ if(t>=days[i]) return i; } return -1; };
-  const feeds=new Array(7).fill(0), wets=new Array(7).fill(0), sleep=new Array(7).fill(0);
-  (S.log||[]).forEach(e=>{
+  const feeds=new Array(7).fill(0), wets=new Array(7).fill(0);
+  live().forEach(e=>{
     const i=idx(e.at||e.u||0); if(i<0) return;
     if(e.t==='feed') feeds[i]++;
     else if(e.t==='diaper' && e.w) wets[i]++;
-    else if(e.t==='sleep' && e.e){ sleep[i]+=Math.max(0,(e.e-(e.at||e.u))/36e5); }
   });
+  const sleep=BabyListTracker.dailySleep(live(),7,now).map(v=>v/HOUR);
   box.innerHTML=
     sparkTile(feeds,'var(--color-primary)','Feeds','')+
     sparkTile(wets,'var(--color-info)','Wet','')+
@@ -490,6 +457,7 @@ function render(){
 
   const dol=dayOfLife();
   $('dol').textContent='Day '+dol+' of life';
+  $('completeToggle').checked=S.loggingComplete===true;
 
   const L=live();
   const lastFeed=L.filter(isFeed).sort((a,b)=>b.at-a.at)[0];
@@ -504,7 +472,8 @@ function render(){
   const f=L.filter(e=>isFeed(e)&&inWindow(e,DAY)).length;
   const w=L.filter(e=>isWet(e)&&inWindow(e,DAY)).length;
   const d=L.filter(e=>isDirty(e)&&inWindow(e,DAY)).length;
-  const slept=L.filter(e=>e.t==='sleep'&&e.e&&inWindow(e,DAY)).reduce((a,b)=>a+(b.e-b.at),0);
+  const now=Date.now();
+  const slept=BabyListTracker.sleepInWindow(L,now-DAY,now,now);
   $('today').innerHTML=
     '<span class="badge badge-soft badge-secondary">'+f+' feeds / 24h</span>'+
     '<span class="badge badge-soft badge-info">'+w+' wet</span>'+
@@ -520,19 +489,44 @@ function render(){
     '<a href="./emergency.html" class="btn btn-sm btn-soft btn-error rounded-xl font-bold w-full">Newborn warning signs</a>' : '';
 
   const recent=L.filter(e=>inWindow(e,2*DAY)).sort((a,b)=>b.at-a.at);
-  $('hist').innerHTML=recent.length? recent.map(e=>{
+  const hist=$('hist');
+  hist.replaceChildren();
+  if(!recent.length){
+    const empty=document.createElement('p');
+    empty.className='m-0 ink-soft text-[13px]';
+    empty.textContent='Nothing logged yet.';
+    hist.appendChild(empty);
+  }
+  recent.forEach(e=>{
     let txt='';
     if(e.t==='feed') txt=e.k==='bottle'?('Bottle '+(e.oz||'?')+' oz'):('Nursed '+(e.s||'')+' '+fmtDur(e.d||0));
     else if(e.t==='pump') txt='Pumped '+(e.oz||'?')+' oz';
     else if(e.t==='diaper') txt=(e.w&&e.p)?'Wet + dirty':(e.w?'Wet':'Dirty');
     else if(e.t==='sleep') txt=e.e?('Slept '+since(e.e-e.at)):'Sleeping…';
-    return '<div class="ent flex items-center gap-2 py-1.5 px-2 rounded-lg">'+
-      '<span class="font-bold w-16 flex-none hero-num">'+clock(e.at)+'</span>'+
-      '<span class="flex-1 min-w-0">'+txt+(e.by?' <span class="ink-soft text-[11px]">'+e.by+'</span>':'')+'</span>'+
-      '<button class="btn btn-xs btn-ghost text-error font-bold flex-none" data-del="'+e.i+'" aria-label="Delete entry">✕</button>'+
-      '</div>';
-  }).join('') : '<p class="m-0 ink-soft text-[13px]">Nothing logged yet.</p>';
-  $('hist').querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>drop(b.getAttribute('data-del'))));
+    const row=document.createElement('div');
+    row.className='ent flex items-center gap-2 py-1.5 px-2 rounded-lg';
+    const when=document.createElement('span');
+    when.className='font-bold w-16 flex-none hero-num';
+    when.textContent=clock(e.at);
+    const desc=document.createElement('span');
+    desc.className='flex-1 min-w-0';
+    desc.textContent=txt;
+    if(e.by){
+      const by=document.createElement('span');
+      by.className='ink-soft text-[11px] ml-1';
+      by.textContent=e.by;
+      desc.appendChild(by);
+    }
+    const del=document.createElement('button');
+    del.type='button'; del.className='btn btn-xs btn-ghost text-error font-bold flex-none';
+    del.setAttribute('aria-label','Delete entry'); del.textContent='✕';
+    del.addEventListener('click',()=>{
+      const removed=drop(e.i);
+      if(removed) toast('Entry deleted',()=>{ removed.u=Date.now(); S.log.push(removed); save(); render(); });
+    });
+    row.append(when,desc,del);
+    hist.appendChild(row);
+  });
 }
 
 /* ---------- logging ---------- */
@@ -558,6 +552,11 @@ $('btnPump').addEventListener('click',()=>{
   const v=oz(); if(v===null){ toast('Enter the ounces first'); $('ozIn').focus(); return; }
   const id=add({t:'pump',oz:v}); $('ozIn').value='';
   toast('Pumped '+v+' oz',()=>drop(id));
+});
+$('completeToggle').addEventListener('change',()=>{
+  S.loggingComplete=$('completeToggle').checked;
+  save(); render();
+  toast(S.loggingComplete?'Count prompts are on':'Count prompts are paused');
 });
 
 /* nursing timer, with the screen held awake while it runs */
@@ -597,24 +596,25 @@ setInterval(()=>{ if(nurse) $('nurseClock').textContent=fmtDur((Date.now()-nurse
 
 /* ---------- doctor summary ---------- */
 $('copyBtn').addEventListener('click',async()=>{
-  const L=live(), dol=dayOfLife();
-  const win=(ms,f)=>L.filter(e=>inWindow(e,ms)&&f(e));
+  const L=live(), dol=dayOfLife(), now=Date.now();
+  const win=(ms,f)=>L.filter(e=>e.at>=now-ms&&f(e));
   let out='BABY LOG — day '+dol+' of life — '+new Date().toLocaleString()+'\n\n';
+  out+='DATA QUALITY\n  '+(S.loggingComplete===true?'Family marked this log complete.':'Log may be incomplete; missing entries should not be treated as missed care.')+'\n\n';
   out+='LAST 24 HOURS\n';
   out+='  Feeds: '+win(DAY,isFeed).length+'  (breast '+win(DAY,e=>isFeed(e)&&e.k==='breast').length+', bottle '+win(DAY,e=>isFeed(e)&&e.k==='bottle').length+')\n';
   const oz24=win(DAY,e=>isFeed(e)&&e.k==='bottle').reduce((a,b)=>a+(b.oz||0),0);
   if(oz24) out+='  Bottle volume: '+Math.round(oz24*10)/10+' oz\n';
   out+='  Wet diapers: '+win(DAY,isWet).length+'\n';
   out+='  Dirty diapers: '+win(DAY,isDirty).length+'\n';
-  const s24=win(DAY,e=>e.t==='sleep'&&e.e).reduce((a,b)=>a+(b.e-b.at),0);
+  const s24=BabyListTracker.sleepInWindow(L,now-DAY,now,now);
   out+='  Sleep: '+(Math.round(s24/HOUR*10)/10)+' h\n\n';
   out+='LAST 7 DAYS (daily average)\n';
-  const days=Math.min(7,Math.max(1,dol));
+  const days=BabyListTracker.trackedDayCount(L,now-7*DAY,now);
   out+='  Feeds/day: '+Math.round(win(7*DAY,isFeed).length/days*10)/10+'\n';
   out+='  Wet/day: '+Math.round(win(7*DAY,isWet).length/days*10)/10+'\n';
   out+='  Dirty/day: '+Math.round(win(7*DAY,isDirty).length/days*10)/10+'\n';
-  const w=warnings();
-  if(w.length) out+='\nFLAGS\n'+w.map(x=>'  - '+x[1]).join('\n')+'\n';
+  const w=warnings().filter(x=>x[0]==='error'||x[0]==='warning');
+  if(w.length) out+='\nCOUNT PROMPTS\n'+w.map(x=>'  - '+x[1]).join('\n')+'\n';
   try{ await navigator.clipboard.writeText(out); toast('Copied — paste it for the pediatrician'); }
   catch(e){ prompt('Copy the log:',out); }
 });
@@ -626,6 +626,7 @@ $('bornSave').addEventListener('click',()=>{
   const d=new Date(v);
   if(isNaN(d) || d.getTime()>Date.now()+6e4){ toast('That date is in the future'); return; }
   S.born=d.toISOString(); save(); render();
+  if(window.BabyListUI) window.BabyListUI.rebuildNav();
   toast('Tracking from day 1');
 });
 
@@ -659,7 +660,7 @@ render();
 pullCloud();
 setInterval(pullCloud,60000);
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden) pullCloud(); });
-addEventListener('pagehide',()=>{ if(pushTimer){ clearTimeout(pushTimer); pushCloud(); } });
+addEventListener('pagehide',()=>{ if(pushTimer) clearTimeout(pushTimer); });
 
 if('serviceWorker' in navigator && location.protocol==='https:'){
   try{

@@ -1,40 +1,75 @@
-# Getting Baby List onto phones — two routes
+# Phone distribution options
 
-## Route A (working today, free): installed PWA + real push
-Already built. On iPhone: Safari → your Pages URL → Share → Add to Home Screen.
-Then in the app: Enable notifications → Enable push. With the GitHub Actions
-sender configured (see README), reminders arrive with the app fully closed on
-iOS 16.4+ and Android. No Apple account, no review, no cost. For a two-person
-family app, this is the route I recommend actually living on.
+## Recommended for a small private deployment: installed PWA
 
-## Route B: a real App Store listing
-What Apple requires and I cannot do for you: an Apple Developer account
-($99/year), a Mac with Xcode (or a cloud Mac), and passing App Review.
-The codebase is ready for the standard wrapper path, Capacitor:
+Host the release over HTTPS, then install it from Safari or Chrome. This keeps
+the shipped offline behavior, Worker sync, and Web Push model intact without
+store review. On iPhone, Web Push requires installation to the Home Screen.
 
-1. `npm install -D @capacitor/core @capacitor/cli @capacitor/ios @capacitor/push-notifications`
-2. `mkdir www && cp index.html labor.html sw.js manifest.webmanifest *.png www/`
-3. Edit `capacitor.config.json` → set your own `appId` (reverse-DNS).
-4. `npx cap add ios && npx cap sync`
-5. Open `ios/App/App.xcworkspace` in Xcode → Signing & Capabilities → add your
-   team, plus the **Push Notifications** capability and **Background Modes →
-   Remote notifications**.
-6. Icons/splash: `npx @capacitor/assets generate --iconBackgroundColor '#0B0E15'`
-   (it picks up icon-512.png).
-7. Archive → App Store Connect → TestFlight → submit.
+The post-deploy checklist remains required: mobile operating systems can change
+notification, storage, background, and standalone-mode behavior independently
+of this codebase.
 
-Two honest caveats for Route B:
-- **Push inside the native wrapper is different plumbing.** Web Push does not
-  run inside the iOS WKWebView; the store build uses `@capacitor/push-notifications`
-  (APNs device tokens), and the sender must speak APNs or FCM instead of Web
-  Push. Same registry pattern, different transport — a contained follow-up task,
-  not a rewrite.
-- **Guideline 4.2:** Apple rejects thin website wrappers. Native push, offline
-  support, and the installed app shell usually clear the bar for a utility app,
-  and **TestFlight-only distribution** (you and Elizabeth) skips the storefront
-  entirely while still installing "like a real app."
+## Apple App Store / TestFlight wrapper
 
-## Google Play (much easier, if Android ever matters)
-$25 one-time. `npx @bubblewrap/cli init --manifest <pages-url>/manifest.webmanifest`
-builds a Trusted Web Activity. Because a TWA runs real Chrome, today's Web Push
-keeps working unchanged.
+A native wrapper is possible with Capacitor, but it is a separate product
+release rather than a packaging toggle. You need an Apple Developer membership,
+macOS/Xcode or a managed build service, privacy disclosures, screenshots,
+signing, and review.
+
+Start by copying the entire static app—not a partial page list—into a web asset
+directory:
+
+```sh
+npm install --save-dev @capacitor/core @capacitor/cli @capacitor/ios
+npx cap init
+mkdir -p www
+rsync -a --exclude node_modules --exclude worker --exclude .github ./ www/
+npx cap add ios
+npx cap sync ios
+```
+
+Then review these native differences before distribution:
+
+- Web Push does not provide the native notification pipeline inside an iOS
+  `WKWebView`. Add a Capacitor/APNs integration and a separate device-token
+  registry/sender if closed-app native notifications are required.
+- Service-worker behavior inside a wrapper differs from Safari installation;
+  verify every offline route and decide whether to disable the worker in native
+  builds in favor of bundled assets.
+- External phone/web links, print/share behavior, file import/export, safe-area
+  insets, text scaling, and keyboard focus need device testing.
+- Replace example identifiers, display name, icons, support URL, privacy-policy
+  URL, and VAPID/Worker configuration before signing.
+- Complete Apple's health/medical, privacy, data-collection, encryption/export,
+  and account-deletion questionnaires according to the final native behavior.
+  The current reference copy must not be marketed as diagnosis or monitoring.
+- A thin web wrapper can be rejected. Native-quality integration, offline value,
+  accessibility, and platform-consistent behavior should be evident.
+
+For a limited trusted audience, TestFlight may be operationally simpler than a
+public listing, but it still uses Apple signing and beta-review rules.
+
+## Google Play
+
+A Trusted Web Activity via Bubblewrap can preserve Chrome's PWA and Web Push
+behavior:
+
+```sh
+npx @bubblewrap/cli init --manifest https://example.com/manifest.webmanifest
+```
+
+Configure Digital Asset Links, signing, store disclosures, testing tracks, and
+the production origin before submission. A Capacitor Android wrapper is another
+option if native notification or file integrations are needed; it carries the
+same “separate product release” testing burden as iOS.
+
+## Before any store submission
+
+- Re-run `npm run verify` from a clean package.
+- Complete `POST-DEPLOY.md` on real target devices.
+- Obtain a fresh clinical/legal review of `sources.html` and all warning copy.
+- Publish an accurate privacy policy describing local data, optional Worker
+  sync, push endpoints, backups, retention, deletion, and support contact.
+- Test upgrade/migration without losing local records.
+- Verify the app remains useful when sync and notifications are disabled.

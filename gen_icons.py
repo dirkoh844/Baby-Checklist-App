@@ -11,7 +11,7 @@ def svg(body, cls=''):
     c = f' class="{cls}"' if cls else ''
     return f'<svg{c} viewBox="0 0 24 24" fill="none">{body}</svg>'
 
-# ---------------------------------------------------------------- nav (7)
+# ---------------------------------------------------------------- navigation destination icons
 NAV = {
  # rounded frame + tick, optically centred
  'index': svg(f'<rect x="3.9" y="3.9" width="16.2" height="16.2" rx="4.6" {A}/>'
@@ -115,60 +115,7 @@ def mark_svg(bleed=False, scale=1.0):
 
 FAVICON = 'data:image/svg+xml,' + urllib.parse.quote(mark_svg(), safe='')
 
-# ================================================================ rewrite pages
-TABS = [('index', 'Checklist', '--color-primary'), ('labor', 'Labor', '--color-error'),
-        ('birthplan', 'Birth Plan', '--color-secondary'), ('tracker', 'Tracker', '--color-accent'),
-        ('upbringing', 'Upbringing', '--color-success'), ('reminders', 'Reminders', '--color-warning'),
-        ('settings', 'Settings', '--color-info')]
-
-def nav(active):
-    rows = []
-    for f, label, acc in TABS:
-        cur = ' aria-current="page"' if f == active else ''
-        rows.append(f'    <a href="./{f}.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap"{cur} style="--tab-a:var({acc})">'
-                    f'<span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]">{NAV[f]}</span>{label}</a>')
-    return ('<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">\n'
-            '  <div class="max-w-[640px] mx-auto grid grid-cols-7">\n' + '\n'.join(rows) + '\n  </div>\n</nav>')
-
-PAGES = [('index.html', 'index'), ('labor.html', 'labor'), ('birthplan.html', 'birthplan'),
-         ('tracker.html', 'tracker'), ('upbringing.html', 'upbringing'),
-         ('reminders.html', 'reminders'), ('settings.html', 'settings'), ('emergency.html', None)]
-
-touched = []
-for page, active in PAGES:
-    src = open(page).read()
-    before = src
-
-    m = re.search(r'<nav class="fixed bottom-0.*?</nav>', src, re.S)
-    assert m, page + ': no nav'
-    src = src[:m.start()] + nav(active if active else 'index') + src[m.end():]
-    if active is None:                       # emergency is not a tab
-        src = src.replace(' aria-current="page"', '', 1)
-
-    # night button first: its old art is byte-identical to the old moon
-    src = re.sub(r'(id="nightBtn"[^>]*>)<svg.*?</svg>', lambda mm: mm.group(1) + NIGHT, src, flags=re.S)
-    # SOS button
-    src = re.sub(r'(id="sosBtn"[^>]*>)<svg.*?</svg>', lambda mm: mm.group(1) + SOS_SVG, src, flags=re.S)
-    # theme toggle: two innerHTML strings inside applyTheme
-    src = re.sub(r"\? '<svg class=\"w-4 h-4\".*?</svg>'", "? '" + SUN + "'", src, flags=re.S)
-    src = re.sub(r": '<svg class=\"w-4 h-4\".*?</svg>';", ": '" + MOON + "';", src, flags=re.S)
-    # favicon
-    src = re.sub(r'<link rel="icon" href="data:image/svg\+xml,[^"]*">',
-                 f'<link rel="icon" href="{FAVICON}">', src)
-
-    if page == 'index.html':
-        s = src.index('const ICONS={'); e = src.index('\n};', s)
-        body = 'const ICONS={\n' + ',\n'.join(f"  {k}:'{v}'" for k, v in ICONS.items())
-        src = src[:s] + body + src[e:]
-
-    # sweep every remaining icon onto the one weight
-    src = re.sub(r'stroke-width="(1\.[4-9]|2|2\.[0-2])"', f'stroke-width="{W}"', src)
-    src = re.sub(r'stroke-width="(2\.[3-9]|3)"', 'stroke-width="2.5"', src)
-
-    if src != before:
-        safe_write(page, src); touched.append(page)
-
-print('pages rewritten:', ', '.join(touched))
+# ================================================================ reusable icon source ends
 
 # ================================================================ PNGs
 from PIL import Image, ImageDraw

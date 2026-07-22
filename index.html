@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Newborn Essentials — Baby List</title>
-<meta name="description" content="A pediatrician-aligned newborn checklist with budgets, due-date timing, and family sharing.">
+<meta name="description" content="A private, source-reviewed pregnancy and newborn checklist with budgets, timing, tracking, and family sharing.">
 <meta name="theme-color" content="#10141F" id="themeColor">
 <meta name="color-scheme" content="dark light">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,8 +36,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=2.12.5" rel="stylesheet">
-<link href="./assets/enhance.css?v=2.12.5" rel="stylesheet">
+<link href="./assets/navbar.css?v=3.0.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=3.0.0" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -157,7 +157,10 @@ body{
   footer{font-size:9pt}
 }
 </style>
-<script src="./assets/notify.js?v=2.12.5" defer></script>
+<script src="./assets/state-core.js?v=3.0.0"></script>
+<script src="./assets/sync-core.js?v=3.0.0"></script>
+<script src="./assets/app-shell.js?v=3.0.0" defer></script>
+<script src="./assets/notify.js?v=3.0.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-[env(safe-area-inset-bottom)]">
 
@@ -167,7 +170,7 @@ body{
     <div class="flex items-center justify-between gap-2">
       <h1 class="font-display font-semibold text-[22px] leading-tight m-0">
         Newborn <em class="italic font-medium text-secondary">Essentials</em>
-        <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1 h-3.5">Pediatrician-aligned · tap to pack</span>
+        <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1 h-3.5">Source-reviewed · tap to pack</span>
         <span id="dueChip" class="badge badge-secondary badge-soft badge-xs font-extrabold mt-1.5 hidden"></span>
       </h1>
       <div class="icobtns flex gap-1.5 flex-none items-center"><span id="syncDot" class="hidden w-2 h-2 rounded-full mr-0.5" role="status"></span>
@@ -269,7 +272,7 @@ body{
   <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
     <div class="foot-actions mb-4">
       <button id="linkBtn" type="button" class="btn btn-primary w-full h-12 rounded-2xl text-[15px] font-extrabold gap-2 shadow-md"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M10 14a4.5 4.5 0 006.4.4l3-3a4.5 4.5 0 00-6.4-6.4l-1.6 1.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M14 10a4.5 4.5 0 00-6.4-.4l-3 3a4.5 4.5 0 006.4 6.4l1.6-1.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>Share link</button>
-      <p class="text-[12px] ink-soft font-semibold leading-relaxed mt-1.5 mb-3 text-center">Sends the whole list in one link — checkmarks, added items, due date, and the live sync connection.</p>
+      <p class="text-[12px] ink-soft font-semibold leading-relaxed mt-1.5 mb-3 text-center">Creates a private snapshot link with checkmarks, added items, and due date. It never includes your live-sync token.</p>
       <div class="grid grid-cols-2 gap-2">
         <button id="copyBtn" type="button" class="btn btn-soft btn-info h-11 rounded-xl justify-start text-[13px] font-bold gap-2"><svg class="w-4 h-4 flex-none" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2.5" stroke="currentColor" stroke-width="1.75"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2" stroke="currentColor" stroke-width="1.75"/></svg>Copy list</button>
         <button id="dlBtn" type="button" class="btn btn-soft btn-accent h-11 rounded-xl justify-start text-[13px] font-bold gap-2"><svg class="w-4 h-4 flex-none" viewBox="0 0 24 24" fill="none"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>Download .txt</button>
@@ -281,28 +284,18 @@ body{
       </div>
       <input type="file" id="fileInput" accept=".json,application/json" hidden>
     </div>
-    <p class="mb-2.5 text-[11px]">Baby List v2.12.5 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a></p>
-    <p class="mb-2.5">Follows AAP and CPSC safe-sleep guidance, but isn't medical advice. Confirm anything health-related with your pediatrician.</p>
+    <p class="mb-2.5 text-[11px]">Baby List v3.0.0 · <a class="link link-primary font-bold" href="./settings.html">Settings &amp; what's new</a> · <a class="link font-bold" href="./reminders.html">Reminders</a> · <a class="link font-bold" href="./sources.html">Safety sources</a></p>
+    <p class="mb-2.5">Source-reviewed July 21, 2026. This planning tool is not medical advice; confirm health decisions with your clinician.</p>
     <details class="topic" style="--topic-a:var(--color-primary)">
       <summary>How saving, sharing &amp; cloud sync work</summary>
-      <div class="topic-body ink-soft"><p><b class="text-base-content font-extrabold">Progress saves on this device automatically.</b> <b class="text-base-content font-extrabold">Share link</b> packs your checkmarks, added items, and due date into a URL anyone can open. <b class="text-base-content font-extrabold">Save / Load file</b> is a .json backup. <b class="text-base-content font-extrabold">Share copy</b> downloads this page with your list baked in. <b class="text-base-content font-extrabold">Cloud sync</b> keeps one live list across every device — set it up once in <a class="link link-primary font-bold" href="./settings.html">Settings</a>, then send a Share link; devices that open it join automatically and refresh about once a minute and whenever the app is opened. Anything synced or linked is visible to whoever has the link.</p></div>
+      <div class="topic-body ink-soft"><p><b class="text-base-content font-extrabold">Progress saves on this device automatically.</b> <b class="text-base-content font-extrabold">Share link</b> creates a credential-free snapshot anyone with the link can view. <b class="text-base-content font-extrabold">Save / Load file</b> is a full .json backup that omits sync credentials. <b class="text-base-content font-extrabold">Share copy</b> downloads this page with a snapshot baked in. <b class="text-base-content font-extrabold">Live sync</b> is opt-in in <a class="link link-primary font-bold" href="./settings.html">Settings</a>; adding another phone requires an explicitly labeled invite containing the private token. Treat snapshots, backups, and invites as sensitive family information.</p></div>
     </details>
   </footer>
 </div>
 
 <button id="toTop" type="button" class="btn btn-circle btn-sm bg-base-100/90 border border-base-300 shadow-lg fixed right-3 z-40 hidden" style="bottom:calc(env(safe-area-inset-bottom) + 96px)" aria-label="Back to top"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M12 19V5m0 0l-6 6m6-6l6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 
-<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
-  <div class="max-w-[640px] mx-auto grid grid-cols-7">
-    <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" aria-current="page" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="3.9" y="3.9" width="16.2" height="16.2" rx="4.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 12.15l2.55 2.55 4.85-5.35" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
-    <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.4S4.6 15.8 4.6 10A4.2 4.2 0 0 1 12 7.5a4.2 4.2 0 0 1 7.4 2.5c0 5.8-7.4 10.4-7.4 10.4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.7 11.7h2.1l1.15-2.1 1.55 3.9 1-1.8h2.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
-    <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="8.7" y="3.3" width="6.6" height="3.5" rx="1.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.7 5.05H7.05A1.65 1.65 0 0 0 5.4 6.7v11.65A1.65 1.65 0 0 0 7.05 20h9.9a1.65 1.65 0 0 0 1.65-1.65V6.7a1.65 1.65 0 0 0-1.65-1.65H15.3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16.9s-3.05-1.85-3.05-4a1.75 1.75 0 0 1 3.05-1.2 1.75 1.75 0 0 1 3.05 1.2c0 2.15-3.05 4-3.05 4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Birth Plan</a>
-    <a href="./emergency.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></span>Warning</a>
-    <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.5v-6.7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 13.8c0-3.95-2.8-6.25-6.85-6.25 0 3.95 2.8 6.25 6.85 6.25z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.1c0-3.2 2.4-5.1 5.75-5.1 0 3.2-2.4 5.1-5.75 5.1z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Upbringing</a>
-    <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-warning)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M6.35 10.3a5.65 5.65 0 0 1 11.3 0c0 4.65 1.9 5.6 1.9 5.6H4.45s1.9-.95 1.9-5.6z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 18.6a2.25 2.25 0 0 0 4.2 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reminders</a>
-    <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6 12h2.6M14.3 16l1.3 2.25M9.7 16l-1.3 2.25M7.4 12H4.8M9.7 8L8.4 5.75M14.3 8l1.3-2.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Settings</a>
-  </div>
-</nav>
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav"><div class="app-nav-grid"></div></nav>
 
 <div class="toast toast-center toast-bottom z-[80] mb-20 hidden" id="toastWrap">
   <div class="alert bg-neutral text-neutral-content rounded-2xl py-3.5 px-6 text-[15px] leading-snug font-extrabold shadow-lg border-0 max-w-[92vw] whitespace-normal justify-center text-center" id="toast" role="status" aria-live="polite"></div>
@@ -314,13 +307,13 @@ body{
    Newborn Essentials — logic layer (all business rules preserved)
    ================================================================ */
 
-/* ---------- data (full taxonomy — 96 items) ---------- */
+/* ---------- data (full taxonomy — 95 items) ---------- */
 const DATA = [
  {id:'clothing', name:'Clothing', icon:'clothing', tip:'Buy mostly 0–3 & 3–6 mo. Newborn size is outgrown in days.', items:[
    {n:'Snap-side bodysuits',k:'onesie onesies', q:'6–8', note:'Envelope-neck shoulders for easy over-the-head changes.', lo:15, hi:30},
    {n:'Footed sleep & play pajamas', q:'6–8', note:'Zippers beat snaps at 3 a.m.', lo:20, hi:40},
-   {n:'Muslin swaddle blankets',k:'wrap', q:'3–4', note:'Breathable fabric lowers overheating risk.', lo:20, hi:40},
-   {n:'Wearable sleep sacks (0–3 mo)',k:'wearable blanket sleepsack', q:'2–3', note:'AAP-preferred over loose blankets.', lo:30, hi:60},
+   {n:'Muslin swaddle blankets',k:'wrap', q:'3–4', note:'Choose lightweight layers and avoid overheating.', lo:20, hi:40},
+   {n:'Wearable sleep sacks (0–3 mo)',k:'wearable blanket sleepsack', q:'2–3', note:'A wearable blanket can add warmth without loose bedding.', lo:30, hi:60},
    {n:'Scratch mittens', q:'2–3', note:'Newborn nails grow fast and scratch the face.', lo:6, hi:12},
    {n:'No-skid socks', q:'4–6', note:'', lo:8, hi:15},
    {n:'Soft season-appropriate hats', q:'1–2', note:'The hospital gives one — keep a backup.', lo:8, hi:15},
@@ -329,8 +322,8 @@ const DATA = [
    {n:'Layering cardigan', q:'1–2', note:'Adds warmth without overdressing.', lo:12, hi:25, a:true}
  ]},
  {id:'feeding', name:'Feeding', icon:'feeding', tip:'Fed is best — have both breast and bottle supplies ready.', items:[
-   {n:'Bottles, slow-flow size 1', q:'8–10', note:'BPA-free; anti-colic venting cuts gas.', lo:30, hi:60, wk:34},
-   {n:'Bottle sterilizer (or large pot)', q:'1', note:'Sterilize before first use, then weekly.', lo:0, hi:80},
+   {n:'Bottles, slow-flow size 1', q:'8–10', note:'BPA-free; vented designs may reduce swallowed air for some babies.', lo:30, hi:60, wk:34},
+   {n:'Bottle-sanitizing method (pot, steam, or dishwasher)', q:'1', note:'Clean after every feed. Sanitize daily if baby is under 2 months, premature, or immunocompromised.', lo:0, hi:80},
    {n:'Bottle brush + drying rack', q:'1', note:'Keep it dedicated to baby bottles.', lo:15, hi:30},
    {n:'Burp cloths', q:'6–8', note:'You will use more than you expect.', lo:12, hi:25},
    {n:'Waterproof bibs', q:'2–3', note:'Spit-up is near-constant in the first weeks.', lo:10, hi:20},
@@ -361,14 +354,14 @@ const DATA = [
    {n:'Crib or bassinet (CPSC/AAP)',k:'cot moses basket', q:'1', note:'Firm, flat surface; no drop-sides.', lo:90, hi:400, wk:32},
    {n:'Firm, flat, waterproof mattress', q:'1', note:'Soft mattresses raise SIDS risk.', lo:50, hi:150, wk:32},
    {n:'Fitted sheets (snug)', q:'2–3', note:'Must fit tight — no loose fabric.', lo:20, hi:40, wk:34},
-   {n:'White-noise machine',k:'sound machine hatch', q:'1', note:'Womb-like sound lengthens sleep.', lo:20, hi:50},
-   {n:'Video + audio monitor', q:'1', note:'Smart units track motion and breathing.', lo:40, hi:200},
+   {n:'White-noise machine',k:'sound machine hatch', q:'1', note:'Optional soothing sound; keep volume low and the unit away from the crib.', lo:20, hi:50},
+   {n:'Video + audio monitor', q:'1', note:'For convenience only. Consumer vital-sign monitors do not prevent SIDS or replace safe sleep and supervision.', lo:40, hi:200},
    {n:'Blackout curtains / shade', q:'1', note:'Protects the daytime nap schedule.', lo:20, hi:50},
    {n:'Glider or rocker + ottoman', q:'1', note:'A lifesaver for middle-of-night feeds.', lo:150, hi:500},
-   {n:'Baby swing or bouncer', q:'1', note:'Soothes fussiness — always supervise.', lo:40, hi:200, o:true},
+   {n:'Baby swing or bouncer', q:'1', note:'For awake, supervised use only — never for sleep. Move a sleeping baby to a firm, flat sleep space.', lo:40, hi:200, o:true},
    {n:'Cool-mist humidifier', q:'1', note:'Eases stuffy noses in dry rooms.', lo:30, hi:60, o:true, a:true},
    {n:'Dim nightlight', q:'1', note:'Just enough light for 3 a.m. feeds.', lo:12, hi:25, o:true, a:true},
-   {n:"Pack 'n Play / playard",k:'pack-and-play travel crib', q:'1', note:'Portable sleep and naps anywhere.', lo:60, hi:150, o:true, a:true},
+   {n:"Pack 'n Play / playard",k:'pack-and-play travel crib', q:'1', note:'Use for sleep only when the model and setup are approved for sleep; follow its manual and keep the surface bare.', lo:60, hi:150, o:true, a:true},
    {n:'Room thermometer', q:'1', note:'Keep the nursery around 68–72°F.', lo:8, hi:15, o:true, a:true}
  ]},
  {id:'bath', name:'Bath & Grooming', icon:'bath', tip:'Bathe 2–3× a week — daily baths dry out delicate skin.', items:[
@@ -377,7 +370,7 @@ const DATA = [
    {n:'Soft washcloths', q:'6–8', note:'Gentle on skin; keep them baby-only.', lo:10, hi:20},
    {n:'Tear-free 2-in-1 wash', q:'1', note:'Fragrance-free; EWG-verified if you can.', lo:8, hi:15},
    {n:'Fragrance-free lotion', q:'1', note:'Matters most for dry / eczema-prone skin.', lo:8, hi:15},
-   {n:'Nail clipper or electric file', q:'1', note:'A file is safest for tiny newborns.', lo:10, hi:25},
+   {n:'Nail clipper or electric file', q:'1', note:'A file can be easier to control on tiny newborn nails.', lo:10, hi:25},
    {n:'Soft-bristle hairbrush', q:'1', note:'Also helps with cradle cap.', lo:6, hi:12},
    {n:'Baby laundry detergent', q:'1', note:'Free & Clear; wash everything before use.', lo:10, hi:20},
    {n:'Bath thermometer', q:'1', note:'Aim for ~100°F / 38°C bathwater.', lo:10, hi:20, o:true, a:true},
@@ -396,7 +389,6 @@ const DATA = [
    {n:'Pacifiers (varied shapes)',k:'paci binky soother dummy', q:'1–2', note:'Offer once breastfeeding is established.', lo:8, hi:15},
    {n:'Car-seat mirror', q:'1', note:'See a rear-facing baby from the front seat.', lo:12, hi:20, o:true, a:true},
    {n:'Infant first-aid kit', q:'1', note:'Bandages, tweezers, and basics in one place.', lo:15, hi:30, o:true, a:true},
-   {n:'Gripe water', q:'1', note:'A gentler option some parents prefer for gas.', lo:8, hi:12, o:true, a:true},
    {n:'Medicine syringe / dispenser', q:'1', note:'For dosing once your pediatrician okays meds.', lo:8, hi:15, a:true},
    {n:'Vitamin D drops (400 IU)', q:'1', note:'AAP-recommended daily for breastfed babies.', lo:8, hi:12, a:true, wk:36},
    {n:'Petroleum jelly', q:'1', note:'For circumcision care, if it applies.', lo:3, hi:6, o:true, a:true},
@@ -451,9 +443,9 @@ function priorityFor(it){ if(P1.has(it.n)) return 1; if(it.o || P3.has(it.n)) re
 
 /* ---------- state + storage (all storage guarded per resiliency spec) ---------- */
 const KEY='newborn-checklist-v3';
-const KEY_SHARED='newborn-checklist-shared-v1';
-const hasCloud = !!(window.storage && window.storage.get && window.storage.set);
-let lastSyncStamp=null;
+/* Shared sync is deliberately limited to the revisioned private v3 worker.
+   Anonymous/global artifact KV stores cannot provide the consistency or
+   privacy guarantees required for family and newborn data. */
 let state={checked:{},collapsed:{},hidePacked:false,dark:true,custom:{},sort:'importance',sizeIdx:0,hideNotes:false,sync:false,importedShare:null,tier:'all',phase:'all',due:null,who:'',cloud:null};
 const WHO_KEY='newborn-who';
 try{ state.who=localStorage.getItem(WHO_KEY)||''; }catch(e){}
@@ -461,45 +453,47 @@ function setWho(n){ state.who=(n||'').trim(); try{localStorage.setItem(WHO_KEY,s
 const buzz=p=>{ try{ if(navigator.vibrate) navigator.vibrate(p); }catch(e){} };
 let searchTerm='', wasComplete=false, saveTimer=null;
 const RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const SAVE_VERSION=2;
+const SAVE_VERSION=3;
 
 /* Other pages own keys this page knows nothing about (the feed log, the
    emergency card, the birth date). A whitelist snapshot would delete them on
    every save, so foreign keys are carried through untouched. */
-const OWNED=['checked','collapsed','hidePacked','due','who','custom','sort','dark','sizeIdx',
+const OWNED=['checked','collapsed','hidePacked','due','who','custom','notes','sort','dark','sizeIdx',
   'hideNotes','sync','importedShare','tier','phase','cloud','themeV','savedAt'];
 let passthrough={};
 function keepForeign(saved){
-  /* applyState runs for local boots AND for incoming cloud or file states, so
-     this must never replace what we already carry: a remote doc that has not
-     seen this phone's feed entries would otherwise erase them before the next
-     push. Foreign keys merge; the log is unioned by entry id. */
-  const next=Object.assign({},passthrough);
+  /* StateCore has already merged shared entities and tombstones. Re-unioning
+     logs here would revive entries another page intentionally deleted. */
+  const next={};
   Object.keys(saved||{}).forEach(k=>{ if(OWNED.indexOf(k)<0) next[k]=saved[k]; });
-  const log=mergeLogs(passthrough.log,(saved||{}).log);
-  if(log.length) next.log=log; else delete next.log;
   passthrough=next;
-}
-/* append-only union by entry id; the newer edit of an id wins */
-function mergeLogs(a,b){
-  const m={};
-  (a||[]).forEach(e=>{ if(e&&e.i) m[e.i]=e; });
-  (b||[]).forEach(e=>{ if(e&&e.i){ const o=m[e.i]; if(!o||(e.u||0)>(o.u||0)) m[e.i]=e; } });
-  return Object.keys(m).map(k=>m[k]).sort((x,y)=>(x.at||0)-(y.at||0));
 }
 function snapshot(){
   return Object.assign({},passthrough,{checked:state.checked,collapsed:state.collapsed,hidePacked:state.hidePacked,due:state.due,who:state.who,
     custom:state.custom,notes:state.notes,sort:state.sort,dark:state.dark,sizeIdx:state.sizeIdx,hideNotes:state.hideNotes,
     sync:state.sync,importedShare:state.importedShare,tier:state.tier,phase:state.phase,cloud:state.cloud,themeV:2,savedAt:new Date().toISOString()});
 }
+let baselineSnapshot=null,pendingSnapshot=null;
+function prepareSnapshot(){
+  const raw=snapshot();
+  const snap=BabyListState.stamp(raw,baselineSnapshot||raw);
+  baselineSnapshot=BabyListState.copy(snap);
+  passthrough._sync=BabyListState.copy(snap._sync);
+  return snap;
+}
 let cloudTimer=null, cloudOK=null, pendingLocal=false, pendingCloud=false;
-function setDot(ok){
+function setDot(ok,label){
   const d=$('syncDot'); if(!d) return;
-  if(!state.sync || !remote.available()){ d.classList.add('hidden'); cloudOK=null; return; }
+  if(!state.sync || !remote.available()){
+    d.classList.add('hidden'); cloudOK=null;
+    window.dispatchEvent(new CustomEvent('babylist-sync-status',{detail:{state:'hidden'}}));
+    return;
+  }
   d.classList.remove('hidden');
-  d.classList.toggle('bg-success',ok); d.classList.toggle('bg-warning',!ok);
-  d.setAttribute('aria-label', ok?'Cloud sync connected':'Cloud sync unreachable');
-  d.title = ok?'Synced':'Sync unreachable — changes saved on this device';
+  d.classList.toggle('bg-success',ok===true); d.classList.toggle('bg-warning',ok==='pending'); d.classList.toggle('bg-error',ok===false);
+  const title=ok===true?'Shared list synced':ok==='pending'?'Changes saved here; sync pending':'Sync unreachable — changes saved on this device';
+  d.setAttribute('aria-label',title); d.title=title;
+  window.dispatchEvent(new CustomEvent('babylist-sync-status',{detail:{state:ok===true?'synced':ok==='pending'?'pending':'offline',label:label||undefined,title}}));
   if(cloudOK===true && ok===false) toast("Cloud sync is unreachable — changes are safe on this device");
   cloudOK=ok;
 }
@@ -510,62 +504,48 @@ function writeLocal(snap){
 async function pushCloud(){
   pendingCloud=false;
   if(!(state.sync && remote.available())) return;
+  setDot('pending');
   try{
-    let snap2=snapshot();
-    try{
-      const cur=await remote.get();
-      if(cur && cur.push) cloudPushCache=cur.push;
-      if(cur && cur.state && cur.savedAt && cur.savedAt!==lastSyncStamp){
-        if(mergeIncoming(cur.state)){ snap2=snapshot(); refreshUI(); }
-        else snap2=snapshot();
-      }
-    }catch(e){}
-    lastSyncStamp=snap2.savedAt;
-    const doc={app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap2.savedAt,state:snap2};
-    if(cloudPushCache) doc.push=cloudPushCache;
-    const ok=await remote.put(doc);
-    setDot(ok!==false);
+    const local=prepareSnapshot();
+    const result=await BabyListSync.syncState(state.cloud,local);
+    applyState(result.state,true); state.sync=true;
+    baselineSnapshot=BabyListState.copy(result.state);
+    writeLocal(result.state); refreshUI(); setDot(true,'Synced just now');
   }catch(e){ setDot(false); }
 }
 function persist(pushShared){
   /* local save: fast, coalesced at 120ms. cloud push: debounced to 2s so a
      burst of taps becomes one PUT instead of a request per checkmark. */
   pendingLocal=true;
+  pendingSnapshot=prepareSnapshot();
   clearTimeout(saveTimer);
-  saveTimer=setTimeout(async()=>{
+  saveTimer=setTimeout(()=>{
     pendingLocal=false;
-    const snap=snapshot(), json=JSON.stringify(snap);
-    let doneLocal=false;
-    try{ if(hasCloud){ await window.storage.set(KEY,json); doneLocal=true; } }catch(e){}
-    if(!doneLocal) writeLocal(snap);
+    const snap=pendingSnapshot||prepareSnapshot(); pendingSnapshot=null;
+    writeLocal(snap);
   },120);
   if(state.sync && remote.available() && pushShared!==false){
     pendingCloud=true;
+    setDot('pending');
     clearTimeout(cloudTimer);
     cloudTimer=setTimeout(pushCloud,2000);
   }
 }
 function flushPending(){
-  /* the tab is going away: land the local write synchronously and fire any
-     pending cloud push with keepalive so the last checkmark survives */
-  if(pendingLocal){ clearTimeout(saveTimer); pendingLocal=false; if(!hasCloud) writeLocal(snapshot()); }
-  if(pendingCloud && state.sync && !hasCloud && state.cloud && state.cloud.u){
-    clearTimeout(cloudTimer); pendingCloud=false;
-    try{
-      const doc={app:'newborn-checklist',version:SAVE_VERSION,savedAt:new Date().toISOString(),state:snapshot()};
-      if(cloudPushCache) doc.push=cloudPushCache;
-      fetch(cloudUrlFor(state.cloud),{method:'PUT',headers:cloudHeaders(state.cloud),body:JSON.stringify(doc),keepalive:true});
-    }catch(e){}
-  }
+  /* Always land locally. Revisioned network sync resumes safely next open;
+     no pagehide whole-document PUT can overwrite another phone. */
+  if(pendingLocal){ clearTimeout(saveTimer); pendingLocal=false; writeLocal(pendingSnapshot||prepareSnapshot()); pendingSnapshot=null; }
+  if(pendingCloud){ clearTimeout(cloudTimer); pendingCloud=false; }
 }
 addEventListener('pagehide',flushPending);
 document.addEventListener('visibilitychange',()=>{ if(document.hidden) flushPending(); });
 async function hydrate(){
-  try{ if(hasCloud){ const r=await window.storage.get(KEY); if(r&&r.value) return JSON.parse(r.value); } }catch(e){}
-  try{ const v=localStorage.getItem(KEY); if(v) return JSON.parse(v); }catch(e){}
+  try{ const v=localStorage.getItem(KEY); if(v) return BabyListState.sanitizeState(JSON.parse(v)); }catch(e){}
   return null;
 }
 function applyState(saved,skipWho){
+  const previousBorn=state.bornRaw||null;
+  saved=BabyListState.sanitizeState(saved||{});
   keepForeign(saved);
   state.checked=saved.checked||{};
   state.collapsed=saved.collapsed||{};
@@ -584,84 +564,13 @@ function applyState(saved,skipWho){
   state.tier=(saved.tier===1||saved.tier===2||saved.tier===3)?saved.tier:'all';
   state.phase=(saved.phase==='pregnancy'||saved.phase==='baby')?saved.phase:'all';
   if(saved.cloud && typeof saved.cloud.u==='string'){ state.cloud={u:saved.cloud.u,k:(typeof saved.cloud.k==='string'?saved.cloud.k:'')}; if(saved.cloud.kt) state.cloud.kt=saved.cloud.kt; }
+  if(previousBorn!==state.bornRaw && window.BabyListUI) window.BabyListUI.rebuildNav();
 }
 
-/* ================================================================
-   REMOTE ADAPTER — one shared list across devices.
-   Backend A: Claude artifact shared storage (window.storage).
-   Backend B: any HTTP JSON endpoint (GET returns the payload,
-   PUT replaces it). Auth is auto-shaped per provider hostname.
-   ================================================================ */
-function cloudHeaders(cfg,method,useMaster){
-  const hd={'Content-Type':'application/json'};
-  if(!cfg || !cfg.k) return hd;
-  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
-  /* jsonbin: an Access Key scoped to read+update is what belongs in a page
-     anyone can view. A Master Key is the whole account, so it is only used if
-     the access header is rejected, and the choice is remembered as cfg.kt. */
-  if(host.includes('jsonbin.io')) hd[(useMaster||cfg.kt==='m')?'X-Master-Key':'X-Access-Key']=cfg.k;
-  else if(host.includes('extendsclass.com')) hd['Security-key']=cfg.k;
-  else hd['Authorization']='Bearer '+cfg.k;
-  return hd;
-}
-async function cloudFetch(cfg,method,body){
-  const opts={method,headers:cloudHeaders(cfg,method),cache:'no-store'};
-  if(body!=null) opts.body=body;
-  let res=await fetch(cloudUrlFor(cfg),opts);
-  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
-  if((res.status===401||res.status===403) && host.includes('jsonbin.io') && cfg.kt!=='m'){
-    const o2={method,headers:cloudHeaders(cfg,method,true),cache:'no-store'};
-    if(body!=null) o2.body=body;
-    res=await fetch(cloudUrlFor(cfg),o2);
-    if(res.ok) cfg.kt='m';
-  }
-  return res;
-}
-function cloudUrlFor(cfg){
-  if(!cfg) return null;
-  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
-  if(host.includes('jsonstorage.net') && cfg.k && cfg.u.indexOf('apiKey=')<0)
-    return cfg.u+(cfg.u.includes('?')?'&':'?')+'apiKey='+encodeURIComponent(cfg.k);
-  return cfg.u;
-}
-function unwrapCloud(body){
-  if(body && typeof body==='object'){
-    if(body.record && body.record.app==='newborn-checklist') return body.record;   /* jsonbin.io */
-    if(body.app==='newborn-checklist') return body;
-  }
-  return null;
-}
-let cloudPushCache=null;
+/* Shared storage adapter. HTTP sync requires the revisioned v3 Worker; the
+   legacy anonymous JSON stores were removed because they expose family data. */
 const remote={
-  available(){ return hasCloud || !!(state.cloud && state.cloud.u); },
-  kind(){ return hasCloud ? 'artifact' : (state.cloud && state.cloud.u ? 'http' : null); },
-  async get(){
-    if(hasCloud){
-      const r=await window.storage.get(KEY_SHARED,true);
-      if(!r||!r.value) return null;
-      const sh=JSON.parse(r.value);
-      return (sh && sh.app==='newborn-checklist' && sh.state) ? sh : null;
-    }
-    if(state.cloud && state.cloud.u){
-      const res=await cloudFetch(state.cloud,'GET');
-      if(!res.ok) return null;
-      const doc=unwrapCloud(await res.json());
-      if(doc && doc.push) cloudPushCache=doc.push;
-      return doc;
-    }
-    return null;
-  },
-  async put(payload){
-    if(hasCloud){
-      await window.storage.set(KEY_SHARED,JSON.stringify(payload),true);
-      return true;
-    }
-    if(state.cloud && state.cloud.u){
-      const res=await cloudFetch(state.cloud,'PUT',JSON.stringify(payload));
-      return res.ok;
-    }
-    return false;
-  }
+  available(){ return !!(state.cloud && state.cloud.u); }
 };
 
 /* Categories start collapsed; any explicit choice (either direction) is stored
@@ -675,40 +584,6 @@ function phaseOf(cat,it){
   if(cat.id==='hospital'||cat.id==='parent') return 'pregnancy';
   if(cat.id==='health' && (it.n==='Pediatrician chosen'||it.n==='Infant CPR class')) return 'pregnancy';
   return 'baby';
-}
-
-/* Conflict reduction for two-device editing: union their checks and custom
-   items into ours. A check they made after our last sync is adopted; a check
-   older than our last sync that we no longer have was unchecked here and stays
-   unchecked. Returns true when anything visible changed. */
-function mergeIncoming(their){
-  let changed=false;
-  const lsMs=Date.parse(lastSyncStamp||'')||0;
-  if(Array.isArray(their.log)){
-    const before=JSON.stringify(passthrough.log||[]);
-    passthrough.log=mergeLogs(passthrough.log,their.log);
-    if(JSON.stringify(passthrough.log)!==before) changed=true;
-  }
-  const mine=state.checked||{};
-  Object.keys(their.checked||{}).forEach(k=>{
-    const tv=their.checked[k];
-    const ta=(tv&&tv.at)||0;
-    if(!(k in mine)){ if(ta>lsMs){ mine[k]=tv; changed=true; } }
-    else{ const ma=(mine[k]&&mine[k].at)||0; if(ta>ma){ mine[k]=tv; changed=true; } }
-  });
-  state.checked=mine;
-  const tc=their.custom||{};
-  Object.keys(tc).forEach(cid=>{
-    const ours=state.custom[cid]||(state.custom[cid]=[]);
-    (tc[cid]||[]).forEach(it=>{
-      if(it && it._id && !ours.some(x=>x._id===it._id)){ ours.push(it); changed=true; }
-    });
-  });
-  if(!state.due && typeof their.due==='string' && their.due){ state.due=their.due; changed=true; }
-  if(their.notes && typeof their.notes==='object'){
-    for(const k in their.notes){ if(!state.notes[k] && their.notes[k]){ state.notes[k]=their.notes[k]; changed=true; } }
-  }
-  return changed;
 }
 
 /* ---------- helpers ---------- */
@@ -1155,7 +1030,7 @@ $('clrFilters').addEventListener('click',()=>{ clearTimeout(searchTimer);
 });
 
 /* ---------- theme + size ---------- */
-const SIZES=[1,1.12,1.25];
+const SIZES=['0','1','2'];
 function applyTheme(){
   document.documentElement.setAttribute('data-theme',state.dark?'womb':'dawn');
   $('themeBtn').innerHTML=state.dark
@@ -1164,8 +1039,7 @@ function applyTheme(){
   const tc=$('themeColor'); if(tc) tc.content=state.dark?'#10141F':'#FAF8F4';
 }
 function applySize(){
-  const z=SIZES[state.sizeIdx||0];
-  document.body.style.zoom = z===1 ? '' : z;
+  document.documentElement.dataset.textSize=SIZES[state.sizeIdx||0]||'0';
 }
 $('themeBtn').addEventListener('click',()=>{ state.dark=!state.dark; applyTheme(); persist(); });
 $('sizeBtn').addEventListener('click',()=>{ state.sizeIdx=((state.sizeIdx||0)+1)%SIZES.length; applySize(); persist(); toast(['Default','Large','Extra large'][state.sizeIdx]+' text'); });
@@ -1258,11 +1132,11 @@ function refreshUI(){
 /* ---------- save file / load file (.json backup) ---------- */
 function collectExtras(){
   const g=k=>{ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } };
-  return {reminders:g('newborn-reminders'),laborLog:g('labor-contractions'),laborContacts:g('labor-contacts')};
+  return {reminders:g('newborn-reminders'),laborLog:g('labor-contractions'),laborContacts:g('labor-contacts'),trackerArchive:g('newborn-log-archive')};
 }
 function saveToFile(){
-  const snap=snapshot();
-  const payload={app:'newborn-checklist',version:3,savedAt:snap.savedAt,state:snap,extras:collectExtras()};
+  const snap=BabyListState.forBackup(prepareSnapshot());
+  const payload={app:'newborn-checklist',version:4,savedAt:snap.savedAt,state:snap,extras:collectExtras()};
   try{
     const d=new Date(), pad=n=>String(n).padStart(2,'0');
     const name='newborn-checklist-'+d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'.json';
@@ -1278,13 +1152,16 @@ function loadFromFile(file){
     try{
       const data=JSON.parse(r.result);
       if(!data || data.app!=='newborn-checklist' || typeof data.state!=='object' || !data.state) throw new Error('bad file');
-      applyState(data.state,true); wasComplete=false; persist(); refreshUI();
+      const incoming=BabyListState.sanitizeState(data.state);
+      if(state.sync&&remote.available()&&!confirm('Restore this backup? The restored checklist, dates, emergency card, and tracker log will be merged into the private shared list on connected phones.')) return;
+      applyState(incoming,true); wasComplete=false; persist(); refreshUI();
       let restored='';
       if(data.extras){
         const s=(k,v)=>{ try{ if(v) localStorage.setItem(k,JSON.stringify(v)); }catch(e){} };
         s('newborn-reminders',data.extras.reminders);
         s('labor-contractions',data.extras.laborLog);
         s('labor-contacts',data.extras.laborContacts);
+        s('newborn-log-archive',data.extras.trackerArchive);
         restored=' — full backup restored';
       }
       const when=data.savedAt? new Date(data.savedAt) : null;
@@ -1299,30 +1176,88 @@ $('saveFileBtn').addEventListener('click',saveToFile);
 $('loadFileBtn').addEventListener('click',()=>fileInput.click());
 fileInput.addEventListener('change',()=>{ const f=fileInput.files&&fileInput.files[0]; if(f) loadFromFile(f); fileInput.value=''; });
 
-/* ---------- share copy (self-contained .html) ---------- */
-function shareCopy(){
+/* ---------- share copy (single-file .html with styles, fonts, and logic) ---------- */
+function blobDataURL(blob){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(reader.result); reader.onerror=()=>reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+async function inlineCssAssets(css,base){
+  const refs=[...css.matchAll(/url\(\s*(['"]?)(?!data:|#)([^)'"\s]+)\1\s*\)/gi)];
+  const replacements=new Map();
+  for(const match of refs){
+    const raw=match[2]; if(replacements.has(raw)) continue;
+    try{
+      const url=new URL(raw,base).href;
+      const response=await fetch(url,{cache:'force-cache',credentials:'same-origin'});
+      if(!response.ok) throw new Error('asset '+response.status);
+      replacements.set(raw,await blobDataURL(await response.blob()));
+    }catch(e){ replacements.set(raw,new URL(raw,base).href); }
+  }
+  replacements.forEach((value,raw)=>{
+    css=css.replaceAll('url('+raw+')','url("'+value+'")')
+      .replaceAll('url("'+raw+'")','url("'+value+'")')
+      .replaceAll("url('"+raw+"')",'url("'+value+'")');
+  });
+  return css;
+}
+async function shareCopy(){
+  const button=$('shareBtn');
   try{
-    const snap=snapshot();
+    button.disabled=true; button.setAttribute('aria-busy','true'); toast('Building private HTML copy…');
+    const snap=BabyListState.forBackup(prepareSnapshot());
     const payload={app:'newborn-checklist',version:SAVE_VERSION,savedAt:snap.savedAt,state:snap};
-    const holder=$('shared-state');
+    const copy=document.documentElement.cloneNode(true);
+    const holder=copy.querySelector('#shared-state');
     holder.textContent=JSON.stringify(payload).replace(/</g,'\\u003c');
-    /* absolutize local assets so the downloaded copy styles itself from the
-       live site instead of a relative path it does not have */
-    const abs=pth=>{ try{ return new URL(pth,location.href).href; }catch(e){ return pth; } };
-    const cssL=document.querySelector('link[href="./assets/app.css"]');
-    const cjS=document.querySelector('script[src="./assets/confetti.min.js"]');
-    if(cssL) cssL.setAttribute('href',abs('./assets/app.css'));
-    if(cjS) cjS.setAttribute('src',abs('./assets/confetti.min.js'));
-    const src='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
-    if(cssL) cssL.setAttribute('href','./assets/app.css');
-    if(cjS) cjS.setAttribute('src','./assets/confetti.min.js');
-    holder.textContent='';
+    const copyButton=copy.querySelector('#shareBtn');
+    if(copyButton){ copyButton.disabled=false; copyButton.removeAttribute('aria-busy'); }
+    const copyToast=copy.querySelector('#toastWrap');
+    if(copyToast) copyToast.classList.add('hidden');
+    const copyToastText=copy.querySelector('#toast');
+    if(copyToastText) copyToastText.textContent='';
+
+    /* Inline every stylesheet and its fonts. A network fallback is used only
+       if a nested decorative asset cannot be read while the copy is built. */
+    for(const link of [...copy.querySelectorAll('link[rel="stylesheet"][href]')]){
+      const url=new URL(link.getAttribute('href'),location.href).href;
+      const response=await fetch(url,{cache:'force-cache',credentials:'same-origin'});
+      if(!response.ok) throw new Error('Could not load '+url);
+      const style=document.createElement('style');
+      style.setAttribute('data-inlined-from',url);
+      style.textContent=await inlineCssAssets(await response.text(),url);
+      link.replaceWith(style);
+    }
+
+    /* Non-deferred dependency scripts keep their head position. Deferred
+       scripts move after the page logic so they still see a complete DOM. */
+    for(const old of [...copy.querySelectorAll('script[src]')]){
+      const url=new URL(old.getAttribute('src'),location.href).href;
+      const response=await fetch(url,{cache:'force-cache',credentials:'same-origin'});
+      if(!response.ok) throw new Error('Could not load '+url);
+      const script=document.createElement('script');
+      if(old.type) script.type=old.type;
+      script.setAttribute('data-inlined-from',url);
+      script.textContent=await response.text();
+      if(old.defer){ old.remove(); copy.querySelector('body').append(script); }
+      else old.replaceWith(script);
+    }
+
+    /* Secondary page links and nonessential icons resolve to the deployed app,
+       while this checklist itself remains usable as a single offline file. */
+    const base=document.createElement('base');
+    base.href=new URL('./',location.href).href;
+    copy.querySelector('head').prepend(base);
+    const src='<!DOCTYPE html>\n'+copy.outerHTML;
     state.importedShare=snap.savedAt; persist();
     const blob=new Blob([src],{type:'text/html'});
     const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='newborn-checklist-shared.html';
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
     toast('Share copy downloaded');
-  }catch(e){ toast('Share not supported here'); }
+  }catch(e){ toast('Could not build the HTML copy — try again while this app is available offline'); }
+  finally{ button.disabled=false; button.removeAttribute('aria-busy'); }
 }
 $('shareBtn').addEventListener('click',shareCopy);
 function readEmbedded(){
@@ -1330,7 +1265,9 @@ function readEmbedded(){
     const t=$('shared-state');
     if(!t || !t.textContent.trim()) return null;
     const d=JSON.parse(t.textContent);
-    if(d && d.app==='newborn-checklist' && d.state && typeof d.state==='object') return d;
+    if(d && d.app==='newborn-checklist' && d.state && typeof d.state==='object'){
+      d.state=BabyListState.sanitizeState(d.state); return d;
+    }
   }catch(e){}
   return null;
 }
@@ -1355,7 +1292,7 @@ function b64uDecode(s){
   for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
   return new TextDecoder().decode(bytes);
 }
-function encodeShareURL(){
+function encodeShareURL(includeSync){
   const bits=new Array(Math.ceil(FLAT.length/32)).fill(0);
   FLAT.forEach((it,i)=>{ if(state.checked[it._id]) bits[i>>5]=(bits[i>>5]|(1<<(i&31)))|0; });
   const cc=[];
@@ -1363,7 +1300,7 @@ function encodeShareURL(){
   const payload={v:1,n:FLAT.length,b:bits,d:state.due||null,t:state.tier};
   if(Object.keys(state.custom||{}).some(k=>(state.custom[k]||[]).length)) payload.cu=state.custom;
   if(cc.length) payload.cc=cc;
-  if(state.sync && state.cloud && state.cloud.u) payload.cs={u:state.cloud.u,k:state.cloud.k||''};
+  if(includeSync && state.sync && state.cloud && state.cloud.u) payload.cs={u:state.cloud.u,k:state.cloud.k||''};
   const base=(location.origin && location.origin!=='null' && location.protocol.indexOf('http')===0)
     ? location.origin+location.pathname : location.href.split('#')[0];
   return base+'#s='+b64uEncode(JSON.stringify(payload));
@@ -1373,6 +1310,7 @@ function decodeShareHash(){
   try{
     const m=location.hash.match(/[#&]s=([A-Za-z0-9\-_]+)/);
     if(!m) return null;
+    if(m[1].length>12000) return null;
     const p=JSON.parse(b64uDecode(m[1]));
     if(!p || p.v!==1 || !Array.isArray(p.b)) return null;
     const checked={};
@@ -1380,7 +1318,8 @@ function decodeShareHash(){
     for(let i=0;i<n;i++){ if(((p.b[i>>5]>>>(i&31))&1)===1) checked[FLAT[i]._id]=true; }
     (Array.isArray(p.cc)?p.cc:[]).forEach(id=>{ if(typeof id==='string') checked[id]=true; });
     const cs=(p.cs && typeof p.cs.u==='string' && p.cs.u.indexOf('https://')===0)?{u:p.cs.u,k:(typeof p.cs.k==='string'?p.cs.k:'')}:null;
-    return {raw:m[1],checked,custom:(p.cu&&typeof p.cu==='object')?p.cu:{},due:(typeof p.d==='string')?p.d:null,
+    const clean=BabyListState.sanitizeState({checked,custom:(p.cu&&typeof p.cu==='object')?p.cu:{},due:(typeof p.d==='string')?p.d:null});
+    return {raw:m[1],checked:clean.checked,custom:clean.custom,due:clean.due,
             tier:(p.t===1||p.t===2||p.t===3)?p.t:'all',cs};
   }catch(e){ return null; }
 }
@@ -1391,18 +1330,17 @@ function applyShared(sh){
   wasComplete=false;
 }
 async function shareLink(){
-  const url=encodeShareURL();
+  const url=encodeShareURL(false);
+  if(url.length>1800){ saveToFile(); toast('This list is too large for a dependable URL — a private backup file was saved instead'); return; }
   try{
     if(navigator.canShare && navigator.canShare({url}) && navigator.share){
-      await navigator.share({title:'Newborn Essentials',text:'Our baby checklist',url});
+      await navigator.share({title:'Newborn Essentials',text:'A snapshot of our baby checklist',url});
       return;
     }
   }catch(e){ if(e && e.name==='AbortError') return; }
   try{
     await navigator.clipboard.writeText(url);
-    toast(url.length>2000
-      ? 'Link copied — heads up, it is '+url.length+' characters; a Save-to-file backup travels better at this size'
-      : 'Link copied — send it to anyone');
+    toast('Snapshot link copied — it does not include cloud access');
   }catch(e){ prompt('Copy this link:',url); }
 }
 $('linkBtn').addEventListener('click',shareLink);
@@ -1446,19 +1384,19 @@ function toggleCalm(){
 }
 $('calmBtn').addEventListener('click',toggleCalm);
 
-/* ---------- family sync (Claude artifact environments only) ---------- */
+/* ---------- private family sync ---------- */
 
 async function pollShared(){
   if(!state.sync || !remote.available() || document.hidden) return;
   try{
-    const sh=await remote.get();
-    if(!sh || !sh.state || !sh.savedAt) return;
-    if(lastSyncStamp && sh.savedAt<=lastSyncStamp) return;
-    lastSyncStamp=sh.savedAt;
-    applyState(sh.state,true); state.sync=true; persist(false); refreshUI();
-    setDot(true);
-    toast('Updated from the shared list');
-  }catch(e){}
+    setDot('pending','Checking…');
+    const local=prepareSnapshot();
+    const result=await BabyListSync.pullState(state.cloud,local);
+    const changed=JSON.stringify(BabyListState.toRemote(result.state))!==JSON.stringify(BabyListState.toRemote(local));
+    applyState(result.state,true); state.sync=true; baselineSnapshot=BabyListState.copy(result.state);
+    writeLocal(result.state); refreshUI(); setDot(true,changed?'Updated just now':'Synced just now');
+    if(changed) toast('Updated from the shared list');
+  }catch(e){ setDot(false); }
 }
 
 
@@ -1472,7 +1410,8 @@ async function pollShared(){
   }catch(e){ $('storageWarn').classList.remove('hidden'); }
 
   const saved=await hydrate();
-  if(saved) applyState(saved);
+  if(saved){ applyState(saved); baselineSnapshot=BabyListState.copy(saved); }
+  else baselineSnapshot=BabyListState.sanitizeState(snapshot());
   if(saved && saved.themeV!==2) persist(false); /* stamp the one-time dark migration */
 
   /* 1. URL share link (highest precedence — the user tapped it deliberately) */
@@ -1480,11 +1419,19 @@ async function pollShared(){
   let consumedURL=false;
   if(urlShare){
     const marker='s:'+urlShare.raw.slice(0,64);
-    if(!saved){
+    if(urlShare.cs){
+      if(state.importedShare===marker){ consumedURL=true; }
+      else if(confirm('This is a live-sync invite. Joining gives this device access to the private family list and merges this device\'s checklist with it. Anyone with the invite can read and change that list. Join now?')){
+        state.cloud=urlShare.cs; state.sync=true; state.importedShare=marker;
+        persist(false); consumedURL=true;
+        toast('Joined the private shared list');
+      }else toast('Live-sync invite not joined');
+    } else if(!saved){
       applyShared(urlShare); state.importedShare=marker; persist(); consumedURL=true;
-      toast('Loaded the shared checklist');
+      toast('Loaded the checklist snapshot');
     } else if(state.importedShare!==marker){
-      if(confirm('This link contains a shared checklist. Replace your current list with it?')){ applyShared(urlShare); consumedURL=true; }
+      const warning=state.sync&&remote.available()?' This device has live sync, so the replacement will be sent to connected phones.':'';
+      if(confirm('This link contains a checklist snapshot. Replace your current checklist with it?'+warning)){ applyShared(urlShare); consumedURL=true; }
       state.importedShare=marker; persist();
     }
     try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
@@ -1504,26 +1451,23 @@ async function pollShared(){
     }
   }
 
-  /* 3. Shared cloud state — artifact storage or a configured HTTP endpoint */
+  /* 3. Shared state from the configured private v3 worker */
   if(remote.available()){
     try{
-      const sh=await remote.get();
-      if(sh && sh.state){
-        if(!saved && !emb && !consumedURL){
-          applyState(sh.state,true); state.sync=true; lastSyncStamp=sh.savedAt||null; persist(false);
-          toast('Synced with the shared list');
-        } else if(state.sync && sh.savedAt && (!saved || sh.savedAt>(saved.savedAt||''))){
-          lastSyncStamp=sh.savedAt;
-          applyState(sh.state,true); state.sync=true; persist(false);
-        }
+      if(state.sync || (!saved && state.cloud)){
+        const local=prepareSnapshot();
+        const result=await BabyListSync.pullState(state.cloud,local);
+        applyState(result.state,true); state.sync=true; baselineSnapshot=BabyListState.copy(result.state);
+        writeLocal(result.state);
+        toast('Synced with the shared list'); setDot(true,'Synced just now');
       }
-    }catch(e){}
+    }catch(e){ setDot(false); }
   }
   setInterval(pollShared,60000);
   document.addEventListener('visibilitychange',()=>{ if(!document.hidden) pollShared(); });
 
   try{ if(navigator.storage && navigator.storage.persist) navigator.storage.persist(); }catch(e){}
-  setDot(cloudOK===false?false:true);
+  setDot(state.sync&&remote.available()?'pending':false,state.sync?'Sync pending':undefined);
   refreshUI();
 
   /* PWA: cache the shell + CDN assets for offline use after first visit */

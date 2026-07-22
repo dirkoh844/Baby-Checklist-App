@@ -1,76 +1,85 @@
-/* Baby List service worker — network-first navigations (fresh deploys reach users),
-   stale-while-revalidate for assets/CDNs, notification click focuses the app */
-const VERSION = 'babylist-v38';
-const CORE = ['./', './index.html', './labor.html', './reminders.html', './settings.html', './upbringing.html', './birthplan.html', './tracker.html', './emergency.html', './assets/app.css', './assets/navbar.css?v=2.12.5', './assets/enhance.css?v=2.12.5', './assets/notify.js?v=2.12.5', './assets/confetti.min.js', './assets/fonts/fraunces-latin-opsz-normal.woff2', './assets/fonts/fraunces-latin-opsz-italic.woff2', './assets/fonts/nunito-sans-latin-normal.woff2', './assets/fonts/nunito-sans-latin-italic.woff2', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './badge-96.png', './icon-mono-512.png'];
+/* Baby List service worker — static shell only. API, authenticated, no-store,
+   and cross-origin requests always bypass CacheStorage. */
+const VERSION = 'babylist-v300';
+const CACHE_PREFIX = 'babylist-';
+const CORE = [
+  './', './index.html', './labor.html', './reminders.html', './settings.html',
+  './upbringing.html', './birthplan.html', './tracker.html', './emergency.html',
+  './sources.html', './assets/app.css', './assets/navbar.css?v=3.0.0',
+  './assets/enhance.css?v=3.0.0', './assets/state-core.js?v=3.0.0',
+  './assets/sync-core.js?v=3.0.0', './assets/tracker-core.js?v=3.0.0', './assets/app-shell.js?v=3.0.0',
+  './assets/notify.js?v=3.0.0', './assets/confetti.min.js',
+  './assets/fonts/fraunces-latin-opsz-normal.woff2',
+  './assets/fonts/fraunces-latin-opsz-italic.woff2',
+  './assets/fonts/nunito-sans-latin-normal.woff2',
+  './assets/fonts/nunito-sans-latin-italic.woff2', './manifest.webmanifest',
+  './icon-192.png', './icon-512.png', './icon-maskable-512.png',
+  './apple-touch-icon.png', './badge-96.png', './icon-mono-512.png'
+];
+const STATIC_PATHS = new Set(CORE.map(x => new URL(x, self.location.href).pathname));
 
-self.addEventListener('install', e => {
-  /* cache each file on its own: addAll() rejects the entire install if a single
-     entry 404s, which silently leaves the app with no offline cache at all */
-  e.waitUntil(
-    caches.open(VERSION)
-      .then(c => Promise.allSettled(CORE.map(u => c.add(u))))
-      .then(() => self.skipWaiting())
-  );
+self.addEventListener('install', event => {
+  event.waitUntil(caches.open(VERSION).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting()));
 });
 
-self.addEventListener('activate', e => {
-  e.waitUntil(
+self.addEventListener('activate', event => {
+  event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== VERSION).map(k => caches.delete(k))))
+      .then(keys => Promise.all(keys.filter(k => k.startsWith(CACHE_PREFIX) && k !== VERSION).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
 
-self.addEventListener('fetch', e => {
-  const req = e.request;
+self.addEventListener('fetch', event => {
+  const req = event.request;
   if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;
+  if (req.cache === 'no-store' || req.headers.has('Authorization')) return;
 
-  // Navigations: network-first so new deploys land immediately; cache fallback offline
   if (req.mode === 'navigate') {
-    e.respondWith(
+    event.respondWith(
       fetch(req).then(res => {
-        if (res && res.ok) {
-          const copy = res.clone();
-          caches.open(VERSION).then(c => c.put(req, copy));
-        }
+        if (res && res.ok) event.waitUntil(caches.open(VERSION).then(cache => cache.put(req, res.clone())));
         return res;
-      }).catch(() =>
-        caches.match(req).then(hit => hit || caches.match('./index.html'))
-      )
+      }).catch(async () => (await caches.match(req)) || (await caches.match('./index.html')))
     );
     return;
   }
 
-  // Assets incl. CDN styles/scripts/fonts: stale-while-revalidate
-  e.respondWith(
+  if (!STATIC_PATHS.has(url.pathname)) return;
+  event.respondWith(
     caches.match(req).then(hit => {
-      const net = fetch(req).then(res => {
-        if (res && (res.status === 200 || res.type === 'opaque')) {
-          const copy = res.clone();
-          caches.open(VERSION).then(c => c.put(req, copy));
-        }
+      const network = fetch(req).then(res => {
+        if (res && res.ok) event.waitUntil(caches.open(VERSION).then(cache => cache.put(req, res.clone())));
         return res;
       }).catch(() => hit);
-      return hit || net;
+      return hit || network;
     })
   );
 });
 
-self.addEventListener('push', e => {
-  let d = { title: 'Baby List', body: 'Reminder' };
-  try { if (e.data) d = Object.assign(d, e.data.json()); } catch (_) {}
-  e.waitUntil(self.registration.showNotification(d.title, {
-    body: d.body, tag: d.tag || 'babylist',
+self.addEventListener('push', event => {
+  let data = { title: 'Baby List', body: 'Reminder', url: './reminders.html' };
+  try { if (event.data) data = Object.assign(data, event.data.json()); } catch (_) {}
+  event.waitUntil(self.registration.showNotification(data.title, {
+    body: data.body, tag: data.tag || 'babylist', data: { url: data.url || './reminders.html' },
     icon: './icon-192.png', badge: './badge-96.png'
   }));
 });
 
-self.addEventListener('notificationclick', e => {
-  e.notification.close();
-  e.waitUntil(
-    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
-      for (const c of list) { if ('focus' in c) return c.focus(); }
-      if (self.clients.openWindow) return self.clients.openWindow('./');
-    })
-  );
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const target = new URL((event.notification.data && event.notification.data.url) || './reminders.html', self.location.href).href;
+  event.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+    for (const client of list) {
+      if (client.url === target && 'focus' in client) return client.focus();
+    }
+    return self.clients.openWindow ? self.clients.openWindow(target) : undefined;
+  }));
+});
+
+self.addEventListener('message', event => {
+  if (!event.data || event.data.type !== 'CLEAR_PRIVATE_DATA') return;
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => /private|api|cloud/i.test(k)).map(k => caches.delete(k)))));
 });

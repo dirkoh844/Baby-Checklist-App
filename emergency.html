@@ -36,8 +36,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=2.12.5" rel="stylesheet">
-<link href="./assets/enhance.css?v=2.12.5" rel="stylesheet">
+<link href="./assets/navbar.css?v=3.0.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=3.0.0" rel="stylesheet">
 <script>
 addEventListener('DOMContentLoaded',function(){
   if(!window.__cssMissing) return;
@@ -111,7 +111,10 @@ body{
 .pane[hidden]{display:none}
 @media print{ *{background:#fff!important;color:#000!important} #tabNav,#toastWrap,.icobtns,.seg{display:none!important} .pane[hidden]{display:block!important} .card{border:1pt solid #999!important;page-break-inside:avoid} }
 </style>
-<script src="./assets/notify.js?v=2.12.5" defer></script>
+<script src="./assets/state-core.js?v=3.0.0"></script>
+<script src="./assets/sync-core.js?v=3.0.0"></script>
+<script src="./assets/app-shell.js?v=3.0.0" defer></script>
+<script src="./assets/notify.js?v=3.0.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
@@ -131,7 +134,7 @@ body{
   <div class="alert bg-base-100 border-2 border-error mt-4 py-3 block">
     <p class="m-0 text-[13.5px] font-semibold leading-relaxed">Whoever you call, whoever picks up, say this first:</p>
     <p class="m-0 mt-1 text-[15px] font-extrabold leading-snug text-error">"I gave birth on <span id="bornSay">[date]</span>."</p>
-    <p class="m-0 mt-1 text-[12.5px] leading-relaxed ink-soft">Pregnancy complications kill women up to a year after birth, and the person triaging you will not think of it unless you say it. Say it to the 911 operator, the ER desk, and every nurse.</p>
+    <p class="m-0 mt-1 text-[12.5px] leading-relaxed ink-soft">Serious pregnancy-related complications can happen during pregnancy and for up to a year after delivery. Tell the 911 operator, emergency desk, and every clinician that you recently gave birth.</p>
   </div>
 
   <div class="seg mt-3" role="tablist" aria-label="Who is this about">
@@ -192,6 +195,10 @@ body{
         <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-warning) 25%, transparent);color:var(--color-warning)">H</span>Headache that will not go away</summary>
         <div class="topic-body ink-soft"><p>Especially unrelieved by medicine, or with vision changes. Postpartum high blood pressure, which can arrive days or weeks after birth.</p></div>
       </details>
+      <details class="topic" style="--topic-a:var(--color-warning)">
+        <summary><span class="w-6 h-6 rounded-md grid place-items-center flex-none font-display font-bold text-[13px]" style="background:color-mix(in oklab, var(--color-warning) 25%, transparent);color:var(--color-warning)">S</span>Severe swelling of hands or face</summary>
+        <div class="topic-body ink-soft"><p>Sudden or extreme swelling—especially with headache, vision changes, trouble breathing, or upper-abdominal pain—can be a warning sign of a blood-pressure complication. Call now.</p></div>
+      </details>
       </div>
     </section>
 
@@ -224,12 +231,12 @@ body{
   <div class="pane" id="paneBaby" role="tabpanel" aria-labelledby="tabBaby" hidden>
     <section class="card bg-base-100 border-2 border-error shadow-sm mt-3">
       <div class="card-body p-4 gap-1">
-        <h2 class="font-display font-semibold text-[17.5px] m-0 text-error">ER now, or call 911</h2>
-        <p class="m-0 text-[12.5px] ink-soft leading-relaxed mb-1">Under 3 months, a newborn can go from fine to very sick quickly, and the early signs are quiet.</p>
+        <h2 class="font-display font-semibold text-[17.5px] m-0 text-error">Get medical help now</h2>
+        <p class="m-0 text-[12.5px] ink-soft leading-relaxed mb-1">Young infants can become seriously ill quickly, and early signs may be subtle.</p>
       <details class="topic" style="--topic-a:var(--color-error)">
-        <summary>Fever: 100.4 °F (38 °C)+ rectal — go now</summary>
-        <div class="topic-body ink-soft"><p>A rectal temperature of <b class="text-base-content">100.4 F (38 C) or higher, under 3 months, is an emergency</b>. Do not give fever medicine first. Do not re-check in an hour to see if it drops. Do not wait for a callback. Under 3 months, take the temperature rectally, not in the ear or armpit.</p>
-          <svg class="diagram" viewBox="0 0 340 64" role="img" aria-label="Thermometer showing the emergency line at 100.4 degrees Fahrenheit, 38 Celsius: anything at or past that line, under 3 months old, means go to the ER now" style="color:var(--ink-soft)">
+        <summary>Fever: 100.4 °F (38 °C)+ rectal — call immediately</summary>
+        <div class="topic-body ink-soft"><p>For a baby under 3 months, a rectal temperature of <b class="text-base-content">100.4 F (38 C) or higher needs immediate medical guidance and prompt evaluation</b>. Call the pediatrician or on-call service now and follow where they direct you to be seen. If the baby looks seriously ill, has breathing trouble, is hard to wake, or you cannot reach clinical help promptly, use emergency care. Do not give fever medicine unless a clinician tells you to.</p>
+          <svg class="diagram" viewBox="0 0 340 64" role="img" aria-label="Thermometer showing the urgent-call line at 100.4 degrees Fahrenheit, 38 Celsius, for a baby under 3 months" style="color:var(--ink-soft)">
             <circle cx="26" cy="30" r="11" fill="var(--color-error)"/>
             <rect x="32" y="24" width="286" height="12" rx="6" fill="color-mix(in oklab, currentColor 16%, transparent)"/>
             <rect x="32" y="24" width="176" height="12" rx="6" fill="var(--color-error)"/>
@@ -237,7 +244,7 @@ body{
             <g fill="currentColor" font-weight="800" font-size="9">
               <text x="60" y="16">97°</text><text x="130" y="16">99°</text>
               <text x="214" y="16" fill="var(--color-error)">100.4 °F / 38 °C</text>
-              <text x="170" y="59" fill="var(--color-error)" text-anchor="middle">at or past this line → ER now</text>
+              <text x="170" y="59" fill="var(--color-error)" text-anchor="middle">at or past this line → call immediately</text>
             </g>
           </svg></div>
       </details>
@@ -247,7 +254,7 @@ body{
       </details>
       <details class="topic" style="--topic-a:var(--color-error)">
         <summary>Lethargy: hard to wake, floppy</summary>
-        <div class="topic-body ink-soft"><p>Hard to wake, floppy, not interacting. If the baby will not stir after being undressed and prodded, that is not a good sleeper.</p></div>
+        <div class="topic-body ink-soft"><p>Hard to wake, unusually floppy, weak, or not interacting. If the baby does not respond normally to gentle stimulation, seek urgent medical help.</p></div>
       </details>
       <details class="topic" style="--topic-a:var(--color-error)">
         <summary>Color change: pale, mottled, gray, or blue</summary>
@@ -265,7 +272,7 @@ body{
         <h2 class="font-display font-semibold text-[17.5px] m-0" style="color:var(--color-warning)">Call the pediatrician today</h2>
       <details class="topic" style="--topic-a:var(--color-warning)">
         <summary>Feeding refusal or missed feeds</summary>
-        <div class="topic-body ink-soft"><p>Refusing feeds, missing two feeds in a row, feeding under 5 minutes, or falling asleep before finishing every time. Newborns feed 8 to 12 times a day, roughly every 2 to 3 hours.</p></div>
+        <div class="topic-body ink-soft"><p>New difficulty feeding, repeated refusal, too sleepy to stay awake for feeds, or substantially fewer feeds than the baby's care plan. Breastfeeding newborns commonly feed 8 to 12 times in 24 hours, but formula, combination feeding, prematurity, and individual plans differ.</p></div>
       </details>
       <details class="topic" style="--topic-a:var(--color-warning)">
         <summary>Too few wet diapers (under 6 a day)</summary>
@@ -297,11 +304,11 @@ body{
       </details>
       <details class="topic" style="--topic-a:var(--color-warning)">
         <summary>Vomiting: forceful, green, or bloody</summary>
-        <div class="topic-body ink-soft"><p>Forceful or projectile, green, or after every feed. Blood in vomit or stool.</p></div>
+        <div class="topic-body ink-soft"><p>Repeated forceful or projectile vomiting needs a prompt call. Green vomit, blood, severe pain, a swollen belly, unusual sleepiness, or signs of dehydration need urgent medical assessment now.</p></div>
       </details>
       <details class="topic" style="--topic-a:var(--color-warning)">
-        <summary>Dehydration: no tears, dry mouth, sunken spots</summary>
-        <div class="topic-body ink-soft"><p>No tears when crying, dry mouth, sunken eyes, sunken soft spot.</p></div>
+        <summary>Dehydration: dry mouth, sunken eyes or soft spot</summary>
+        <div class="topic-body ink-soft"><p>Very dry mouth, sunken eyes, a sunken soft spot, unusual sleepiness, or a clear drop in wet diapers. Young newborns may not make visible tears normally, so tears alone are not a reliable test.</p></div>
       </details>
         <details class="topic" style="--topic-a:var(--color-info)">
           <summary>Before you call: the 5 things to have ready</summary>
@@ -329,8 +336,8 @@ body{
         <details class="topic" style="--topic-a:var(--color-info)">
           <summary>Funny breathing, hiccups &amp; snorts</summary>
           <div class="topic-body ink-soft">
-            <p>Newborns breathe in bursts — fast for a stretch, then a pause of up to about 10 seconds, then back to normal. Hiccups, sneezes, and snorty, congested-sounding breathing are normal too.</p>
-            <p><b class="text-base-content">Call 911 if:</b> a pause lasts more than 10–15 seconds, lips or face turn blue or gray, they grunt with every breath, or the skin sucks in between the ribs. (These are on the red-flag list above.)</p>
+            <p>Newborn breathing can be irregular, with short pauses followed by faster breaths. Hiccups, sneezes, and some snorty sounds are common, but watch the baby's color, alertness, and effort—not only a timer.</p>
+            <p><b class="text-base-content">Call 911 if:</b> the baby does not resume breathing promptly, turns blue or gray, becomes limp or unresponsive, or has severe work of breathing. Grunting with every breath or skin pulling in between the ribs needs urgent medical assessment.</p>
           </div>
         </details>
 
@@ -393,7 +400,7 @@ body{
     <section class="card bg-base-100 border border-base-300 shadow-sm mt-3">
       <div class="card-body p-4 gap-2">
         <h2 class="font-display font-semibold text-[17.5px] m-0">Emergency card</h2>
-        <p class="m-0 text-[12.5px] ink-soft leading-relaxed">Stored on this phone and synced to the other one. Fill it in now, not in a triage bay with no bars.</p>
+        <p class="m-0 text-[12.5px] ink-soft leading-relaxed">Saved on this device and, only if private sync is enabled, shared with connected phones. It can contain sensitive health and insurance details; fill only what is useful and protect device access.</p>
         <div class="grid gap-2.5 mt-1">
           <div>
             <label for="cBorn" class="text-[10px] font-extrabold uppercase tracking-wider ink-soft">Baby's birth date and time</label>
@@ -455,21 +462,11 @@ body{
   </div>
 
   <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
-    <p class="m-0">Drawn from AWHONN's POST-BIRTH warning signs, CDC Hear Her, and AAP newborn guidance. This is not a diagnosis and not a substitute for your care team. When in doubt, call. Nobody has ever been scolded for calling about a newborn.</p>
+    <p class="m-0">Source-reviewed July 21, 2026 using CDC maternal-warning guidance and pediatric newborn guidance. This is not a diagnosis or a substitute for emergency services or your care team. When in doubt, call. <a class="link link-primary font-bold" href="./sources.html">Safety sources and review scope</a>.</p>
   </footer>
 </div>
 
-<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
-  <div class="max-w-[640px] mx-auto grid grid-cols-7">
-    <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="3.9" y="3.9" width="16.2" height="16.2" rx="4.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 12.15l2.55 2.55 4.85-5.35" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
-    <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.4S4.6 15.8 4.6 10A4.2 4.2 0 0 1 12 7.5a4.2 4.2 0 0 1 7.4 2.5c0 5.8-7.4 10.4-7.4 10.4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.7 11.7h2.1l1.15-2.1 1.55 3.9 1-1.8h2.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
-    <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="8.7" y="3.3" width="6.6" height="3.5" rx="1.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.7 5.05H7.05A1.65 1.65 0 0 0 5.4 6.7v11.65A1.65 1.65 0 0 0 7.05 20h9.9a1.65 1.65 0 0 0 1.65-1.65V6.7a1.65 1.65 0 0 0-1.65-1.65H15.3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16.9s-3.05-1.85-3.05-4a1.75 1.75 0 0 1 3.05-1.2 1.75 1.75 0 0 1 3.05 1.2c0 2.15-3.05 4-3.05 4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Birth Plan</a>
-    <a href="./emergency.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" aria-current="page" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></span>Warning</a>
-    <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.5v-6.7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 13.8c0-3.95-2.8-6.25-6.85-6.25 0 3.95 2.8 6.25 6.85 6.25z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.1c0-3.2 2.4-5.1 5.75-5.1 0 3.2-2.4 5.1-5.75 5.1z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Upbringing</a>
-    <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-warning)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M6.35 10.3a5.65 5.65 0 0 1 11.3 0c0 4.65 1.9 5.6 1.9 5.6H4.45s1.9-.95 1.9-5.6z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 18.6a2.25 2.25 0 0 0 4.2 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reminders</a>
-    <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6 12h2.6M14.3 16l1.3 2.25M9.7 16l-1.3 2.25M7.4 12H4.8M9.7 8L8.4 5.75M14.3 8l1.3-2.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Settings</a>
-  </div>
-</nav>
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav"><div class="app-nav-grid"></div></nav>
 
 <div class="toast toast-center toast-bottom z-[80] mb-20 hidden" id="toastWrap">
   <div class="alert bg-neutral text-neutral-content rounded-2xl py-3.5 px-6 text-[15px] leading-snug font-extrabold shadow-lg border-0 max-w-[92vw] whitespace-normal justify-center text-center" id="toast" role="status" aria-live="polite"></div>
@@ -480,8 +477,32 @@ const $=id=>document.getElementById(id);
 let toastTimer=null;
 function toast(m){ const w=$('toastWrap'); $('toast').textContent=m; w.classList.remove('hidden'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),2600); }
 const KEY='newborn-checklist-v3';
-function readState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):{}; }catch(e){ return {}; } }
-function patch(fn){ try{ const s=readState(); fn(s); localStorage.setItem(KEY,JSON.stringify(s)); return s; }catch(e){ return null; } }
+function readState(){
+  try{ const v=localStorage.getItem(KEY); return BabyListState.sanitizeState(v?JSON.parse(v):{}); }
+  catch(e){ return BabyListState.sanitizeState({}); }
+}
+let emergencySyncTimer=null;
+function queueEmergencySync(){
+  clearTimeout(emergencySyncTimer);
+  emergencySyncTimer=setTimeout(async()=>{
+    const s=readState();
+    if(!(s.sync&&s.cloud&&s.cloud.u)) return;
+    try{
+      const result=await BabyListSync.syncState(s.cloud,s);
+      localStorage.setItem(KEY,JSON.stringify(result.state));
+    }catch(e){}
+  },800);
+}
+function patch(fn,shouldSync=true){
+  try{
+    const before=readState(), next=BabyListState.copy(before);
+    fn(next);
+    const saved=BabyListState.stamp(next,before);
+    localStorage.setItem(KEY,JSON.stringify(saved));
+    if(shouldSync) queueEmergencySync();
+    return saved;
+  }catch(e){ return null; }
+}
 
 let dark=true;
 const st0=readState();
@@ -492,7 +513,7 @@ function applyTheme(){
     ? '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 3.2v2.1M12 18.7v2.1M3.2 12h2.1M18.7 12h2.1M5.8 5.8l1.5 1.5M16.7 16.7l1.5 1.5M18.2 5.8l-1.5 1.5M7.3 16.7l-1.5 1.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>'
     : '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M20.1 13.7A7.6 7.6 0 0 1 10.3 3.9 8.4 8.4 0 1 0 20.1 13.7z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 }
-$('themeBtn').addEventListener('click',()=>{ dark=!dark; applyTheme(); patch(s=>{ s.dark=dark; s.themeV=2; }); });
+$('themeBtn').addEventListener('click',()=>{ dark=!dark; applyTheme(); patch(s=>{ s.dark=dark; s.themeV=2; },false); });
 applyTheme();
 
 /* panes */
@@ -535,9 +556,10 @@ $('cardSave').addEventListener('click',()=>{
   const card={};
   FIELDS.forEach(f=>{ const v=$(f).value.trim(); if(v) card[f]=v; });
   const born=$('cBorn').value ? new Date($('cBorn').value).toISOString() : null;
-  patch(s=>{ s.card=card; if(born) s.born=born; s.savedAt=new Date().toISOString(); });
+  const saved=patch(s=>{ s.card=card; if(born) s.born=born; });
   loadCard();
-  toast('Card saved on this phone, and it syncs to the other one');
+  if(born&&window.BabyListUI) window.BabyListUI.rebuildNav();
+  toast(saved&&saved.sync&&saved.cloud&&saved.cloud.u?'Card saved · private sync queued':'Card saved on this device');
 });
 $('cardCopy').addEventListener('click',async()=>{
   const s=readState(), c=s.card||{};
@@ -548,6 +570,17 @@ $('cardCopy').addEventListener('click',async()=>{
   catch(e){ prompt('Copy the card:',out); }
 });
 loadCard();
+async function pullEmergencyCard(){
+  const s=readState();
+  if(!(s.sync&&s.cloud&&s.cloud.u)) return;
+  try{
+    const result=await BabyListSync.pullState(s.cloud,s);
+    localStorage.setItem(KEY,JSON.stringify(result.state));
+    loadCard();
+  }catch(e){}
+}
+pullEmergencyCard();
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) pullEmergencyCard(); });
 
 if('serviceWorker' in navigator && location.protocol==='https:'){
   try{

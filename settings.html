@@ -34,8 +34,8 @@
 <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-1668x2388.png">
 <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash/apple-splash-2048x2732.png">
 <link href="./assets/app.css" rel="stylesheet" onerror="window.__cssMissing=1">
-<link href="./assets/navbar.css?v=2.12.5" rel="stylesheet">
-<link href="./assets/enhance.css?v=2.12.5" rel="stylesheet">
+<link href="./assets/navbar.css?v=3.0.0" rel="stylesheet">
+<link href="./assets/enhance.css?v=3.0.0" rel="stylesheet">
 <script>
 /* the stylesheet is the whole design: if it 404s (usually because assets/ was
    not deployed) say so plainly rather than dumping unstyled markup */
@@ -108,14 +108,17 @@ body{
 
 @media print{ *{background:#fff!important;color:#000!important} #tabNav{display:none!important} }
 </style>
-<script src="./assets/notify.js?v=2.12.5" defer></script>
+<script src="./assets/state-core.js?v=3.0.0"></script>
+<script src="./assets/sync-core.js?v=3.0.0"></script>
+<script src="./assets/app-shell.js?v=3.0.0" defer></script>
+<script src="./assets/notify.js?v=3.0.0" defer></script>
 </head>
 <body class="min-h-dvh text-[16px] leading-relaxed pb-28">
 
 <header class="navbar sticky top-0 z-30 bg-base-200/85 backdrop-blur-md border-b border-base-300 px-3.5 pt-[calc(env(safe-area-inset-top)+8px)] pb-2 min-h-0">
   <div class="w-full max-w-[640px] mx-auto flex items-center gap-2">
     <h1 class="font-display font-semibold text-[21px] leading-tight m-0 flex-1">Settings
-      <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1">Sync · due date · appearance</span>
+      <span class="block font-sans font-extrabold text-[10px] tracking-[.15em] uppercase text-primary mt-1">Sync · dates · navigation · access</span>
     </h1>
     <a href="./emergency.html" class="btn btn-circle btn-sm btn-soft btn-error flex-none hidden" id="sosBtn" aria-label="Warning signs and emergency contacts" title="Warning signs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></a>
       <button class="btn btn-circle btn-sm btn-ghost border border-base-300 text-base-content/70 flex-none hidden" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
@@ -132,6 +135,15 @@ body{
         <button id="themeToggle" type="button" class="btn btn-sm btn-soft btn-secondary rounded-xl font-bold">Theme: Dark</button>
         <button id="sizeToggle" type="button" class="btn btn-sm btn-soft btn-accent rounded-xl font-bold">Text: Default</button>
         <button id="calmToggle" type="button" class="btn btn-sm btn-soft btn-info rounded-xl font-bold" aria-pressed="false">Calm sounds: Off</button>
+      </div>
+      <div class="mt-2">
+        <p class="text-[12px] font-extrabold m-0 mb-1">Bottom menu stage</p>
+        <div class="join w-full" role="group" aria-label="Bottom menu stage">
+          <button type="button" class="btn btn-sm join-item flex-1 stageBtn" data-stage="auto">Auto</button>
+          <button type="button" class="btn btn-sm join-item flex-1 stageBtn" data-stage="pregnancy">Pregnancy</button>
+          <button type="button" class="btn btn-sm join-item flex-1 stageBtn" data-stage="baby">Baby</button>
+        </div>
+        <p class="text-[11.5px] ink-soft leading-relaxed m-0 mt-1">Auto switches to the tracker after a birth date is saved. You can override it here at any time.</p>
       </div>
     </div>
   </section>
@@ -160,40 +172,45 @@ body{
 
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-gold">
     <div class="card-body p-4 gap-2">
-      <h2 class="font-display font-semibold text-[17.5px] m-0 text-accent">Baby tracker</h2>
-      <p class="text-[12.5px] ink-soft leading-relaxed m-0">Feeds, diapers, and sleep once the baby is here. It lives here now — the bottom menu carries Warning signs instead.</p>
-      <a href="./tracker.html" class="btn btn-sm btn-primary rounded-xl font-extrabold w-full">Open the tracker</a>
+      <h2 class="font-display font-semibold text-[17.5px] m-0 text-accent">More tools</h2>
+      <p class="text-[12.5px] ink-soft leading-relaxed m-0">Everything remains available even when the five-item bottom menu changes with your stage.</p>
+      <div class="grid grid-cols-2 gap-2">
+        <a href="./index.html" class="btn btn-sm btn-soft btn-primary rounded-xl font-extrabold">Checklist</a>
+        <a href="./labor.html" class="btn btn-sm btn-soft btn-error rounded-xl font-extrabold">Labor timer</a>
+        <a href="./birthplan.html" class="btn btn-sm btn-soft btn-secondary rounded-xl font-extrabold">Birth plan</a>
+        <a href="./tracker.html" class="btn btn-sm btn-soft btn-primary rounded-xl font-extrabold">Baby tracker</a>
+        <a href="./emergency.html" class="btn btn-sm btn-soft btn-error rounded-xl font-extrabold">Warning signs</a>
+        <a href="./upbringing.html" class="btn btn-sm btn-soft btn-success rounded-xl font-extrabold">Guides</a>
+        <a href="./reminders.html" class="btn btn-sm btn-soft btn-warning rounded-xl font-extrabold">Reminders</a>
+        <a href="./sources.html" class="btn btn-sm btn-soft btn-info rounded-xl font-extrabold">Safety sources</a>
+      </div>
     </div>
   </section>
 
     <!-- cloud sync -->
   <section class="card bg-base-100 border border-base-300 shadow-sm mt-4 zone-info">
     <div class="card-body p-4 gap-2">
-      <h2 class="font-display font-semibold text-[17.5px] m-0 text-info">Cloud sync</h2>
+      <h2 class="font-display font-semibold text-[17.5px] m-0 text-info">Private family sync</h2>
       <p class="text-[12.5px] ink-soft leading-relaxed m-0" id="syncStatus">Checking…</p>
       <div id="syncOn" class="hidden flex-col gap-2">
         <div class="text-[11.5px] font-semibold ink-soft break-all rounded-lg p-2.5" style="background:var(--color-base-200)" id="endpointText"></div>
         <div class="flex gap-2 flex-wrap">
           <button id="copyEndpoint" type="button" class="btn btn-sm btn-soft btn-info rounded-xl font-bold">Copy endpoint (for CLOUD_URL secret)</button>
-          <button id="copyInvite" type="button" class="btn btn-sm btn-soft btn-primary rounded-xl font-bold">Copy invite link (adds a phone)</button>
+          <button id="copyInvite" type="button" class="btn btn-sm btn-soft btn-primary rounded-xl font-bold">Create live-sync invite</button>
           <button id="cloudTest" type="button" class="btn btn-sm btn-soft btn-success rounded-xl font-bold">Test connection</button>
           <button id="syncToggle" type="button" class="btn btn-sm btn-soft btn-primary rounded-xl font-bold">Pause sync</button>
           <button id="syncDisconnect" type="button" class="btn btn-sm btn-soft btn-error rounded-xl font-bold">Disconnect</button>
         </div>
       </div>
       <div id="syncOff" class="hidden flex-col gap-2">
-        <input id="cloudUrl" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="https://… endpoint URL" aria-label="Sync endpoint URL">
-        <input id="cloudKey" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="Token or access key" aria-label="Sync access key">
+        <input id="cloudUrl" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="https://your-worker.workers.dev" aria-label="Sync endpoint URL" inputmode="url" autocomplete="url" spellcheck="false">
+        <input id="cloudKey" type="password" class="input input-sm input-bordered bg-base-200 font-semibold text-[16px] w-full" placeholder="Worker TOKEN" aria-label="Sync access token" autocomplete="new-password" spellcheck="false">
         <button id="cloudConnect" type="button" class="btn btn-sm btn-primary font-extrabold w-full">Connect</button>
         <details class="topic" style="--topic-a:var(--color-info)">
-          <summary>Option A — Cloudflare Worker (recommended, free)</summary>
-          <div class="topic-body ink-soft"><p>Free, nothing expires, and the list cannot be read without the token. Deploy <code class="text-[11px]">worker/baby-list-worker.js</code>, then paste the workers.dev URL plus your TOKEN.</p></div>
+          <summary>Set up the private sync worker</summary>
+          <div class="topic-body ink-soft"><p>Deploy <code class="text-[11px]">worker/baby-list-worker.js</code> with the included Durable Object configuration, set a strong TOKEN secret and an exact ALLOWED_ORIGINS list, then paste its HTTPS URL and TOKEN here. Only the v3 worker is accepted.</p></div>
         </details>
-        <details class="topic" style="--topic-a:var(--color-info)">
-          <summary>Option B — JSONBin.io (free account)</summary>
-          <div class="topic-body ink-soft"><p>Free account, private bins, no auto-deletion. Paste <code class="text-[11px]">https://api.jsonbin.io/v3/b/YOUR_BIN_ID</code> and an <b class="text-base-content">Access Key</b> with read + update, not your Master Key. The free allowance is 10,000 requests total, so it fits light use.</p></div>
-        </details>
-        <button id="cloudCreate" type="button" class="btn btn-xs btn-ghost w-full font-bold">Quick throwaway store (JSONBlob: public, deleted after 75 idle days)</button>
+        <p class="text-[11.5px] ink-soft leading-relaxed m-0">The endpoint and token stay on this device. Normal snapshot links and backup files omit them.</p>
       </div>
     </div>
   </section>
@@ -202,7 +219,7 @@ body{
   <section class="card bg-base-100 border border-error/40 shadow-sm mt-4">
     <div class="card-body p-4 gap-2">
       <h2 class="font-display font-semibold text-[17.5px] m-0 text-error">Reset</h2>
-      <p class="text-[12.5px] ink-soft leading-relaxed m-0">Clears every checkmark and the due date — on all synced phones — while keeping your custom items, reminders, contacts, and the cloud connection.</p>
+      <p class="text-[12.5px] ink-soft leading-relaxed m-0">The first button clears only packed status. A new-pregnancy reset also clears dates, item notes, tracker history, and emergency-card entries while keeping custom items, reminders, contacts, and sync settings.</p>
       <button id="resetChecks" type="button" class="btn btn-sm btn-soft btn-warning rounded-xl font-bold w-full">Reset checkmarks only</button>
       <button id="babyReset" type="button" class="btn btn-sm btn-soft btn-error rounded-xl font-bold w-full">Start a new pregnancy (full reset)</button>
     </div>
@@ -223,21 +240,11 @@ body{
   </section>
 
   <footer class="mt-6 py-4 px-1 text-[12px] ink-soft leading-relaxed">
-    <p class="m-0">Baby List <b class="text-base-content" id="verLine">v2.0.0</b> · running from GitHub Pages · <a class="link link-primary font-bold" href="./index.html">Back to the checklist</a></p>
+    <p class="m-0">Baby List <b class="text-base-content" id="verLine">v3.0.0</b> · local-first PWA · <a class="link link-primary font-bold" href="./index.html">Back to the checklist</a></p>
   </footer>
 </div>
 
-<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav">
-  <div class="max-w-[640px] mx-auto grid grid-cols-7">
-    <a href="./index.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-primary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="3.9" y="3.9" width="16.2" height="16.2" rx="4.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 12.15l2.55 2.55 4.85-5.35" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Checklist</a>
-    <a href="./labor.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.4S4.6 15.8 4.6 10A4.2 4.2 0 0 1 12 7.5a4.2 4.2 0 0 1 7.4 2.5c0 5.8-7.4 10.4-7.4 10.4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.7 11.7h2.1l1.15-2.1 1.55 3.9 1-1.8h2.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Labor</a>
-    <a href="./birthplan.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-secondary)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><rect x="8.7" y="3.3" width="6.6" height="3.5" rx="1.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.7 5.05H7.05A1.65 1.65 0 0 0 5.4 6.7v11.65A1.65 1.65 0 0 0 7.05 20h9.9a1.65 1.65 0 0 0 1.65-1.65V6.7a1.65 1.65 0 0 0-1.65-1.65H15.3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16.9s-3.05-1.85-3.05-4a1.75 1.75 0 0 1 3.05-1.2 1.75 1.75 0 0 1 3.05 1.2c0 2.15-3.05 4-3.05 4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Birth Plan</a>
-    <a href="./emergency.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-error)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M10.3 4.05L2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.05a2 2 0 0 0-3.4 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.3v4.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="16.75" r="1.15" fill="currentColor" stroke="none"/></svg></span>Warning</a>
-    <a href="./upbringing.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-success)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20.5v-6.7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 13.8c0-3.95-2.8-6.25-6.85-6.25 0 3.95 2.8 6.25 6.85 6.25z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.1c0-3.2 2.4-5.1 5.75-5.1 0 3.2-2.4 5.1-5.75 5.1z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Upbringing</a>
-    <a href="./reminders.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" style="--tab-a:var(--color-warning)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><path d="M6.35 10.3a5.65 5.65 0 0 1 11.3 0c0 4.65 1.9 5.6 1.9 5.6H4.45s1.9-.95 1.9-5.6z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 18.6a2.25 2.25 0 0 0 4.2 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reminders</a>
-    <a href="./settings.html" class="nt flex flex-col items-center gap-0.5 pt-1.5 pb-1 text-[8.5px] font-extrabold tracking-tight whitespace-nowrap" aria-current="page" style="--tab-a:var(--color-info)"><span class="np grid place-items-center w-11 h-7 rounded-full transition-colors [&>svg]:w-[18px] [&>svg]:h-[18px]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6 12h2.6M14.3 16l1.3 2.25M9.7 16l-1.3 2.25M7.4 12H4.8M9.7 8L8.4 5.75M14.3 8l1.3-2.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Settings</a>
-  </div>
-</nav>
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur-md border-t border-base-300 pb-[env(safe-area-inset-bottom)]" aria-label="Main" id="tabNav"><div class="app-nav-grid"></div></nav>
 
 <div class="toast toast-center toast-bottom z-[80] mb-20 hidden" id="toastWrap">
   <div class="alert bg-neutral text-neutral-content rounded-2xl py-3.5 px-6 text-[15px] leading-snug font-extrabold shadow-lg border-0 max-w-[92vw] whitespace-normal justify-center text-center" id="toast" role="status" aria-live="polite"></div>
@@ -248,22 +255,42 @@ const $=id=>document.getElementById(id);
 let toastTimer=null;
 function toast(m){ const w=$('toastWrap'); $('toast').textContent=m; w.classList.remove('hidden'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>w.classList.add('hidden'),1900); }
 
-const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='2.12.5';
-function loadState(){ try{ const v=localStorage.getItem(KEY); return v?JSON.parse(v):null; }catch(e){ return null; } }
-function patchState(fn){
+const KEY='newborn-checklist-v3', WHO_KEY='newborn-who', VERSION='3.0.0';
+function loadState(){
+  try{ const v=localStorage.getItem(KEY); return BabyListState.sanitizeState(v?JSON.parse(v):{}); }
+  catch(e){ return BabyListState.sanitizeState({}); }
+}
+let settingsSyncTimer=null;
+function scheduleSettingsSync(){
+  clearTimeout(settingsSyncTimer);
+  settingsSyncTimer=setTimeout(async()=>{
+    const s=loadState();
+    if(!(s.sync&&s.cloud&&s.cloud.u)) return;
+    try{
+      const result=await BabyListSync.syncState(s.cloud,s);
+      localStorage.setItem(KEY,JSON.stringify(result.state));
+      window.dispatchEvent(new CustomEvent('babylist-sync-status',{detail:{state:'synced'}}));
+    }catch(e){
+      window.dispatchEvent(new CustomEvent('babylist-sync-status',{detail:{state:'offline',label:'Saved here · retrying'}}));
+    }
+  },800);
+}
+function patchState(fn,shouldSync=true){
   try{
-    const s=loadState()||{checked:{},collapsed:{},custom:{},sort:'importance',dark:true,themeV:2,tier:'all',hidePacked:false,hideNotes:false,sizeIdx:0,sync:false,importedShare:null,due:null,who:'',cloud:null,savedAt:new Date().toISOString()};
-    fn(s);
-    localStorage.setItem(KEY,JSON.stringify(s));
-    return s;
+    const before=loadState(), next=BabyListState.copy(before);
+    fn(next);
+    const saved=BabyListState.stamp(next,before);
+    localStorage.setItem(KEY,JSON.stringify(saved));
+    if(shouldSync) scheduleSettingsSync();
+    return saved;
   }catch(e){ toast('This browser is blocking saved data'); return null; }
 }
 
 /* ---------- theme + size ---------- */
-let cur=loadState()||{};
+let cur=loadState();
 let dark = (cur.themeV===2 && typeof cur.dark==='boolean') ? cur.dark : true;
 let sizeIdx = typeof cur.sizeIdx==='number' ? cur.sizeIdx : 0;
-const SIZES=[1,1.12,1.25], SIZE_L=['Default','Large','Extra large'];
+const SIZE_L=['Default','Large','Extra large'];
 function applyTheme(){
   document.documentElement.setAttribute('data-theme',dark?'womb':'dawn');
   $('themeBtn').innerHTML=dark
@@ -271,19 +298,37 @@ function applyTheme(){
     : '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M20.1 13.7A7.6 7.6 0 0 1 10.3 3.9 8.4 8.4 0 1 0 20.1 13.7z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   $('themeToggle').textContent='Theme: '+(dark?'Dark':'Light');
 }
-function applySize(){ document.body.style.zoom = SIZES[sizeIdx]===1?'':SIZES[sizeIdx]; $('sizeToggle').textContent='Text: '+SIZE_L[sizeIdx]; }
-function saveTheme(){ patchState(s=>{ s.dark=dark; s.themeV=2; s.sizeIdx=sizeIdx; }); }
+function applySize(){ document.documentElement.dataset.textSize=String(sizeIdx); $('sizeToggle').textContent='Text: '+SIZE_L[sizeIdx]; }
+function saveTheme(){ patchState(s=>{ s.dark=dark; s.themeV=2; s.sizeIdx=sizeIdx; },false); }
 $('themeBtn').addEventListener('click',()=>{ dark=!dark; applyTheme(); saveTheme(); });
 $('themeToggle').addEventListener('click',()=>{ dark=!dark; applyTheme(); saveTheme(); });
-$('sizeToggle').addEventListener('click',()=>{ sizeIdx=(sizeIdx+1)%SIZES.length; applySize(); saveTheme(); });
+$('sizeToggle').addEventListener('click',()=>{ sizeIdx=(sizeIdx+1)%SIZE_L.length; applySize(); saveTheme(); });
 applyTheme(); applySize();
+
+/* ---------- stage-aware navigation ---------- */
+function renderStage(){
+  const value=loadState().navStage||'auto';
+  document.querySelectorAll('.stageBtn').forEach(b=>{
+    const active=b.dataset.stage===value;
+    b.classList.toggle('btn-primary',active);
+    b.setAttribute('aria-pressed',String(active));
+  });
+}
+document.querySelectorAll('.stageBtn').forEach(b=>b.addEventListener('click',()=>{
+  const value=b.dataset.stage;
+  patchState(s=>{ s.navStage=value==='auto'?null:value; },false);
+  renderStage();
+  if(window.BabyListUI) window.BabyListUI.rebuildNav();
+  toast(value==='auto'?'Menu will switch automatically':value==='baby'?'Baby menu selected':'Pregnancy menu selected');
+}));
+renderStage();
 
 /* ---------- name ---------- */
 try{ $('whoInput').value=localStorage.getItem(WHO_KEY)||cur.who||''; }catch(e){}
 $('whoInput').addEventListener('change',()=>{
   const v=$('whoInput').value.trim();
   try{ localStorage.setItem(WHO_KEY,v); }catch(e){}
-  patchState(s=>{ s.who=v; });
+  patchState(s=>{ s.who=v; },false);
   toast(v?'Name saved':'Name cleared');
 });
 
@@ -311,59 +356,11 @@ $('dueClear').addEventListener('click',()=>{ patchState(s=>{ s.due=null; }); due
 dueReadout();
 
 /* ---------- cloud sync configuration ---------- */
-function cloudHeaders(cfg,useMaster){
-  const hd={'Content-Type':'application/json'};
-  if(!cfg||!cfg.k) return hd;
-  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
-  if(host.includes('jsonbin.io')) hd[(useMaster||cfg.kt==='m')?'X-Master-Key':'X-Access-Key']=cfg.k;
-  else if(host.includes('extendsclass.com')) hd['Security-key']=cfg.k;
-  else hd['Authorization']='Bearer '+cfg.k;
-  return hd;
-}
-async function cloudFetch(cfg,method,body){
-  const opts={method,headers:cloudHeaders(cfg),cache:'no-store'};
-  if(body!=null) opts.body=body;
-  let res=await fetch(cloudUrlFor(cfg),opts);
-  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
-  if((res.status===401||res.status===403) && host.includes('jsonbin.io') && cfg.kt!=='m'){
-    const o2={method,headers:cloudHeaders(cfg,true),cache:'no-store'};
-    if(body!=null) o2.body=body;
-    res=await fetch(cloudUrlFor(cfg),o2);
-    if(res.ok){ cfg.kt='m'; patchState(s=>{ if(s.cloud) s.cloud.kt='m'; }); }
-  }
-  return res;
-}
-function cloudUrlFor(cfg){
-  const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||'';
-  if(host.includes('jsonstorage.net')&&cfg.k&&cfg.u.indexOf('apiKey=')<0)
-    return cfg.u+(cfg.u.includes('?')?'&':'?')+'apiKey='+encodeURIComponent(cfg.k);
-  return cfg.u;
-}
-function seedDoc(){
-  const s=loadState();
-  return JSON.stringify({app:'newborn-checklist',version:2,savedAt:(s&&s.savedAt)||new Date().toISOString(),
-    state:s||{checked:{},collapsed:{},custom:{},sort:'importance',dark:true,themeV:2,tier:'all',who:''}});
-}
-/* Throwaway store only. JSONBlob blobs are public and are removed after 75
-   idle days, and creation depends on the Location header being exposed to the
-   page, which is the part that breaks when their CORS policy changes. */
-let mintWhy='';
-async function mintCloud(body){
-  mintWhy='';
-  try{
-    const r=await fetch('https://jsonblob.com/api/jsonBlob',{method:'POST',headers:{'Content-Type':'application/json'},body});
-    if(r.status===201){
-      const loc=r.headers.get('Location')||r.headers.get('location');
-      if(loc) return {u:loc.indexOf('http')===0?loc:'https://jsonblob.com'+loc,k:''};
-      mintWhy='JSONBlob stored it but hid the Location header from the page';
-    } else mintWhy='JSONBlob answered '+r.status;
-  }catch(e){ mintWhy='JSONBlob was unreachable (blocked or CORS)'; }
-  try{
-    const r=await fetch('https://api.jsonstorage.net/v1/json',{method:'POST',headers:{'Content-Type':'application/json'},body});
-    if(r.ok){ const j=await r.json(); const uri=j.uri||j.url; if(uri&&uri.indexOf('https://')===0) return {u:uri,k:''}; }
-    else mintWhy+='; jsonstorage answered '+r.status;
-  }catch(e){ mintWhy+='; jsonstorage was unreachable'; }
-  return null;
+async function syncNow(cfg,state){
+  const result=await BabyListSync.syncState(cfg,state||loadState());
+  localStorage.setItem(KEY,JSON.stringify(result.state));
+  window.dispatchEvent(new CustomEvent('babylist-sync-status',{detail:{state:'synced'}}));
+  return result.state;
 }
 function renderSync(){
   const s=loadState()||{};
@@ -373,11 +370,11 @@ function renderSync(){
   $('syncOff').classList.toggle('hidden',on); $('syncOff').classList.toggle('flex',!on);
   if(on){
     const host=(cfg.u.match(/^https?:\/\/([^\/]+)/)||[])[1]||cfg.u;
-    $('syncStatus').textContent='Connected to '+host+' · sync '+(s.sync?'ON':'paused')+'. Every device that opens your Share link joins this list.';
+    $('syncStatus').textContent='Private v3 sync at '+host+' · '+(s.sync?'active':'paused')+'. Snapshot links and backups do not include this connection.';
     $('endpointText').textContent=cfg.u;
     $('syncToggle').textContent=s.sync?'Pause sync':'Resume sync';
   } else {
-    $('syncStatus').textContent='Not set up yet. One shared list across every device, refreshed about once a minute.';
+    $('syncStatus').textContent='Not connected. Your list remains saved on this device and works offline.';
   }
 }
 $('cloudTest').addEventListener('click',async()=>{
@@ -385,17 +382,12 @@ $('cloudTest').addEventListener('click',async()=>{
   if(!cfg||!cfg.u){ toast('Nothing connected yet'); return; }
   const b=$('cloudTest'); b.disabled=true; b.textContent='Testing…';
   try{
-    const res=await cloudFetch(cfg,'GET');
-    if(res.ok){
-      const doc=await res.json().catch(()=>null);
-      const body=(doc&&doc.record)?doc.record:doc;
-      const n=(body&&body.state&&body.state.checked)?Object.keys(body.state.checked).length:0;
-      toast(body&&body.app? 'Connected. Read the shared list back ('+n+' items checked).' : 'Connected. The store is reachable but still empty.');
-    }
-    else if(res.status===401||res.status===403) toast('Rejected ('+res.status+'). Wrong key, or it lacks read and update permission.');
-    else if(res.status===404) toast('Endpoint answered 404. Check the URL, and that the store still exists.');
-    else toast('Endpoint answered '+res.status);
-  }catch(e){ toast('Could not reach the endpoint (offline, blocked, or CORS)'); }
+    const result=await BabyListSync.read(cfg);
+    const n=result.doc?Object.keys(result.doc.state.checked||{}).length:0;
+    toast(result.doc?'Connected · revision '+result.revision+' · '+n+' checked':'Connected · shared list is empty');
+  }catch(e){
+    toast(e&&e.code==='unsupported_endpoint'?'That is not a Baby List v3 worker':e&&e.status===401?'Token rejected':'Could not reach the private sync worker');
+  }
   b.disabled=false; b.textContent='Test connection';
 });
 $('copyEndpoint').addEventListener('click',async()=>{
@@ -407,13 +399,7 @@ $('syncToggle').addEventListener('click',()=>{ const s=patchState(x=>{ x.sync=!x
 $('syncDisconnect').addEventListener('click',()=>{
   if(!confirm('Disconnect this device from the shared list? The cloud copy stays; this device keeps its local list.')) return;
   patchState(s=>{ s.cloud=null; s.sync=false; }); renderSync(); toast('Disconnected');
-});
-$('cloudCreate').addEventListener('click',async()=>{
-  const b=$('cloudCreate'); b.disabled=true; b.textContent='Creating…';
-  const cfg=await mintCloud(seedDoc());
-  if(cfg){ patchState(s=>{ s.cloud=cfg; s.sync=true; }); renderSync(); toast('Shared storage created — send a Share link from the checklist'); }
-  else toast(mintWhy? 'Auto-create failed: '+mintWhy : 'Auto-create unavailable — paste an endpoint instead');
-  b.disabled=false; b.textContent='Create shared storage';
+  BabyListSync.clearPrivateCaches();
 });
 $('cloudConnect').addEventListener('click',async()=>{
   const u=$('cloudUrl').value.trim(), k=$('cloudKey').value.trim();
@@ -421,19 +407,15 @@ $('cloudConnect').addEventListener('click',async()=>{
   const cfg={u,k};
   const b=$('cloudConnect'); b.disabled=true; b.textContent='Checking…';
   try{
-    let hasDoc=false;
-    try{
-      const r=await fetch(cloudUrlFor(cfg),{headers:cloudHeaders(cfg),cache:'no-store'});
-      if(r.ok){ const j=await r.json(); const doc=(j&&j.record&&j.record.app)?j.record:j; hasDoc=!!(doc&&doc.app==='newborn-checklist'); }
-    }catch(e){}
-    if(!hasDoc){
-      const put=await fetch(cloudUrlFor(cfg),{method:'PUT',headers:cloudHeaders(cfg),body:seedDoc()});
-      if(!put.ok) throw new Error('put failed');
-    }
-    patchState(s=>{ s.cloud=cfg; s.sync=true; });
+    const staged=patchState(s=>{ s.cloud=cfg; s.sync=true; },false);
+    await syncNow(cfg,staged);
     renderSync();
-    toast(hasDoc?'Connected — the shared list loads next time you open the checklist':'Connected — this device\'s list is now the shared list');
-  }catch(e){ toast('Could not reach that endpoint — check the URL and key'); }
+    $('cloudKey').value='';
+    toast('Private sync connected');
+  }catch(e){
+    patchState(s=>{ s.cloud=null; s.sync=false; },false);
+    toast(e&&e.code==='unsupported_endpoint'?'Only the Baby List v3 worker is supported':e&&e.status===401?'Token rejected':'Connection failed — check the URL, token, and allowed origin');
+  }
   b.disabled=false; b.textContent='Connect';
 });
 renderSync();
@@ -447,35 +429,34 @@ function b64u(str){
 }
 $('copyInvite').addEventListener('click',async()=>{
   const s=loadState(); if(!s||!s.cloud||!s.cloud.u){ toast('Set up Cloud sync first'); return; }
+  if(!confirm('This live-sync invite contains the private endpoint and access token. Anyone who gets the link can read and change the shared list. Create it now?')) return;
   const payload={v:1,n:0,b:[],d:null,t:'all',cs:{u:s.cloud.u,k:s.cloud.k||''}};
   const link=location.href.replace(/settings\.html.*$/,'index.html')+'#s='+b64u(JSON.stringify(payload));
-  try{ await navigator.clipboard.writeText(link); toast('Invite copied — the other phone joins this list when it opens the link'); }
+  try{ await navigator.clipboard.writeText(link); toast('Live-sync invite copied · send it privately'); }
   catch(e){ prompt('Copy this invite link:',link); }
 });
 
-/* baby #2 reset: clear locally AND in the cloud (otherwise merge-on-push
-   would faithfully resurrect the old checkmarks), preserving push subs */
+/* A new-pregnancy reset uses tombstones, so concurrent devices cannot revive
+   the previous baby's data when they next sync. Reminders and push live apart. */
 $('babyReset').addEventListener('click',async()=>{
-  if(!confirm('Reset for a new baby? Checkmarks and due date clear on every synced phone. Custom items, reminders, and cloud sync stay.')) return;
-  const s=patchState(x=>{ x.checked={}; x.due=null; x.importedShare=null; x.tier='all'; x.phase='all'; x.savedAt=new Date().toISOString(); });
-  const cfg=s&&s.cloud;
-  if(cfg&&cfg.u){
-    try{
-      let doc=null;
-      try{
-        const r=await cloudFetch(cfg,'GET');
-        if(r.ok){ const j=await r.json(); doc=(j&&j.record&&j.record.app)?j.record:j; }
-      }catch(e){}
-      const out={app:'newborn-checklist',version:2,savedAt:s.savedAt,state:s};
-      if(doc&&doc.push) out.push=doc.push;
-      await cloudFetch(cfg,'PUT',JSON.stringify(out));
-    }catch(e){}
-  }
-  dueReadout(); toast('Fresh start — ready for the next baby');
+  if(!confirm('Start a new pregnancy? This clears checkmarks, item notes, due/birth dates, tracker history, and emergency-card entries on synced phones. Custom items, reminders, contacts, and sync settings stay.')) return;
+  const s=patchState(x=>{
+    x.checked={}; x.notes={}; x.due=null; x.born=null; x.log=[]; x.card={};
+    x.importedShare=null; x.tier='all'; x.phase='all'; x.loggingComplete=false; x.navStage=null;
+  },false);
+  try{ localStorage.removeItem('newborn-log-archive'); }catch(e){}
+  try{
+    if(s.sync&&s.cloud&&s.cloud.u) await syncNow(s.cloud,s);
+    toast('Fresh start — ready for the next pregnancy');
+  }catch(e){ scheduleSettingsSync(); toast('Reset saved here · sync will retry'); }
+  dueReadout(); renderStage();
+  if(window.BabyListUI) window.BabyListUI.rebuildNav();
 });
 
 /* ---------- what's new ---------- */
 const LOG=[
+  {v:'3.0.0',d:'Jul 2026',n:['Conflict-safe private sync with revision checks, field-level merging, deletion tombstones, isolated push subscriptions, and no API response caching','Stage-aware five-item navigation, stronger focus and touch states, and an always-visible urgent-warning shortcut','Tracker data-quality control, corrected sleep-window math, safe history rendering, complete archive backups, and a source-reviewed safety pass','Snapshot links and backups omit sync credentials; live-sync invites now require an explicit security warning']},
+  {v:'2.12.6',d:'Jul 2026',n:['Upbringing: "How you’re really doing" now nests inside "Recovery & the fourth trimester" instead of sitting as its own card, so the fourth-trimester section covers both body and mind']},
   {v:'2.12.5',d:'Jul 2026',n:['Upbringing: "The first 30 days," "1–6 months," and "6–12 months" are now tap-to-expand sections too, so the whole page collapses to four phase headers']},
   {v:'2.12.4',d:'Jul 2026',n:['Upbringing: "Recovery & the fourth trimester" is now a tap-to-expand section like the rest of the page, instead of always being open']},
   {v:'2.12.3',d:'Jul 2026',n:['Birth Plan headers: the title before the dash is now bold and larger, the detail after it drops to a smaller line underneath, and where a section had a second dash it now reads as a comma on that same smaller line']},
