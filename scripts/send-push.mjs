@@ -48,7 +48,11 @@ function zonedClock(now, timeZone) {
 }
 
 /* The window exceeds the five-minute schedule interval so a slightly late run
-   catches the reminder. Server-side slots keep overlapping runs idempotent. */
+   catches the reminder. Delivery is at-least-once: a slot is marked sent only
+   AFTER the push resolves, so a crash or transient failure retries next run
+   rather than silently dropping a reminder. Two overlapping runs may, rarely,
+   send the same slot twice — a duplicate is the acceptable failure for a
+   best-effort schedule, and a missed feeding reminder is not. */
 export function computeDue(entry, now = new Date(), windowMin = 12) {
   const local = zonedClock(now, entry.tz);
   const due = [];
@@ -86,21 +90,18 @@ async function main() {
     entry.last = entry.last || {};
     for (const { r, slot } of computeDue(entry, new Date())) {
       if (entry.last[r.id] === slot) continue;
-      const payload = JSON.stringify({
-        title: r.label, body: bodyFor(r), tag: 'rem-' + r.id,
-        url: './reminders.html', reminderId: r.id
-      });
-      if (DRY) { console.log('[dry]', key.slice(0, 8), r.id + '|' + slot, payload); continue; }
+      const payload = JSON.stringify({ title: r.label, body: bodyFor(r), tag: 'rem-' + r.id, url: './reminders.html', reminderId: r.id });
+      if (DRY) { console.log('[dry]', key.slice(0, 8), r.id + '|' + slot); continue; }
       try {
         await webpush.sendNotification(entry.sub, payload);
-        entry.last[r.id] = slot;
+        entry.last[r.id] = slot;                       // record ONLY after delivery
         updates.push({ key, last: { [r.id]: slot } });
         sent++;
         console.log('sent', key.slice(0, 8), r.id + '|' + slot);
       } catch (err) {
         const code = err && err.statusCode;
         if (code === 404 || code === 410) { updates.push({ key, remove: true }); console.log('pruning dead subscription', key.slice(0, 8)); break; }
-        console.error('send failed', key.slice(0, 8), code || err.message);
+        console.error('send failed', key.slice(0, 8), code || err.message);   // not acked -> retried next run
       }
     }
   }
