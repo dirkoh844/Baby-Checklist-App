@@ -34,6 +34,34 @@ function json(value, status, headers) {
 }
 function plainObject(v) { return !!v && typeof v === 'object' && !Array.isArray(v); }
 function safeKey(k) { return typeof k === 'string' && k.length > 0 && k.length <= 180 && !['__proto__', 'prototype', 'constructor'].includes(k); }
+/* Constant-time string compare so token verification does not leak length-prefix
+   timing. Folds the length difference in and iterates the longer length. */
+function safeEqual(a, b) {
+  a = String(a); b = String(b);
+  const len = Math.max(a.length, b.length);
+  let diff = a.length ^ b.length;
+  for (let i = 0; i < len; i++) diff |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
+  return diff === 0;
+}
+/* Reject push endpoints that point at private/loopback/IP-literal/bare hosts —
+   the SSRF-flavored targets that would turn the sender into an internal proxy.
+   Real browser push services all use public, dotted hostnames. */
+function publicPushHost(hostname) {
+  const h = String(hostname || '').toLowerCase().replace(/\.$/, '');
+  if (!h || h === 'localhost') return false;
+  if (h.indexOf('.') === -1) return false;                       // bare host, no TLD
+  if (h.indexOf(':') !== -1) return false;                       // IPv6 literal
+  if (/^\d{1,3}(\.\d{1,3}){3}$/.test(h)) return false;           // dotted-decimal IPv4
+  if (/^(0x[0-9a-f]+|\d+)(\.(0x[0-9a-f]+|\d+)){0,3}$/.test(h)) return false; // hex/octal/dword IPv4
+  // internal TLDs and cloud metadata / DNS-rebinding services
+  const badSuffix = ['.local', '.localhost', '.internal', '.intranet', '.lan', '.home.arpa',
+    '.nip.io', '.xip.io', '.sslip.io', '.localtest.me'];
+  if (badSuffix.some(s => h === s.slice(1) || h.endsWith(s))) return false;
+  if (h === 'metadata.google.internal') return false;
+  return true;
+}
+// Above every domain cap in validateStateDocument (checked/notes 3000); MAX_BODY bounds real size.
+const MAX_KEYS = 20000;
 function scrub(v, depth) {
   if (depth > 7 || v == null) return v == null ? v : null;
   if (typeof v === 'string') return v.slice(0, 2000);
@@ -42,7 +70,7 @@ function scrub(v, depth) {
   if (Array.isArray(v)) return v.slice(0, 10000).map(x => scrub(x, depth + 1));
   if (!plainObject(v)) return null;
   const out = {};
-  Object.keys(v).slice(0, 2000).forEach(k => { if (safeKey(k)) out[k] = scrub(v[k], depth + 1); });
+  Object.keys(v).slice(0, MAX_KEYS).forEach(k => { if (safeKey(k)) out[k] = scrub(v[k], depth + 1); });
   return out;
 }
 function validateStateDocument(body) {
@@ -65,6 +93,7 @@ function cleanPushEntry(v) {
   let endpoint;
   try { endpoint = new URL(v.sub.endpoint); } catch (_) { throw new Error('invalid_endpoint'); }
   if (endpoint.protocol !== 'https:' || endpoint.username || endpoint.password) throw new Error('invalid_endpoint');
+  if (!publicPushHost(endpoint.hostname)) throw new Error('invalid_endpoint');
   const out = scrub(v, 0);
   out.who = String(out.who || '').slice(0, 80);
   out.tz = String(out.tz || 'UTC').slice(0, 80);
@@ -106,8 +135,15 @@ export class FamilyList {
       catch (e) { return json({ error: 'Invalid Baby List document', code: e.message || 'invalid_document' }, 400); }
       const stored = await this.ctx.storage.get('state');
       const revision = stored ? stored.revision : 0;
-      const match = Number((req.headers.get('If-Match') || '').replace(/[^0-9]/g, ''));
-      if (!Number.isFinite(match) || match !== revision) {
+      /* Require an explicit numeric If-Match. A missing header, "*", or garbage
+         previously collapsed to 0 and allowed a blind write whenever the current
+         revision happened to be 0. */
+      const ifMatch = req.headers.get('If-Match');
+      if (ifMatch == null || !/\d/.test(ifMatch)) {
+        return json({ error: 'If-Match revision required', code: 'precondition_required', revision, current: stored ? Object.assign({}, stored.doc, { revision }) : null }, 428, { ETag: '"' + revision + '"' });
+      }
+      const match = Number(ifMatch.replace(/[^0-9]/g, ''));
+      if (match !== revision) {
         return json({ error: 'Revision conflict', code: 'revision_conflict', revision, current: stored ? Object.assign({}, stored.doc, { revision }) : null }, 409, { ETag: '"' + revision + '"' });
       }
       const next = revision + 1;
@@ -148,6 +184,8 @@ export class FamilyList {
     }
 
     if (req.method === 'POST' && path === '/push/ack') {
+      /* The sender records a slot in `last` only AFTER the push is delivered, so
+         a crashed or failed run simply retries next time (at-least-once). */
       const text = await req.text();
       if (utf8Size(text) > MAX_PUSH_BODY) return json({ error: 'Push request is too large', code: 'too_large' }, 413);
       let body;
@@ -176,10 +214,11 @@ export default {
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: responseHeaders(origin) });
 
     const path = new URL(req.url).pathname;
-    const senderRoute = (req.method === 'GET' && path === '/push/registry') || (req.method === 'POST' && path === '/push/ack');
+    const senderRoute = (req.method === 'GET' && path === '/push/registry') ||
+      (req.method === 'POST' && path === '/push/ack');
     const expected = senderRoute ? env.PUSH_TOKEN : env.TOKEN;
     const supplied = (req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '');
-    if (!expected || supplied !== expected) return new Response(JSON.stringify({ error: 'Unauthorized', code: 'unauthorized' }), { status: 401, headers: responseHeaders(origin) });
+    if (!expected || !safeEqual(supplied, expected)) return new Response(JSON.stringify({ error: 'Unauthorized', code: 'unauthorized' }), { status: 401, headers: responseHeaders(origin) });
     if (!env.FAMILY) return new Response(JSON.stringify({ error: 'Durable Object binding is missing', code: 'server_misconfigured' }), { status: 500, headers: responseHeaders(origin) });
 
     const id = env.FAMILY.idFromName('primary-family');
