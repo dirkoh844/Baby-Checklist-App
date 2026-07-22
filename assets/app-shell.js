@@ -12,10 +12,11 @@
     reminders: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.5 10.5a5.5 5.5 0 0111 0c0 4.5 2 5.5 2 5.5h-15s2-1 2-5.5z" stroke="currentColor" stroke-width="1.8"/><path d="M10 19a2.2 2.2 0 004 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
     tracker: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 18V9M10 18V5M15 18v-7M20 18V7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 19.5h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
     settings: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 4.6v2M12 17.4v2M4.6 12h2M17.4 12h2M6.7 6.7l1.4 1.4M15.9 15.9l1.4 1.4M17.3 6.7l-1.4 1.4M8.1 15.9l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-    sources: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 4h9a2 2 0 012 2v13H8a2 2 0 00-2 2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M17 17H8a2 2 0 00-2 2M9.5 8h5M9.5 11h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
     more: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="6" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="18" cy="12" r="1.5" fill="currentColor"/></svg>'
   };
-  // Every destination, with the label/icon/color used in the More menu.
+  /* Every MENU destination, with the label/icon/color used in the More menu.
+     sources.html is deliberately absent — it stays reachable through the
+     "Safety sources" links on the content pages, not from the menu. */
   const ALL = {
     'index.html': ['Checklist', 'checklist', 'primary'],
     'labor.html': ['Labor', 'labor', 'error'],
@@ -24,8 +25,7 @@
     'emergency.html': ['Warning signs', 'warning', 'error'],
     'upbringing.html': ['Guides', 'guide', 'success'],
     'reminders.html': ['Reminders', 'reminders', 'warning'],
-    'settings.html': ['Settings', 'settings', 'info'],
-    'sources.html': ['Sources', 'sources', 'accent']
+    'settings.html': ['Settings', 'settings', 'info']
   };
   const prenatal = [
     ['index.html', 'Checklist', 'checklist', 'primary'],
@@ -176,6 +176,12 @@
     b.setAttribute('aria-label', 'Open urgent warning signs');
     b.title = 'Urgent warning signs';
   }
+  function revealThemeButton() {
+    /* Every page ships a wired #themeBtn (kept hidden since the control moved
+       to Settings); surface it app-wide so night mode is always one tap away. */
+    const b = document.getElementById('themeBtn');
+    if (b) { b.classList.remove('hidden'); b.title = 'Light / dark'; }
+  }
   function applyTextSize() {
     const n = Math.max(0, Math.min(2, Number(state().sizeIdx) || 0));
     document.documentElement.dataset.textSize = String(n);
@@ -199,5 +205,5 @@
   }
   window.BabyListUI = { rebuildNav, setSyncStatus, stage: () => stage(state()) };
   window.addEventListener('babylist-sync-status', e => setSyncStatus(e.detail));
-  rebuildNav(); revealSafetyShortcut(); applyTextSize();
+  rebuildNav(); revealSafetyShortcut(); revealThemeButton(); applyTextSize();
 })();
