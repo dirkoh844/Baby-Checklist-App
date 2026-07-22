@@ -1,110 +1,113 @@
 #!/usr/bin/env node
-/* Baby List push sender — runs on GitHub Actions cron.
-   Reads the shared cloud bin, computes which reminders are due for each
-   subscribed device (in that device's own timezone), sends Web Push, and
-   writes de-dup slots back so nothing fires twice. */
+/* Baby List push sender. It reads only the isolated push registry and sends
+   atomic acknowledgements, so reminder delivery can never rewrite app state. */
 import webpush from 'web-push';
 
 const {
-  CLOUD_URL, CLOUD_KEY = '',
-  VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY,
-  VAPID_SUBJECT = 'mailto:babylist@example.com',
-  DRY = ''
+  CLOUD_URL, PUSH_KEY = '', VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY,
+  VAPID_SUBJECT = 'mailto:babylist@example.com', DRY = ''
 } = process.env;
 
-if (!CLOUD_URL) {
-  console.error('Missing env: CLOUD_URL');
-  process.exit(1);
-}
+if (!CLOUD_URL) { console.error('Missing env: CLOUD_URL'); process.exit(1); }
+if (!PUSH_KEY) { console.error('Missing env: PUSH_KEY'); process.exit(1); }
 if (!DRY) {
   if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) {
-    console.error('Missing env: VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY');
-    process.exit(1);
+    console.error('Missing env: VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY'); process.exit(1);
   }
   webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
 }
 
-function headersFor(url, key, method) {
-  const hd = { 'Content-Type': 'application/json' };
-  if (!key) return hd;
-  const host = (url.match(/^https?:\/\/([^/]+)/) || [])[1] || '';
-  if (host.includes('jsonbin.io')) hd[process.env.CLOUD_KEY_TYPE === 'master' ? 'X-Master-Key' : 'X-Access-Key'] = key;
-  else if (host.includes('extendsclass.com')) hd['Security-key'] = key;
-  else hd['Authorization'] = 'Bearer ' + key;
-  return hd;
+let workerUrl;
+try { workerUrl = new URL(CLOUD_URL); }
+catch (_) { console.error('CLOUD_URL must be a valid HTTPS URL'); process.exit(1); }
+if (workerUrl.protocol !== 'https:' || workerUrl.username || workerUrl.password || workerUrl.search || workerUrl.hash) {
+  console.error('CLOUD_URL must be an HTTPS URL without credentials, query, or fragment');
+  process.exit(1);
 }
-function urlFor(url, key) {
-  const host = (url.match(/^https?:\/\/([^/]+)/) || [])[1] || '';
-  if (host.includes('jsonstorage.net') && key && url.indexOf('apiKey=') < 0)
-    return url + (url.includes('?') ? '&' : '?') + 'apiKey=' + encodeURIComponent(key);
-  return url;
-}
+const base = workerUrl.origin + workerUrl.pathname.replace(/\/+$/, '');
+const headers = { 'Content-Type': 'application/json', 'Accept': 'application/json', Authorization: 'Bearer ' + PUSH_KEY };
 const minutesOf = t => { const m = /^(\d{1,2}):(\d{2})$/.exec(t || ''); return m ? (+m[1] * 60 + +m[2]) : null; };
 
-/* Which reminders are due for one device entry at `now`?  WINDOW must exceed
-   the cron gap so a late runner still catches the slot; de-dup handles overlap. */
-export function computeDue(entry, now = new Date(), windowMin = 20) {
-  const local = new Date(now.getTime() - (entry.tzo || 0) * 60000);
-  const day = local.toISOString().slice(0, 10);
-  const cur = local.getUTCHours() * 60 + local.getUTCMinutes();
+function zonedClock(now, timeZone) {
+  let tz = timeZone || 'UTC';
+  let parts;
+  try {
+    parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    }).formatToParts(now);
+  } catch (_) {
+    tz = 'UTC';
+    parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    }).formatToParts(now);
+  }
+  const p = Object.fromEntries(parts.filter(x => x.type !== 'literal').map(x => [x.type, x.value]));
+  return { day: p.year + '-' + p.month + '-' + p.day, minute: Number(p.hour) * 60 + Number(p.minute), timeZone: tz };
+}
+
+/* The window exceeds the five-minute schedule interval so a slightly late run
+   catches the reminder. Server-side slots keep overlapping runs idempotent. */
+export function computeDue(entry, now = new Date(), windowMin = 12) {
+  const local = zonedClock(now, entry.tz);
   const due = [];
   (entry.reminders || []).forEach(r => {
+    if (!r || !r.id || !r.label) return;
     if (r.type === 'daily') {
-      const t = minutesOf(r.time); if (t === null) return;
-      if (cur >= t && cur < t + windowMin) due.push({ r, slot: day + '|' + r.time });
+      const target = minutesOf(r.time); if (target === null) return;
+      if (local.minute >= target && local.minute < target + windowMin) due.push({ r, slot: local.day + '|' + r.time });
     } else if (r.type === 'interval') {
-      const s = minutesOf(r.start), e = minutesOf(r.end), ev = (+r.every || 2) * 60;
-      if (s === null || e === null || ev <= 0 || cur < s || cur > e) return;
-      const since = cur - s;
-      if (since % ev < windowMin) due.push({ r, slot: day + '|i' + Math.floor(since / ev) });
+      const start = minutesOf(r.start), end = minutesOf(r.end), every = (+r.every || 2) * 60;
+      if (start === null || end === null || every <= 0 || local.minute < start || local.minute > end) return;
+      const since = local.minute - start;
+      if (since % every < windowMin) due.push({ r, slot: local.day + '|i' + Math.floor(since / every) });
     }
   });
   return due;
 }
 
 function bodyFor(r) {
-  if (r.type === 'interval') return 'Every ' + (r.every || 2) + 'h — small sips add up.';
-  return "Time for this — you've got it, mama.";
+  return r.type === 'interval' ? 'Scheduled interval reminder.' : 'Your scheduled reminder is due.';
 }
 
 async function main() {
-  const url = urlFor(CLOUD_URL, CLOUD_KEY);
-  const res = await fetch(url, { headers: headersFor(CLOUD_URL, CLOUD_KEY, 'GET'), cache: 'no-store' });
-  if (!res.ok) { console.error('Cloud GET failed', res.status); process.exit(1); }
-  const body = await res.json();
-  const doc = (body && body.record && body.record.app === 'newborn-checklist') ? body.record : body;
-  if (!doc || doc.app !== 'newborn-checklist') { console.log('No app document yet — nothing to do.'); return; }
-  const subs = (doc.push && doc.push.subs) || {};
+  const res = await fetch(base + '/push/registry', { headers, cache: 'no-store' });
+  if (!res.ok) { console.error('Push registry GET failed', res.status); process.exit(1); }
+  const registry = await res.json();
+  const subs = registry && registry.subs || {};
   const keys = Object.keys(subs);
   if (!keys.length) { console.log('No push subscriptions registered.'); return; }
 
-  let changed = false, sent = 0;
+  const updates = [];
+  let sent = 0;
   for (const key of keys) {
-    const entry = subs[key];
+    const entry = subs[key] || {};
     entry.last = entry.last || {};
-    const due = computeDue(entry, new Date());
-    for (const { r, slot } of due) {
-      const dedup = r.id + '|' + slot;
+    for (const { r, slot } of computeDue(entry, new Date())) {
       if (entry.last[r.id] === slot) continue;
-      const payload = JSON.stringify({ title: r.label, body: bodyFor(r), tag: 'rem-' + r.id });
-      if (DRY) { console.log('[dry]', key.slice(0, 8), dedup, payload); }
-      else {
-        try { await webpush.sendNotification(entry.sub, payload); sent++; console.log('sent', key.slice(0, 8), dedup); }
-        catch (err) {
-          const code = err && err.statusCode;
-          if (code === 404 || code === 410) { console.log('pruning dead subscription', key.slice(0, 8)); delete subs[key]; changed = true; break; }
-          console.error('send failed', key.slice(0, 8), code || err.message);
-          continue;
-        }
+      const payload = JSON.stringify({
+        title: r.label, body: bodyFor(r), tag: 'rem-' + r.id,
+        url: './reminders.html', reminderId: r.id
+      });
+      if (DRY) { console.log('[dry]', key.slice(0, 8), r.id + '|' + slot, payload); continue; }
+      try {
+        await webpush.sendNotification(entry.sub, payload);
+        entry.last[r.id] = slot;
+        updates.push({ key, last: { [r.id]: slot } });
+        sent++;
+        console.log('sent', key.slice(0, 8), r.id + '|' + slot);
+      } catch (err) {
+        const code = err && err.statusCode;
+        if (code === 404 || code === 410) { updates.push({ key, remove: true }); console.log('pruning dead subscription', key.slice(0, 8)); break; }
+        console.error('send failed', key.slice(0, 8), code || err.message);
       }
-      entry.last[r.id] = slot; changed = true;
     }
   }
 
-  if (changed) {
-    doc.push = { subs };
-    const put = await fetch(url, { method: 'PUT', headers: headersFor(CLOUD_URL, CLOUD_KEY, 'PUT'), body: JSON.stringify(body.record ? { ...doc } : doc) });
-    if (!put.ok) console.error('Cloud PUT failed', put.status);
+  if (updates.length) {
+    const ack = await fetch(base + '/push/ack', { method: 'POST', headers, body: JSON.stringify({ updates }) });
+    if (!ack.ok) { console.error('Push acknowledgement failed', ack.status); process.exitCode = 1; }
   }
   console.log('Done.', sent, 'notification(s) sent.');
 }
